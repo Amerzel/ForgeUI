@@ -13,6 +13,10 @@
 export { ThemeProvider } from './ThemeProvider/index.js'
 export type { ThemeProviderProps } from './ThemeProvider/index.js'
 
+// Phase 1 — Disclosure
+export { Accordion } from './disclosure/Accordion.js'
+export { Tabs }      from './disclosure/Tabs.js'
+
 // Phase 1 — Forms
 export { Input }        from './forms/Input.js'
 export { Textarea }     from './forms/Textarea.js'
