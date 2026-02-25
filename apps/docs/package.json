@@ -14,7 +14,8 @@
     "@forgeui/components": "workspace:*",
     "@forgeui/hooks": "workspace:*",
     "@forgeui/icons": "workspace:*",
-    "@forgeui/tokens": "workspace:*"
+    "@forgeui/tokens": "workspace:*",
+    "@xyflow/react": "^12.10.1"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^8.4.7",
