@@ -13,6 +13,14 @@
 export { ThemeProvider } from './ThemeProvider/index.js'
 export type { ThemeProviderProps } from './ThemeProvider/index.js'
 
+// Phase 1 — Overlays
+export { Dialog }        from './overlays/Dialog.js'
+export { Tooltip, TooltipProvider } from './overlays/Tooltip.js'
+export { DropdownMenu }  from './overlays/DropdownMenu.js'
+export { ContextMenu }   from './overlays/ContextMenu.js'
+export { Popover }       from './overlays/Popover.js'
+export type { MenuEntry, MenuItem, MenuSeparatorItem, MenuSubItem, MenuItemVariant } from './overlays/Menu.js'
+
 // Phase 1 — Feedback
 export { Alert }         from './feedback/Alert.js'
 export { Progress }      from './feedback/Progress.js'
