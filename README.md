@@ -28,10 +28,10 @@ Unified design system for the game development tool suite.
 
 | Package | Description |
 |---------|-------------|
-| `@forgeui/tokens` | Design tokens — colors, spacing, typography, shadows, animations |
-| `@forgeui/components` | React component library (~40 components across 7 categories) |
-| `@forgeui/icons` | Shared icon set |
-| `@forgeui/hooks` | Shared React hooks (theme, shortcuts, media queries) |
+| `@forgeui/tokens` | Design tokens — colors, spacing, typography, shadows, animations, z-index + color manipulation utils |
+| `@forgeui/components` | React component library (18 Phase 1 + 4 Phase 2 composites) |
+| `@forgeui/icons` | Shared icon set (Lucide React + custom game icons) |
+| `@forgeui/hooks` | Shared React hooks (theme, tokens access for canvas/WebGL) |
 
 ## Quick start
 

@@ -20,41 +20,32 @@ ForgeUI/
 ├── packages/
 │   ├── tokens/                  # @forgeui/tokens
 │   │   └── src/
-│   │       ├── colors.ts        # Color palette + semantic aliases
-│   │       ├── spacing.ts       # Spacing scale (4px base)
-│   │       ├── typography.ts    # Type scale, font stacks, weights
-│   │       ├── shadows.ts       # Elevation shadows
-│   │       ├── animations.ts    # Duration + easing tokens
-│   │       ├── layout.ts        # Layout constants (nav height, sidebar width)
-│   │       ├── radii.ts         # Border radius scale
-│   │       └── index.ts         # Barrel export + CSS variable generator
+│   │       ├── scales/          # Numeric scales (gray-50 to gray-950)
+│   │       ├── semantic/        # Mapping scales to aliases (bg, surface, etc.)
+│   │       ├── index.ts         # Exports JS objects + CSS variable generator
+│   │       └── color.ts         # Color manipulation helpers for canvas rendering
 │   │
 │   ├── components/              # @forgeui/components
 │   │   ├── src/
-│   │   │   ├── primitives/      # Button, Badge, IconButton, Link, Text, Separator
-│   │   │   ├── forms/           # FormField, Input, TextArea, Select, Switch, Checkbox,
-│   │   │   │                    # RadioGroup, Chip, ChipGroup, DatePicker
-│   │   │   ├── composites/      # Card, Panel, Drawer, Tabs, Accordion
-│   │   │   ├── data-display/    # DataTable, List, ListItem, ActivityFeed,
-│   │   │   │                    # StatusGrid, DiffView
-│   │   │   ├── navigation/      # NavBar, Sidebar, Breadcrumb, CommandPalette
-│   │   │   ├── feedback/        # Toast, Spinner, EmptyState, ErrorBoundary, Skeleton
-│   │   │   ├── overlays/        # Dialog, Popover, Tooltip, ContextMenu, DropdownMenu
-│   │   │   └── layout/          # AppShell, SplitPane, Stack, Grid
+│   │   │   ├── primitives/      # Polymorphic components (as prop)
+│   │   │   ├── forms/
+│   │   │   ├── overlays/        # Radix-based Dialog, Tooltip, Dropdown
+│   │   │   ├── composites/      # DataTable (TanStack), CommandPalette (cmdk)
+│   │   │   └── lib/
+│   │   │       └── cn.ts        # Internal class merging util (clsx)
 │   │   ├── styles/
-│   │   │   └── base.css         # CSS reset + token-driven global styles
+│   │   │   ├── base.css         # Global resets & variables
+│   │   │   └── *.module.css     # Scoped CSS Modules for components
 │   │   └── package.json
 │   │
 │   ├── icons/                   # @forgeui/icons
 │   │   └── src/
-│   │       └── ...              # SVG icon components
+│   │       └── index.ts         # Curated Lucide React + custom game icons
 │   │
 │   └── hooks/                   # @forgeui/hooks
 │       └── src/
-│           ├── useTheme.ts      # Theme toggle + persistence
-│           ├── useKeyboardShortcut.ts
-│           ├── useMediaQuery.ts
-│           └── useLocalStorage.ts
+│           ├── useTheme.ts
+│           └── useTokens.ts     # Access raw token values in JS (for Canvas/WebGL)
 │
 ├── apps/
 │   └── docs/                    # Storybook 8 documentation site
@@ -66,387 +57,397 @@ ForgeUI/
 └── package.json
 ```
 
+**Note:** There is no standalone `@forgeui/utils` package. Class merging (`cn.ts`)
+lives inside `@forgeui/components` as an internal utility. Color manipulation
+(`color.ts`) lives inside `@forgeui/tokens` alongside the values it operates on.
+
 ---
 
 ## Design tokens
 
-### Colors
+### Colors (Numeric & Semantic)
 
-Extracted from LoreEngine's existing dark theme and formalized into a systematic
-palette. Dark-first with light mode support planned (LoreEngine UX-01).
+Standardized on a 10-step numeric scale to ensure longevity and easy "Light Mode" implementation. All tokens are exported as **JS Constants** and **CSS Variables**.
 
-#### Base palette
+#### Gray Scale (Example)
+Used for backgrounds, borders, and neutral text.
 
-```
-Background:     --forge-bg:              #1a1a2e
-Surface:        --forge-surface:         #16213e
-Surface hover:  --forge-surface-hover:   #1a2744
-Surface raised: --forge-surface-raised:  #1e2d4a
-Border:         --forge-border:          #0f3460
-Border subtle:  --forge-border-subtle:   #0a2540
-```
+| Step | Variable | Hex |
+|------|----------|-----|
+| 50 | `--forge-gray-50` | `#f9fafb` |
+| 100 | `--forge-gray-100` | `#f3f4f6` |
+| 200 | `--forge-gray-200` | `#e5e7eb` |
+| 300 | `--forge-gray-300` | `#d1d5db` |
+| 400 | `--forge-gray-400` | `#9ca3af` |
+| 500 | `--forge-gray-500` | `#6b7280` |
+| 600 | `--forge-gray-600` | `#4b5563` |
+| 700 | `--forge-gray-700` | `#374151` |
+| 800 | `--forge-gray-800` | `#1e2d4a` |
+| 900 | `--forge-gray-900` | `#16213e` |
+| 950 | `--forge-gray-950` | `#0a0a0f` |
 
-#### Text
+Same 50–950 scale applies to: **Blue**, **Red**, **Green**, **Amber**, **Purple**.
 
-```
-Primary:   --forge-text:          #e0e0e0
-Secondary: --forge-text-muted:    #8892a4
-Disabled:  --forge-text-disabled: #5a6577
-Inverse:   --forge-text-inverse:  #1a1a2e
-```
+#### Semantic Mapping (Dark Mode Default)
 
-#### Semantic
+| Semantic Alias | Scale Value | Hex (Approx) |
+|-----------|-----------|-------|
+| `--forge-bg` | `gray-950` | `#0a0a0f` |
+| `--forge-surface` | `gray-900` | `#16213e` |
+| `--forge-surface-raised` | `gray-800` | `#1e2d4a` |
+| `--forge-border` | `gray-700` | `#374151` |
+| `--forge-border-subtle` | `gray-800` | `#1e2d4a` |
+| `--forge-text` | `gray-100` | `#e0e0e0` |
+| `--forge-text-muted` | `gray-400` | `#9ca3af` |
 
-```
-Highlight:       --forge-highlight:       #e94560
-Highlight hover: --forge-highlight-hover: #d63550
-Accent:          --forge-accent:          #0f3460
-Success:         --forge-success:         #4caf50
-Danger:          --forge-danger:          #e94560
-Warning:         --forge-warning:         #ff9800
-Info:            --forge-info:            #2196f3
-```
+#### Semantic Status
+Mapped to vibrant scales (Blue, Red, Green, Amber).
 
-#### Entity type palette (LoreEngine domain, extensible)
+| Alias | Scale | Use |
+|-------|-------|-----|
+| `--forge-info` | `blue-500` | Informational states |
+| `--forge-success` | `green-500` | Confirmations, valid states |
+| `--forge-warning` | `amber-500` | Caution, pending states |
+| `--forge-danger` | `red-500` | Errors, destructive actions |
 
-```
-character:  #2e4057    location:  #3a5a40    event:    #6b3fa0
-faction:    #8b4513    item:      #4a6fa5    concept:  #5c5c8a
-creature:   #7a4069    prophecy:  #6a5acd    secret:   #8b0000
-rumor:      #b8860b
-```
+### Spacing (4px Base, Multiplier Scale)
 
-### Spacing
+Every step is `N × 4px`. The full scale:
 
-4px base unit. Consistent across all tools.
+| Token | Value |
+|-------|-------|
+| `--forge-space-0` | `0px` |
+| `--forge-space-px` | `1px` |
+| `--forge-space-0.5` | `2px` |
+| `--forge-space-1` | `4px` |
+| `--forge-space-2` | `8px` |
+| `--forge-space-3` | `12px` |
+| `--forge-space-4` | `16px` |
+| `--forge-space-5` | `20px` |
+| `--forge-space-6` | `24px` |
+| `--forge-space-8` | `32px` |
+| `--forge-space-10` | `40px` |
+| `--forge-space-12` | `48px` |
+| `--forge-space-16` | `64px` |
 
-```
---forge-space-0:  0
---forge-space-px: 1px
---forge-space-1:  0.25rem  (4px)
---forge-space-2:  0.5rem   (8px)
---forge-space-3:  0.75rem  (12px)
---forge-space-4:  1rem     (16px)
---forge-space-5:  1.25rem  (20px)
---forge-space-6:  1.5rem   (24px)
---forge-space-8:  2rem     (32px)
---forge-space-10: 2.5rem   (40px)
---forge-space-12: 3rem     (48px)
---forge-space-16: 4rem     (64px)
-```
+The naming convention is **multiplier-based**: `--forge-space-N` = `N × 4px`.
+Sub-unit values (`0.5`, `px`) cover fine alignment needs (borders, icon nudges).
 
-### Typography
+### Shadows
 
-```
-Font family:  system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
-Mono family:  'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace
+| Token | Value | Use |
+|-------|-------|-----|
+| `--forge-shadow-sm` | `0 1px 2px rgba(0,0,0,0.3)` | Subtle lift (cards) |
+| `--forge-shadow-md` | `0 4px 8px rgba(0,0,0,0.4)` | Dropdowns, tooltips |
+| `--forge-shadow-lg` | `0 8px 24px rgba(0,0,0,0.5)` | Modals, dialogs |
+| `--forge-shadow-inset` | `inset 0 1px 2px rgba(0,0,0,0.3)` | Pressed/input states |
 
---forge-text-xs:   0.7rem    (badges, tiny labels)
---forge-text-sm:   0.8rem    (form labels, metadata, captions)
---forge-text-base: 0.875rem  (body text, default)
---forge-text-md:   1rem      (subheadings, emphasis)
---forge-text-lg:   1.25rem   (section headers)
---forge-text-xl:   1.5rem    (page titles)
---forge-text-2xl:  1.75rem   (hero titles)
+### Animation & Motion
 
---forge-weight-normal:   400
---forge-weight-medium:   500
---forge-weight-semibold: 600
---forge-weight-bold:     700
+| Token | Value | Use |
+|-------|-------|-----|
+| `--forge-duration-fast` | `100ms` | Hover, focus feedback |
+| `--forge-duration-normal` | `200ms` | Panels, dropdowns |
+| `--forge-duration-slow` | `400ms` | Page transitions, modals |
+| `--forge-easing-default` | `cubic-bezier(0.4, 0, 0.2, 1)` | General purpose |
+| `--forge-easing-in` | `cubic-bezier(0.4, 0, 1, 1)` | Exit animations |
+| `--forge-easing-out` | `cubic-bezier(0, 0, 0.2, 1)` | Enter animations |
 
---forge-leading-tight:   1.25
---forge-leading-normal:  1.5
---forge-leading-relaxed: 1.75
-```
+### Z-Index
 
-### Border radius
+Fixed scale to prevent z-index wars across tools.
 
-```
---forge-radius-sm:   3px   (badges, chips)
---forge-radius-md:   4px   (inputs, buttons)
---forge-radius-lg:   8px   (cards, panels)
---forge-radius-xl:   12px  (modals, dialogs)
---forge-radius-full: 9999px (pills, avatars)
-```
+| Token | Value | Use |
+|-------|-------|-----|
+| `--forge-z-base` | `0` | Default stacking |
+| `--forge-z-dropdown` | `100` | Dropdowns, popovers |
+| `--forge-z-sticky` | `200` | Sticky headers, toolbars |
+| `--forge-z-overlay` | `300` | Overlays, backdrops |
+| `--forge-z-modal` | `400` | Dialogs, modals |
+| `--forge-z-toast` | `500` | Notifications, toasts |
+| `--forge-z-tooltip` | `600` | Tooltips (always on top) |
 
-### Shadows (elevation)
-
-```
---forge-shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.3)
---forge-shadow-md:  0 4px 12px rgba(0, 0, 0, 0.4)
---forge-shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.5)
---forge-shadow-xl:  0 12px 36px rgba(0, 0, 0, 0.6)
-```
-
-### Animation
-
-```
---forge-duration-fast:   100ms
---forge-duration-normal: 150ms
---forge-duration-slow:   300ms
---forge-duration-slower: 500ms
-
---forge-ease-default:    ease
---forge-ease-in-out:     cubic-bezier(0.4, 0, 0.2, 1)
---forge-ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1)
-```
-
-### Layout constants
-
-```
---forge-nav-height:         56px
---forge-sidebar-width:      280px
---forge-sidebar-collapsed:  56px
---forge-detail-pane-width:  360px
---forge-content-max-width:  48rem
---forge-controls-width:     300px
+### JS-Accessible Tokens
+Critical for tool development (Node editors, Graph views, Canvas maps).
+```typescript
+// @forgeui/tokens
+export const tokens = {
+  colors: {
+    gray: { 50: '#f9fafb', /* ... */ 950: '#0a0a0f' },
+    blue: { /* ... */ },
+  },
+  spacing: { 1: '4px', 2: '8px', 3: '12px', 4: '16px', /* ... */ },
+  shadows: { sm: '0 1px 2px rgba(0,0,0,0.3)', /* ... */ },
+  animation: { durationFast: '100ms', easingDefault: 'cubic-bezier(0.4, 0, 0.2, 1)', /* ... */ },
+  zIndex: { base: 0, dropdown: 100, /* ... */ },
+}
 ```
 
 ---
 
 ## Component inventory
 
-### Phase 1: Foundation (~25 components)
+### Phase 1: Foundation (Polymorphic & Scoped)
 
-Core components needed by LoreEngine wave 1 and likely by all tools.
+All primitives support the `as` prop for semantic flexibility. Styling uses **CSS Modules** to prevent global namespace pollution.
 
 #### Primitives (7)
 
-| Component | Radix base | Props | Notes |
-|-----------|-----------|-------|-------|
-| `Button` | — | variant (primary, secondary, danger, ghost), size (sm, md, lg), disabled, loading | Existing LoreEngine: `.btn`, `.btn--primary`, `.btn--danger`, `.btn--ghost`, `.btn--sm` |
-| `Badge` | — | variant (type, status, visibility), color, size | LoreEngine's 23-variant badge system |
-| `IconButton` | — | icon, label (aria), size, variant | Compact action triggers |
-| `Link` | — | href, external, variant | Styled anchor with router integration |
-| `Text` | — | as (p, span, h1-h6, label), size, weight, color, truncate | Semantic text rendering |
-| `Separator` | Radix.Separator | orientation, decorative | Horizontal/vertical divider |
-| `VisuallyHidden` | Radix.VisuallyHidden | — | Accessibility utility |
+| Component | Props | Notes |
+|-----------|-------|-------|
+| `Button` | variant, size, as, disabled, loading | Primary, secondary, ghost, danger variants |
+| `IconButton` | icon, label, size, variant | Accessible wrapper; requires `label` for screen readers |
+| `Badge` | variant, color | Status indicators; includes numeric entity-state mapping |
+| `Text` | as, size, weight, color, truncate | Polymorphic (`p`, `span`, `label`, `h1`–`h6`) |
+| `Heading` | as, size | Semantic heading levels with consistent scale |
+| `Separator` | orientation, decorative | Horizontal/vertical divider; `decorative` hides from a11y tree |
+| `Card` | as, variant, padding | Surface container with border and shadow tokens |
 
 #### Forms (8)
 
-| Component | Radix base | Props | Notes |
-|-----------|-----------|-------|-------|
-| `FormField` | — | label, error, description, required, children | Wrapper: label + input + error + help text |
-| `Input` | — | type (text, number, search, password), size, placeholder | Existing: `.form-input` |
-| `TextArea` | — | autoResize, minRows, maxRows | Existing: `.form-textarea` |
-| `Select` | Radix.Select | options, placeholder, multiple | Dropdown selection |
-| `Switch` | Radix.Switch | checked, onCheckedChange, label | Toggle switch |
-| `Checkbox` | Radix.Checkbox | checked, onCheckedChange, label, indeterminate | Check toggle |
-| `Chip` | — | label, selected, onToggle, removable, color | Filter chip / tag |
-| `ChipGroup` | — | children, exclusive | Group of toggleable chips |
-
-#### Feedback (4)
-
-| Component | Radix base | Props | Notes |
-|-----------|-----------|-------|-------|
-| `Spinner` | — | size, message | Existing: `LoadingSpinner.tsx` |
-| `EmptyState` | — | icon, title, description, action | Existing: `EmptyState.tsx` |
-| `ErrorBoundary` | — | fallback, onReset | Existing: `ErrorBoundary.tsx` |
-| `Skeleton` | — | width, height, variant (text, circle, rect) | Loading placeholder |
+| Component | Props | Notes |
+|-----------|-------|-------|
+| `Input` | size, variant, error, disabled | Text input with built-in validation styling |
+| `Textarea` | size, resize, error | Auto-grows by default; resize configurable |
+| `Select` | options, value, placeholder | Radix Select for accessible dropdowns |
+| `Checkbox` | checked, indeterminate, label | Radix Checkbox with label association |
+| `Switch` | checked, size, label | Toggle switch for boolean settings |
+| `RadioGroup` | options, value, orientation | Radix RadioGroup with keyboard navigation |
+| `Slider` | min, max, step, value | Radix Slider; useful for numeric tool parameters |
+| `FormField` | label, error, hint, required | Wrapper that composes label + input + error message |
 
 #### Overlays (3)
 
-| Component | Radix base | Props | Notes |
-|-----------|-----------|-------|-------|
-| `Dialog` | Radix.Dialog | title, description, children, open, onOpenChange | Modal dialog |
-| `Tooltip` | Radix.Tooltip | content, side, delayDuration | Hover tooltip |
-| `DropdownMenu` | Radix.DropdownMenu | trigger, items, onSelect | Action menu |
+| Component | Library | Props | Notes |
+|-----------|---------|-------|-------|
+| `Dialog` | Radix Dialog | open, title, description | Modal with focus trap and scroll lock |
+| `Tooltip` | Radix Tooltip | content, side, delay | Hover/focus info; accessible by default |
+| `DropdownMenu` | Radix DropdownMenu | items, trigger | Keyboard-navigable context menus |
 
-#### Layout (3)
+### Phase 2: Composites (Headless Logic)
 
-| Component | Radix base | Props | Notes |
-|-----------|-----------|-------|-------|
-| `Stack` | — | direction (h, v), gap, align, justify, wrap | Flexbox shorthand |
-| `Grid` | — | columns, gap, minChildWidth | Responsive auto-fit grid |
-| `Card` | — | header, footer, padding, variant (surface, raised, outlined) | Surface container |
+Focus on complex tools using industry-standard headless libraries for performance.
 
-### Phase 2: Composites (~15 components)
-
-Needed for LoreEngine wave 1 packs and general tool UX.
-
-| Component | Radix base | Props | Notes |
-|-----------|-----------|-------|-------|
-| `Drawer` | Radix.Dialog | side (left, right), title, width | Slide-out panel (UI-01 inspector) |
-| `Tabs` | Radix.Tabs | tabs[], activeTab, onTabChange | Tab navigation |
-| `Accordion` | Radix.Accordion | items[], type (single, multiple) | Collapsible sections |
-| `Panel` | — | title, collapsible, actions, children | Titled section container |
-| `Popover` | Radix.Popover | trigger, content, side | Floating content |
-| `ContextMenu` | Radix.ContextMenu | trigger, items | Right-click menu (UX-07) |
-| `Toast` | Radix.Toast | title, description, variant, duration | Notification |
-| `CommandPalette` | Radix.Dialog | commands[], onSelect, placeholder | Keyboard command search (UX-02) |
-| `NavBar` | — | brand, items, actions | App-level navigation bar |
-| `Sidebar` | — | items, collapsible, width | Navigation sidebar |
-| `AppShell` | — | nav, sidebar, main, detail | Full page layout scaffold |
-| `SplitPane` | — | direction, defaultSizes, minSizes, onResize | Resizable panels |
-| `DataTable` | — | columns, data, sortable, filterable, onRowClick | Tabular data display |
-| `List` / `ListItem` | — | items, selectable, onSelect, renderItem | Selectable item list |
-| `ActivityFeed` | — | events[], renderEvent | Timestamped event stream |
-
-### Phase 3: Domain extensions
-
-LoreEngine-specific components built on ForgeUI primitives. These stay in
-LoreEngine's repo, not in ForgeUI, but demonstrate the design system's
-extensibility.
-
-- `EntityBadge` (wraps Badge with entity type colors)
-- `CanonBadge` (wraps Badge with canon state colors)
-- `VisibilityBadge` (wraps Badge with visibility colors)
-- `EntityCard` (wraps Card + EntityBadge + metadata)
-- `FindingCard` (wraps Card + severity + entity anchors)
-- `DiffView` (before/after comparison for agent approval)
-- `RevisionList` (wraps List for version history)
+| Component | Library | Notes |
+|-----------|---------|-------|
+| `DataTable` | **TanStack Table** | Virtualization support for 10k+ rows; sorting, filtering, column resize |
+| `CommandPalette` | **cmdk** | Fast, keyboard-first navigation; fuzzy search |
+| `SplitPane` | — | Native-feeling resizable panels; persist sizes to localStorage |
+| `AppShell` | — | Root layout (Sidebar + Nav + Main); fixed-viewport desktop assumption |
 
 ---
 
 ## Theming architecture
 
-### CSS variable injection
+### Theme Contract Extensions
 
-Tokens are exported as both TypeScript objects and CSS variables. The
-`ThemeProvider` component injects variables at the root level.
-
-```tsx
-import { ThemeProvider } from '@forgeui/components'
-import { darkTheme } from '@forgeui/tokens'
-
-function App() {
-  return (
-    <ThemeProvider theme={darkTheme}>
-      <AppShell>...</AppShell>
-    </ThemeProvider>
-  )
-}
-```
-
-### Theme contract
-
-Each theme must satisfy a `ThemeContract` type that defines all required
-token categories. This ensures tools can't accidentally omit tokens.
+Tools can provide domain-specific tokens (e.g., LoreEngine's "Prophecy" color) via the `ThemeProvider` without bloating the core system. The contract uses a generic type parameter for type-safe extensions.
 
 ```typescript
-interface ThemeContract {
-  colors: {
-    bg: string
-    surface: string
-    surfaceHover: string
-    border: string
-    text: string
-    textMuted: string
-    highlight: string
-    success: string
-    danger: string
-    warning: string
-    info: string
-  }
-  spacing: Record<SpacingKey, string>
-  typography: Record<TypographyKey, string>
-  radii: Record<RadiusKey, string>
-  shadows: Record<ShadowKey, string>
+interface ThemeContract<TExtensions extends Record<string, unknown> = Record<string, never>> {
+  colors: BaseColors;
+  spacing: SpacingScale;
+  shadows: ShadowScale;
+  animation: AnimationTokens;
+  zIndex: ZIndexScale;
+  extensions: TExtensions;
 }
+
+// In LoreEngine:
+interface LoreExtensions {
+  prophecy: string;
+  factionPrimary: string;
+  factionSecondary: string;
+  timeline: { past: string; present: string; future: string };
+}
+type LoreTheme = ThemeContract<LoreExtensions>;
+
+// In MapEditor:
+interface MapExtensions {
+  terrain: { grass: string; water: string; rock: string };
+  gridLine: string;
+}
+type MapTheme = ThemeContract<MapExtensions>;
 ```
 
-### Dark mode (default) → Light mode (UX-01)
+### Layout Assumptions
 
-Dark theme ships first. Light theme added as a second `ThemeContract`
-implementation. Tools opt in via `ThemeProvider` or user preference
-(persisted via `useTheme` hook in `@forgeui/hooks`).
+All 9 tools are **fixed-viewport desktop applications** (Electron or full-window browser). ForgeUI does not ship responsive breakpoints. If a tool requires responsive behavior, it handles its own breakpoint logic on top of ForgeUI's layout primitives.
+
+`AppShell` targets a minimum viewport of **1280×720** and uses CSS `dvh`/`dvw` units for full-viewport layouts.
 
 ---
 
-## Tooling decisions
+## Build & Distribution
+
+### Output Format
+
+All packages are built with **tsup**, producing:
+- **ESM** (primary) — for modern bundlers (Vite, esbuild).
+- **CJS** (secondary) — for legacy Node tooling or SSR if needed.
+- **TypeScript declarations** (`.d.ts`) — generated alongside each format.
+
+### CSS Delivery
+
+- `@forgeui/tokens` outputs a standalone `tokens.css` file containing all CSS custom properties. Consumers import it once at their app root.
+- `@forgeui/components` uses **CSS Modules**. Each component's scoped `.module.css` is bundled alongside its JS. Consumers' bundlers (Vite, webpack) handle the CSS automatically on import.
+- No runtime CSS-in-JS. No Tailwind.
+
+### Entry Points
+
+Packages support both barrel and deep imports:
+```typescript
+// Barrel (convenient, tree-shaking relies on bundler)
+import { Button, Input } from '@forgeui/components';
+
+// Deep import (guaranteed minimal, no barrel overhead)
+import { Button } from '@forgeui/components/Button';
+```
+
+Each component is a separate entry point in the package's `exports` map.
+
+### Build Order
+
+Turborepo manages the dependency graph: `tokens` → `components` / `icons` / `hooks` (parallel where independent).
+
+---
+
+## Testing strategy
+
+### Unit & Interaction Tests
+
+- **Vitest** as the test runner across all packages.
+- **Testing Library** for DOM-based component tests.
+- Every component must have at minimum:
+  - Render test (mounts without error).
+  - Accessibility audit (`vitest-axe`, must pass with zero violations).
+  - Keyboard interaction test (focus, activation, navigation).
+
+### Visual Regression
+
+- **Storybook** with the **A11y addon** and **Interaction addon** active for every story.
+- Every component variant has a dedicated Storybook story that doubles as visual documentation.
+- Visual regression snapshots are captured via **Storybook test runner** in CI to catch unintended style changes.
+
+### CI Enforcement
+
+All quality gates run in CI on every PR:
+- `pnpm lint` — ESLint + Prettier.
+- `pnpm test` — Vitest (includes axe audits).
+- `pnpm build` — Ensures all packages compile cleanly.
+- Storybook build — Ensures no broken stories.
+
+PRs that fail any gate cannot merge.
+
+---
+
+## Versioning & Release
+
+### Semantic Versioning
+
+All packages follow **semver** strictly:
+- **Patch**: Bug fixes, token value tweaks that don't change names.
+- **Minor**: New components, new tokens, new non-breaking props.
+- **Major**: Removed/renamed components, removed/renamed tokens, breaking prop changes.
+
+### Changesets
+
+Versioning is managed via **Changesets**:
+1. Every PR that changes a published package must include a changeset (`pnpm changeset`).
+2. Changesets accumulate on `main`.
+3. A release PR is auto-generated that bumps versions and updates changelogs.
+4. On merge of the release PR, packages are published to the registry.
+
+### Breaking Change Policy
+
+Breaking changes require:
+- A migration guide in the PR description.
+- A deprecation period of at least one minor release where the old API is preserved with console warnings before removal.
+- Codemods provided where feasible (e.g., renaming a prop across consuming tools).
+
+---
+
+## Documentation
+
+### Storybook as Primary Docs
+
+Storybook serves as the living documentation site:
+- Every component has stories covering all variants, sizes, and states.
+- Stories include usage examples and prop documentation via `argTypes`.
+- The A11y addon panel is visible on every story for real-time audit feedback.
+
+### API Reference
+
+TypeScript types serve as the API reference. Component props are documented via JSDoc comments on the prop interfaces, which surface in IDE tooltips and Storybook's auto-generated docs.
+
+### Migration Guides
+
+When consuming tools adopt ForgeUI, each tool gets a brief migration guide covering:
+- Which ForgeUI components replace existing ad-hoc components.
+- Token mapping from the tool's existing hardcoded values to ForgeUI tokens.
+- Any breaking changes in the tool's UI behavior.
+
+---
+
+## Tooling & Quality Gates
 
 | Concern | Choice | Rationale |
 |---------|--------|-----------|
-| Monorepo runner | **Turborepo** | Fast incremental builds, task caching, pnpm-native |
-| Package manager | **pnpm** | Workspace support, strict dependencies, fast installs |
-| Bundler | **tsup** | Zero-config TS → ESM/CJS, fast, tree-shakeable output |
-| Docs | **Storybook 8** | Industry standard, interactive component playground, auto-generated docs |
-| Testing | **Vitest + Testing Library** | Matches LoreEngine's existing frontend test stack |
-| Linting | **ESLint + Prettier** | Consistent code style across packages |
-| Versioning | **Changesets** | Automated semver, changelogs, monorepo-aware publishing |
-| CSS approach | **Vanilla CSS + CSS variables** | No Tailwind dependency; token-driven; tools import base.css |
-| Type checking | **TypeScript strict** | Matches all tools' existing TS configurations |
+| CSS Approach | **CSS Modules** | Scoped styles, zero runtime overhead, high performance |
+| Icons | **Lucide React** | Large, consistent library + custom SVG extension |
+| Testing | **Vitest + Testing Library** | Fast, modern test runner with DOM testing |
+| Accessibility | **vitest-axe** | Automated A11y testing; zero-violation policy in CI |
+| Styling Utils | **clsx** | Lightweight class merging for variant composition |
+| Build | **tsup** | Fast TS bundler; outputs ESM + CJS + declarations |
+| Versioning | **Changesets** | Automated semver bumps and changelogs |
+
+### Quality Gates
+- **A11y**: 100% `vitest-axe` pass rate on every component.
+- **Canvas-Ready**: Every color token must be available as a raw hex string for `<canvas>` use.
+- **Performance**: Individual packages are tree-shakeable; deep imports supported.
+- **Visuals**: Storybook A11y and Interaction addons active on every story.
+- **Types**: TypeScript strict mode; no `any` in public API surfaces.
 
 ---
 
-## LoreEngine migration strategy
+## Implementation Strategy
 
-### Phase A: Token extraction
+### Phase 1: Core & Scoping
+- Setup Monorepo (pnpm + Turborepo).
+- Define full numeric color scales (50–950) for all palettes and export JS-accessible objects.
+- Define spacing, shadow, animation, and z-index token scales.
+- Implement all 7 Primitives using **CSS Modules**.
+- Implement all 8 Form components with Radix where applicable.
+- Implement all 3 Overlay components using Radix primitives.
+- Set up Vitest + Testing Library with axe audits.
+- Set up Storybook with A11y and Interaction addons.
+- Configure Changesets for versioning.
 
-1. Copy LoreEngine's `:root` CSS variables into `@forgeui/tokens`
-2. Formalize into scales (spacing, typography, radius, shadows)
-3. Add `@forgeui/tokens` as dependency in LoreEngine `client/package.json`
-4. Replace `index.css` `:root` block with `@import '@forgeui/tokens/base.css'`
-5. Update all `var(--bg)` → `var(--forge-bg)` references (find-replace)
+### Phase 2: Headless Composites
+- Integrate **TanStack Table** for `DataTable` with virtualization.
+- Integrate **cmdk** for `CommandPalette`.
+- Build `SplitPane` with persisted panel sizes.
+- Build `AppShell` targeting 1280×720 minimum viewport.
 
-### Phase B: Primitive replacement
+### Phase 3: Domain Extensions & Rollout
 
-1. Replace LoreEngine's `.btn` classes with `<Button>` component
-2. Replace `.badge` classes with `<Badge>` component
-3. Replace `.form-*` classes with `<FormField>`, `<Input>`, `<TextArea>`
-4. Replace `LoadingSpinner.tsx` with `<Spinner>`
-5. Replace `EmptyState.tsx` with ForgeUI `<EmptyState>`
+#### Extension Support
+- Implement generic `ThemeContract<T>` provider with typed extensions.
+- Build and document the extension pattern for LoreEngine (first consumer).
 
-### Phase C: Composite replacement
+#### Pilot Migration: PipelineInspector
+- **PipelineInspector** migrates first — it has the simplest UI surface and fewest custom components, making it the lowest-risk pilot.
+- Document the migration process, pain points, and patterns discovered.
 
-1. Replace wiki sidebar with `<Sidebar>` + `<List>`
-2. Replace entity detail with `<Drawer>` or `<Panel>`
-3. Replace modal patterns with `<Dialog>`
-4. Replace tab patterns with `<Tabs>`
+#### Incremental Rollout
+- Tools migrate incrementally, not all-at-once. A tool can adopt ForgeUI for new screens while keeping existing UI intact.
+- Migration order (after pilot): **EntityArchitect** → **QuestForge** → **EncounterComposer** → **AssetGenerator** → **Director** → **TerrainComposer** → **LoreEngine** (last, largest surface area).
+- Each tool's migration includes:
+  - Token mapping from existing hardcoded values.
+  - Component swap list (ad-hoc → ForgeUI equivalent).
+  - Codemods where prop interfaces differ.
+- "Migrated" means: all new UI uses ForgeUI components; existing UI is converted or has a tracked backlog to convert.
 
-### Phase D: Layout replacement
-
-1. Replace each view's manual CSS grid with `<AppShell>` configuration
-2. Replace flex containers with `<Stack>`
-3. Replace responsive grids with `<Grid>`
-
-### Result
-
-- LoreEngine's `index.css` shrinks from ~1,120 lines to ~200 lines
-  (view-specific overrides for graph canvas, map, timeline)
-- All new wave 1–5 UI items build on ForgeUI from day one
-- Other tools adopt ForgeUI for instant visual consistency
-
----
-
-## Quality gates
-
-- **Accessibility**: All interactive components pass axe-core automated audit
-- **Keyboard**: Every component usable without a mouse
-- **Screen reader**: ARIA labels and live regions tested with VoiceOver/NVDA
-- **Type safety**: All props fully typed; no `any` in public API
-- **Bundle size**: Tree-shakeable; individual component imports supported
-- **Browser support**: Chrome/Firefox/Safari/Edge latest 2 versions
-- **Visual regression**: Chromatic or Percy snapshots on PR
-
----
-
-## Implementation phases
-
-### Phase 1: Bootstrap + tokens + ~25 core components
-
-- Initialize monorepo (Turborepo + pnpm)
-- Build @forgeui/tokens with full token set + CSS variable generation
-- Build Phase 1 components (primitives, forms, feedback, overlays, layout)
-- Set up Storybook with stories for every component
-- Write component tests (Vitest + Testing Library)
-- Publish first internal release
-
-### Phase 2: Composites + AppShell + docs
-
-- Build Phase 2 components (Drawer, Tabs, NavBar, Sidebar, AppShell, DataTable, etc.)
-- Build documentation site in Storybook (usage guides, token reference)
-- Begin LoreEngine migration (Phase A + B)
-
-### Phase 3: Domain extensions + full migration
-
-- Build LoreEngine domain components on ForgeUI primitives
-- Complete LoreEngine migration (Phase C + D)
-- Onboard first sibling tool
-
-### Phase 4: Ecosystem rollout
-
-- Publish to npm (or internal registry)
-- Onboard remaining tools
-- Add light theme
-- Add visual regression testing
+#### Compatibility
+- ForgeUI targets **React 18+**. Tools on older versions must upgrade before adopting.
+- ForgeUI does not depend on any specific bundler, but CSS Modules require bundler support (Vite, webpack 5+, esbuild with plugin).
