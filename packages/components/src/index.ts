@@ -45,6 +45,21 @@ export { ToggleGroup }  from './forms/ToggleGroup.js'
 export { FormField }    from './forms/FormField.js'
 export { NumberInput }  from './forms/NumberInput.js'
 
+// Phase 2b — Complex inputs
+export { DataTable }           from './complex/DataTable.js'
+export type { ColumnDef }      from './complex/DataTable.js'
+export { CommandPalette }      from './complex/CommandPalette.js'
+export type { CommandGroup, CommandItem } from './complex/CommandPalette.js'
+export { TreeView }            from './complex/TreeView.js'
+export type { TreeNode }       from './complex/TreeView.js'
+export { Combobox }            from './complex/Combobox.js'
+export type { ComboboxOption } from './complex/Combobox.js'
+export { ColorPicker }         from './complex/ColorPicker.js'
+export { TagsInput }           from './complex/TagsInput.js'
+export { PropertyGrid }        from './complex/PropertyGrid.js'
+export type { PropertySection, PropertyItem, PropertyType, SelectOption } from './complex/PropertyGrid.js'
+export { EditableText }        from './complex/EditableText.js'
+
 // Phase 2a — Layout
 export { AppShell }            from './layout/AppShell.js'
 export { ResizablePanel, ResizablePanelGroup } from './layout/ResizablePanelGroup.js'
