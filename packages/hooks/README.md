@@ -19,7 +19,7 @@ import { ThemeProvider } from '@forgeui/components'
 
 export function App() {
   return (
-    <ThemeProvider palette="hearth-bronze" mode="dark">
+    <ThemeProvider palette="midnight-forge-v2" mode="dark">
       <YourApp />
     </ThemeProvider>
   )

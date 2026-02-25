@@ -40,14 +40,14 @@ import '@forgeui/tokens/tokens.css'
 
 function App() {
   return (
-    <ThemeProvider palette="hearth-bronze" mode="dark">
+    <ThemeProvider palette="midnight-forge-v2" mode="dark">
       <YourApp />
     </ThemeProvider>
   )
 }
 ```
 
-**Palettes:** `hearth-bronze` (default) · `midnight-forge` · `deep-space` · `midnight-forge-v2`
+**Palettes:** `midnight-forge-v2` (default) · `hearth-bronze` · `midnight-forge` · `deep-space`
 **Modes:** `dark` (default) · `light`
 
 ---

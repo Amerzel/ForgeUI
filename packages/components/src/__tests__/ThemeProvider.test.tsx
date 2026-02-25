@@ -41,14 +41,14 @@ describe('ThemeProvider', () => {
     expect(wrapper).toHaveAttribute('data-forge-provider')
   })
 
-  it('defaults to hearth-bronze dark', () => {
+  it('defaults to midnight-forge-v2 dark', () => {
     const { container } = render(
       <ThemeProvider>
         <span />
       </ThemeProvider>,
     )
     const wrapper = container.firstChild as HTMLElement
-    expect(wrapper).toHaveAttribute('data-palette', 'hearth-bronze')
+    expect(wrapper).toHaveAttribute('data-palette', 'midnight-forge-v2')
     expect(wrapper).toHaveAttribute('data-theme', 'dark')
   })
 
@@ -90,7 +90,7 @@ describe('ThemeProvider', () => {
       </ThemeProvider>,
     )
     const wrapper = container.firstChild as HTMLElement
-    expect(wrapper).toHaveAttribute('data-palette', 'hearth-bronze')
+    expect(wrapper).toHaveAttribute('data-palette', 'midnight-forge-v2')
     await user.click(screen.getByText('switch palette'))
     expect(wrapper).toHaveAttribute('data-palette', 'midnight-forge')
   })

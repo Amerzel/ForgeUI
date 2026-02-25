@@ -28,7 +28,7 @@ import { ThemeProvider } from '@forgeui/components'
 
 export function App() {
   return (
-    <ThemeProvider palette="hearth-bronze" mode="dark">
+    <ThemeProvider palette="midnight-forge-v2" mode="dark">
       <YourApp />
     </ThemeProvider>
   )
@@ -49,20 +49,20 @@ import { Button } from '@forgeui/components/Button'
 
 ```tsx
 <ThemeProvider
-  palette="hearth-bronze"  // 'hearth-bronze' | 'midnight-forge' | 'deep-space' | 'midnight-forge-v2'
+  palette="midnight-forge-v2"  // 'midnight-forge-v2' | 'hearth-bronze' | 'midnight-forge' | 'deep-space'
   mode="dark"              // 'dark' | 'light'
   extensions={{}}          // optional tool-specific token extensions
 >
 ```
 
-Defaults: `palette="hearth-bronze"`, `mode="dark"`.
+Defaults: `palette="midnight-forge-v2"`, `mode="dark"`.
 
 | Palette | Accent | Character |
 |---------|--------|-----------|
-| `hearth-bronze` | Amber `#d97706` | Warm forge workshop (default) |
+| `midnight-forge-v2` | Gold `#f59e0b` | Navy/gold (default) |
+| `hearth-bronze` | Amber `#d97706` | Warm forge workshop |
 | `midnight-forge` | Blue `#4f8ff7` | Cool navy |
 | `deep-space` | Teal `#14b8a6` | Deep navy |
-| `midnight-forge-v2` | Gold `#f59e0b` | Navy/gold |
 
 ### Tool-specific token extensions
 
@@ -70,7 +70,7 @@ Tools can inject domain-specific CSS custom properties via `extensions`:
 
 ```tsx
 <ThemeProvider
-  palette="hearth-bronze"
+  palette="midnight-forge-v2"
   mode="dark"
   extensions={{ prophecy: '#c084fc', factionPrimary: '#38bdf8' }}
 >

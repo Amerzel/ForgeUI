@@ -31,7 +31,7 @@ import { ThemeProvider, Button, Input } from '@forgeui/components'
 
 export function App() {
   return (
-    <ThemeProvider palette="hearth-bronze" mode="dark">
+    <ThemeProvider palette="midnight-forge-v2" mode="dark">
       <YourApp />
     </ThemeProvider>
   )
@@ -42,10 +42,10 @@ export function App() {
 
 | Palette | Accent | Character |
 |---------|--------|-----------|
-| `hearth-bronze` | Amber `#d97706` | Warm forge workshop (default) |
+| `midnight-forge-v2` | Gold `#f59e0b` | Navy/gold (default) |
+| `hearth-bronze` | Amber `#d97706` | Warm forge workshop |
 | `midnight-forge` | Blue `#4f8ff7` | Cool navy |
 | `deep-space` | Teal `#14b8a6` | Deep navy |
-| `midnight-forge-v2` | Gold `#f59e0b` | Navy/gold |
 
 All palettes use a 3px default radius for a sharp, precision-tool aesthetic.
 

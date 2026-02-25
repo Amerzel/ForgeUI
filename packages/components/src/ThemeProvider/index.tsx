@@ -5,7 +5,7 @@ import type { Palette, Mode } from '@forgeui/tokens'
 import type { ExtensionTokens } from '@forgeui/hooks'
 
 export interface ThemeProviderProps {
-  /** Active color palette. Default: 'hearth-bronze' */
+  /** Active color palette. Default: 'midnight-forge-v2' */
   palette?: Palette
   /** Color mode. Default: 'dark' */
   mode?: Mode
@@ -31,12 +31,12 @@ export interface ThemeProviderProps {
  * Mount once at the app root. Nesting is supported for sub-tree overrides.
  *
  * @example
- * <ThemeProvider palette="hearth-bronze" mode="dark">
+ * <ThemeProvider palette="midnight-forge-v2" mode="dark">
  *   <App />
  * </ThemeProvider>
  */
 export function ThemeProvider({
-  palette: paletteProp = 'hearth-bronze',
+  palette: paletteProp = 'midnight-forge-v2',
   mode: modeProp = 'dark',
   extensions = {},
   children,

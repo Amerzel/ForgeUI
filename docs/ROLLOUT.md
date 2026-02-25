@@ -59,7 +59,7 @@ Expected components needed (to be confirmed during migration):
 Week 1: Token migration
   [ ] Install @forgeui/tokens, @forgeui/components, @forgeui/hooks
   [ ] Add tokens.css import at app entry
-  [ ] Wrap root with <ThemeProvider palette="hearth-bronze" mode="dark">
+  [ ] Wrap root with <ThemeProvider palette="midnight-forge-v2" mode="dark">
   [ ] Replace all :root hardcoded colors with var(--forge-*)
   [ ] Define PipelineInspectorExtensions in src/theme.ts
 

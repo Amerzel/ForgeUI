@@ -14,10 +14,10 @@ const preview: Preview = {
         title: 'Palette',
         icon: 'paintbrush',
         items: [
-          { value: 'hearth-bronze',    title: 'Hearth Bronze (default)' },
+          { value: 'midnight-forge-v2', title: 'Midnight Forge v2 (default)' },
+          { value: 'hearth-bronze',    title: 'Hearth Bronze' },
           { value: 'midnight-forge',   title: 'Midnight Forge' },
           { value: 'deep-space',       title: 'Deep Space' },
-          { value: 'midnight-forge-v2', title: 'Midnight Forge v2' },
         ],
         dynamicTitle: true,
       },
@@ -36,12 +36,12 @@ const preview: Preview = {
     },
   },
   initialGlobals: {
-    palette: 'hearth-bronze',
+    palette: 'midnight-forge-v2',
     mode: 'dark',
   },
   decorators: [
     (Story, context) => {
-      const palette = (context.globals['palette'] ?? 'hearth-bronze') as Palette
+      const palette = (context.globals['palette'] ?? 'midnight-forge-v2') as Palette
       const mode    = (context.globals['mode'] ?? 'dark') as Mode
       return createElement(
         ThemeProvider,
