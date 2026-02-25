@@ -13,6 +13,13 @@
 export { ThemeProvider } from './ThemeProvider/index.js'
 export type { ThemeProviderProps } from './ThemeProvider/index.js'
 
+// Phase 1 — Feedback
+export { Alert }         from './feedback/Alert.js'
+export { Progress }      from './feedback/Progress.js'
+export { Skeleton }      from './feedback/Skeleton.js'
+export { ToastProvider, ToastList } from './feedback/Toast.js'
+export type { ToastItem, ToastVariant } from './feedback/Toast.js'
+
 // Phase 1 — Disclosure
 export { Accordion } from './disclosure/Accordion.js'
 export { Tabs }      from './disclosure/Tabs.js'
