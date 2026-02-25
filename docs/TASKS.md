@@ -249,27 +249,27 @@ Dependencies are noted where a task cannot start until another is complete.
 > Depends on: Track 12 complete (Phase 1 published).
 
 ### Overlays
-- [ ] **T13.1** — `Drawer`: extends Radix Dialog with `side` (left/right/top/bottom), `open`, `title`; slide-in animation using easing-default; non-blocking alternative to Dialog; same focus-trap + scroll-lock
+- [x] **T13.1** — `Drawer`: extends Radix Dialog with `side` (left/right/top/bottom), `open`, `title`; slide-in animation using easing-default; non-blocking alternative to Dialog; same focus-trap + scroll-lock
 
 ### Composites
-- [ ] **T13.2** — `Toolbar`: wraps Radix Toolbar; roving tabindex keyboard focus between items; accepts `Button`, `IconButton`, `Toggle`, `ToggleGroup`, `Separator` as children with proper `Toolbar.Button`/`Toolbar.Link` wrappers
-- [ ] **T13.3** — `ResizablePanelGroup`: native HTML drag resize (no external lib unless necessary); `direction` (horizontal/vertical); panel size constraints (min/max); sizes persisted to localStorage by `storageKey` prop
-- [ ] **T13.4** — `Collapsible`: wraps Radix Collapsible; `open`, `onOpenChange`, `defaultOpen`; animated expand/collapse for single regions; simpler than Accordion for one-off use
-- [ ] **T13.5** — `Menubar`: wraps Radix Menubar; horizontal menu bar (File/Edit/View pattern); keyboard navigation with arrow keys; submenus; checkable items; used in Electron tools for native-feeling app chrome
-- [ ] **T13.6** — `Steps`: `steps` (array of `{label, description?, status: 'pending'|'active'|'completed'|'error'}`); horizontal indicator; visual connectors between steps; used for pipeline flows and import wizards
+- [x] **T13.2** — `Toolbar`: wraps Radix Toolbar; roving tabindex keyboard focus between items; accepts `Button`, `IconButton`, `Toggle`, `ToggleGroup`, `Separator` as children with proper `Toolbar.Button`/`Toolbar.Link` wrappers
+- [x] **T13.3** — `ResizablePanelGroup`: native HTML drag resize (no external lib unless necessary); `direction` (horizontal/vertical); panel size constraints (min/max); sizes persisted to localStorage by `storageKey` prop
+- [x] **T13.4** — `Collapsible`: wraps Radix Collapsible; `open`, `onOpenChange`, `defaultOpen`; animated expand/collapse for single regions; simpler than Accordion for one-off use
+- [x] **T13.5** — `Menubar`: wraps Radix Menubar; horizontal menu bar (File/Edit/View pattern); keyboard navigation with arrow keys; submenus; checkable items; used in Electron tools for native-feeling app chrome
+- [x] **T13.6** — `Steps`: `steps` (array of `{label, description?, status: 'pending'|'active'|'completed'|'error'}`); horizontal indicator; visual connectors between steps; used for pipeline flows and import wizards
 
 ### Data Display
-- [ ] **T13.7** — `Avatar`: wraps Radix Avatar; `src`, `alt`, `fallback` (initials string); size tokens; fallback renders colored background with initials when image fails to load
-- [ ] **T13.8** — `AspectRatio`: wraps Radix AspectRatio; `ratio` prop (e.g., `16/9`); constrains child to exact ratio; used for asset thumbnails
-- [ ] **T13.9** — `Table`: semantic HTML table; compound `Table.Header`, `Table.Body`, `Table.Row`, `Table.Cell`, `Table.Head`; styled with forge tokens; for static/small data (use DataTable for large sets); sortable header cells optional
-- [ ] **T13.10** — `Breadcrumb`: `items` (array of `{label, href?}`); current page item has `aria-current="page"`; separator between items (chevron icon); last item non-link
+- [x] **T13.7** — `Avatar`: wraps Radix Avatar; `src`, `alt`, `fallback` (initials string); size tokens; fallback renders colored background with initials when image fails to load
+- [x] **T13.8** — `AspectRatio`: wraps Radix AspectRatio; `ratio` prop (e.g., `16/9`); constrains child to exact ratio; used for asset thumbnails
+- [x] **T13.9** — `Table`: semantic HTML table; compound `Table.Header`, `Table.Body`, `Table.Row`, `Table.Cell`, `Table.Head`; styled with forge tokens; for static/small data (use DataTable for large sets); sortable header cells optional
+- [x] **T13.10** — `Breadcrumb`: `items` (array of `{label, href?}`); current page item has `aria-current="page"`; separator between items (chevron icon); last item non-link
 
 ### Layout
-- [ ] **T13.11** — `AppShell`: root layout wrapper; `sidebar` slot, `nav` slot, `main` slot; fixed-viewport (dvh/dvw); minimum 1280×720; CSS grid layout; sidebar width configurable via prop or CSS variable
-- [ ] **T13.12** — `DropZone`: `accept` (MIME types/extensions), `multiple`, `maxSize`, `onDrop`, `onError`; visual drag-over state (dashed border + accent color); click-to-browse fallback; file type/size validation with error display; accessible via keyboard
-- [ ] **T13.13** — `Pagination`: `page`, `pageSize`, `total`, `onPageChange`, `onPageSizeChange`; prev/next buttons; page number buttons (with ellipsis for large ranges); page size selector using Select component
+- [x] **T13.11** — `AppShell`: root layout wrapper; `sidebar` slot, `nav` slot, `main` slot; fixed-viewport (dvh/dvw); minimum 1280×720; CSS grid layout; sidebar width configurable via prop or CSS variable
+- [x] **T13.12** — `DropZone`: `accept` (MIME types/extensions), `multiple`, `maxSize`, `onDrop`, `onError`; visual drag-over state (dashed border + accent color); click-to-browse fallback; file type/size validation with error display; accessible via keyboard
+- [x] **T13.13** — `Pagination`: `page`, `pageSize`, `total`, `onPageChange`, `onPageSizeChange`; prev/next buttons; page number buttons (with ellipsis for large ranges); page size selector using Select component
 
-**Stories + Tests (T13.14)** — All 13 Phase 2a components
+- [x] **Stories + Tests (T13.14)** — All 13 Phase 2a components
 
 ---
 
@@ -277,23 +277,23 @@ Dependencies are noted where a task cannot start until another is complete.
 
 > Depends on: Track 13 complete. Each component here is standalone — build in parallel where possible.
 
-- [ ] **T14.1** — `DataTable`: wraps TanStack Table v8; `columns` (TanStack ColumnDef array), `data`, `sorting`, `filtering`, `columnResizing`, `rowSelection`; virtualization via TanStack Virtual for 10k+ rows; compound `DataTable.Toolbar` (filter inputs, column visibility), `DataTable.Pagination` (wraps Pagination component); empty and loading states
+- [x] **T14.1** — `DataTable`: wraps TanStack Table v8; `columns` (TanStack ColumnDef array), `data`, `sorting`, `filtering`, `columnResizing`, `rowSelection`; virtualization via TanStack Virtual for 10k+ rows; compound `DataTable.Toolbar` (filter inputs, column visibility), `DataTable.Pagination` (wraps Pagination component); empty and loading states
 
-- [ ] **T14.2** — `CommandPalette`: wraps cmdk; `items` (grouped list with label/icon/action/keywords), `open`, `onOpenChange`, `placeholder`; fuzzy search; keyboard-first (arrow keys, enter, escape); groups with headings; empty state; uses shadow-xl + surface-overlay backdrop; typically opened via `⌘K`
+- [x] **T14.2** — `CommandPalette`: wraps cmdk; `items` (grouped list with label/icon/action/keywords), `open`, `onOpenChange`, `placeholder`; fuzzy search; keyboard-first (arrow keys, enter, escape); groups with headings; empty state; uses shadow-xl + surface-overlay backdrop; typically opened via `⌘K`
 
-- [ ] **T14.3** — `TreeView`: custom implementation; `nodes` (recursive tree structure with id/label/children/icon), `selected`, `expanded`, `onSelect`, `onExpand`; keyboard navigation (arrow keys to traverse, enter to select, space to expand); multi-select support; used for scene graphs, entity hierarchies, file trees
+- [x] **T14.3** — `TreeView`: custom implementation; `nodes` (recursive tree structure with id/label/children/icon), `selected`, `expanded`, `onSelect`, `onExpand`; keyboard navigation (arrow keys to traverse, enter to select, space to expand); multi-select support; used for scene graphs, entity hierarchies, file trees
 
-- [ ] **T14.4** — `Combobox`: wraps cmdk or Radix Combobox; `options`, `value`, `onChange`, `placeholder`, `search` (controlled search string), `onSearchChange`, `loading`, `empty`; autocomplete with filtering for large lists (100s of items); accessible keyboard navigation
+- [x] **T14.4** — `Combobox`: wraps cmdk or Radix Combobox; `options`, `value`, `onChange`, `placeholder`, `search` (controlled search string), `onSearchChange`, `loading`, `empty`; autocomplete with filtering for large lists (100s of items); accessible keyboard navigation
 
-- [ ] **T14.5** — `ColorPicker`: custom implementation; `value` (hex/rgb/hsl string), `onChange`, `format` (hex/rgb/hsl), `swatches` (preset colors array), `alpha` (boolean — show alpha channel), `eyeDropper` (boolean — native EyeDropper API); saturation/lightness 2D picker; hue slider; alpha slider (when enabled); hex/rgb/hsl text input; swatch grid
+- [x] **T14.5** — `ColorPicker`: custom implementation; `value` (hex/rgb/hsl string), `onChange`, `format` (hex/rgb/hsl), `swatches` (preset colors array), `alpha` (boolean — show alpha channel), `eyeDropper` (boolean — native EyeDropper API); saturation/lightness 2D picker; hue slider; alpha slider (when enabled); hex/rgb/hsl text input; swatch grid
 
-- [ ] **T14.6** — `TagsInput`: `value` (string array), `onChange`, `suggestions` (optional autocomplete list), `max`, `placeholder`, `disabled`; add tag on Enter/comma/Tab; remove on Backspace or × chip button; pill chip rendering; keyboard focus management between chips and input
+- [x] **T14.6** — `TagsInput`: `value` (string array), `onChange`, `suggestions` (optional autocomplete list), `max`, `placeholder`, `disabled`; add tag on Enter/comma/Tab; remove on Backspace or × chip button; pill chip rendering; keyboard focus management between chips and input
 
-- [ ] **T14.7** — `PropertyGrid`: `sections` (array of `{label, items: PropertyItem[]}`), `values`, `onChange`; inspector-style key-value editor; each row has a typed editor (text/number/color/boolean/select/vec2/vec3); sections are collapsible (wraps Collapsible); used in entity/material/physics inspectors
+- [x] **T14.7** — `PropertyGrid`: `sections` (array of `{label, items: PropertyItem[]}`), `values`, `onChange`; inspector-style key-value editor; each row has a typed editor (text/number/color/boolean/select/vec2/vec3); sections are collapsible (wraps Collapsible); used in entity/material/physics inspectors
 
-- [ ] **T14.8** — `EditableText`: `value`, `onChange`, `onCommit`, `onCancel`, `placeholder`, `disabled`; renders static text; activates inline input on click or Enter; commits on blur or Enter; cancels on Escape; used for renaming entities, nodes, layers in-place
+- [x] **T14.8** — `EditableText`: `value`, `onChange`, `onCommit`, `onCancel`, `placeholder`, `disabled`; renders static text; activates inline input on click or Enter; commits on blur or Enter; cancels on Escape; used for renaming entities, nodes, layers in-place
 
-**Stories + Tests (T14.9)** — All 8 Phase 2b components
+- [x] **Stories + Tests (T14.9)** — All 8 Phase 2b components
 
 ---
 
@@ -301,13 +301,13 @@ Dependencies are noted where a task cannot start until another is complete.
 
 > Depends on: Track 14 complete. These are high-complexity, long-iteration components.
 
-- [ ] **T15.1** — `NodeEditor`: `nodes`, `edges`, `onConnect`, `onNodeChange`, `onEdgeChange`; visual node graph with ports, connections, and pan/zoom; evaluate reactflow adoption vs. custom; minimap; selection; keyboard shortcuts; used for shader, logic, and dialogue editors
+- [x] **T15.1** — `NodeEditor`: `nodes`, `edges`, `onConnect`, `onNodeChange`, `onEdgeChange`; visual node graph with ports, connections, and pan/zoom; evaluate reactflow adoption vs. custom; minimap; selection; keyboard shortcuts; used for shader, logic, and dialogue editors
 
-- [ ] **T15.2** — `Timeline`: `tracks` (array of `{id, label, clips: Clip[]}`), `currentTime`, `duration`, `onSeek`, `onClipChange`; horizontal time-based editor; playhead scrubbing; track lanes; clip drag/resize; zoom; used for animation sequences and cutscenes
+- [x] **T15.2** — `Timeline`: `tracks` (array of `{id, label, clips: Clip[]}`), `currentTime`, `duration`, `onSeek`, `onClipChange`; horizontal time-based editor; playhead scrubbing; track lanes; clip drag/resize; zoom; used for animation sequences and cutscenes
 
-- [ ] **T15.3** — `VirtualCanvas`: `items`, `viewport` (`{x, y, zoom}`), `onViewportChange`, `onItemChange`; infinite pannable/zoomable canvas; mouse + trackpad gesture support; grid overlay; item selection and drag; used for map editors and level editors
+- [x] **T15.3** — `VirtualCanvas`: `items`, `viewport` (`{x, y, zoom}`), `onViewportChange`, `onItemChange`; infinite pannable/zoomable canvas; mouse + trackpad gesture support; grid overlay; item selection and drag; used for map editors and level editors
 
-**Stories + Tests (T15.4)**
+- [x] **Stories + Tests (T15.4)**
 
 ---
 
@@ -315,13 +315,13 @@ Dependencies are noted where a task cannot start until another is complete.
 
 > Depends on: T5.6 (ThemeProvider base).
 
-- [ ] **T16.1** — Finalize generic `ThemeContract<TExtensions>` TypeScript type; ensure type safety flows through `ThemeProvider`, `useTheme()`, and `useTokens()`
-- [ ] **T16.2** — Document LoreEngine extension pattern with concrete example:
+- [x] **T16.1** — Finalize generic `ThemeContract<TExtensions>` TypeScript type; ensure type safety flows through `ThemeProvider`, `useTheme()`, and `useTokens()`
+- [x] **T16.2** — Document LoreEngine extension pattern with concrete example:
   - `LoreExtensions` interface
   - How extension tokens are passed to ThemeProvider
   - How they surface as CSS custom properties in consumer CSS
   - How `useTokens()` returns them for canvas use
-- [ ] **T16.3** — Create migration guide template for consuming tools:
+- [x] **T16.3** — Create migration guide template for consuming tools:
   - Token mapping table (hardcoded values → ForgeUI tokens)
   - Component swap list (ad-hoc → ForgeUI equivalent)
   - Step-by-step adoption checklist
