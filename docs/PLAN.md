@@ -70,7 +70,11 @@ lives inside `@forgeui/components` as an internal utility. Color manipulation
 Standardized on a 10-step numeric scale to ensure longevity and easy "Light Mode" implementation. All tokens are exported as **JS Constants** and **CSS Variables**.
 
 #### Gray Scale (Example)
-Used for backgrounds, borders, and neutral text.
+Used for backgrounds, borders, and neutral text. Steps 50–700 follow a neutral
+luminance ramp. Steps 800–950 shift intentionally toward a **navy/blue tint** to
+create the dark, immersive aesthetic expected in game development tooling. This is
+a deliberate design choice, not a neutral gray — light mode will use the neutral
+upper steps.
 
 | Step | Variable | Hex |
 |------|----------|-----|
@@ -96,7 +100,7 @@ Same 50–950 scale applies to: **Blue**, **Red**, **Green**, **Amber**, **Purpl
 | `--forge-surface` | `gray-900` | `#16213e` |
 | `--forge-surface-raised` | `gray-800` | `#1e2d4a` |
 | `--forge-border` | `gray-700` | `#374151` |
-| `--forge-border-subtle` | `gray-800` | `#1e2d4a` |
+| `--forge-border-subtle` | `gray-600` | `#4b5563` |
 | `--forge-text` | `gray-100` | `#e0e0e0` |
 | `--forge-text-muted` | `gray-400` | `#9ca3af` |
 
@@ -153,6 +157,37 @@ Sub-unit values (`0.5`, `px`) cover fine alignment needs (borders, icon nudges).
 | `--forge-easing-in` | `cubic-bezier(0.4, 0, 1, 1)` | Exit animations |
 | `--forge-easing-out` | `cubic-bezier(0, 0, 0.2, 1)` | Enter animations |
 
+All duration tokens respect `prefers-reduced-motion`. When the user's OS requests
+reduced motion, `base.css` overrides all duration tokens to `0ms`:
+```css
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --forge-duration-fast: 0ms;
+    --forge-duration-normal: 0ms;
+    --forge-duration-slow: 0ms;
+  }
+}
+```
+Components that use these tokens automatically become motion-safe with no extra work.
+
+### Focus Ring
+
+A consistent focus indicator across all interactive components.
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `--forge-focus-ring-color` | `blue-400` (`#60a5fa`) | Ring color; high contrast against dark surfaces |
+| `--forge-focus-ring-width` | `2px` | Ring thickness |
+| `--forge-focus-ring-offset` | `2px` | Gap between element edge and ring |
+
+Applied via a shared utility style:
+```css
+.focus-ring:focus-visible {
+  outline: var(--forge-focus-ring-width) solid var(--forge-focus-ring-color);
+  outline-offset: var(--forge-focus-ring-offset);
+}
+```
+
 ### Z-Index
 
 Fixed scale to prevent z-index wars across tools.
@@ -180,6 +215,7 @@ export const tokens = {
   shadows: { sm: '0 1px 2px rgba(0,0,0,0.3)', /* ... */ },
   animation: { durationFast: '100ms', easingDefault: 'cubic-bezier(0.4, 0, 0.2, 1)', /* ... */ },
   zIndex: { base: 0, dropdown: 100, /* ... */ },
+  focusRing: { color: '#60a5fa', width: '2px', offset: '2px' },
 }
 ```
 
@@ -198,8 +234,8 @@ All primitives support the `as` prop for semantic flexibility. Styling uses **CS
 | `Button` | variant, size, as, disabled, loading | Primary, secondary, ghost, danger variants |
 | `IconButton` | icon, label, size, variant | Accessible wrapper; requires `label` for screen readers |
 | `Badge` | variant, color | Status indicators; includes numeric entity-state mapping |
-| `Text` | as, size, weight, color, truncate | Polymorphic (`p`, `span`, `label`, `h1`–`h6`) |
-| `Heading` | as, size | Semantic heading levels with consistent scale |
+| `Text` | as, size, weight, color, truncate | Inline/block text (`p`, `span`, `label`, `div`). Does **not** render headings — use `Heading` for that. |
+| `Heading` | as, level, size | Semantic heading levels (`h1`–`h6`); `level` controls the HTML element, `size` controls visual scale independently |
 | `Separator` | orientation, decorative | Horizontal/vertical divider; `decorative` hides from a11y tree |
 | `Card` | as, variant, padding | Surface container with border and shadow tokens |
 
@@ -232,6 +268,7 @@ Focus on complex tools using industry-standard headless libraries for performanc
 |-----------|---------|-------|
 | `DataTable` | **TanStack Table** | Virtualization support for 10k+ rows; sorting, filtering, column resize |
 | `CommandPalette` | **cmdk** | Fast, keyboard-first navigation; fuzzy search |
+| `Toast` | **Radix Toast** | Stackable notifications at `--forge-z-toast`; auto-dismiss with configurable duration |
 | `SplitPane` | — | Native-feeling resizable panels; persist sizes to localStorage |
 | `AppShell` | — | Root layout (Sidebar + Nav + Main); fixed-viewport desktop assumption |
 
@@ -426,6 +463,7 @@ When consuming tools adopt ForgeUI, each tool gets a brief migration guide cover
 ### Phase 2: Headless Composites
 - Integrate **TanStack Table** for `DataTable` with virtualization.
 - Integrate **cmdk** for `CommandPalette`.
+- Integrate **Radix Toast** for `Toast` notifications.
 - Build `SplitPane` with persisted panel sizes.
 - Build `AppShell` targeting 1280×720 minimum viewport.
 
@@ -442,6 +480,7 @@ When consuming tools adopt ForgeUI, each tool gets a brief migration guide cover
 #### Incremental Rollout
 - Tools migrate incrementally, not all-at-once. A tool can adopt ForgeUI for new screens while keeping existing UI intact.
 - Migration order (after pilot): **EntityArchitect** → **QuestForge** → **EncounterComposer** → **AssetGenerator** → **Director** → **TerrainComposer** → **LoreEngine** (last, largest surface area).
+- **Crucible** is excluded from the migration order — it is the core framework, not a UI application. It may consume `@forgeui/tokens` for shared constants but does not render ForgeUI components.
 - Each tool's migration includes:
   - Token mapping from existing hardcoded values.
   - Component swap list (ad-hoc → ForgeUI equivalent).
