@@ -108,17 +108,112 @@ body {
 --------------------------------------------------------------------------- */
 
 @media (forced-colors: active) {
+  /* Focus ring always visible — critical for keyboard users */
   *:focus-visible {
     outline: 3px solid ButtonText;
     outline-offset: 2px;
   }
 
+  /* Restore borders for interactive elements */
   button,
   [role="button"],
   input,
   select,
-  textarea {
+  textarea,
+  [role="combobox"],
+  [role="listbox"],
+  [role="option"] {
     border: 1px solid ButtonText;
+    forced-color-adjust: auto;
+  }
+
+  /* Checkbox, Radio, Switch — use system colors for indicators */
+  .forge-checkbox,
+  [role="checkbox"],
+  [role="radio"],
+  [role="switch"] {
+    border: 2px solid ButtonText;
+    forced-color-adjust: none;
+    background-color: Canvas;
+    color: ButtonText;
+  }
+
+  /* Checked/on state uses Highlight */
+  [role="checkbox"][data-state="checked"],
+  [role="radio"][data-state="checked"],
+  [role="switch"][data-state="checked"] {
+    background-color: Highlight;
+    border-color: Highlight;
+    color: HighlightText;
+  }
+
+  /* Progress bar — use Highlight for fill */
+  [role="progressbar"] > div {
+    background-color: Highlight;
+    forced-color-adjust: none;
+  }
+
+  /* Slider thumb and range */
+  [role="slider"] {
+    background-color: Highlight;
+    border: 2px solid ButtonText;
+    forced-color-adjust: none;
+  }
+
+  /* Badge / status indicators — add border instead of relying on background */
+  .forge-badge {
+    border: 1px solid ButtonText;
+    forced-color-adjust: auto;
+  }
+
+  /* Skeleton — disable shimmer animation, use system bg */
+  .forge-skeleton {
+    background-image: none;
+    background-color: ButtonFace;
+    border: 1px solid ButtonText;
+    animation: none;
+  }
+
+  /* Dialogs, Popovers, Menus — ensure borders visible */
+  .forge-dialog,
+  .forge-popover,
+  .forge-dropdown-menu,
+  .forge-context-menu,
+  .forge-toast {
+    border: 2px solid ButtonText;
+    background-color: Canvas;
+    color: ButtonText;
+  }
+
+  /* Alert — use border instead of background tinting */
+  .forge-alert {
+    border: 2px solid ButtonText;
+    background-color: Canvas;
+    color: ButtonText;
+  }
+
+  /* Accordion triggers and tab triggers */
+  .forge-accordion-trigger,
+  .forge-tabs-trigger {
+    forced-color-adjust: auto;
+  }
+
+  .forge-tabs-trigger[data-state="active"] {
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+  /* Toggle pressed state — underline instead of background */
+  [role="button"][aria-pressed="true"],
+  .forge-toggle[data-state="on"],
+  .forge-toggle-group [data-state="on"] {
+    text-decoration: underline;
+    outline: 2px solid Highlight;
+  }
+
+  /* Separator */
+  .forge-separator {
+    background-color: ButtonText;
   }
 }
 
