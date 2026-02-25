@@ -1,0 +1,9 @@
+/* Import ForgeUI base styles for Storybook */
+@import '@forgeui/components/styles/base.css';
+
+/* Storybook canvas padding */
+#storybook-root {
+  padding: 1rem;
+  min-height: 100vh;
+  background-color: var(--forge-bg);
+}
