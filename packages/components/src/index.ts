@@ -45,6 +45,26 @@ export { ToggleGroup }  from './forms/ToggleGroup.js'
 export { FormField }    from './forms/FormField.js'
 export { NumberInput }  from './forms/NumberInput.js'
 
+// Phase 2a — Layout
+export { AppShell }            from './layout/AppShell.js'
+export { ResizablePanel, ResizablePanelGroup } from './layout/ResizablePanelGroup.js'
+export { Table }               from './layout/Table.js'
+export { DropZone }            from './layout/DropZone.js'
+export { Pagination }          from './layout/Pagination.js'
+
+// Phase 2a — Composites
+export { Drawer }              from './composites/Drawer.js'
+export { Collapsible }         from './composites/Collapsible.js'
+export { Toolbar }             from './composites/Toolbar.js'
+export { Steps }               from './composites/Steps.js'
+export type { Step }           from './composites/Steps.js'
+export { Avatar }              from './composites/Avatar.js'
+export { AspectRatio }         from './composites/AspectRatio.js'
+export { Breadcrumb }          from './composites/Breadcrumb.js'
+export type { BreadcrumbItem } from './composites/Breadcrumb.js'
+export { Menubar }             from './composites/Menubar.js'
+export type { MenubarMenu }    from './composites/Menubar.js'
+
 // Phase 1 — Primitives
 export { VisuallyHidden } from './primitives/VisuallyHidden.js'
 export { Label }          from './primitives/Label.js'
