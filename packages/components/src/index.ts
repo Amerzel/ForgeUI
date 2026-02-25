@@ -13,6 +13,19 @@
 export { ThemeProvider } from './ThemeProvider/index.js'
 export type { ThemeProviderProps } from './ThemeProvider/index.js'
 
+// Phase 1 — Forms
+export { Input }        from './forms/Input.js'
+export { Textarea }     from './forms/Textarea.js'
+export { Select }       from './forms/Select.js'
+export { Checkbox }     from './forms/Checkbox.js'
+export { Switch }       from './forms/Switch.js'
+export { RadioGroup }   from './forms/RadioGroup.js'
+export { Slider }       from './forms/Slider.js'
+export { Toggle }       from './forms/Toggle.js'
+export { ToggleGroup }  from './forms/ToggleGroup.js'
+export { FormField }    from './forms/FormField.js'
+export { NumberInput }  from './forms/NumberInput.js'
+
 // Phase 1 — Primitives
 export { VisuallyHidden } from './primitives/VisuallyHidden.js'
 export { Label }          from './primitives/Label.js'
