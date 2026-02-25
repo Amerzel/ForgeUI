@@ -1,3 +1,5 @@
+> **Archived:** This document is historical.
+
 > **Archived:** This document is historical and no longer actively maintained.
 
 # PRD: Single UI App — Integrated Architecture
