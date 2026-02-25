@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ForgeUI — Palette Samples</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #09090b;
+    color: #e4e4e7;
+    line-height: 1.5;
+    padding: 48px 24px;
+  }
+
+  .page-header {
+    max-width: 1200px;
+    margin: 0 auto 48px;
+    text-align: center;
+  }
+  .page-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .page-header p {
+    color: #a1a1aa;
+    font-size: 16px;
+  }
+
+  .samples {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+
+  .sample {
+    border: 1px solid #27272a;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .sample-header {
+    padding: 24px 32px;
+    border-bottom: 1px solid #27272a;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    background: #18181b;
+  }
+  .sample-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .sample-header .number {
+    color: #71717a;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .sample-header .personality {
+    color: #a1a1aa;
+    font-size: 14px;
+    margin-left: auto;
+  }
+
+  .sample-body {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+  }
+
+  /* Swatch column */
+  .swatches {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-right: 1px solid #27272a;
+    background: #111113;
+  }
+  .swatch-group-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #71717a;
+    margin-top: 12px;
+    margin-bottom: 2px;
+  }
+  .swatch-group-label:first-child { margin-top: 0; }
+  .swatch {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+  }
+  .swatch-color {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .swatch-label {
+    color: #a1a1aa;
+    min-width: 70px;
+  }
+  .swatch-hex {
+    font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+    font-size: 12px;
+    color: #71717a;
+  }
+
+  /* Preview column */
+  .preview {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .preview-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #71717a;
+    margin-bottom: 10px;
+  }
+
+  /* Buttons */
+  .button-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn {
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid;
+  }
+  .btn-ghost {
+    background: transparent;
+    border: 1.5px solid transparent;
+  }
+
+  /* Input */
+  .input-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .input-label {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .mock-input {
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1.5px solid;
+    width: 100%;
+    max-width: 360px;
+    outline: none;
+    font-family: inherit;
+  }
+  .mock-input::placeholder {
+    opacity: 0.5;
+  }
+
+  /* Badges */
+  .badge-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    padding: 3px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  /* Card */
+  .mock-card {
+    padding: 20px;
+    border: 1.5px solid;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .mock-card-title {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .mock-card-desc {
+    font-size: 13px;
+    opacity: 0.6;
+  }
+  .mock-card-footer {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  /* App shell mini preview */
+  .app-shell {
+    border: 1.5px solid;
+    max-width: 100%;
+    height: 180px;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    grid-template-rows: 40px 1fr;
+    overflow: hidden;
+  }
+  .app-shell-nav {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    border-bottom: 1.5px solid;
+  }
+  .app-shell-sidebar {
+    border-right: 1.5px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    gap: 8px;
+  }
+  .sidebar-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    opacity: 0.3;
+  }
+  .sidebar-icon.active { opacity: 1; }
+  .app-shell-main {
+    padding: 14px;
+    display: flex;
+    gap: 10px;
+  }
+  .main-panel {
+    flex: 1;
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 11px;
+    opacity: 0.5;
+  }
+
+  /* Risk callout */
+  .risk {
+    font-size: 13px;
+    padding: 10px 14px;
+    border-left: 3px solid #f59e0b;
+    background: rgba(245, 158, 11, 0.06);
+    color: #a1a1aa;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Comparison table */
+  .comparison {
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 1px solid #27272a;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .comparison h2 {
+    padding: 20px 28px;
+    font-size: 20px;
+    background: #18181b;
+    border-bottom: 1px solid #27272a;
+  }
+  .comparison table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .comparison th {
+    text-align: left;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: #a1a1aa;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #27272a;
+    background: #111113;
+  }
+  .comparison td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #1c1c1f;
+  }
+  .comparison tr:last-child td { border-bottom: none; }
+  .comparison .rec {
+    background: rgba(245, 158, 11, 0.06);
+  }
+  .comparison .color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>ForgeUI Palette Samples</h1>
+  <p>10 candidate palettes with rendered components. Pick your favorites.</p>
+</div>
+
+<div class="samples" id="samples"></div>
+
+<div style="height:48px"></div>
+
+<div class="comparison">
+  <h2>Comparison</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th><th>Name</th><th>Base</th><th>Accent</th><th>Radius</th><th>Notes</th>
+      </tr>
+    </thead>
+    <tbody id="comparison-body"></tbody>
+  </table>
+</div>
+
+<div style="height:80px"></div>
+
+<script>
+const palettes = [
+  {
+    id: 1,
+    name: "Midnight Forge",
+    personality: "Professional, deep, slightly cool. Premium IDE feel.",
+    radius: 6,
+    risk: null,
+    bg: "#0a0a1a", surface: "#121830", raised: "#1e2d4a", border: "#2a3f5f",
+    text: "#e0e4ec", muted: "#8892a8",
+    accent: "#4f8ff7", success: "#34d399", warning: "#fbbf24", danger: "#f87171",
+    note: "Safe, familiar — could be any IDE"
+  },
+  {
+    id: 2,
+    name: "Obsidian",
+    personality: "Minimal, monochromatic. Lets colorful game content pop.",
+    radius: 4,
+    risk: null,
+    bg: "#0f0f0f", surface: "#1a1a1a", raised: "#262626", border: "#333333",
+    text: "#e5e5e5", muted: "#737373",
+    accent: "#a78bfa", success: "#4ade80", warning: "#fb923c", danger: "#ef4444",
+    note: "Neutral canvas; violet accent is distinctive"
+  },
+  {
+    id: 3,
+    name: "Ember",
+    personality: "Warm, grounded, forge-inspired. Evokes crafting and creation.",
+    radius: 8,
+    risk: "Warm tones are distinctive but risk feeling muddy in complex layouts.",
+    bg: "#0d0b0a", surface: "#1c1816", raised: "#2a2320", border: "#3d3430",
+    text: "#ede8e3", muted: "#8a7e76",
+    accent: "#f59e0b", success: "#22c55e", warning: "#f97316", danger: "#dc2626",
+    note: "Thematic 'forge' warmth; can feel muddy"
+  },
+  {
+    id: 4,
+    name: "Neon Terminal",
+    personality: "Futuristic, high-energy. Cyberpunk terminals and HUDs.",
+    radius: 2,
+    risk: "Glow effects + high saturation can cause eye fatigue in long sessions.",
+    bg: "#030712", surface: "#0a1628", raised: "#112240", border: "#1e3a5f",
+    text: "#f0f6ff", muted: "#64748b",
+    accent: "#06b6d4", success: "#10b981", warning: "#eab308", danger: "#f43f5e",
+    note: "Eye-catching; cyan is energetic but fatiguing"
+  },
+  {
+    id: 5,
+    name: "Slate",
+    personality: "Calm, mature, enterprise. Like Linear or Notion dark mode.",
+    radius: 8,
+    risk: "15% opacity badge fills may be too subtle for quick status scanning.",
+    bg: "#111116", surface: "#1c1c24", raised: "#26262f", border: "#35353f",
+    text: "#ececef", muted: "#7e7e8a",
+    accent: "#818cf8", success: "#34d399", warning: "#fbbf24", danger: "#f87171",
+    note: "Refined, understated; may be too subtle"
+  },
+  {
+    id: 6,
+    name: "Deep Space",
+    personality: "Sci-fi tool aesthetic. Unreal Engine meets VS Code.",
+    radius: 6,
+    risk: null,
+    bg: "#07090e", surface: "#0e1420", raised: "#162032", border: "#243044",
+    text: "#d4dae5", muted: "#6b7a90",
+    accent: "#14b8a6", success: "#22c55e", warning: "#f59e0b", danger: "#ef4444",
+    note: "Teal accent is uncommon and memorable"
+  },
+  {
+    id: 7,
+    name: "Graphite",
+    personality: "Earthy, grounded, calm. Nature-themed.",
+    radius: 6,
+    risk: "Green accent collides with success state — primary actions and success feedback become indistinguishable.",
+    bg: "#101010", surface: "#1a1a18", raised: "#252522", border: "#363632",
+    text: "#e8e6e1", muted: "#85837c",
+    accent: "#22c55e", success: "#22c55e", warning: "#eab308", danger: "#ef4444",
+    note: "Accent = Success collision is a usability issue"
+  },
+  {
+    id: 8,
+    name: "Void",
+    personality: "Maximum contrast. True black for OLED.",
+    radius: 6,
+    risk: "Limited surface differentiation makes nested panels hard to distinguish.",
+    bg: "#000000", surface: "#0a0a0a", raised: "#161616", border: "#2a2a2a",
+    text: "#fafafa", muted: "#666666",
+    accent: "#3b82f6", success: "#22c55e", warning: "#f59e0b", danger: "#ef4444",
+    note: "Dramatic but flat; poor surface depth"
+  },
+  {
+    id: 9,
+    name: "Amethyst",
+    personality: "Distinctive, creative-tool energy. Figma meets gaming.",
+    radius: 8,
+    risk: "Purple is polarizing — some love it, some find it distracting over long sessions.",
+    bg: "#0e0b13", surface: "#191422", raised: "#241e30", border: "#352e42",
+    text: "#e8e4ef", muted: "#8a8298",
+    accent: "#c084fc", success: "#4ade80", warning: "#fbbf24", danger: "#fb7185",
+    note: "Bold brand or bold rejection"
+  },
+  {
+    id: 10,
+    name: "Midnight Forge v2",
+    personality: "Navy professionalism + warm forge accents. Strongest brand identity.",
+    radius: 6,
+    risk: null,
+    bg: "#080c14", surface: "#101828", raised: "#1a2540", border: "#283650",
+    text: "#e2e8f0", muted: "#7889a4",
+    accent: "#f59e0b", success: "#34d399", warning: "#fb923c", danger: "#f87171",
+    note: "Gold-on-navy = high identity; warm+cool balance"
+  }
+];
+
+const recommended = [1, 6, 10];
+
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1,3), 16);
+  const g = parseInt(hex.slice(3,5), 16);
+  const b = parseInt(hex.slice(5,7), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function renderSample(p) {
+  const r = p.radius + 'px';
+  const isRec = recommended.includes(p.id);
+
+  return `
+  <div class="sample">
+    <div class="sample-header">
+      <span class="number">#${p.id}</span>
+      <h2>${p.name}${isRec ? ' <span style="color:#f59e0b;font-size:13px;font-weight:500;">★ Recommended</span>' : ''}</h2>
+      <span class="personality">${p.personality}</span>
+    </div>
+    <div class="sample-body">
+      <div class="swatches">
+        <div class="swatch-group-label">Surfaces</div>
+        ${swatch('BG', p.bg)}
+        ${swatch('Surface', p.surface)}
+        ${swatch('Raised', p.raised)}
+        ${swatch('Border', p.border)}
+        <div class="swatch-group-label">Text</div>
+        ${swatch('Text', p.text)}
+        ${swatch('Muted', p.muted)}
+        <div class="swatch-group-label">Accents</div>
+        ${swatch('Accent', p.accent)}
+        ${swatch('Success', p.success)}
+        ${swatch('Warning', p.warning)}
+        ${swatch('Danger', p.danger)}
+      </div>
+      <div class="preview" style="background:${p.bg};color:${p.text};">
+
+        <div>
+          <div class="preview-section-label" style="color:${p.muted}">Buttons</div>
+          <div class="button-row">
+            <button class="btn" style="background:${p.accent};color:${p.bg};border-radius:${r};">Save Entity</button>
+            <button class="btn btn-outline" style="color:${p.text};border-color:${p.border};border-radius:${r};">Cancel</button>
+            <button class="btn btn-ghost" style="color:${p.danger};border-radius:${r};">Delete</button>
+            <button class="btn" style="background:${p.danger};color:#fff;border-radius:${r};">Confirm Delete</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="preview-section-label" style="color:${p.muted}">Form Inputs</div>
+          <div class="input-preview">
+            <label class="input-label" style="color:${p.text}">Entity Name</label>
+            <input class="mock-input" style="background:${p.surface};color:${p.text};border-color:${p.border};border-radius:${r};" placeholder="Enter entity name..." />
+          </div>
+          <div class="input-preview" style="margin-top:10px;">
+            <label class="input-label" style="color:${p.text}">Description <span style="color:${p.danger};font-size:12px;">— Required</span></label>
+            <input class="mock-input" style="background:${p.surface};color:${p.text};border-color:${p.danger};border-radius:${r};" placeholder="" value="" />
+          </div>
+        </div>
+
+        <div>
+          <div class="preview-section-label" style="color:${p.muted}">Badges</div>
+          <div class="badge-row">
+            <span class="badge" style="background:${hexToRgba(p.success,0.15)};color:${p.success};border-radius:${r};">
+              <span class="badge-dot" style="background:${p.success};"></span> Active
+            </span>
+            <span class="badge" style="background:${hexToRgba(p.warning,0.15)};color:${p.warning};border-radius:${r};">
+              <span class="badge-dot" style="background:${p.warning};"></span> Draft
+            </span>
+            <span class="badge" style="background:${hexToRgba(p.danger,0.15)};color:${p.danger};border-radius:${r};">
+              <span class="badge-dot" style="background:${p.danger};"></span> Error
+            </span>
+            <span class="badge" style="background:${hexToRgba(p.accent,0.15)};color:${p.accent};border-radius:${r};">
+              <span class="badge-dot" style="background:${p.accent};"></span> In Progress
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <div class="preview-section-label" style="color:${p.muted}">Card</div>
+          <div class="mock-card" style="background:${p.surface};border-color:${p.border};border-radius:${r};">
+            <div class="mock-card-title" style="color:${p.text}">Dragon of the Northern Peaks</div>
+            <div class="mock-card-desc" style="color:${p.muted};">Ancient creature guarding the Forge of Eternity. Weakness: cold iron.</div>
+            <div class="mock-card-footer">
+              <span class="badge" style="background:${hexToRgba(p.success,0.15)};color:${p.success};border-radius:${r};font-size:11px;">
+                Active
+              </span>
+              <span class="badge" style="background:${hexToRgba(p.accent,0.15)};color:${p.accent};border-radius:${r};font-size:11px;">
+                Boss Entity
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="preview-section-label" style="color:${p.muted}">App Shell</div>
+          <div class="app-shell" style="background:${p.bg};border-color:${p.border};border-radius:${r};">
+            <div class="app-shell-nav" style="background:${p.surface};border-color:${p.border};color:${p.text};">
+              <span style="color:${p.accent};font-weight:700;">ForgeUI</span>
+              <span style="color:${p.muted};font-weight:400;font-size:12px;">EntityArchitect</span>
+            </div>
+            <div class="app-shell-sidebar" style="background:${p.surface};border-color:${p.border};">
+              <div class="sidebar-icon active" style="background:${p.accent};"></div>
+              <div class="sidebar-icon" style="background:${p.muted};"></div>
+              <div class="sidebar-icon" style="background:${p.muted};"></div>
+              <div class="sidebar-icon" style="background:${p.muted};"></div>
+            </div>
+            <div class="app-shell-main" style="background:${p.bg};">
+              <div class="main-panel" style="border-color:${p.border};color:${p.muted};background:${p.surface};">Entity List</div>
+              <div class="main-panel" style="border-color:${p.border};color:${p.muted};background:${p.surface};flex:2;">Inspector</div>
+            </div>
+          </div>
+        </div>
+
+        ${p.risk ? `<div class="risk">${p.risk}</div>` : ''}
+
+      </div>
+    </div>
+  </div>`;
+}
+
+function swatch(label, hex) {
+  return `
+    <div class="swatch">
+      <div class="swatch-color" style="background:${hex};"></div>
+      <span class="swatch-label">${label}</span>
+      <span class="swatch-hex">${hex}</span>
+    </div>`;
+}
+
+// Render all samples
+document.getElementById('samples').innerHTML = palettes.map(renderSample).join('');
+
+// Render comparison table
+document.getElementById('comparison-body').innerHTML = palettes.map(p => {
+  const isRec = recommended.includes(p.id);
+  return `
+    <tr class="${isRec ? 'rec' : ''}">
+      <td>${p.id}</td>
+      <td><strong>${p.name}</strong>${isRec ? ' <span style="color:#f59e0b;">★</span>' : ''}</td>
+      <td><span class="color-dot" style="background:${p.bg};"></span><span class="color-dot" style="background:${p.surface};"></span><span class="color-dot" style="background:${p.raised};"></span></td>
+      <td><span class="color-dot" style="background:${p.accent};"></span>${p.accent}</td>
+      <td>${p.radius}px</td>
+      <td style="color:#a1a1aa;">${p.note}</td>
+    </tr>`;
+}).join('');
+</script>
+
+</body>
+</html>
