@@ -13,6 +13,28 @@
 export { ThemeProvider } from './ThemeProvider/index.js'
 export type { ThemeProviderProps } from './ThemeProvider/index.js'
 
+// Layout primitives
+export { Box }        from './layout/Box.js'
+export type { BoxProps } from './layout/Box.js'
+export { Stack }      from './layout/Stack.js'
+export type { StackProps } from './layout/Stack.js'
+export { Flex }       from './layout/Flex.js'
+export type { FlexProps } from './layout/Flex.js'
+export { Group }      from './layout/Group.js'
+export type { GroupProps } from './layout/Group.js'
+export { Grid }       from './layout/Grid.js'
+export type { GridProps, GridColProps } from './layout/Grid.js'
+export { Center }     from './layout/Center.js'
+export type { CenterProps } from './layout/Center.js'
+export { Spacer }     from './layout/Spacer.js'
+export type { SpacerProps } from './layout/Spacer.js'
+export { Container }  from './layout/Container.js'
+export type { ContainerProps } from './layout/Container.js'
+export { SimpleGrid } from './layout/SimpleGrid.js'
+export type { SimpleGridProps } from './layout/SimpleGrid.js'
+export { Wrap }       from './layout/Wrap.js'
+export type { WrapProps } from './layout/Wrap.js'
+
 // Phase 1 — Overlays
 export { Dialog }        from './overlays/Dialog.js'
 export { Tooltip, TooltipProvider } from './overlays/Tooltip.js'
