@@ -1,0 +1,58 @@
+{
+  "name": "@forgeui/components",
+  "version": "0.0.1",
+  "description": "ForgeUI component library — 59 components for game development tooling",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./ThemeProvider": {
+      "types": "./dist/ThemeProvider/index.d.ts",
+      "import": "./dist/ThemeProvider/index.js",
+      "require": "./dist/ThemeProvider/index.cjs"
+    },
+    "./styles/base.css": "./styles/base.css"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist", "styles"],
+  "sideEffects": ["*.css"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0"
+  },
+  "dependencies": {
+    "@forgeui/hooks": "workspace:*",
+    "@forgeui/tokens": "workspace:*",
+    "@radix-ui/react-slot": "^1.1.1",
+    "clsx": "^2.1.1"
+  },
+  "devDependencies": {
+    "@forgeui/hooks": "workspace:*",
+    "@forgeui/tokens": "workspace:*",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@vitest/coverage-v8": "^2.1.8",
+    "jsdom": "^25.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "vitest-axe": "^1.0.0-pre.3"
+  }
+}

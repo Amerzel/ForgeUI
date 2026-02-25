@@ -1,0 +1,148 @@
+/*
+ * @forgeui/components — base.css
+ *
+ * Global resets and utility styles for ForgeUI.
+ * Import once at your app root, after tokens.css.
+ *
+ * Usage:
+ *   import '@forgeui/tokens/tokens.css'
+ *   import '@forgeui/components/styles/base.css'
+ */
+
+/* ---------------------------------------------------------------------------
+   Box-sizing reset
+--------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------------
+   Base element resets
+--------------------------------------------------------------------------- */
+
+body {
+  margin: 0;
+  font-family: var(--forge-font-sans);
+  font-size: var(--forge-font-size-base);
+  line-height: var(--forge-leading-normal);
+  color: var(--forge-text);
+  background-color: var(--forge-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------------------------------------------------------------------------
+   Focus ring utility
+   Apply .focus-ring to any interactive element that needs a visible focus indicator.
+--------------------------------------------------------------------------- */
+
+.forge-focus-ring:focus-visible {
+  outline: var(--forge-focus-ring-width) solid var(--forge-focus-ring-color);
+  outline-offset: var(--forge-focus-ring-offset);
+}
+
+/* Remove default focus outline when using custom focus ring */
+.forge-focus-ring:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Text selection
+--------------------------------------------------------------------------- */
+
+::selection {
+  background-color: var(--forge-selection-bg);
+  color: var(--forge-selection-text);
+}
+
+/* ---------------------------------------------------------------------------
+   Custom scrollbars (dark theme — WebKit only; Firefox uses scrollbar-color)
+--------------------------------------------------------------------------- */
+
+:root {
+  scrollbar-color: var(--forge-scrollbar-thumb) var(--forge-scrollbar-track);
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--forge-scrollbar-track);
+  border-radius: var(--forge-radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--forge-scrollbar-thumb);
+  border-radius: var(--forge-radius-full);
+  border: 2px solid var(--forge-scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--forge-scrollbar-thumb-hover);
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion — zero all duration tokens
+   Components using these tokens automatically become motion-safe.
+--------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --forge-duration-fast: 0ms;
+    --forge-duration-normal: 0ms;
+    --forge-duration-slow: 0ms;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   High contrast / forced colors mode
+   Ensure visible borders and focus indicators when OS forces a palette.
+   Doesn't need to look polished — just functional.
+--------------------------------------------------------------------------- */
+
+@media (forced-colors: active) {
+  *:focus-visible {
+    outline: 3px solid ButtonText;
+    outline-offset: 2px;
+  }
+
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea {
+    border: 1px solid ButtonText;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Typography defaults
+--------------------------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--forge-font-display);
+  font-weight: var(--forge-font-semibold);
+  line-height: var(--forge-leading-tight);
+  letter-spacing: var(--forge-tracking-tight);
+  color: var(--forge-text);
+}
+
+p {
+  margin: 0;
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--forge-font-mono);
+  font-size: 0.9em;
+}
