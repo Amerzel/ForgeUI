@@ -38,6 +38,31 @@ export interface ResolvedTokens {
  */
 export type ExtensionTokens = Record<string, string>
 
+/**
+ * ThemeContract<TExtensions> — typed extension contract for a consuming tool.
+ *
+ * Defines the shape of domain-specific CSS custom properties that a tool
+ * passes to ThemeProvider.extensions. Using this type provides:
+ * - Auto-complete for extension token keys
+ * - Type-checked values in useTheme<TExtensions>() and useTokens<TExtensions>()
+ * - Documentation of which tokens a tool owns
+ *
+ * @example
+ * interface LoreExtensions extends ThemeContract {
+ *   '--lore-prophecy': string
+ *   '--lore-faction': string
+ *   '--lore-relic': string
+ * }
+ *
+ * // In ThemeProvider:
+ * <ThemeProvider extensions={{ '--lore-prophecy': '#c084fc', '--lore-faction': '#38bdf8', '--lore-relic': '#fb7185' }}>
+ *
+ * // In hooks:
+ * const { extensions } = useTokens<LoreExtensions>()
+ * extensions['--lore-prophecy'] // string — type-safe
+ */
+export type ThemeContract<TExtensions extends ExtensionTokens = ExtensionTokens> = TExtensions
+
 export interface ThemeContextValue {
   palette: Palette
   mode: Mode

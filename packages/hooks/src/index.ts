@@ -14,7 +14,7 @@ export { ThemeContext } from './ThemeContext.js'
 
 export type { UseThemeResult } from './useTheme.js'
 export type { UseTokensResult } from './useTokens.js'
-export type { ThemeContextValue, ResolvedTokens, ExtensionTokens } from './ThemeContext.js'
+export type { ThemeContextValue, ResolvedTokens, ExtensionTokens, ThemeContract } from './ThemeContext.js'
 
 // resolveTokens is exported for ThemeProvider (in @forgeui/components) to call internally
 export { resolveTokens } from './resolveTokens.js'
