@@ -115,9 +115,11 @@ export const Toasts: Story = {
   render: function ToastDemo() {
     const [toasts, setToasts] = useState<ToastItem[]>([])
 
-    const addToast = (variant: ToastItem['variant'], title: string, description?: string) => {
+    const addToast = (variant: NonNullable<ToastItem['variant']>, title: string, description?: string) => {
       const id = String(++_toastId)
-      setToasts(prev => [...prev, { id, title, description, variant, duration: 5000 }])
+      const item: ToastItem = { id, title, variant, duration: 5000 }
+      if (description) item.description = description
+      setToasts(prev => [...prev, item])
     }
     const dismiss = (id: string) => setToasts(prev => prev.filter(t => t.id !== id))
 

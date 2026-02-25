@@ -1,6 +1,6 @@
 {
   "name": "@forgeui/tokens",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "ForgeUI design tokens — CSS variables and JS constants",
   "type": "module",
   "exports": {
@@ -19,8 +19,12 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
-  "sideEffects": ["*.css"],
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "build": "tsx scripts/generate-scales.ts && tsup",
     "dev": "tsup --watch",

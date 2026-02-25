@@ -45,8 +45,7 @@ const preview: Preview = {
       const mode    = (context.globals['mode'] ?? 'dark') as Mode
       return createElement(
         ThemeProvider,
-        { palette, mode },
-        createElement(Story),
+        { palette, mode, children: createElement(Story) },
       )
     },
   ],

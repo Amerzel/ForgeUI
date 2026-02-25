@@ -8,6 +8,8 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
   size?: TextareaSize
   /** Resize behavior. Default: 'vertical' (auto-grows) */
   resize?: TextareaResize
+  /** Auto-grow height to fit content. Shorthand for resize="vertical". */
+  autoGrow?: boolean
   error?: boolean
 }
 
@@ -20,6 +22,7 @@ const SIZE_STYLE: Record<TextareaSize, React.CSSProperties> = {
 export function Textarea({
   size = 'md',
   resize = 'vertical',
+  autoGrow = false,
   error = false,
   disabled,
   className,
@@ -32,13 +35,15 @@ export function Textarea({
   const [focused, setFocused] = useState(false)
   const ref = useRef<HTMLTextAreaElement>(null)
 
-  // Auto-grow when resize is 'vertical'
+  const effectiveResize = autoGrow ? 'vertical' : resize
+
+  // Auto-grow when resize is 'vertical' or autoGrow is true
   useEffect(() => {
-    if (resize === 'vertical' && ref.current) {
+    if (effectiveResize === 'vertical' && ref.current) {
       ref.current.style.height = 'auto'
       ref.current.style.height = `${ref.current.scrollHeight}px`
     }
-  }, [value, resize])
+  }, [value, effectiveResize])
 
   const borderColor = error
     ? 'var(--forge-danger)'
@@ -64,7 +69,7 @@ export function Textarea({
         borderRadius: 'var(--forge-radius-md)',
         fontFamily: 'var(--forge-font-sans)',
         color: disabled ? 'var(--forge-text-disabled)' : 'var(--forge-text)',
-        resize: resize === 'vertical' ? 'none' : resize, // 'none' for auto-grow, manual for others
+        resize: effectiveResize === 'vertical' ? 'none' : effectiveResize, // 'none' for auto-grow, manual for others
         cursor: disabled ? 'not-allowed' : 'text',
         outline: 'none',
         transition: `border-color var(--forge-duration-fast) var(--forge-easing-default)`,

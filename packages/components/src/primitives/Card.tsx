@@ -8,6 +8,8 @@ interface CardRootProps extends React.HTMLAttributes<HTMLDivElement> {
   asChild?: boolean
   variant?: CardVariant
   padding?: CardPadding
+  /** Elevates the card with a stronger shadow and raised surface background. */
+  elevated?: boolean
 }
 
 const PADDING_VARS: Record<CardPadding, string> = {
@@ -23,7 +25,7 @@ const VARIANT_STYLE: Record<CardVariant, React.CSSProperties> = {
   outlined: { backgroundColor: 'transparent', border: '1px solid var(--forge-border)', boxShadow: 'none' },
 }
 
-function CardRoot({ asChild = false, variant = 'default', padding = 'md', className, style, ...props }: CardRootProps) {
+function CardRoot({ asChild = false, variant = 'default', padding = 'md', elevated = false, className, style, ...props }: CardRootProps) {
   const Comp = asChild ? Slot : 'div'
   return (
     <Comp
@@ -32,6 +34,7 @@ function CardRoot({ asChild = false, variant = 'default', padding = 'md', classN
         borderRadius: 'var(--forge-radius-lg)',
         padding: PADDING_VARS[padding],
         ...VARIANT_STYLE[variant],
+        ...(elevated ? { boxShadow: 'var(--forge-shadow-lg)', backgroundColor: 'var(--forge-surface-raised)' } : {}),
         ...style,
       }}
       {...props}

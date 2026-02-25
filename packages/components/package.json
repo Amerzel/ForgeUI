@@ -1,6 +1,6 @@
 {
   "name": "@forgeui/components",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "ForgeUI component library — 59 components for game development tooling",
   "type": "module",
   "exports": {
