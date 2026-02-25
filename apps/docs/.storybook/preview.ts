@@ -45,7 +45,12 @@ const preview: Preview = {
       const mode    = (context.globals['mode'] ?? 'dark') as Mode
       return createElement(
         ThemeProvider,
-        { palette, mode, children: createElement(Story) },
+        { palette, mode },
+        createElement(
+          'div',
+          { style: { minHeight: '100vh', backgroundColor: 'var(--forge-bg)', padding: '1rem', boxSizing: 'border-box' } },
+          createElement(Story),
+        ),
       )
     },
   ],

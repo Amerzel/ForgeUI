@@ -1,9 +1,8 @@
 /* Import ForgeUI base styles for Storybook */
 @import '@forgeui/components/styles/base.css';
 
-/* Storybook canvas padding */
+/* Background and padding are applied by the ThemeProvider decorator wrapper
+   (inside the provider scope where var(--forge-bg) resolves correctly) */
 #storybook-root {
-  padding: 1rem;
   min-height: 100vh;
-  background-color: var(--forge-bg);
 }
