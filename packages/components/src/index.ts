@@ -45,6 +45,14 @@ export { ToggleGroup }  from './forms/ToggleGroup.js'
 export { FormField }    from './forms/FormField.js'
 export { NumberInput }  from './forms/NumberInput.js'
 
+// Phase 3 — Domain-specific
+export { NodeEditor }    from './domain/NodeEditor.js'
+export type { FlowNode, FlowEdge } from './domain/NodeEditor.js'
+export { Timeline }      from './domain/Timeline.js'
+export type { TimelineTrack, TimelineClip } from './domain/Timeline.js'
+export { VirtualCanvas } from './domain/VirtualCanvas.js'
+export type { CanvasViewport, CanvasItem } from './domain/VirtualCanvas.js'
+
 // Phase 2b — Complex inputs
 export { DataTable }           from './complex/DataTable.js'
 export type { ColumnDef }      from './complex/DataTable.js'
