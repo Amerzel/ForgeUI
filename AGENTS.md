@@ -2,7 +2,7 @@
 
 ## Project Structure
 - `packages/tokens/`: Design tokens — colors, spacing, typography, shadows, animations, z-index, and color manipulation utils. Published as `@forgeui/tokens`.
-- `packages/components/`: React component library built on Radix Primitives. Internal `lib/cn.ts` for class merging. Published as `@forgeui/components`.
+- `packages/components/`: React component library (43 components) built on Radix Primitives. Organized into `primitives/`, `forms/`, `disclosure/`, `feedback/`, `overlays/`, `navigation/`, `composites/`. Internal `lib/cn.ts` for class merging. Published as `@forgeui/components`.
 - `packages/icons/`: Shared SVG icon components (Lucide React + custom game icons). Published as `@forgeui/icons`.
 - `packages/hooks/`: Shared React hooks (theme, token access for canvas/WebGL). Published as `@forgeui/hooks`.
 - `apps/docs/`: Storybook 8 documentation site with component playground and usage guides.

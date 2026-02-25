@@ -27,10 +27,13 @@ ForgeUI/
 │   │
 │   ├── components/              # @forgeui/components
 │   │   ├── src/
-│   │   │   ├── primitives/      # Polymorphic components (as prop)
-│   │   │   ├── forms/
-│   │   │   ├── overlays/        # Radix-based Dialog, Tooltip, Dropdown
-│   │   │   ├── composites/      # DataTable (TanStack), CommandPalette (cmdk)
+│   │   │   ├── primitives/      # Button, Badge, Text, Heading, Card, etc.
+│   │   │   ├── forms/           # Input, Select, Checkbox, Slider, etc.
+│   │   │   ├── disclosure/      # Accordion, Tabs, Collapsible
+│   │   │   ├── feedback/        # Progress, Alert, Skeleton, Toast
+│   │   │   ├── overlays/        # Dialog, Tooltip, Dropdown, Drawer, Popover
+│   │   │   ├── navigation/      # Menubar, Steps, Toolbar, Breadcrumb
+│   │   │   ├── composites/      # DataTable, CommandPalette, TreeView, etc.
 │   │   │   └── lib/
 │   │   │       └── cn.ts        # Internal class merging util (clsx)
 │   │   ├── styles/
@@ -221,23 +224,33 @@ export const tokens = {
 
 ---
 
-## Component inventory
+## Component inventory (43 total)
 
-### Phase 1: Foundation (Polymorphic & Scoped)
+Informed by cross-referencing **shadcn/ui** (59 components), **Radix** (30), **Ark UI** (46),
+**Park UI** (59), **Mantine** (130), and **Chakra UI** (107), plus an audit of the
+**AssetGenerator** codebase (47 production components). The inventory below covers every
+component pattern that appears in 2+ major libraries AND has a confirmed use case
+across the 9-tool ecosystem.
+
+### Phase 1: Foundation (25 components)
 
 All primitives support the `as` prop for semantic flexibility. Styling uses **CSS Modules** to prevent global namespace pollution.
 
-#### Primitives (7)
+#### Primitives (11)
 
 | Component | Props | Notes |
 |-----------|-------|-------|
 | `Button` | variant, size, as, disabled, loading | Primary, secondary, ghost, danger variants |
 | `IconButton` | icon, label, size, variant | Accessible wrapper; requires `label` for screen readers |
 | `Badge` | variant, color | Status indicators; includes numeric entity-state mapping |
-| `Text` | as, size, weight, color, truncate | Inline/block text (`p`, `span`, `label`, `div`). Does **not** render headings — use `Heading` for that. |
+| `Text` | as, size, weight, color, truncate | Inline/block text (`p`, `span`, `label`, `div`). Does **not** render headings — use `Heading` for that |
 | `Heading` | as, level, size | Semantic heading levels (`h1`–`h6`); `level` controls the HTML element, `size` controls visual scale independently |
 | `Separator` | orientation, decorative | Horizontal/vertical divider; `decorative` hides from a11y tree |
 | `Card` | as, variant, padding | Surface container with border and shadow tokens |
+| `Kbd` | keys | Keyboard shortcut display (e.g., `⌘+S`); renders styled keycap elements |
+| `Alert` | variant, icon, closable | Status banner for info/success/warning/error; used for inline feedback and destructive action confirmations |
+| `Skeleton` | width, height, radius, animate | Loading placeholder; matches content shape while data loads |
+| `ScrollArea` | orientation, scrollbarSize | Custom-styled scrollbar container; preserves native scroll behavior while matching dark theme |
 
 #### Forms (8)
 
@@ -252,17 +265,33 @@ All primitives support the `as` prop for semantic flexibility. Styling uses **CS
 | `Slider` | min, max, step, value | Radix Slider; useful for numeric tool parameters |
 | `FormField` | label, error, hint, required | Wrapper that composes label + input + error message |
 
+#### Disclosure (2)
+
+| Component | Library | Props | Notes |
+|-----------|---------|-------|-------|
+| `Accordion` | Radix Accordion | type, collapsible, defaultValue | Collapsible content sections; single or multiple open panels. Used in inspector panels, settings groups, property editors |
+| `Tabs` | Radix Tabs | value, orientation | Tabbed content panels; horizontal/vertical. Used in inspectors, multi-view editors, settings |
+
+#### Feedback (1)
+
+| Component | Library | Props | Notes |
+|-----------|---------|-------|-------|
+| `Progress` | Radix Progress | value, max, getValueLabel | Linear progress bar; determinate or indeterminate. Used for build progress, asset processing, batch operations |
+
 #### Overlays (3)
 
 | Component | Library | Props | Notes |
 |-----------|---------|-------|-------|
 | `Dialog` | Radix Dialog | open, title, description | Modal with focus trap and scroll lock |
 | `Tooltip` | Radix Tooltip | content, side, delay | Hover/focus info; accessible by default |
-| `DropdownMenu` | Radix DropdownMenu | items, trigger | Keyboard-navigable context menus |
+| `DropdownMenu` | Radix DropdownMenu | items, trigger | Keyboard-navigable action menus |
 
-### Phase 2: Composites (Headless Logic)
+### Phase 2: Advanced Components (14 components)
 
-Focus on complex tools using industry-standard headless libraries for performance.
+Composites use industry-standard headless libraries. Advanced inputs and overlays cover
+patterns discovered in the AssetGenerator audit and confirmed across major component libraries.
+
+#### Composites (5)
 
 | Component | Library | Notes |
 |-----------|---------|-------|
@@ -271,6 +300,41 @@ Focus on complex tools using industry-standard headless libraries for performanc
 | `Toast` | **Radix Toast** | Stackable notifications at `--forge-z-toast`; auto-dismiss with configurable duration |
 | `SplitPane` | — | Native-feeling resizable panels; persist sizes to localStorage |
 | `AppShell` | — | Root layout (Sidebar + Nav + Main); fixed-viewport desktop assumption |
+
+#### Overlays (3)
+
+| Component | Library | Props | Notes |
+|-----------|---------|-------|-------|
+| `ContextMenu` | Radix Context Menu | items, trigger | Right-click menus; fundamental to every game dev tool. Supports submenus, checkable items, keyboard navigation |
+| `Drawer` | Radix Dialog (extended) | side, open, title | Slide-in panel from any edge; non-blocking alternative to Dialog for properties and settings |
+| `Popover` | Radix Popover | side, align, sideOffset | Anchored floating content; used for quick-edit panels, inline color pickers, mini-forms |
+
+#### Advanced Inputs (4)
+
+| Component | Library | Props | Notes |
+|-----------|---------|-------|-------|
+| `Combobox` | **cmdk** or Radix | options, value, placeholder, search | Searchable select for large lists; autocomplete with filtering. Essential when Select doesn't scale (100s of entities/assets) |
+| `NumberInput` | — | value, min, max, step, precision | Numeric input with increment/decrement stepper buttons and min/max clamping. Used for transforms, dimensions, physics params |
+| `ColorPicker` | — | value, format, swatches | HSL/RGB/Hex color selection with saturation/hue/alpha controls. Used in material editing, palette creation, map annotations |
+| `TagsInput` | — | value, suggestions, max | Multi-tag entry field; add/remove freeform tags as pills. Used for entity tagging, keyword management across LoreEngine and QuestForge |
+
+#### Patterns (2)
+
+| Component | Props | Notes |
+|-----------|-------|-------|
+| `DropZone` | accept, maxSize, multiple, onDrop | Drag-and-drop file upload area with visual drag state, file type validation, and click-to-browse fallback. Used in asset import workflows |
+| `Toolbar` | orientation | Groups related controls (buttons, toggles, separators) with roving keyboard focus. Used in canvas toolbars, editor action bars |
+
+### Phase 3: Domain-Specific (4 components)
+
+Components that require deeper integration with tool-specific data structures or OS-level patterns.
+
+| Component | Library | Props | Notes |
+|-----------|---------|-------|-------|
+| `TreeView` | — | data, expandedIds, selectedId, onSelect | Hierarchical data display with expand/collapse, keyboard navigation, and selection. Used for scene graphs, entity hierarchies, file trees in EntityArchitect, LoreEngine, TerrainComposer |
+| `Editable` | — | value, placeholder, onSubmit | Inline text that switches to an input on click/Enter. Used for renaming entities, nodes, layers, and labels in-place without opening a dialog |
+| `Steps` | — | current, items, orientation | Multi-step wizard indicator with active/completed/error states. Used for asset pipeline flows, entity creation wizards, import workflows |
+| `Menubar` | Radix Menubar | menus | Desktop-style horizontal menu bar (File, Edit, View...) with keyboard navigation and submenus. Used in Electron-based tools for native-feeling app chrome |
 
 ---
 
@@ -449,25 +513,41 @@ When consuming tools adopt ForgeUI, each tool gets a brief migration guide cover
 
 ## Implementation Strategy
 
-### Phase 1: Core & Scoping
+### Phase 1: Foundation (25 components)
 - Setup Monorepo (pnpm + Turborepo).
 - Define full numeric color scales (50–950) for all palettes and export JS-accessible objects.
-- Define spacing, shadow, animation, and z-index token scales.
-- Implement all 7 Primitives using **CSS Modules**.
-- Implement all 8 Form components with Radix where applicable.
-- Implement all 3 Overlay components using Radix primitives.
+- Define spacing, shadow, animation, z-index, and focus ring token scales.
+- Implement 11 Primitives: Button, IconButton, Badge, Text, Heading, Separator, Card, Kbd, Alert, Skeleton, ScrollArea.
+- Implement 8 Form components: Input, Textarea, Select, Checkbox, Switch, RadioGroup, Slider, FormField.
+- Implement 2 Disclosure components: Accordion, Tabs.
+- Implement 1 Feedback component: Progress.
+- Implement 3 Overlay components: Dialog, Tooltip, DropdownMenu.
 - Set up Vitest + Testing Library with axe audits.
 - Set up Storybook with A11y and Interaction addons.
 - Configure Changesets for versioning.
 
-### Phase 2: Headless Composites
+### Phase 2: Advanced Components (14 components)
 - Integrate **TanStack Table** for `DataTable` with virtualization.
-- Integrate **cmdk** for `CommandPalette`.
+- Integrate **cmdk** for `CommandPalette` and `Combobox`.
 - Integrate **Radix Toast** for `Toast` notifications.
+- Integrate **Radix Context Menu** for `ContextMenu` (right-click menus).
+- Integrate **Radix Popover** for `Popover` (floating anchored content).
+- Build `Drawer` extending Radix Dialog for slide-in panels.
 - Build `SplitPane` with persisted panel sizes.
 - Build `AppShell` targeting 1280×720 minimum viewport.
+- Build `NumberInput` with stepper controls and min/max clamping.
+- Build `ColorPicker` with HSL/RGB/Hex modes and swatch presets.
+- Build `TagsInput` with freeform entry and optional suggestions.
+- Build `DropZone` with drag state, file validation, and click fallback.
+- Build `Toolbar` with roving focus and grouped controls.
 
-### Phase 3: Domain Extensions & Rollout
+### Phase 3: Domain-Specific Components & Rollout (4 components)
+
+#### Domain Components
+- Build `TreeView` for hierarchical data (scene graphs, entity trees, file browsers).
+- Build `Editable` for inline rename interactions.
+- Build `Steps` for multi-step wizard flows.
+- Integrate **Radix Menubar** for `Menubar` (desktop-style app menus).
 
 #### Extension Support
 - Implement generic `ThemeContract<T>` provider with typed extensions.
