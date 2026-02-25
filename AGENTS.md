@@ -2,7 +2,7 @@
 
 ## Project Structure
 - `packages/tokens/`: Design tokens — colors, spacing, typography, shadows, animations, z-index, and color manipulation utils. Published as `@forgeui/tokens`.
-- `packages/components/`: React component library (45 components) built on Radix Primitives. Organized into `primitives/`, `forms/`, `disclosure/`, `feedback/`, `overlays/`, `navigation/`, `composites/`. Internal `lib/cn.ts` for class merging. Published as `@forgeui/components`.
+- `packages/components/`: React 19+ component library (59 components) built on Radix Primitives. Organized into `primitives/`, `forms/`, `disclosure/`, `feedback/`, `overlays/`, `navigation/`, `composites/`. Internal `lib/cn.ts` for class merging. Published as `@forgeui/components`.
 - `packages/icons/`: Shared SVG icon components (Lucide React + custom game icons). Published as `@forgeui/icons`.
 - `packages/hooks/`: Shared React hooks (theme, token access for canvas/WebGL). Published as `@forgeui/hooks`.
 - `apps/docs/`: Storybook 8 documentation site with component playground and usage guides.
@@ -10,7 +10,7 @@
 ## Build, Test, and Development Commands
 - `pnpm install`: install all dependencies across workspaces.
 - `pnpm dev`: start Storybook dev server for interactive component development.
-- `pnpm build`: build all packages (tokens → components → icons → hooks).
+- `pnpm build`: build all packages (tokens → hooks → components; tokens → icons parallel).
 - `pnpm test`: run Vitest tests across all packages.
 - `pnpm lint`: run ESLint + Prettier checks.
 - `pnpm changeset`: create a changeset for versioning.
@@ -20,9 +20,10 @@
 - Components: PascalCase files and exports (`Button.tsx`, `FormField.tsx`).
 - Tokens: camelCase exports (`spacing`, `colors`), kebab-case CSS variables (`--forge-space-4`).
 - Hooks: camelCase with `use` prefix (`useTheme.ts`, `useKeyboardShortcut.ts`).
-- CSS: Vanilla CSS Modules with CSS variables from `@forgeui/tokens`. No Tailwind, no CSS-in-JS.
+- CSS: CSS Modules (`.module.css`) pre-compiled via PostCSS (`postcss-modules`) at build time. Consumers import pre-scoped CSS — no CSS Module bundler support needed. No Tailwind, no CSS-in-JS.
 - Class merging: Use `clsx` only (internal `cn.ts` in components). No tailwind-merge.
-- All components use `forwardRef` for ref forwarding and accept `className` for composition.
+- All components accept `ref` natively (React 19 — no `forwardRef`) and `className` for composition.
+- Composition: Use `asChild` prop (via `@radix-ui/react-slot`) instead of polymorphic `as` prop.
 
 ## Testing Guidelines
 - Use Vitest + Testing Library for component tests.
