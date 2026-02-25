@@ -1,0 +1,16 @@
+[
+  {
+    "name": "@forgeui/components (full barrel)",
+    "path": "packages/components/dist/index.js",
+    "import": "*",
+    "limit": "80 KB",
+    "gzip": true
+  },
+  {
+    "name": "@forgeui/tokens",
+    "path": "packages/tokens/dist/index.js",
+    "import": "*",
+    "limit": "5 KB",
+    "gzip": true
+  }
+]
