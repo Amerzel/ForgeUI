@@ -13,5 +13,17 @@
 export { ThemeProvider } from './ThemeProvider/index.js'
 export type { ThemeProviderProps } from './ThemeProvider/index.js'
 
-// Phase 1 components are exported here as they are implemented
-// (populated incrementally through Track 7–11)
+// Phase 1 — Primitives
+export { VisuallyHidden } from './primitives/VisuallyHidden.js'
+export { Label }          from './primitives/Label.js'
+export { Separator }      from './primitives/Separator.js'
+export { Spinner }        from './primitives/Spinner.js'
+export { Badge }          from './primitives/Badge.js'
+export { Text }           from './primitives/Text.js'
+export { Heading }        from './primitives/Heading.js'
+export { Kbd }            from './primitives/Kbd.js'
+export { ScrollArea }     from './primitives/ScrollArea.js'
+export { Card }           from './primitives/Card.js'
+export { Button }         from './primitives/Button.js'
+export { IconButton }     from './primitives/IconButton.js'
+export { AlertDialog }    from './primitives/AlertDialog.js'
