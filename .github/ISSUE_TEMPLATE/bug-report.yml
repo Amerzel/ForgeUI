@@ -1,0 +1,135 @@
+name: Bug Report
+description: Something in ForgeUI is broken or behaving unexpectedly.
+title: "bug: [component] — short description"
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug. Please fill in all fields below so we can
+        reproduce and fix it quickly. The more specific you are, the faster this gets resolved.
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which component is affected?
+      options:
+        - Box / Stack / Flex / Group (layout primitives)
+        - Grid / SimpleGrid / Center / Container / Wrap / Spacer (layout primitives)
+        - Button / IconButton
+        - Badge / Text / Heading / Kbd
+        - Card / Separator / Spinner / ScrollArea
+        - Input / Textarea / Select / NumberInput
+        - Checkbox / Switch / RadioGroup / Slider / Toggle / ToggleGroup
+        - Combobox / TagsInput / ColorPicker
+        - FormField / EditableText
+        - Accordion / Tabs / Collapsible
+        - Alert / Progress / Skeleton / Toast
+        - Dialog / AlertDialog / Tooltip / Popover
+        - DropdownMenu / ContextMenu
+        - AppShell / Drawer / ResizablePanel
+        - Toolbar / Breadcrumb / Steps / Avatar / Menubar
+        - Table / DataTable / Pagination
+        - TreeView / PropertyGrid / CommandPalette
+        - NodeEditor / Timeline / VirtualCanvas
+        - ThemeProvider / useTheme / useTokens
+        - Other / Multiple
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      description: Run `pnpm list @forgeui/components` to find your version.
+      placeholder: "e.g. 1.0.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: |
+        Paste the smallest JSX/TSX that demonstrates the bug.
+        A Storybook story is ideal. "It doesn't work" is not enough — show the code.
+      render: tsx
+      placeholder: |
+        import { Box } from '@forgeui/components'
+
+        // Bug: Box with bg="accent" shows wrong color
+        export default function Repro() {
+          return (
+            <ThemeProvider>
+              <Box bg="accent" p={4}>
+                This should be the accent color but shows red.
+              </Box>
+            </ThemeProvider>
+          )
+        }
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: What should happen?
+      placeholder: "The Box background should be var(--forge-accent), which is an amber-orange in the hearth-bronze palette."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: What actually happens? Include error messages if any.
+      placeholder: "The Box renders with a red background regardless of the accent token."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: Environment
+      multiple: true
+      options:
+        - Chrome / Chromium
+        - Firefox
+        - Safari
+        - Node.js (SSR / test)
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Cosmetic (wrong colour, spacing, etc.)
+        - Functional (component does not work as documented)
+        - Accessibility (WCAG violation, keyboard trap, missing ARIA)
+        - Crash / unhandled error
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Tool name, screenshot, Storybook link, or anything else relevant.
+      placeholder: "This affects AssetGenerator's entity inspector panel."
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I checked the AGENT-GUIDE.md and Storybook docs — this is not a usage mistake
+          required: true
+        - label: I searched existing issues and this has not been reported
+          required: true
+        - label: I provided a minimal code reproduction above
+          required: true

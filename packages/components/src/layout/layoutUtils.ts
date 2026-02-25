@@ -52,10 +52,16 @@ export function cleanStyle(obj: Record<string, string | number | undefined>): Re
 }
 
 /**
- * Shorthand padding/margin props shared across all layout primitives.
+ * Shorthand padding/margin/color/radius props shared across all layout primitives.
  * Mirrors the Box API so that Stack, Flex, etc. don't require wrapping in Box for spacing.
  */
 export interface SpacingShorthandProps {
+  /** Background color — semantic alias or raw CSS */
+  bg?: string
+  /** Text color — semantic alias or raw CSS */
+  c?: string
+  /** Border radius token (none/sm/md/lg/xl/full) or raw CSS */
+  radius?: string
   /** Padding on all sides */
   p?: SpaceValue
   /** Horizontal padding */
@@ -80,15 +86,18 @@ export interface SpacingShorthandProps {
 
 /** Resolve SpacingShorthandProps to a CSSProperties object (most-specific wins). */
 export function resolveSpacing(props: SpacingShorthandProps): Record<string, string | number> {
-  const { p, px, py, pt, pb, pl, pr, m, mx, my, mt, mb, ml, mr } = props
+  const { p, px, py, pt, pb, pl, pr, m, mx, my, mt, mb, ml, mr, bg, c, radius } = props
   return cleanStyle({
-    paddingTop:    sp(pt ?? py ?? p),
-    paddingBottom: sp(pb ?? py ?? p),
-    paddingLeft:   sp(pl ?? px ?? p),
-    paddingRight:  sp(pr ?? px ?? p),
-    marginTop:     sp(mt ?? my ?? m),
-    marginBottom:  sp(mb ?? my ?? m),
-    marginLeft:    sp(ml ?? mx ?? m),
-    marginRight:   sp(mr ?? mx ?? m),
+    paddingTop:      sp(pt ?? py ?? p),
+    paddingBottom:   sp(pb ?? py ?? p),
+    paddingLeft:     sp(pl ?? px ?? p),
+    paddingRight:    sp(pr ?? px ?? p),
+    marginTop:       sp(mt ?? my ?? m),
+    marginBottom:    sp(mb ?? my ?? m),
+    marginLeft:      sp(ml ?? mx ?? m),
+    marginRight:     sp(mr ?? mx ?? m),
+    backgroundColor: col(bg),
+    color:           c ? (col(c) ?? c) : undefined,
+    borderRadius:    rad(radius),
   })
 }

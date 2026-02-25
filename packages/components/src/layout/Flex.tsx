@@ -27,6 +27,7 @@ export function Flex({
   inline = false,
   p, px, py, pt, pb, pl, pr,
   m, mx, my, mt, mb, ml, mr,
+  bg, c, radius,
   style,
   ...props
 }: FlexProps) {
@@ -42,7 +43,7 @@ export function Flex({
       columnGap:      sp(columnGap),
       flex,
     }),
-    ...resolveSpacing({ p, px, py, pt, pb, pl, pr, m, mx, my, mt, mb, ml, mr }),
+    ...resolveSpacing({ p, px, py, pt, pb, pl, pr, m, mx, my, mt, mb, ml, mr, bg, c, radius }),
     ...style,
   }
 

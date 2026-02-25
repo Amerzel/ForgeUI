@@ -21,6 +21,7 @@ export function Stack({
   reverse = false,
   p, px, py, pt, pb, pl, pr,
   m, mx, my, mt, mb, ml, mr,
+  bg, c, radius,
   style,
   ...props
 }: StackProps) {
@@ -32,7 +33,7 @@ export function Stack({
       alignItems:    align,
       justifyContent: justify,
     }),
-    ...resolveSpacing({ p, px, py, pt, pb, pl, pr, m, mx, my, mt, mb, ml, mr }),
+    ...resolveSpacing({ p, px, py, pt, pb, pl, pr, m, mx, my, mt, mb, ml, mr, bg, c, radius }),
     ...style,
   }
 

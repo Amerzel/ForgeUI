@@ -1,0 +1,125 @@
+name: Component Request
+description: Request a new component or significant enhancement to an existing one.
+title: "feat: [ComponentName] — short description"
+labels: ["component-request", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing: please check **docs/AGENT-GUIDE.md** and the Storybook
+        (`pnpm storybook`) to confirm the component does not already exist under a
+        different name. Many layout needs are covered by composing layout primitives.
+
+  - type: input
+    id: component-name
+    attributes:
+      label: Proposed component name
+      placeholder: "e.g. DatePicker, SplitButton, KanbanBoard"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: request-type
+    attributes:
+      label: Request type
+      options:
+        - New component (does not exist at all)
+        - New prop / variant on an existing component
+        - Composition pattern (how to combine existing components)
+        - Other enhancement
+    validations:
+      required: true
+
+  - type: dropdown
+    id: tool
+    attributes:
+      label: Which tool needs this?
+      description: Helps us understand real-world demand and priority.
+      multiple: true
+      options:
+        - LoreEngine
+        - AssetGenerator
+        - PipelineInspector
+        - Multiple tools
+        - New / unknown tool
+        - ForgeUI Storybook / docs
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What UI problem are you trying to solve? Be specific about the user interaction or data display need.
+      placeholder: |
+        LoreEngine needs a date/time picker for scheduling in-world events (e.g., "Battle of Ironkeep
+        occurred on Year 342, Day 14"). The native <input type="date"> doesn't support fictional
+        calendars or year ranges beyond 9999. We need a custom picker that accepts an arbitrary
+        calendar schema.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What existing components have you tried?
+      description: Show the code you wrote before deciding a new component was needed.
+      render: tsx
+      placeholder: |
+        // Tried composing with Input + Popover:
+        <Popover trigger={<Input readOnly value="Year 342, Day 14" />}>
+          <NumberInput label="Year" />
+          <NumberInput label="Day" />
+        </Popover>
+        // Problem: no keyboard navigation, no validation, too much per-use boilerplate.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-api
+    attributes:
+      label: Proposed API (optional but very helpful)
+      description: Sketch the component's props and usage. Doesn't need to be final.
+      render: tsx
+      placeholder: |
+        <CalendarPicker
+          value={{ year: 342, day: 14 }}
+          onChange={setDate}
+          calendar={elderCalendar}   // custom calendar schema
+          min={{ year: 1 }}
+          max={{ year: 1000 }}
+        />
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority / blocking?
+      options:
+        - Nice to have — workaround exists
+        - Important — workaround is poor UX
+        - Blocking — cannot complete the feature without this
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: Prior art / references
+      description: Similar components in Mantine, Chakra, shadcn, Radix, etc. that we could study.
+      placeholder: |
+        - Mantine DatePicker: supports custom calendars via `getDayProps`
+        - React DayPicker: headless, very flexible, used by shadcn
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I checked AGENT-GUIDE.md — this component does not exist under another name
+          required: true
+        - label: I searched existing issues and this has not been requested
+          required: true
+        - label: I described the problem, not just the solution
+          required: true
