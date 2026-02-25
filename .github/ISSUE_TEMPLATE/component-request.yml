@@ -37,9 +37,9 @@ body:
       description: Helps us understand real-world demand and priority.
       multiple: true
       options:
-        - LoreEngine
-        - AssetGenerator
-        - PipelineInspector
+        - ForgeLore
+        - ForgeAsset
+        - ForgePipeline
         - Multiple tools
         - New / unknown tool
         - ForgeUI Storybook / docs
