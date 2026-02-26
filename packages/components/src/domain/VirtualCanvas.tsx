@@ -85,21 +85,28 @@ export function VirtualCanvas({
   }, [])
 
   // Zoom with wheel
-  const handleWheel = useCallback((e: React.WheelEvent) => {
-    if (!containerRef.current) return
-    e.preventDefault()
-    const rect = containerRef.current.getBoundingClientRect()
-    const cursorX = e.clientX - rect.left
-    const cursorY = e.clientY - rect.top
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
 
-    const zoomFactor = e.deltaY < 0 ? 1.12 : 0.89
-    const newZoom = Math.max(minZoom, Math.min(maxZoom, viewport.zoom * zoomFactor))
-    const scale = newZoom / viewport.zoom
+    const handleNativeWheel = (e: WheelEvent) => {
+      e.preventDefault()
+      const rect = el.getBoundingClientRect()
+      const cursorX = e.clientX - rect.left
+      const cursorY = e.clientY - rect.top
 
-    // Zoom towards cursor
-    const newX = cursorX - scale * (cursorX - viewport.x)
-    const newY = cursorY - scale * (cursorY - viewport.y)
-    setViewport({ x: newX, y: newY, zoom: newZoom })
+      const zoomFactor = e.deltaY < 0 ? 1.12 : 0.89
+      const newZoom = Math.max(minZoom, Math.min(maxZoom, viewport.zoom * zoomFactor))
+      const scale = newZoom / viewport.zoom
+
+      // Zoom towards cursor
+      const newX = cursorX - scale * (cursorX - viewport.x)
+      const newY = cursorY - scale * (cursorY - viewport.y)
+      setViewport({ x: newX, y: newY, zoom: newZoom })
+    }
+
+    el.addEventListener('wheel', handleNativeWheel, { passive: false })
+    return () => el.removeEventListener('wheel', handleNativeWheel)
   }, [viewport, minZoom, maxZoom, setViewport])
 
   // Item drag
@@ -149,7 +156,6 @@ export function VirtualCanvas({
       onPointerDown={handleCanvasPointerDown}
       onPointerMove={handleCanvasPointerMove}
       onPointerUp={handleCanvasPointerUp}
-      onWheel={handleWheel}
     >
       {/* Grid background */}
       {grid && (
