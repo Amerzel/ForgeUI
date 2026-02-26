@@ -25,6 +25,7 @@ interface NodeEditorProps {
   onConnect?: OnConnect
   onNodesChange?: OnNodesChange
   onEdgesChange?: OnEdgesChange
+  onNodeClick?: (event: React.MouseEvent, node: Node) => void
   /** Custom node type renderers */
   nodeTypes?: NodeTypes
   /** Custom edge type renderers */
@@ -47,6 +48,7 @@ export function NodeEditor({
   onConnect,
   onNodesChange,
   onEdgesChange,
+  onNodeClick,
   nodeTypes,
   edgeTypes,
   minimap = true,
@@ -125,6 +127,7 @@ export function NodeEditor({
         onConnect={onConnect}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        onNodeClick={onNodeClick}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         fitView
