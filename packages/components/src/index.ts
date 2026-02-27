@@ -37,7 +37,7 @@ export type { WrapProps } from './layout/Wrap.js'
 
 // Phase 1 — Overlays
 export { Dialog }        from './overlays/Dialog.js'
-export { Tooltip, TooltipProvider } from './overlays/Tooltip.js'
+export { Tooltip, TooltipProvider, type TooltipProps } from './overlays/Tooltip.js'
 export { DropdownMenu }  from './overlays/DropdownMenu.js'
 export { ContextMenu }   from './overlays/ContextMenu.js'
 export { Popover }       from './overlays/Popover.js'

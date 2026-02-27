@@ -1,10 +1,11 @@
 import * as RadixTooltip from '@radix-ui/react-tooltip'
 import { usePortalContainer } from '@forgeui/hooks'
+import { cn } from '../lib/cn.js'
 
 
 type TooltipSide = 'top' | 'right' | 'bottom' | 'left'
 
-interface TooltipProps {
+export interface TooltipProps {
   /** The element that triggers the tooltip */
   children: React.ReactNode
   /** Tooltip text content */
@@ -15,6 +16,8 @@ interface TooltipProps {
   delayDuration?: number
   /** When true, tooltip won't appear */
   disabled?: boolean
+  /** Additional CSS class for the tooltip content */
+  className?: string
 }
 
 /**
@@ -32,6 +35,7 @@ export function Tooltip({
   sideOffset = 6,
   delayDuration = 400,
   disabled = false,
+  className,
 }: TooltipProps) {
   const portalContainer = usePortalContainer()
   if (disabled) return <>{children}</>
@@ -46,7 +50,7 @@ export function Tooltip({
         <RadixTooltip.Content
           side={side}
           sideOffset={sideOffset}
-          className="forge-tooltip"
+          className={cn('forge-tooltip', className)}
           style={{
             padding: `var(--forge-space-1) var(--forge-space-2)`,
             backgroundColor: 'var(--forge-text)',
