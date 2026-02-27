@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'vitest-axe'
 import { ThemeProvider } from '../ThemeProvider/index.js'
-import { Timeline, VirtualCanvas } from '../index.js'
-import type { TimelineTrack, CanvasItem } from '../index.js'
+import { Timeline, VirtualCanvas, DrawingCanvas, ImageViewer, ComparisonSlider, LayerStack } from '../index.js'
+import type { TimelineTrack, CanvasItem, Layer } from '../index.js'
 
 // Note: NodeEditor wraps ReactFlow which uses canvas and extensive browser APIs.
 // We test its accessibility and rendering at the component level via Timeline and
@@ -180,6 +180,281 @@ describe('VirtualCanvas', () => {
     const { container } = render(
       <Themed>
         <VirtualCanvas items={ITEMS} />
+      </Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// DrawingCanvas
+// ---------------------------------------------------------------------------
+describe('DrawingCanvas', () => {
+  it('renders the canvas application', () => {
+    render(
+      <Themed>
+        <DrawingCanvas width={256} height={256} tool="brush" brushSize={10} />
+      </Themed>
+    )
+    expect(screen.getByRole('application', { name: 'Drawing canvas' })).toBeInTheDocument()
+  })
+
+  it('shows drawing layer canvas', () => {
+    render(
+      <Themed>
+        <DrawingCanvas width={256} height={256} tool="brush" brushSize={10} />
+      </Themed>
+    )
+    expect(screen.getByTestId('drawing-layer')).toBeInTheDocument()
+  })
+
+  it('displays tool indicator', () => {
+    render(
+      <Themed>
+        <DrawingCanvas width={128} height={128} tool="eraser" brushSize={20} />
+      </Themed>
+    )
+    expect(screen.getByLabelText('Tool: eraser, Size: 20px')).toBeInTheDocument()
+  })
+
+  it('shows loading state when background image is set', () => {
+    render(
+      <Themed>
+        <DrawingCanvas width={256} height={256} tool="brush" brushSize={10} backgroundImage="test.png" />
+      </Themed>
+    )
+    expect(screen.getByLabelText('Loading background image')).toBeInTheDocument()
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed>
+        <DrawingCanvas width={256} height={256} tool="brush" brushSize={10} />
+      </Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// ImageViewer
+// ---------------------------------------------------------------------------
+describe('ImageViewer', () => {
+  it('renders with aria label', () => {
+    render(
+      <Themed>
+        <ImageViewer src="test.png" alt="Test image" />
+      </Themed>
+    )
+    expect(screen.getByRole('application', { name: 'Image viewer: Test image' })).toBeInTheDocument()
+  })
+
+  it('renders zoom controls', () => {
+    render(
+      <Themed>
+        <ImageViewer src="test.png" alt="Test image" />
+      </Themed>
+    )
+    expect(screen.getByRole('button', { name: 'Zoom in' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Zoom out' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Fit to view' })).toBeInTheDocument()
+  })
+
+  it('hides controls when showControls is false', () => {
+    render(
+      <Themed>
+        <ImageViewer src="test.png" alt="Test" showControls={false} />
+      </Themed>
+    )
+    expect(screen.queryByRole('button', { name: 'Zoom in' })).not.toBeInTheDocument()
+  })
+
+  it('renders toolbar slot', () => {
+    render(
+      <Themed>
+        <ImageViewer src="test.png" alt="Test" toolbar={<button>Download</button>} />
+      </Themed>
+    )
+    expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument()
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed>
+        <ImageViewer src="test.png" alt="Test image" />
+      </Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// ComparisonSlider
+// ---------------------------------------------------------------------------
+describe('ComparisonSlider', () => {
+  it('renders with aria role slider', () => {
+    render(
+      <Themed>
+        <ComparisonSlider before="a.png" after="b.png" />
+      </Themed>
+    )
+    expect(screen.getByRole('slider', { name: 'Image comparison slider' })).toBeInTheDocument()
+  })
+
+  it('displays labels', () => {
+    render(
+      <Themed>
+        <ComparisonSlider before="a.png" after="b.png" beforeLabel="Original" afterLabel="Processed" />
+      </Themed>
+    )
+    expect(screen.getByText('Original')).toBeInTheDocument()
+    expect(screen.getByText('Processed')).toBeInTheDocument()
+  })
+
+  it('shows initial position', () => {
+    render(
+      <Themed>
+        <ComparisonSlider before="a.png" after="b.png" initialPosition={75} />
+      </Themed>
+    )
+    expect(screen.getByRole('slider')).toHaveAttribute('aria-valuenow', '75')
+  })
+
+  it('responds to keyboard left/right', async () => {
+    const onPositionChange = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <ComparisonSlider before="a.png" after="b.png" position={50} onPositionChange={onPositionChange} />
+      </Themed>
+    )
+    const slider = screen.getByRole('slider')
+    slider.focus()
+    await user.keyboard('{ArrowRight}')
+    expect(onPositionChange).toHaveBeenCalledWith(55)
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed>
+        <ComparisonSlider before="a.png" after="b.png" beforeLabel="Before" afterLabel="After" />
+      </Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// LayerStack
+// ---------------------------------------------------------------------------
+describe('LayerStack', () => {
+  const LAYERS: Layer[] = [
+    { id: 'bg', label: 'Background', visible: true, locked: false, opacity: 100 },
+    { id: 'chars', label: 'Characters', visible: true, locked: false, opacity: 80 },
+    { id: 'fx', label: 'Effects', visible: false, locked: true, opacity: 50 },
+  ]
+
+  it('renders layer labels', () => {
+    render(
+      <Themed>
+        <LayerStack layers={LAYERS} />
+      </Themed>
+    )
+    expect(screen.getByText('Background')).toBeInTheDocument()
+    expect(screen.getByText('Characters')).toBeInTheDocument()
+    expect(screen.getByText('Effects')).toBeInTheDocument()
+  })
+
+  it('shows layer count in header', () => {
+    render(
+      <Themed>
+        <LayerStack layers={LAYERS} />
+      </Themed>
+    )
+    expect(screen.getByText('Layers (3)')).toBeInTheDocument()
+  })
+
+  it('shows add button when onAdd provided', () => {
+    const onAdd = vi.fn()
+    render(
+      <Themed>
+        <LayerStack layers={LAYERS} onAdd={onAdd} />
+      </Themed>
+    )
+    expect(screen.getByRole('button', { name: 'Add layer' })).toBeInTheDocument()
+  })
+
+  it('calls onAdd when add button clicked', async () => {
+    const onAdd = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <LayerStack layers={LAYERS} onAdd={onAdd} />
+      </Themed>
+    )
+    await user.click(screen.getByRole('button', { name: 'Add layer' }))
+    expect(onAdd).toHaveBeenCalled()
+  })
+
+  it('calls onSelect on layer click', async () => {
+    const onSelect = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <LayerStack layers={LAYERS} onSelect={onSelect} />
+      </Themed>
+    )
+    await user.click(screen.getByText('Characters'))
+    expect(onSelect).toHaveBeenCalledWith('chars')
+  })
+
+  it('calls onToggleVisibility', async () => {
+    const onToggle = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <LayerStack layers={LAYERS} onToggleVisibility={onToggle} />
+      </Themed>
+    )
+    await user.click(screen.getByRole('button', { name: 'Hide Background' }))
+    expect(onToggle).toHaveBeenCalledWith('bg')
+  })
+
+  it('calls onToggleLock', async () => {
+    const onToggle = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <LayerStack layers={LAYERS} onToggleLock={onToggle} />
+      </Themed>
+    )
+    await user.click(screen.getByRole('button', { name: 'Unlock Effects' }))
+    expect(onToggle).toHaveBeenCalledWith('fx')
+  })
+
+  it('shows remove buttons when onRemove provided', () => {
+    render(
+      <Themed>
+        <LayerStack layers={LAYERS} onRemove={() => {}} />
+      </Themed>
+    )
+    expect(screen.getByRole('button', { name: 'Remove Background' })).toBeInTheDocument()
+  })
+
+  it('marks selected layer', () => {
+    render(
+      <Themed>
+        <LayerStack layers={LAYERS} selectedId="chars" />
+      </Themed>
+    )
+    const item = screen.getByRole('listitem', { name: /Characters/ })
+    expect(item).toHaveAttribute('data-selected', 'true')
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed>
+        <LayerStack layers={LAYERS} selectedId="bg" />
       </Themed>
     )
     expect(await axe(container)).toHaveNoViolations()

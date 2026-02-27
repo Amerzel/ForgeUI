@@ -1168,6 +1168,80 @@ const items: CanvasItem[] = [
 />
 ```
 
+### DrawingCanvas
+
+Freehand brush/eraser canvas overlay for painting masks, annotations, and region selections. Supports smooth stroke interpolation, background image overlay, mask export, clear/invert.
+
+```tsx
+<DrawingCanvas
+  width={512}
+  height={512}
+  tool="brush"
+  brushSize={15}
+  brushColor="rgba(255, 0, 0, 0.5)"
+  backgroundImage="/assets/character.png"
+  onDrawEnd={(maskDataUrl) => saveMask(maskDataUrl)}
+/>
+```
+
+**Key props:** `width` · `height` · `tool` ('brush' | 'eraser') · `brushSize` · `brushColor` · `backgroundImage` · `onStroke` · `onDrawEnd` · `clear` · `invert`
+
+### ImageViewer
+
+Zoom/pan image viewer with pixel-perfect rendering for pixel art. Scroll-to-zoom, drag-to-pan, double-click to toggle fit/1:1, keyboard shortcuts (+/-/0), checkerboard transparency background.
+
+```tsx
+<ImageViewer
+  src="/assets/sprite.png"
+  alt="Player sprite"
+  renderMode="pixelated"
+  toolbar={<IconButton aria-label="Download" icon="⬇" />}
+/>
+```
+
+**Key props:** `src` · `alt` · `renderMode` ('pixelated' | 'smooth') · `minZoom` · `maxZoom` · `initialZoom` (number | 'fit') · `showControls` · `checkerboard` · `toolbar` · `onZoomChange`
+
+### ComparisonSlider
+
+Before/after image comparison with a draggable vertical divider. Keyboard accessible (arrow keys in 5% steps), supports controlled/uncontrolled position, pixel art rendering.
+
+```tsx
+<ComparisonSlider
+  before="/assets/original.png"
+  after="/assets/processed.png"
+  beforeLabel="Original"
+  afterLabel="Background Removed"
+  renderMode="pixelated"
+/>
+```
+
+**Key props:** `before` · `after` · `beforeLabel` · `afterLabel` · `initialPosition` (0–100) · `position` (controlled) · `onPositionChange` · `renderMode` · `orientation` ('horizontal' | 'vertical')
+
+### LayerStack
+
+Ordered layer list with visibility toggle, lock toggle, opacity editing, drag-to-reorder, and thumbnail previews. Standard pattern for multi-layer composition workflows.
+
+```tsx
+<LayerStack
+  layers={[
+    { id: 'bg', label: 'Background', visible: true, locked: false, opacity: 100, thumbnail: '/layers/bg.png' },
+    { id: 'chars', label: 'Characters', visible: true, locked: false, opacity: 80 },
+    { id: 'fx', label: 'Effects', visible: false, locked: true, opacity: 50 },
+  ]}
+  selectedId="chars"
+  onSelect={setSelected}
+  onReorder={setLayers}
+  onToggleVisibility={handleToggleVis}
+  onToggleLock={handleToggleLock}
+  onOpacityChange={handleOpacity}
+  onRemove={handleRemove}
+  onAdd={handleAdd}
+  compact={false}
+/>
+```
+
+**Key props:** `layers` (Layer[]) · `selectedId` · `onSelect` · `onReorder` · `onToggleVisibility` · `onToggleLock` · `onOpacityChange` · `onRemove` · `onAdd` · `compact`
+
 ---
 
 ## 12. Common Patterns
