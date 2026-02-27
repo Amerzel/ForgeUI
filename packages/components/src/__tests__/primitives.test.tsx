@@ -6,6 +6,7 @@ import { ThemeProvider } from '../ThemeProvider/index.js'
 import {
   VisuallyHidden, Label, Separator, Spinner, Badge,
   Text, Heading, Kbd, Card, Button, IconButton, AlertDialog,
+  SectionHeader,
 } from '../index.js'
 
 // Wrapper providing theme context for all tests
@@ -326,6 +327,33 @@ describe('AlertDialog', () => {
       <Themed>
         <AlertDialog open={true} onOpenChange={() => {}} title="Confirm action" onConfirm={() => {}} />
       </Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// SectionHeader
+// ---------------------------------------------------------------------------
+describe('SectionHeader', () => {
+  it('renders label text', () => {
+    render(<Themed><SectionHeader>Identity</SectionHeader></Themed>)
+    expect(screen.getByText('Identity')).toBeInTheDocument()
+  })
+
+  it('renders description when provided', () => {
+    render(<Themed><SectionHeader description="Configure entity identity fields.">Identity</SectionHeader></Themed>)
+    expect(screen.getByText('Configure entity identity fields.')).toBeInTheDocument()
+  })
+
+  it('renders action when provided', () => {
+    render(<Themed><SectionHeader action={<button>Edit</button>}>Section</SectionHeader></Themed>)
+    expect(screen.getByRole('button', { name: 'Edit' })).toBeInTheDocument()
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed><SectionHeader description="Help text" action={<button>Go</button>}>Tools</SectionHeader></Themed>
     )
     expect(await axe(container)).toHaveNoViolations()
   })

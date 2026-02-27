@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'vitest-axe'
 import { ThemeProvider } from '../ThemeProvider/index.js'
-import { Alert, Progress, Skeleton, ToastProvider, ToastList } from '../index.js'
+import { Alert, Progress, Skeleton, ToastProvider, ToastList, EmptyState } from '../index.js'
 import type { ToastItem } from '../index.js'
 
 function Themed({ children }: { children: React.ReactNode }) {
@@ -234,5 +234,40 @@ describe('Toast', () => {
       </Themed>
     )
     expect(document.querySelector('.forge-toast')).toBeNull()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// EmptyState
+// ---------------------------------------------------------------------------
+describe('EmptyState', () => {
+  it('renders title', () => {
+    render(<Themed><EmptyState title="No entities" /></Themed>)
+    expect(screen.getByText('No entities')).toBeInTheDocument()
+  })
+
+  it('renders description when provided', () => {
+    render(<Themed><EmptyState title="Empty" description="Create one to get started." /></Themed>)
+    expect(screen.getByText('Create one to get started.')).toBeInTheDocument()
+  })
+
+  it('renders icon when provided', () => {
+    render(<Themed><EmptyState icon="🌍" title="No worlds" /></Themed>)
+    expect(screen.getByText('🌍')).toBeInTheDocument()
+  })
+
+  it('renders action button and fires onClick', async () => {
+    const user = userEvent.setup()
+    const onClick = vi.fn()
+    render(<Themed><EmptyState title="No data" action={{ label: 'Create', onClick }} /></Themed>)
+    await user.click(screen.getByRole('button', { name: 'Create' }))
+    expect(onClick).toHaveBeenCalledOnce()
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed><EmptyState icon="📭" title="Nothing here" description="Start by adding items." action={{ label: 'Add', onClick: () => {} }} /></Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
   })
 })

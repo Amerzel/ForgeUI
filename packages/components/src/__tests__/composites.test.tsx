@@ -16,6 +16,10 @@ import {
   AppShell,
   DropZone,
   Pagination,
+  StatCard,
+  HealthRow,
+  NavItem,
+  ModuleToolbar,
 } from '../index.js'
 import type { Step, BreadcrumbItem, MenubarMenu } from '../index.js'
 
@@ -715,6 +719,179 @@ describe('Pagination', () => {
       <Themed>
         <Pagination page={2} pageSize={10} total={50} onPageChange={() => {}} />
       </Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// StatCard
+// ---------------------------------------------------------------------------
+describe('StatCard', () => {
+  it('renders label and value', () => {
+    render(<Themed><StatCard label="Entities" value={142} /></Themed>)
+    expect(screen.getByText('Entities')).toBeInTheDocument()
+    expect(screen.getByText('142')).toBeInTheDocument()
+  })
+
+  it('renders delta when provided', () => {
+    render(<Themed><StatCard label="Quests" value={38} delta="+3" /></Themed>)
+    expect(screen.getByText('+3')).toBeInTheDocument()
+  })
+
+  it('renders icon when provided', () => {
+    render(<Themed><StatCard label="Level" value={12} icon="⚔️" /></Themed>)
+    expect(screen.getByText('⚔️')).toBeInTheDocument()
+  })
+
+  it('fires onClick when clicked', async () => {
+    const user = userEvent.setup()
+    const onClick = vi.fn()
+    render(<Themed><StatCard label="Zones" value={6} onClick={onClick} /></Themed>)
+    await user.click(screen.getByRole('button'))
+    expect(onClick).toHaveBeenCalledOnce()
+  })
+
+  it('has role=button only when clickable', () => {
+    const { rerender } = render(<Themed><StatCard label="A" value={1} /></Themed>)
+    expect(screen.queryByRole('button')).not.toBeInTheDocument()
+    rerender(<Themed><StatCard label="A" value={1} onClick={() => {}} /></Themed>)
+    expect(screen.getByRole('button')).toBeInTheDocument()
+  })
+
+  it('responds to Enter key when clickable', async () => {
+    const user = userEvent.setup()
+    const onClick = vi.fn()
+    render(<Themed><StatCard label="X" value={0} onClick={onClick} /></Themed>)
+    screen.getByRole('button').focus()
+    await user.keyboard('{Enter}')
+    expect(onClick).toHaveBeenCalledOnce()
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed><StatCard label="Factions" value={7} icon="🛡️" delta="+1" /></Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// HealthRow
+// ---------------------------------------------------------------------------
+describe('HealthRow', () => {
+  it('renders name and detail', () => {
+    render(<Themed><HealthRow name="Entity Store" status="ok" detail="142 artifacts" /></Themed>)
+    expect(screen.getByText('Entity Store')).toBeInTheDocument()
+    expect(screen.getByText('142 artifacts')).toBeInTheDocument()
+  })
+
+  it('renders icon when provided', () => {
+    render(<Themed><HealthRow name="Rules" status="ok" detail="Valid" icon="📐" /></Themed>)
+    expect(screen.getByText('📐')).toBeInTheDocument()
+  })
+
+  it('has status role with accessible label', () => {
+    render(<Themed><HealthRow name="Pipeline" status="error" detail="2 issues" /></Themed>)
+    expect(screen.getByRole('status', { name: 'Pipeline: Error' })).toBeInTheDocument()
+  })
+
+  it('shows spinner for running status', () => {
+    const { container } = render(<Themed><HealthRow name="Build" status="running" detail="Building…" /></Themed>)
+    expect(container.querySelector('svg')).toBeInTheDocument()
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed><HealthRow name="Terrain" status="warn" detail="1 gap" icon="🏔️" /></Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// NavItem
+// ---------------------------------------------------------------------------
+describe('NavItem', () => {
+  it('renders label', () => {
+    render(<Themed><NavItem label="Entities" /></Themed>)
+    expect(screen.getByRole('button', { name: /Entities/ })).toBeInTheDocument()
+  })
+
+  it('renders icon when provided', () => {
+    render(<Themed><NavItem label="Quests" icon="📜" /></Themed>)
+    expect(screen.getByText('📜')).toBeInTheDocument()
+  })
+
+  it('renders count badge when provided', () => {
+    render(<Themed><NavItem label="Entities" count={142} /></Themed>)
+    expect(screen.getByText('142')).toBeInTheDocument()
+  })
+
+  it('sets aria-current=page when active', () => {
+    render(<Themed><NavItem label="Active" active /></Themed>)
+    expect(screen.getByRole('button')).toHaveAttribute('aria-current', 'page')
+  })
+
+  it('fires onClick', async () => {
+    const user = userEvent.setup()
+    const onClick = vi.fn()
+    render(<Themed><NavItem label="Click" onClick={onClick} /></Themed>)
+    await user.click(screen.getByRole('button'))
+    expect(onClick).toHaveBeenCalledOnce()
+  })
+
+  it('is disabled when disabled=true', () => {
+    render(<Themed><NavItem label="Disabled" disabled /></Themed>)
+    expect(screen.getByRole('button')).toBeDisabled()
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed><NavItem label="Entities" icon="👤" active count={42} /></Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// ModuleToolbar
+// ---------------------------------------------------------------------------
+describe('ModuleToolbar', () => {
+  it('renders title', () => {
+    render(<Themed><ModuleToolbar title="Entities" /></Themed>)
+    expect(screen.getByRole('toolbar', { name: 'Entities' })).toBeInTheDocument()
+    expect(screen.getByText('Entities')).toBeInTheDocument()
+  })
+
+  it('renders badge when provided', () => {
+    render(<Themed><ModuleToolbar badge="EA" title="Entities" /></Themed>)
+    expect(screen.getByText('EA')).toBeInTheDocument()
+  })
+
+  it('renders children in middle slot', () => {
+    render(
+      <Themed>
+        <ModuleToolbar title="Entities">
+          <span>View switcher</span>
+        </ModuleToolbar>
+      </Themed>
+    )
+    expect(screen.getByText('View switcher')).toBeInTheDocument()
+  })
+
+  it('renders actions on the right', () => {
+    render(
+      <Themed>
+        <ModuleToolbar title="Entities" actions={<button>Save</button>} />
+      </Themed>
+    )
+    expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument()
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed><ModuleToolbar badge="QF" title="Quests" actions={<button>Add</button>} /></Themed>
     )
     expect(await axe(container)).toHaveNoViolations()
   })

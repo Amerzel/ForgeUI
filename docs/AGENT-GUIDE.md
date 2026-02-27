@@ -920,6 +920,82 @@ Semantic HTML table with ForgeUI styling.
 </AspectRatio>
 ```
 
+### StatCard
+
+KPI card with label, value, optional trend indicator and icon.
+
+```tsx
+<StatCard label="Entities" value={142} delta="+12" icon="👤" color="accent" />
+<StatCard label="Health" value="85%" onClick={() => navigate('/health')} />
+```
+
+**Key props:** `label` · `value` (string | number) · `delta` · `icon` · `color` (accent/info/success/warning/danger) · `onClick`
+
+### HealthRow
+
+Status indicator row for health dashboards and system monitors.
+
+```tsx
+<HealthRow name="Entity Store" status="ok" detail="142 artifacts" icon="👤" />
+<HealthRow name="Asset Pipeline" status="running" detail="Generating…" />
+<HealthRow name="Director" status="error" detail="2 orphan refs" />
+```
+
+**Statuses:** `ok` · `warn` · `error` · `running` · `idle`
+**Key props:** `name` · `status` · `detail` · `icon`
+
+### NavItem
+
+Sidebar navigation button with icon, active state, and optional count badge.
+
+```tsx
+<NavItem label="Entities" icon="👤" active count={142} onClick={…} />
+<NavItem label="Pipeline" icon="🔧" disabled />
+```
+
+**Key props:** `label` · `icon` · `active` · `count` · `disabled` · `onClick`
+
+### ModuleToolbar
+
+Standardized toolbar with badge, title, middle content slot, and right-side actions.
+
+```tsx
+<ModuleToolbar badge="EA" title="Entities" actions={<Button size="sm">+ Entity</Button>}>
+  <Badge style={{ cursor: 'pointer' }}>Catalog</Badge>
+  <Badge variant="subtle" style={{ cursor: 'pointer' }}>Graph</Badge>
+</ModuleToolbar>
+```
+
+**Key props:** `badge` · `title` · `children` (middle slot) · `actions` (right slot)
+
+### SectionHeader
+
+Uppercase muted label for visually separating content sections.
+
+```tsx
+<SectionHeader>Identity</SectionHeader>
+<SectionHeader description="Configure gameplay values." action={<Button size="sm" variant="ghost">Edit</Button>}>
+  Gameplay
+</SectionHeader>
+```
+
+**Key props:** `children` (label text) · `description` · `action`
+
+### EmptyState
+
+Centered empty state with icon, title, description, and call-to-action.
+
+```tsx
+<EmptyState
+  icon="🌍"
+  title="No worlds yet"
+  description="Create your first world to get started."
+  action={{ label: 'Create World', onClick: handleCreate }}
+/>
+```
+
+**Key props:** `icon` · `title` · `description` · `action` ({ label, onClick })
+
 ---
 
 ## 10. Complex / Data Components
