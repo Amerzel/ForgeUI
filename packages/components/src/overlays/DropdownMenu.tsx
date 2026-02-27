@@ -118,8 +118,8 @@ export function DropdownMenu({
           {renderItems(items, portalContainer)}
           <style>{`
             @keyframes forge-dropdown-in {
-              from { opacity: 0; transform: scaleY(0.95); transform-origin: top; }
-              to   { opacity: 1; transform: scaleY(1); }
+              from { opacity: 0; }
+              to   { opacity: 1; }
             }
           `}</style>
         </RadixDropdown.Content>

@@ -69,8 +69,8 @@ export function Popover({
 
       <style>{`
         @keyframes forge-popover-in {
-          from { opacity: 0; transform: scale(0.97); }
-          to   { opacity: 1; transform: scale(1); }
+          from { opacity: 0; }
+          to   { opacity: 1; }
         }
       `}</style>
     </RadixPopover.Root>
