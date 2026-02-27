@@ -60,7 +60,7 @@ export function CommandPalette({
             transform: 'translateX(-50%)',
             width: '100%',
             maxWidth: '560px',
-            zIndex: 'var(--forge-z-dialog)',
+            zIndex: 'var(--forge-z-modal)',
             outline: 'none',
           }}
         >

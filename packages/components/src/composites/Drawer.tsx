@@ -62,7 +62,7 @@ export function Drawer({
           className={cn('forge-drawer', className)}
           style={{
             position: 'fixed',
-            zIndex: 'var(--forge-z-dialog)',
+            zIndex: 'var(--forge-z-modal)',
             backgroundColor: 'var(--forge-surface-popover)',
             boxShadow: 'var(--forge-shadow-xl)',
             display: 'flex',

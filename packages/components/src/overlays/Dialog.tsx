@@ -60,7 +60,7 @@ export function Dialog({
             border: '1px solid var(--forge-border)',
             borderRadius: 'var(--forge-radius-lg)',
             boxShadow: 'var(--forge-shadow-xl)',
-            zIndex: 'var(--forge-z-dialog)',
+            zIndex: 'var(--forge-z-modal)',
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',

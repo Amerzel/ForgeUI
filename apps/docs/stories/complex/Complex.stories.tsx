@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   DataTable, CommandPalette, TreeView, Combobox, ColorPicker,
   TagsInput, PropertyGrid, EditableText, Button, Badge, Text,
@@ -78,14 +78,14 @@ export const DataTableVirtualized: Story = {
   name: 'DataTable — virtualized (10k rows)',
   render: () => {
     const BIG_TYPES = ['Mesh', 'Texture', 'Audio', 'Material'] as const
-    const bigData: Asset[] = Array.from({ length: 10000 }, (_, i) => ({
+    const bigData = useMemo(() => Array.from({ length: 10000 }, (_, i) => ({
       id: String(i),
       name: `asset_${i.toString().padStart(5, '0')}.glb`,
       type: BIG_TYPES[i % BIG_TYPES.length] ?? 'Mesh',
       size: Math.round(((i * 13 + 7) % 2000)) / 100,
       status: 'ready' as const,
       modified: 'Today',
-    }))
+    })), [])
     return (
       <div style={{ height: '480px', display: 'flex', flexDirection: 'column' }}>
         <DataTable columns={ASSET_COLUMNS} data={bigData} sorting virtualized />

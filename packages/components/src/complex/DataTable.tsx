@@ -165,7 +165,7 @@ export function DataTable<TData>({
   return (
     <div
       className={cn('forge-data-table', className)}
-      style={{ display: 'flex', flexDirection: 'column', gap: 'var(--forge-space-2)', position: 'relative' }}
+      style={{ display: 'flex', flexDirection: 'column', gap: 'var(--forge-space-2)', position: 'relative', ...(enableVirtualization ? { flex: '1 1 auto', minHeight: 0, overflow: 'hidden' } : {}) }}
     >
       {/* Column filter inputs */}
       {enableFiltering && (
@@ -202,7 +202,7 @@ export function DataTable<TData>({
       {/* Table */}
       <div
         ref={containerRef}
-        style={{ overflowX: 'auto', overflowY: enableVirtualization ? 'auto' : undefined, position: 'relative' }}
+        style={{ overflowX: 'auto', overflowY: enableVirtualization ? 'auto' : undefined, position: 'relative', ...(enableVirtualization ? { flex: '1 1 auto', minHeight: 0 } : {}) }}
       >
         {/* Loading overlay */}
         {loading && (
