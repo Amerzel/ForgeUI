@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/react'
 import { createElement } from 'react'
 import { ThemeProvider } from '@forgeui/components/ThemeProvider'
+import { TooltipProvider } from '@forgeui/components'
 import '@forgeui/tokens/tokens.css'
 import '../styles/base-import.css'
 
@@ -49,9 +50,13 @@ const preview: Preview = {
           palette,
           mode,
           children: createElement(
-            'div',
-            { style: { minHeight: '100vh', backgroundColor: 'var(--forge-bg)', padding: '1rem', boxSizing: 'border-box' } },
-            createElement(Story),
+            TooltipProvider,
+            { delayDuration: 400 },
+            createElement(
+              'div',
+              { style: { minHeight: '100vh', backgroundColor: 'var(--forge-bg)', padding: '1rem', boxSizing: 'border-box' } },
+              createElement(Story),
+            ),
           ),
         },
       )
