@@ -4,6 +4,7 @@ import tsParser from '@typescript-eslint/parser'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
+import globals from 'globals'
 
 export default [
   {
@@ -23,6 +24,9 @@ export default [
       parserOptions: {
         project: true,
         tsconfigRootDir: import.meta.dirname,
+      },
+      globals: {
+        ...globals.browser,
       },
     },
     plugins: {
@@ -56,13 +60,28 @@ export default [
 
       // General
       'no-console': ['warn', { allow: ['warn', 'error'] }],
+      // TypeScript handles no-undef better than ESLint (supports JSX transform, types, etc.)
+      'no-undef': 'off',
     },
   },
   {
-    // Relax rules for config files and scripts
-    files: ['**/*.config.ts', '**/*.config.js', '**/scripts/**'],
+    // Disable type-checked rules for files not included in tsconfig
+    files: [
+      '**/*.config.ts',
+      '**/*.config.js',
+      '**/scripts/**',
+      '**/__tests__/**',
+      '**/test-setup.ts',
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: false,
+      },
+    },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      // Disable all type-checked rules (they require project)
+      ...tsPlugin.configs['disable-type-checked'].rules,
     },
   },
 ]
