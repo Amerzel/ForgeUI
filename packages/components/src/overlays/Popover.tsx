@@ -1,4 +1,5 @@
 import * as RadixPopover from '@radix-ui/react-popover'
+import { usePortalContainer } from '@forgeui/hooks'
 import { cn } from '../lib/cn.js'
 
 type PopoverSide = 'top' | 'right' | 'bottom' | 'left'
@@ -28,13 +29,14 @@ export function Popover({
   width = 'auto',
   className,
 }: PopoverProps) {
+  const portalContainer = usePortalContainer()
   return (
     <RadixPopover.Root open={open} onOpenChange={onOpenChange}>
       <RadixPopover.Trigger asChild>
         {trigger}
       </RadixPopover.Trigger>
 
-      <RadixPopover.Portal>
+      <RadixPopover.Portal container={portalContainer}>
         <RadixPopover.Content
           side={side}
           align={align}

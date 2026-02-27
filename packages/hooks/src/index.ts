@@ -11,6 +11,7 @@
 export { useTheme } from './useTheme.js'
 export { useTokens } from './useTokens.js'
 export { ThemeContext } from './ThemeContext.js'
+export { PortalContainerContext, usePortalContainer } from './PortalContainerContext.js'
 
 export type { UseThemeResult } from './useTheme.js'
 export type { UseTokensResult } from './useTokens.js'

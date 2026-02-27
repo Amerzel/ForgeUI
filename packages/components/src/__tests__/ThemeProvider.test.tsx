@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { ThemeProvider } from '../ThemeProvider/index.js'
-import { useTheme, useTokens } from '@forgeui/hooks'
+import { useTheme, useTokens, usePortalContainer } from '@forgeui/hooks'
 
 // Helper consumer component that reads context
 function ThemeDisplay() {
@@ -106,5 +106,30 @@ describe('ThemeProvider', () => {
     expect(wrapper).toHaveAttribute('data-theme', 'dark')
     await user.click(screen.getByText('switch mode'))
     expect(wrapper).toHaveAttribute('data-theme', 'light')
+  })
+
+  it('provides portal container via usePortalContainer()', () => {
+    function PortalContainerDisplay() {
+      const container = usePortalContainer()
+      return <span data-testid="has-container">{container ? 'yes' : 'no'}</span>
+    }
+    const { container } = render(
+      <ThemeProvider>
+        <PortalContainerDisplay />
+      </ThemeProvider>,
+    )
+    expect(screen.getByTestId('has-container')).toHaveTextContent('yes')
+    // The portal container should be the ThemeProvider wrapper div
+    const wrapper = container.firstChild as HTMLElement
+    expect(wrapper).toHaveAttribute('data-forge-provider')
+  })
+
+  it('returns undefined from usePortalContainer() without ThemeProvider', () => {
+    function PortalContainerDisplay() {
+      const container = usePortalContainer()
+      return <span data-testid="has-container">{container ? 'yes' : 'no'}</span>
+    }
+    render(<PortalContainerDisplay />)
+    expect(screen.getByTestId('has-container')).toHaveTextContent('no')
   })
 })

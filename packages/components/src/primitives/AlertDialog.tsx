@@ -1,4 +1,5 @@
 import * as RadixAlertDialog from '@radix-ui/react-alert-dialog'
+import { usePortalContainer } from '@forgeui/hooks'
 import { Button } from './Button.js'
 
 interface AlertDialogProps {
@@ -36,6 +37,7 @@ export function AlertDialog({
   onCancel,
   destructive = false,
 }: AlertDialogProps) {
+  const portalContainer = usePortalContainer()
   const handleCancel = () => {
     onCancel?.()
     onOpenChange(false)
@@ -48,7 +50,7 @@ export function AlertDialog({
 
   return (
     <RadixAlertDialog.Root open={open} onOpenChange={onOpenChange}>
-      <RadixAlertDialog.Portal>
+      <RadixAlertDialog.Portal container={portalContainer}>
         <RadixAlertDialog.Overlay
           style={{
             position: 'fixed',

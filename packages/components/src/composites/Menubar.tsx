@@ -1,4 +1,5 @@
 import * as RadixMenubar from '@radix-ui/react-menubar'
+import { usePortalContainer } from '@forgeui/hooks'
 import { cn } from '../lib/cn.js'
 import { MENU_CONTENT_STYLE, MENU_ITEM_BASE } from '../overlays/Menu.js'
 import type { MenuEntry } from '../overlays/Menu.js'
@@ -13,7 +14,7 @@ interface MenubarProps {
   className?: string
 }
 
-function renderItems(items: MenuEntry[]) {
+function renderItems(items: MenuEntry[], portalContainer: HTMLElement | undefined) {
   return items.map((entry, i) => {
     if (entry.type === 'separator') {
       return (
@@ -42,9 +43,9 @@ function renderItems(items: MenuEntry[]) {
               <path d="M4 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </RadixMenubar.SubTrigger>
-          <RadixMenubar.Portal>
+          <RadixMenubar.Portal container={portalContainer}>
             <RadixMenubar.SubContent style={MENU_CONTENT_STYLE} sideOffset={2} alignOffset={-4}>
-              {renderItems(sub.items)}
+              {renderItems(sub.items, portalContainer)}
             </RadixMenubar.SubContent>
           </RadixMenubar.Portal>
         </RadixMenubar.Sub>
@@ -82,6 +83,7 @@ function renderItems(items: MenuEntry[]) {
 }
 
 export function Menubar({ menus, className }: MenubarProps) {
+  const portalContainer = usePortalContainer()
   return (
     <RadixMenubar.Root
       className={cn('forge-menubar', className)}
@@ -120,9 +122,9 @@ export function Menubar({ menus, className }: MenubarProps) {
           >
             {menu.label}
           </RadixMenubar.Trigger>
-          <RadixMenubar.Portal>
+          <RadixMenubar.Portal container={portalContainer}>
             <RadixMenubar.Content style={MENU_CONTENT_STYLE} align="start" sideOffset={4}>
-              {renderItems(menu.items)}
+              {renderItems(menu.items, portalContainer)}
             </RadixMenubar.Content>
           </RadixMenubar.Portal>
         </RadixMenubar.Menu>

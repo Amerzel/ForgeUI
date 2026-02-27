@@ -1,4 +1,5 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
+import { usePortalContainer } from '@forgeui/hooks'
 import { cn } from '../lib/cn.js'
 
 interface DialogProps {
@@ -27,11 +28,12 @@ export function Dialog({
   fullHeight = false,
   className,
 }: DialogProps) {
+  const portalContainer = usePortalContainer()
   return (
     <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
       {trigger && <RadixDialog.Trigger asChild>{trigger}</RadixDialog.Trigger>}
 
-      <RadixDialog.Portal>
+      <RadixDialog.Portal container={portalContainer}>
         {/* Overlay */}
         <RadixDialog.Overlay
           style={{

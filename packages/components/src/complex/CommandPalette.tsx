@@ -1,4 +1,5 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
+import { usePortalContainer } from '@forgeui/hooks'
 import { Command } from 'cmdk'
 import { cn } from '../lib/cn.js'
 
@@ -36,9 +37,10 @@ export function CommandPalette({
   empty = 'No results found.',
   className,
 }: CommandPaletteProps) {
+  const portalContainer = usePortalContainer()
   return (
     <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
-      <RadixDialog.Portal>
+      <RadixDialog.Portal container={portalContainer}>
         <RadixDialog.Overlay
           style={{
             position: 'fixed',

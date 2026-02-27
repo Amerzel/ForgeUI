@@ -1,4 +1,5 @@
 import * as RadixContextMenu from '@radix-ui/react-context-menu'
+import { usePortalContainer } from '@forgeui/hooks'
 import { cn } from '../lib/cn.js'
 import { MENU_CONTENT_STYLE, MENU_ITEM_BASE } from './Menu.js'
 import type { MenuEntry } from './Menu.js'
@@ -10,7 +11,7 @@ interface ContextMenuProps {
   className?: string
 }
 
-function renderItems(items: MenuEntry[]) {
+function renderItems(items: MenuEntry[], portalContainer: HTMLElement | undefined) {
   return items.map((entry, i) => {
     if (entry.type === 'separator') {
       return (
@@ -43,9 +44,9 @@ function renderItems(items: MenuEntry[]) {
               <path d="M4 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </RadixContextMenu.SubTrigger>
-          <RadixContextMenu.Portal>
+          <RadixContextMenu.Portal container={portalContainer}>
             <RadixContextMenu.SubContent style={MENU_CONTENT_STYLE} sideOffset={2} alignOffset={-4}>
-              {renderItems(sub.items)}
+              {renderItems(sub.items, portalContainer)}
             </RadixContextMenu.SubContent>
           </RadixContextMenu.Portal>
         </RadixContextMenu.Sub>
@@ -89,18 +90,19 @@ function renderItems(items: MenuEntry[]) {
 }
 
 export function ContextMenu({ children, items, className }: ContextMenuProps) {
+  const portalContainer = usePortalContainer()
   return (
     <RadixContextMenu.Root>
       <RadixContextMenu.Trigger asChild>
         {children}
       </RadixContextMenu.Trigger>
 
-      <RadixContextMenu.Portal>
+      <RadixContextMenu.Portal container={portalContainer}>
         <RadixContextMenu.Content
           className={cn('forge-context-menu', className)}
           style={MENU_CONTENT_STYLE}
         >
-          {renderItems(items)}
+          {renderItems(items, portalContainer)}
         </RadixContextMenu.Content>
       </RadixContextMenu.Portal>
     </RadixContextMenu.Root>

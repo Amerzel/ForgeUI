@@ -1,4 +1,5 @@
 import * as RadixSelect from '@radix-ui/react-select'
+import { usePortalContainer } from '@forgeui/hooks'
 import { cn } from '../lib/cn.js'
 
 type SelectSize = 'sm' | 'md' | 'lg'
@@ -61,6 +62,7 @@ export function Select({
   id,
   className,
 }: SelectProps) {
+  const portalContainer = usePortalContainer()
   return (
     <RadixSelect.Root value={value} onValueChange={onValueChange} disabled={disabled}>
       <RadixSelect.Trigger
@@ -100,7 +102,7 @@ export function Select({
         </RadixSelect.Icon>
       </RadixSelect.Trigger>
 
-      <RadixSelect.Portal>
+      <RadixSelect.Portal container={portalContainer}>
         <RadixSelect.Content
           style={{
             overflow: 'hidden',

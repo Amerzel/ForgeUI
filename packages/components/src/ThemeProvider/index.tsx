@@ -1,5 +1,6 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import { ThemeContext } from '@forgeui/hooks'
+import { PortalContainerContext } from '@forgeui/hooks'
 import { resolveTokens } from '@forgeui/hooks'
 import type { Palette, Mode } from '@forgeui/tokens'
 import type { ExtensionTokens } from '@forgeui/hooks'
@@ -43,6 +44,10 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
   const [palette, setPalette] = useState<Palette>(paletteProp)
   const [mode, setMode] = useState<Mode>(modeProp)
+  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null)
+  const containerRef = useCallback((node: HTMLElement | null) => {
+    setPortalContainer(node)
+  }, [])
 
   // Sync controlled props into state when parent changes them
   useEffect(() => { setPalette(paletteProp) }, [paletteProp])
@@ -66,14 +71,17 @@ export function ThemeProvider({
 
   return (
     <ThemeContext value={contextValue}>
-      <div
-        data-palette={palette}
-        data-theme={mode}
-        data-forge-provider=""
-        style={extensionStyle}
-      >
-        {children}
-      </div>
+      <PortalContainerContext value={portalContainer}>
+        <div
+          ref={containerRef}
+          data-palette={palette}
+          data-theme={mode}
+          data-forge-provider=""
+          style={extensionStyle}
+        >
+          {children}
+        </div>
+      </PortalContainerContext>
     </ThemeContext>
   )
 }
