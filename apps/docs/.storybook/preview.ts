@@ -54,7 +54,7 @@ const preview: Preview = {
             { delayDuration: 400 },
             createElement(
               'div',
-              { style: { minHeight: '100vh', backgroundColor: 'var(--forge-bg)', padding: '1rem', boxSizing: 'border-box' } },
+              { style: { backgroundColor: 'var(--forge-bg)', padding: '1rem', boxSizing: 'border-box' } },
               createElement(Story),
             ),
           ),
