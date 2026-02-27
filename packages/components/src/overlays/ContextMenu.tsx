@@ -1,7 +1,7 @@
 import * as RadixContextMenu from '@radix-ui/react-context-menu'
 import { cn } from '../lib/cn.js'
 import { MENU_CONTENT_STYLE, MENU_ITEM_BASE } from './Menu.js'
-import type { MenuEntry, MenuItem, MenuSubItem } from './Menu.js'
+import type { MenuEntry } from './Menu.js'
 
 interface ContextMenuProps {
   /** The area that triggers the context menu on right-click */
@@ -22,7 +22,7 @@ function renderItems(items: MenuEntry[]) {
     }
 
     if (entry.type === 'sub') {
-      const sub = entry as MenuSubItem
+      const sub = entry
       return (
         <RadixContextMenu.Sub key={i}>
           <RadixContextMenu.SubTrigger
@@ -52,7 +52,7 @@ function renderItems(items: MenuEntry[]) {
       )
     }
 
-    const item = entry as MenuItem
+    const item = entry
     const isDanger = item.variant === 'danger'
     return (
       <RadixContextMenu.Item

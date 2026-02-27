@@ -1,5 +1,5 @@
 import * as RadixTooltip from '@radix-ui/react-tooltip'
-import { cn } from '../lib/cn.js'
+
 
 type TooltipSide = 'top' | 'right' | 'bottom' | 'left'
 

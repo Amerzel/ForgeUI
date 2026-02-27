@@ -1,7 +1,7 @@
 import * as RadixDropdown from '@radix-ui/react-dropdown-menu'
 import { cn } from '../lib/cn.js'
 import { MENU_CONTENT_STYLE, MENU_ITEM_BASE } from './Menu.js'
-import type { MenuEntry, MenuItem, MenuSubItem } from './Menu.js'
+import type { MenuEntry } from './Menu.js'
 
 interface DropdownMenuProps {
   trigger: React.ReactNode
@@ -25,7 +25,7 @@ function renderItems(items: MenuEntry[]) {
     }
 
     if (entry.type === 'sub') {
-      const sub = entry as MenuSubItem
+      const sub = entry
       return (
         <RadixDropdown.Sub key={i}>
           <RadixDropdown.SubTrigger
@@ -55,7 +55,7 @@ function renderItems(items: MenuEntry[]) {
       )
     }
 
-    const item = entry as MenuItem
+    const item = entry
     const isDanger = item.variant === 'danger'
     return (
       <RadixDropdown.Item

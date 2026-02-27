@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import {
-  VisuallyHidden, Label, Separator, Spinner, Badge,
+  Label, Separator, Spinner, Badge,
   Text, Heading, Kbd, Card, IconButton, AlertDialog, ScrollArea,
 } from '@forgeui/components'
 import { useState } from 'react'

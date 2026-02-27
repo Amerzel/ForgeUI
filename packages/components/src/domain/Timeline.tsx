@@ -40,7 +40,7 @@ function formatTime(seconds: number): string {
   return `${m}:${String(s).padStart(2, '0')}.${f}`
 }
 
-function Ruler({ duration, zoom, scrollLeft }: { duration: number; zoom: number; scrollLeft: number }) {
+function Ruler({ duration, zoom, scrollLeft: _scrollLeft }: { duration: number; zoom: number; scrollLeft: number }) {
   const totalWidth = duration * zoom
   // Tick interval: aim for ~60-80px between ticks
   const rawInterval = 80 / zoom
@@ -85,7 +85,7 @@ interface ClipBlockProps {
   onResizeEnd: (duration: number) => void
 }
 
-function ClipBlock({ clip, zoom, trackHeight, onDragEnd, onResizeEnd }: ClipBlockProps) {
+function ClipBlock({ clip, zoom, trackHeight: _trackHeight, onDragEnd, onResizeEnd }: ClipBlockProps) {
   const dragRef = useRef<{ startX: number; originalStart: number } | null>(null)
   const resizeRef = useRef<{ startX: number; originalDuration: number } | null>(null)
 
@@ -118,7 +118,7 @@ function ClipBlock({ clip, zoom, trackHeight, onDragEnd, onResizeEnd }: ClipBloc
     resizeRef.current = { startX: e.clientX, originalDuration: clip.duration }
   }
 
-  const handleResizePointerMove = (e: React.PointerEvent) => {
+  const handleResizePointerMove = (_e: React.PointerEvent) => {
     if (!resizeRef.current) return
     // propagation handled on wrapper
   }
@@ -329,6 +329,7 @@ export function Timeline({
         >
           <div style={{ width: `${totalWidth}px`, position: 'relative' }}>
             {/* Ruler */}
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <div
               style={{ height: `${RULER_HEIGHT}px`, borderBottom: '1px solid var(--forge-border)', position: 'sticky', top: 0, zIndex: 2, backgroundColor: 'var(--forge-surface)', cursor: 'pointer' }}
               onClick={handleRulerClick}

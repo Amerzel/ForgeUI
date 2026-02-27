@@ -76,7 +76,7 @@ function hsvToRgb({ h, s, v, a }: HSV): RGB {
   return { r: r * 255, g: g * 255, b: b * 255, a }
 }
 
-function rgbToHsl({ r, g, b, a }: RGB): string {
+function rgbToHsl({ r, g, b, a: _a }: RGB): string {
   const rr = r / 255, gg = g / 255, bb = b / 255
   const max = Math.max(rr, gg, bb), min = Math.min(rr, gg, bb)
   const l = (max + min) / 2
@@ -124,7 +124,8 @@ function SaturationPicker({ hsv, onChange }: { hsv: HSV; onChange: (s: number, v
   const dragging = useRef(false)
 
   const getCoords = (e: PointerEvent | React.PointerEvent) => {
-    const rect = ref.current!.getBoundingClientRect()
+    const rect = ref.current?.getBoundingClientRect()
+    if (!rect) return { s: 0, v: 0 }
     const s = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
     const v = Math.max(0, Math.min(1, 1 - (e.clientY - rect.top) / rect.height))
     return { s, v }
@@ -207,7 +208,8 @@ function Slider1D({
   const dragging = useRef(false)
 
   const getVal = (e: PointerEvent | React.PointerEvent) => {
-    const rect = ref.current!.getBoundingClientRect()
+    const rect = ref.current?.getBoundingClientRect()
+    if (!rect) return 0
     return Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
   }
 

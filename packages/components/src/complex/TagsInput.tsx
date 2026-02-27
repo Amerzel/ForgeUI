@@ -72,6 +72,7 @@ export function TagsInput({
   const atMax = max !== undefined && value.length >= max
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
     <div
       className={cn('forge-tags-input', className)}
       style={{

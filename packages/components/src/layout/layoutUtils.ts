@@ -3,7 +3,7 @@
  * Converts shorthand prop values into CSS custom property references.
  */
 
-export type SpaceValue = number | 'px' | string
+export type SpaceValue = number | string
 
 const SPACE_SCALE = new Set([0, 0.5, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64])
 

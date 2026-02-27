@@ -134,7 +134,6 @@ describe('TagsInput', () => {
 
   it('respects max prop', async () => {
     const onChange = vi.fn()
-    const user = userEvent.setup()
     render(
       <Themed>
         <TagsInput value={['a', 'b']} onChange={onChange} max={2} />

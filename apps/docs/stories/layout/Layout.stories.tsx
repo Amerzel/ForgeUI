@@ -64,7 +64,7 @@ export const BoxTokenProps: Story = {
         ))}
       </Flex>
 
-      <Text weight="semibold">Polymorphic — as="section"</Text>
+      <Text weight="semibold">Polymorphic — as=&quot;section&quot;</Text>
       <Box as="section" p={4} bg="surface" radius="md" style={{ border: '1px solid var(--forge-border)' }}>
         <Text size="sm">Rendered as &lt;section&gt;</Text>
       </Box>
@@ -199,7 +199,7 @@ export const GridStory: Story = {
       </div>
 
       <div>
-        <Text size="sm" color="muted">Custom template: "300px 1fr 360px" (inspector layout)</Text>
+        <Text size="sm" color="muted">Custom template: &quot;300px 1fr 360px&quot; (inspector layout)</Text>
         <Grid columns="300px 1fr 360px" gap={2} style={{ marginTop: 8 }}>
           <Block label="Sidebar (300px)" color="surface" />
           <Block label="Canvas (1fr)" color="surface-raised" />
@@ -268,9 +268,9 @@ export const ContainerStory: Story = {
     <Stack gap={6} p={4}>
       {(['sm', 'md', 'lg'] as const).map(size => (
         <div key={size}>
-          <Text size="sm" color="muted">size="{size}"</Text>
+          <Text size="sm" color="muted">size=&quot;{size}&quot;</Text>
           <Container size={size} style={{ marginTop: 8, background: 'var(--forge-surface)', border: '1px solid var(--forge-border)', borderRadius: 4, padding: 12 }}>
-            <Text size="sm">Container size="{size}"</Text>
+            <Text size="sm">Container size=&quot;{size}&quot;</Text>
           </Container>
         </div>
       ))}
@@ -303,7 +303,7 @@ export const SimpleGridStory: Story = {
       </div>
 
       <div>
-        <Text size="sm" color="muted">minChildWidth="200px" (auto-fit)</Text>
+        <Text size="sm" color="muted">minChildWidth=&quot;200px&quot; (auto-fit)</Text>
         <SimpleGrid minChildWidth="200px" spacing={3} style={{ marginTop: 8 }}>
           {Array.from({ length: 5 }, (_, i) => (
             <Block key={i} label={`Item ${i + 1}`} />

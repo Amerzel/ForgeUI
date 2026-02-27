@@ -174,7 +174,7 @@ export const ThreePanelEditor: Story = {
                     content: (
                       <Stack gap={3}>
                         <Text color="muted" size="sm">
-                          Krag the Ironback leads the largest goblin clan in Eldenmoor's eastern marshes.
+                          Krag the Ironback leads the largest goblin clan in Eldenmoor&apos;s eastern marshes.
                           Born from the ashes of the Sunguard conflict, he has united three rival clans
                           under a single banner through fear, cunning, and an unnatural resistance to fire.
                         </Text>
@@ -696,7 +696,7 @@ export const LayoutPrimitivesReference: Story = {
             <Heading level={2} size="lg">Box — the base unit</Heading>
             <Text size="sm" color="muted">
               Every layout primitive is built on Box. Use it when you need padding, background,
-              radius, or a custom HTML element — but don't need flex/grid behaviour.
+              radius, or a custom HTML element — but don&apos;t need flex/grid behaviour.
             </Text>
             <Flex gap={3} wrap="wrap">
               <Box p={4} bg="surface" radius="md" style={{ border: '1px solid var(--forge-border)' }}>
@@ -706,7 +706,7 @@ export const LayoutPrimitivesReference: Story = {
                 <Text size="sm" style={{ color: 'var(--forge-text-on-accent)' }}>px=6 py=2 bg=accent radius=full</Text>
               </Box>
               <Box as="section" p={3} bg="surface-raised" radius="sm" style={{ border: '1px solid var(--forge-border)' }}>
-                <Text size="sm">as="section" (polymorphic)</Text>
+                <Text size="sm">as=&quot;section&quot; (polymorphic)</Text>
               </Box>
             </Flex>
           </Stack>
@@ -793,7 +793,7 @@ export const LayoutPrimitivesReference: Story = {
             <Heading level={2} size="lg">SimpleGrid — equal columns</Heading>
             <Text size="sm" color="muted">
               Shorthand for equal-width grid layouts. Use minChildWidth for
-              responsive auto-fit grids that don't need explicit breakpoints.
+              responsive auto-fit grids that don&apos;t need explicit breakpoints.
             </Text>
             <SimpleGrid minChildWidth="180px" spacing={3}>
               {['Entities', 'Quests', 'Factions', 'Locations', 'Events'].map(label => (

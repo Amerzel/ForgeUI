@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useId } from 'react'
 import { Command } from 'cmdk'
 import { cn } from '../lib/cn.js'
 
@@ -52,6 +52,7 @@ export function Combobox({
   const [open, setOpen] = useState(false)
   const [internalSearch, setInternalSearch] = useState('')
   const containerRef = useRef<HTMLDivElement>(null)
+  const listboxId = useId()
 
   const search = controlledSearch ?? internalSearch
   const setSearch = (v: string) => {
@@ -87,6 +88,7 @@ export function Combobox({
         type="button"
         role="combobox"
         aria-expanded={open}
+        aria-controls={listboxId}
         aria-haspopup="listbox"
         aria-label={selectedOption?.label ?? placeholder}
         aria-disabled={disabled}
@@ -138,7 +140,7 @@ export function Combobox({
                 outline: 'none',
               }}
             />
-            <Command.List style={{ maxHeight: '200px', overflowY: 'auto', padding: 'var(--forge-space-1)' }}>
+            <Command.List id={listboxId} style={{ maxHeight: '200px', overflowY: 'auto', padding: 'var(--forge-space-1)' }}>
               {loading && (
                 <Command.Loading>
                   <div style={{ padding: 'var(--forge-space-3)', textAlign: 'center', color: 'var(--forge-text-muted)', fontSize: 'var(--forge-font-size-sm)' }}>

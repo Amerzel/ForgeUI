@@ -4,7 +4,6 @@ import {
   Background,
   Controls,
   MiniMap,
-  Panel,
   type Node,
   type Edge,
   type OnConnect,

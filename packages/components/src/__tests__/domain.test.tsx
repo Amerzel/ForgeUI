@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'vitest-axe'
 import { ThemeProvider } from '../ThemeProvider/index.js'
@@ -171,7 +171,8 @@ describe('VirtualCanvas', () => {
     )
     const node = screen.getByText('Node A').closest('[data-canvas-item-id]')
     expect(node).toBeInTheDocument()
-    await user.click(node!)
+    expect(node).not.toBeNull()
+    await user.click(node as HTMLElement)
     expect(node).toHaveAttribute('data-selected', 'true')
   })
 

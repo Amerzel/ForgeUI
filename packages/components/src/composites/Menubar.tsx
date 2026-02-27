@@ -1,7 +1,7 @@
 import * as RadixMenubar from '@radix-ui/react-menubar'
 import { cn } from '../lib/cn.js'
 import { MENU_CONTENT_STYLE, MENU_ITEM_BASE } from '../overlays/Menu.js'
-import type { MenuEntry, MenuItem, MenuSubItem } from '../overlays/Menu.js'
+import type { MenuEntry } from '../overlays/Menu.js'
 
 export interface MenubarMenu {
   label: string
@@ -25,7 +25,7 @@ function renderItems(items: MenuEntry[]) {
     }
 
     if (entry.type === 'sub') {
-      const sub = entry as MenuSubItem
+      const sub = entry
       return (
         <RadixMenubar.Sub key={i}>
           <RadixMenubar.SubTrigger
@@ -51,7 +51,7 @@ function renderItems(items: MenuEntry[]) {
       )
     }
 
-    const item = entry as MenuItem
+    const item = entry
     const isDanger = item.variant === 'danger'
     return (
       <RadixMenubar.Item

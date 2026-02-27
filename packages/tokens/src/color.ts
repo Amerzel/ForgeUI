@@ -15,9 +15,9 @@
 function parseHex(hex: string): [number, number, number] {
   const h = hex.replace('#', '')
   if (h.length === 3) {
-    const r = parseInt(h[0]! + h[0]!, 16)
-    const g = parseInt(h[1]! + h[1]!, 16)
-    const b = parseInt(h[2]! + h[2]!, 16)
+    const r = parseInt((h[0] ?? '') + (h[0] ?? ''), 16)
+    const g = parseInt((h[1] ?? '') + (h[1] ?? ''), 16)
+    const b = parseInt((h[2] ?? '') + (h[2] ?? ''), 16)
     if (isNaN(r) || isNaN(g) || isNaN(b)) throw new Error(`Invalid hex color: ${hex}`)
     return [r, g, b]
   }

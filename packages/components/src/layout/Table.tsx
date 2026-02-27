@@ -8,15 +8,15 @@ interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   className?: string
 }
 
-interface TableHeaderProps extends React.HTMLAttributes<HTMLTableSectionElement> {}
-interface TableBodyProps extends React.HTMLAttributes<HTMLTableSectionElement> {}
-interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {}
+type TableHeaderProps = React.HTMLAttributes<HTMLTableSectionElement>
+type TableBodyProps = React.HTMLAttributes<HTMLTableSectionElement>
+type TableRowProps = React.HTMLAttributes<HTMLTableRowElement>
 interface TableHeadProps extends React.ThHTMLAttributes<HTMLTableCellElement> {
   /** Sort direction for sortable headers */
   sortDirection?: 'asc' | 'desc' | false
   onSort?: () => void
 }
-interface TableCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {}
+type TableCellProps = React.TdHTMLAttributes<HTMLTableCellElement>
 
 function TableRoot({ className, children, ...props }: TableProps) {
   return (

@@ -300,11 +300,11 @@ describe('AspectRatio', () => {
     render(
       <Themed>
         <AspectRatio ratio={16 / 9}>
-          <img src="test.png" alt="Wide image" />
+          <img src="test.png" alt="Wide landscape" />
         </AspectRatio>
       </Themed>
     )
-    expect(screen.getByAltText('Wide image')).toBeInTheDocument()
+    expect(screen.getByAltText('Wide landscape')).toBeInTheDocument()
   })
 
   it('has no axe violations', async () => {

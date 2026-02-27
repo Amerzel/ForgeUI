@@ -43,24 +43,24 @@ const STEPS = Object.keys(STEP_POSITIONS)
 // ---------------------------------------------------------------------------
 
 function interpolateScale(anchors: { '50': string; '500': string; '950': string }): Record<string, string> {
-  const pos50 = STEP_POSITIONS['50']!
-  const pos500 = STEP_POSITIONS['500']!
-  const pos950 = STEP_POSITIONS['950']!
+  const pos50 = STEP_POSITIONS['50'] ?? 0
+  const pos500 = STEP_POSITIONS['500'] ?? 0.474
+  const pos950 = STEP_POSITIONS['950'] ?? 1.0
 
   // Build two interpolators: 50→500 and 500→950
   const lower = interpolate(
-    [anchors['50'], anchors['500']].map((h) => oklch(parse(h)!)),
+    [anchors['50'], anchors['500']].map((h) => { const c = parse(h); if (!c) throw new Error(`Invalid color: ${h}`); return oklch(c) }),
     'oklch',
   )
   const upper = interpolate(
-    [anchors['500'], anchors['950']].map((h) => oklch(parse(h)!)),
+    [anchors['500'], anchors['950']].map((h) => { const c = parse(h); if (!c) throw new Error(`Invalid color: ${h}`); return oklch(c) }),
     'oklch',
   )
 
   const result: Record<string, string> = {}
 
   for (const step of STEPS) {
-    const pos = STEP_POSITIONS[step]!
+    const pos = STEP_POSITIONS[step] ?? 0
     let color: ReturnType<typeof lower>
 
     if (pos <= pos500) {
@@ -213,7 +213,7 @@ for (const hue of HUES) {
 
 let grayTs = '// AUTO-GENERATED — do not edit by hand.\n\n'
 for (const palette of GRAY_PALETTES) {
-  const varName = `gray${palette.name.split('-').map((w) => w[0]!.toUpperCase() + w.slice(1)).join('')}Scale`
+  const varName = `gray${palette.name.split('-').map((w) => (w[0] ?? '').toUpperCase() + w.slice(1)).join('')}Scale`
   grayTs += scaleToTs(palette.steps, varName) + '\n'
 }
 writeFileSync(join(srcDir, 'gray.ts'), grayTs)

@@ -38,7 +38,7 @@ const VARIANT_STYLE: Record<ToastVariant, { border: string; icon: string }> = {
  * Wrap your app (or relevant subtree) with ToastProvider.
  * Render <ToastList> somewhere near the root to display toasts.
  */
-export function ToastProvider({ children, maxToasts = 5 }: ToastProviderProps) {
+export function ToastProvider({ children, maxToasts: _maxToasts = 5 }: ToastProviderProps) {
   return (
     <RadixToast.Provider swipeDirection="right" duration={4000}>
       {children}

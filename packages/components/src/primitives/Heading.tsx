@@ -37,7 +37,7 @@ export function Heading({
   style,
   ...props
 }: HeadingProps) {
-  const Tag = asChild ? Slot : (`h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6')
+  const Tag = asChild ? Slot : `h${level}`
   return (
     <Tag
       className={cn('forge-heading', className)}

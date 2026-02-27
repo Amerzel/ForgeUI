@@ -11,7 +11,7 @@ export interface GridColProps extends HTMLAttributes<HTMLDivElement> {
    * Number of columns to span (1–12), or 'auto', or a raw CSS grid-column value.
    * e.g. span={4} → 'span 4 / span 4'
    */
-  span?: number | 'auto' | string
+  span?: number | string
   /** Column offset (number of columns to skip before this one) */
   offset?: number
   /** Row span */

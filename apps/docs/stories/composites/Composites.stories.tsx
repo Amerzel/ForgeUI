@@ -3,8 +3,8 @@ import { useState } from 'react'
 import {
   Drawer, Collapsible, Toolbar, Steps, Avatar, AspectRatio,
   Breadcrumb, Menubar, Table, AppShell, ResizablePanelGroup,
-  ResizablePanel, DropZone, Pagination, Button, IconButton,
-  Badge, Text, Heading,
+  ResizablePanel, DropZone, Pagination, Button,
+  Badge, Text,
 } from '@forgeui/components'
 import type { Step, MenubarMenu, BreadcrumbItem } from '@forgeui/components'
 

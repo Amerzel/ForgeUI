@@ -117,7 +117,7 @@ export function DropZone({
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
       onClick={() => !disabled && inputRef.current?.click()}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); !disabled && inputRef.current?.click() } }}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!disabled) { inputRef.current?.click() } } }}
       onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'; e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)' }}
       onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
     >

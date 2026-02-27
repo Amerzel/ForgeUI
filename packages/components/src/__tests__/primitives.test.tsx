@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'vitest-axe'
 import { ThemeProvider } from '../ThemeProvider/index.js'
@@ -304,8 +304,7 @@ describe('AlertDialog', () => {
   it('calls onConfirm and closes when confirm is clicked', async () => {
     const user = userEvent.setup()
     let confirmed = false
-    let openState = true
-    const setOpen = (v: boolean) => { openState = v }
+    const setOpen = (_v: boolean) => { /* no-op */ }
 
     render(
       <Themed>

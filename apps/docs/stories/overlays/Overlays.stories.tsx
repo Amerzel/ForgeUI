@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import {
   Dialog, Tooltip, TooltipProvider, DropdownMenu, ContextMenu, Popover,
-  Button, IconButton, FormField, Input, Select,
+  Button, FormField, Input, Select,
 } from '@forgeui/components'
 import type { MenuEntry } from '@forgeui/components'
 

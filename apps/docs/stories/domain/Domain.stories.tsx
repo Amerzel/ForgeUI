@@ -4,7 +4,7 @@ import {
   NodeEditor, Timeline, VirtualCanvas, Button, Text, Badge,
 } from '@forgeui/components'
 import type {
-  FlowNode, FlowEdge, TimelineTrack, TimelineClip,
+  FlowNode, FlowEdge, TimelineTrack,
   CanvasItem, CanvasViewport,
 } from '@forgeui/components'
 import {

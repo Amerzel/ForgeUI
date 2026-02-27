@@ -9,7 +9,7 @@ export interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
    * - Raw CSS: '1200px', '90rem', etc.
    * Default: none (full width)
    */
-  size?: 'prose' | 'sm' | 'md' | 'lg' | string
+  size?: string
   /** Horizontal padding. Default: space-4 (16px) */
   px?: SpaceValue
   /** Remove max-width and padding constraints */

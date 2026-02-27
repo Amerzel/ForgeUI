@@ -12,7 +12,7 @@ import {
   type ColumnSizingState,
 } from '@tanstack/react-table'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef } from 'react'
 import { Pagination } from '../layout/Pagination.js'
 import { Spinner } from '../primitives/Spinner.js'
 import { cn } from '../lib/cn.js'

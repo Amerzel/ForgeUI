@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useCallback } from 'react'
 import { Collapsible } from '../composites/Collapsible.js'
 import { cn } from '../lib/cn.js'
 
@@ -42,7 +42,7 @@ function TextEditor({ item, value, onChange }: { item: PropertyItem; value: unkn
   return (
     <input
       type="text"
-      value={String(value ?? '')}
+      value={String((value ?? '') as string | number)}
       disabled={item.disabled}
       aria-label={item.label}
       style={{
@@ -68,7 +68,7 @@ function NumberEditor({ item, value, onChange }: { item: PropertyItem; value: un
   return (
     <input
       type="number"
-      value={String(value ?? 0)}
+      value={String((value ?? 0) as string | number)}
       disabled={item.disabled}
       min={item.min}
       max={item.max}
@@ -98,7 +98,7 @@ function ColorEditor({ item, value, onChange }: { item: PropertyItem; value: unk
     <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)' }}>
       <input
         type="color"
-        value={String(value ?? '#000000')}
+        value={String((value ?? '#000000') as string | number)}
         disabled={item.disabled}
         aria-label={item.label}
         style={{
@@ -113,7 +113,7 @@ function ColorEditor({ item, value, onChange }: { item: PropertyItem; value: unk
         onChange={(e) => onChange(e.target.value)}
       />
       <span style={{ fontFamily: 'var(--forge-font-mono)', fontSize: 'var(--forge-font-size-xs)', color: 'var(--forge-text-muted)' }}>
-        {String(value ?? '#000000')}
+        {String((value ?? '#000000') as string | number)}
       </span>
     </div>
   )
@@ -141,7 +141,7 @@ function BooleanEditor({ item, value, onChange }: { item: PropertyItem; value: u
 function SelectEditor({ item, value, onChange }: { item: PropertyItem; value: unknown; onChange: (v: string) => void }) {
   return (
     <select
-      value={String(value ?? '')}
+      value={String((value ?? '') as string | number)}
       disabled={item.disabled}
       aria-label={item.label}
       style={{

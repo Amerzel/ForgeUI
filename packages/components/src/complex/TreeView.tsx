@@ -60,6 +60,7 @@ function TreeNodeItem({ node, depth, selected, expanded, onSelect, onExpand, mul
 
   return (
     <li role="treeitem" aria-selected={multiSelect ? isSelected : undefined} aria-expanded={hasChildren ? isExpanded : undefined} aria-disabled={node.disabled}>
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         tabIndex={node.disabled ? -1 : 0}
         style={{
@@ -123,7 +124,7 @@ function TreeNodeItem({ node, depth, selected, expanded, onSelect, onExpand, mul
 
       {hasChildren && isExpanded && (
         <ul role="group" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-          {node.children!.map(child => (
+          {node.children?.map(child => (
             <TreeNodeItem
               key={child.id}
               node={child}

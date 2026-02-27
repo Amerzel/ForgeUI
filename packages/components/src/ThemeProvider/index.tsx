@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { ThemeContext } from '@forgeui/hooks'
 import { resolveTokens } from '@forgeui/hooks'
 import type { Palette, Mode } from '@forgeui/tokens'
