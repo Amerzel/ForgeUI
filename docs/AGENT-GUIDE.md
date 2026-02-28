@@ -1244,6 +1244,119 @@ Ordered layer list with visibility toggle, lock toggle, opacity editing, drag-to
 
 ---
 
+### EntityCard
+
+Rich metadata card for entities in knowledge graphs, catalogs, and lists. Shows type icon, name, status badge, description, tags, and metadata key-values.
+
+```tsx
+<EntityCard
+  name="Gandalf the Grey"
+  type="Character"
+  typeIcon="🧙"
+  status="Canon"
+  statusColor="var(--forge-success)"
+  description="A wizard of the Istari order, sent to Middle-earth to contest the power of Sauron."
+  tags={['wizard', 'istari', 'fellowship']}
+  meta={[
+    { label: 'Race', value: 'Maia' },
+    { label: 'Age', value: '~2000' },
+  ]}
+  selected={isSelected}
+  onClick={() => select(entity.id)}
+  actions={<IconButton size="sm" icon="⋮" />}
+/>
+```
+
+**Key props:** `name` · `type` · `typeIcon?` · `status?` · `statusColor?` · `description?` · `tags?` · `meta?` · `selected?` · `onClick?` · `actions?`
+
+---
+
+### MiniMap
+
+Scaled-down viewport navigation widget for large canvases, graphs, or maps. Shows a draggable viewport rectangle over content.
+
+```tsx
+<MiniMap
+  contentWidth={2000}
+  contentHeight={1500}
+  viewport={{ x: 100, y: 200, width: 800, height: 600 }}
+  onViewportChange={setViewport}
+  width={200}
+  height={140}
+>
+  {/* Optional: render dots/shapes as minimap content */}
+  {nodes.map(n => <circle cx={n.x} cy={n.y} r={4} fill="var(--forge-accent)" />)}
+</MiniMap>
+```
+
+**Key props:** `contentWidth` · `contentHeight` · `viewport` · `onViewportChange?` · `width?` (default 200) · `height?` (default 140) · `children?`
+
+---
+
+### DiffViewer
+
+Line-by-line text diff with unified or split modes. Uses LCS algorithm with no external dependencies.
+
+```tsx
+<DiffViewer
+  before={originalText}
+  after={modifiedText}
+  mode="unified"         // or "split"
+  beforeLabel="Original"
+  afterLabel="Modified"
+/>
+```
+
+**Key props:** `before` · `after` · `mode?` ('unified' | 'split', default 'unified') · `beforeLabel?` · `afterLabel?`
+
+---
+
+### FilterBar
+
+Horizontal chip-based filter bar with popovers for multi-select, single-select, and boolean filters.
+
+```tsx
+<FilterBar
+  filters={[
+    { id: 'type', label: 'Type', type: 'multi-select', options: [
+      { value: 'character', label: 'Character', count: 12 },
+      { value: 'location', label: 'Location', count: 8 },
+    ]},
+    { id: 'canon', label: 'Canon State', type: 'single-select', options: [
+      { value: 'canon', label: 'Canon' },
+      { value: 'draft', label: 'Draft' },
+    ]},
+    { id: 'public', label: 'Public Only', type: 'boolean' },
+  ]}
+  value={filterState}
+  onChange={setFilterState}
+/>
+```
+
+**Key props:** `filters` (FilterDefinition[]) · `value` (FilterState) · `onChange`
+
+---
+
+### ApprovalPanel
+
+Review panel with status badge, content area, and approve/reject workflow with rationale capture.
+
+```tsx
+<ApprovalPanel
+  title="Entity Update: Gandalf"
+  description="AI agent proposes updating character age"
+  status="pending"
+  onApprove={(rationale) => approve(id, rationale)}
+  onReject={(rationale) => reject(id, rationale)}
+>
+  <DiffViewer before={oldText} after={newText} />
+</ApprovalPanel>
+```
+
+**Key props:** `title` · `description?` · `status?` ('pending' | 'approved' | 'rejected') · `onApprove?` · `onReject?` · `children`
+
+---
+
 ## 12. Common Patterns
 
 ### Toolbar row (logo + spacer + actions)

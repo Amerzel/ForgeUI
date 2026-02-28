@@ -99,6 +99,10 @@ export { TagsInput }           from './complex/TagsInput.js'
 export { PropertyGrid }        from './complex/PropertyGrid.js'
 export type { PropertySection, PropertyItem, PropertyType, SelectOption } from './complex/PropertyGrid.js'
 export { EditableText }        from './complex/EditableText.js'
+export { DiffViewer }          from './complex/DiffViewer.js'
+export type { DiffViewerProps, DiffLine } from './complex/DiffViewer.js'
+export { FilterBar }           from './complex/FilterBar.js'
+export type { FilterBarProps, FilterDefinition, FilterOption, FilterState } from './complex/FilterBar.js'
 
 // Phase 2a — Layout
 export { AppShell }            from './layout/AppShell.js'
@@ -127,6 +131,12 @@ export { NavItem }             from './composites/NavItem.js'
 export type { NavItemProps }   from './composites/NavItem.js'
 export { ModuleToolbar }       from './composites/ModuleToolbar.js'
 export type { ModuleToolbarProps } from './composites/ModuleToolbar.js'
+export { EntityCard }          from './composites/EntityCard.js'
+export type { EntityCardProps } from './composites/EntityCard.js'
+export { MiniMap }             from './composites/MiniMap.js'
+export type { MiniMapProps, MiniMapViewport } from './composites/MiniMap.js'
+export { ApprovalPanel }      from './composites/ApprovalPanel.js'
+export type { ApprovalPanelProps } from './composites/ApprovalPanel.js'
 
 // Phase 1 — Primitives
 export { VisuallyHidden } from './primitives/VisuallyHidden.js'

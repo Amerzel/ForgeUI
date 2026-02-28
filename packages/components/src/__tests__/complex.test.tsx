@@ -12,8 +12,10 @@ import {
   TagsInput,
   PropertyGrid,
   EditableText,
+  DiffViewer,
+  FilterBar,
 } from '../index.js'
-import type { ColumnDef, CommandGroup, TreeNode, PropertySection } from '../index.js'
+import type { ColumnDef, CommandGroup, TreeNode, PropertySection, FilterDefinition, FilterState } from '../index.js'
 
 function Themed({ children }: { children: React.ReactNode }) {
   return <ThemeProvider>{children}</ThemeProvider>
@@ -599,6 +601,112 @@ describe('DataTable', () => {
       <Themed>
         <DataTable columns={COLUMNS} data={DATA} />
       </Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// DiffViewer
+// ---------------------------------------------------------------------------
+describe('DiffViewer', () => {
+  const BEFORE = 'line one\nline two\nline three'
+  const AFTER = 'line one\nline TWO\nline three\nline four'
+
+  it('renders unified diff with added and removed lines', () => {
+    render(
+      <Themed><DiffViewer before={BEFORE} after={AFTER} /></Themed>
+    )
+    expect(screen.getByText(/line one/)).toBeInTheDocument()
+    expect(screen.getByText(/line TWO/)).toBeInTheDocument()
+    expect(screen.getByText(/line four/)).toBeInTheDocument()
+  })
+
+  it('renders split mode with labels', () => {
+    render(
+      <Themed><DiffViewer before={BEFORE} after={AFTER} mode="split" beforeLabel="Original" afterLabel="Modified" /></Themed>
+    )
+    expect(screen.getByText('Original')).toBeInTheDocument()
+    expect(screen.getByText('Modified')).toBeInTheDocument()
+  })
+
+  it('handles identical content', () => {
+    render(
+      <Themed><DiffViewer before="same" after="same" /></Themed>
+    )
+    expect(screen.getByText(/same/)).toBeInTheDocument()
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed><DiffViewer before={BEFORE} after={AFTER} /></Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// FilterBar
+// ---------------------------------------------------------------------------
+describe('FilterBar', () => {
+  const FILTERS: FilterDefinition[] = [
+    { id: 'type', label: 'Type', type: 'multi-select', options: [
+      { value: 'character', label: 'Character', count: 12 },
+      { value: 'location', label: 'Location', count: 8 },
+    ]},
+    { id: 'canon', label: 'Canon', type: 'single-select', options: [
+      { value: 'canon', label: 'Canon' },
+      { value: 'draft', label: 'Draft' },
+    ]},
+    { id: 'visible', label: 'Public Only', type: 'boolean' },
+  ]
+
+  it('renders all filter chips', () => {
+    render(
+      <Themed><FilterBar filters={FILTERS} value={{}} onChange={() => {}} /></Themed>
+    )
+    expect(screen.getByText('Type')).toBeInTheDocument()
+    expect(screen.getByText('Canon')).toBeInTheDocument()
+    expect(screen.getByText('Public Only')).toBeInTheDocument()
+  })
+
+  it('toggles boolean filter on click', async () => {
+    const onChange = vi.fn()
+    render(
+      <Themed><FilterBar filters={FILTERS} value={{}} onChange={onChange} /></Themed>
+    )
+    await userEvent.click(screen.getByText('Public Only'))
+    expect(onChange).toHaveBeenCalledWith({ visible: true })
+  })
+
+  it('opens multi-select popover on click', async () => {
+    render(
+      <Themed><FilterBar filters={FILTERS} value={{}} onChange={() => {}} /></Themed>
+    )
+    await userEvent.click(screen.getByText('Type'))
+    expect(screen.getByText('Character')).toBeInTheDocument()
+    expect(screen.getByText('Location')).toBeInTheDocument()
+  })
+
+  it('shows clear all when filters active', () => {
+    render(
+      <Themed><FilterBar filters={FILTERS} value={{ visible: true }} onChange={() => {}} /></Themed>
+    )
+    expect(screen.getByText('Clear all')).toBeInTheDocument()
+  })
+
+  it('calls onChange with empty object on clear all', async () => {
+    const onChange = vi.fn()
+    render(
+      <Themed><FilterBar filters={FILTERS} value={{ visible: true }} onChange={onChange} /></Themed>
+    )
+    await userEvent.click(screen.getByText('Clear all'))
+    expect(onChange).toHaveBeenCalledWith({})
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed><FilterBar filters={FILTERS} value={{}} onChange={() => {}} /></Themed>
     )
     expect(await axe(container)).toHaveNoViolations()
   })

@@ -20,6 +20,9 @@ import {
   HealthRow,
   NavItem,
   ModuleToolbar,
+  EntityCard,
+  MiniMap,
+  ApprovalPanel,
 } from '../index.js'
 import type { Step, BreadcrumbItem, MenubarMenu } from '../index.js'
 
@@ -892,6 +895,188 @@ describe('ModuleToolbar', () => {
   it('has no axe violations', async () => {
     const { container } = render(
       <Themed><ModuleToolbar badge="QF" title="Quests" actions={<button>Add</button>} /></Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// EntityCard
+// ---------------------------------------------------------------------------
+describe('EntityCard', () => {
+  it('renders name and type', () => {
+    render(
+      <Themed><EntityCard name="Gandalf" type="Character" /></Themed>
+    )
+    expect(screen.getByText('Gandalf')).toBeInTheDocument()
+    expect(screen.getByText('Character')).toBeInTheDocument()
+  })
+
+  it('renders status badge', () => {
+    render(
+      <Themed><EntityCard name="Mordor" type="Location" status="Canon" statusColor="var(--forge-success)" /></Themed>
+    )
+    expect(screen.getByText('Canon')).toBeInTheDocument()
+  })
+
+  it('renders tags', () => {
+    render(
+      <Themed><EntityCard name="Sting" type="Item" tags={['weapon', 'elvish']} /></Themed>
+    )
+    expect(screen.getByText('weapon')).toBeInTheDocument()
+    expect(screen.getByText('elvish')).toBeInTheDocument()
+  })
+
+  it('renders metadata', () => {
+    render(
+      <Themed><EntityCard name="Test" type="Character" meta={[{ label: 'Age', value: '42' }]} /></Themed>
+    )
+    expect(screen.getByText('Age')).toBeInTheDocument()
+    expect(screen.getByText('42')).toBeInTheDocument()
+  })
+
+  it('handles click and selected state', async () => {
+    const onClick = vi.fn()
+    render(
+      <Themed><EntityCard name="Test" type="NPC" selected onClick={onClick} /></Themed>
+    )
+    const button = screen.getByRole('button')
+    expect(button).toHaveAttribute('aria-pressed', 'true')
+    await userEvent.click(button)
+    expect(onClick).toHaveBeenCalledOnce()
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed><EntityCard name="Test" type="Character" status="Draft" tags={['npc']} /></Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// MiniMap
+// ---------------------------------------------------------------------------
+describe('MiniMap', () => {
+  it('renders with aria-label', () => {
+    render(
+      <Themed>
+        <MiniMap contentWidth={1000} contentHeight={800} viewport={{ x: 0, y: 0, width: 400, height: 300 }} />
+      </Themed>
+    )
+    expect(screen.getByRole('img', { name: 'Minimap navigation' })).toBeInTheDocument()
+  })
+
+  it('renders children content', () => {
+    render(
+      <Themed>
+        <MiniMap contentWidth={1000} contentHeight={800} viewport={{ x: 0, y: 0, width: 400, height: 300 }}>
+          <div data-testid="map-content">dots</div>
+        </MiniMap>
+      </Themed>
+    )
+    expect(screen.getByTestId('map-content')).toBeInTheDocument()
+  })
+
+  it('calls onViewportChange on pointer down', () => {
+    const onChange = vi.fn()
+    render(
+      <Themed>
+        <MiniMap contentWidth={1000} contentHeight={800} viewport={{ x: 0, y: 0, width: 400, height: 300 }} onViewportChange={onChange} />
+      </Themed>
+    )
+    const map = screen.getByRole('img')
+    fireEvent.pointerDown(map, { clientX: 100, clientY: 70 })
+    expect(onChange).toHaveBeenCalled()
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed>
+        <MiniMap contentWidth={1000} contentHeight={800} viewport={{ x: 0, y: 0, width: 400, height: 300 }} />
+      </Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// ApprovalPanel
+// ---------------------------------------------------------------------------
+describe('ApprovalPanel', () => {
+  it('renders title, status, and children', () => {
+    render(
+      <Themed>
+        <ApprovalPanel title="Entity Update" status="pending">
+          <p>Review content</p>
+        </ApprovalPanel>
+      </Themed>
+    )
+    expect(screen.getByText('Entity Update')).toBeInTheDocument()
+    expect(screen.getByText('Pending Review')).toBeInTheDocument()
+    expect(screen.getByText('Review content')).toBeInTheDocument()
+  })
+
+  it('shows approve/reject buttons when pending', () => {
+    render(
+      <Themed>
+        <ApprovalPanel title="Test" onApprove={() => {}} onReject={() => {}}>
+          <p>content</p>
+        </ApprovalPanel>
+      </Themed>
+    )
+    expect(screen.getByRole('button', { name: 'Approve' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Reject' })).toBeInTheDocument()
+  })
+
+  it('hides buttons when approved', () => {
+    render(
+      <Themed>
+        <ApprovalPanel title="Test" status="approved" onApprove={() => {}}>
+          <p>content</p>
+        </ApprovalPanel>
+      </Themed>
+    )
+    expect(screen.getByText('Approved')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Approve' })).not.toBeInTheDocument()
+  })
+
+  it('calls onApprove with rationale', async () => {
+    const onApprove = vi.fn()
+    render(
+      <Themed>
+        <ApprovalPanel title="Test" onApprove={onApprove}>
+          <p>content</p>
+        </ApprovalPanel>
+      </Themed>
+    )
+    const textarea = screen.getByPlaceholderText('Add rationale (optional)…')
+    await userEvent.type(textarea, 'Looks good')
+    await userEvent.click(screen.getByRole('button', { name: 'Approve' }))
+    expect(onApprove).toHaveBeenCalledWith('Looks good')
+  })
+
+  it('calls onReject with rationale', async () => {
+    const onReject = vi.fn()
+    render(
+      <Themed>
+        <ApprovalPanel title="Test" onReject={onReject}>
+          <p>content</p>
+        </ApprovalPanel>
+      </Themed>
+    )
+    await userEvent.type(screen.getByPlaceholderText('Add rationale (optional)…'), 'Needs work')
+    await userEvent.click(screen.getByRole('button', { name: 'Reject' }))
+    expect(onReject).toHaveBeenCalledWith('Needs work')
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed>
+        <ApprovalPanel title="Test" status="pending" onApprove={() => {}} onReject={() => {}}>
+          <p>content</p>
+        </ApprovalPanel>
+      </Themed>
     )
     expect(await axe(container)).toHaveNoViolations()
   })
