@@ -22,18 +22,18 @@ interface ComboboxProps {
   className?: string
 }
 
-const CONTENT_STYLE: React.CSSProperties = {
-  position: 'absolute',
+const CONTENT_STYLE = {
+  position: 'absolute' as const,
   top: '100%',
   left: 0,
   right: 0,
-  zIndex: 'var(--forge-z-dropdown)' as unknown as number,
+  zIndex: 'var(--forge-z-dropdown)',
   marginTop: 'var(--forge-space-1)',
   backgroundColor: 'var(--forge-surface-popover)',
   border: '1px solid var(--forge-border)',
   borderRadius: 'var(--forge-radius-md)',
   boxShadow: 'var(--forge-shadow-md)',
-  overflow: 'hidden',
+  overflow: 'hidden' as const,
   maxHeight: '260px',
 }
 

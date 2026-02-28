@@ -3,16 +3,76 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'vitest-axe'
 import { ThemeProvider } from '../ThemeProvider/index.js'
-import { Timeline, VirtualCanvas, DrawingCanvas, ImageViewer, ComparisonSlider, LayerStack } from '../index.js'
-import type { TimelineTrack, CanvasItem, Layer } from '../index.js'
+import { Timeline, VirtualCanvas, DrawingCanvas, ImageViewer, ComparisonSlider, LayerStack, NodeEditor } from '../index.js'
+import type { TimelineTrack, CanvasItem, Layer, FlowNode, FlowEdge } from '../index.js'
 
-// Note: NodeEditor wraps ReactFlow which uses canvas and extensive browser APIs.
-// We test its accessibility and rendering at the component level via Timeline and
-// VirtualCanvas which share the same interaction patterns.
+// Mock @xyflow/react — ReactFlow uses canvas/ResizeObserver APIs unavailable in JSDOM
+vi.mock('@xyflow/react', () => {
+  const ReactFlow = ({ children, ...props }: Record<string, unknown>) => (
+    <div data-testid="mock-reactflow" data-nodes={JSON.stringify(props.nodes)} data-edges={JSON.stringify(props.edges)}>
+      {children as React.ReactNode}
+    </div>
+  )
+  const Background = () => <div data-testid="mock-background" />
+  const Controls = () => <div data-testid="mock-controls" />
+  const MiniMap = () => <div data-testid="mock-minimap" />
+  const BackgroundVariant = { Dots: 'dots', Lines: 'lines', Cross: 'cross' }
+  return { ReactFlow, Background, Controls, MiniMap, BackgroundVariant }
+})
 
 function Themed({ children }: { children: React.ReactNode }) {
   return <ThemeProvider>{children}</ThemeProvider>
 }
+
+// ---------------------------------------------------------------------------
+// NodeEditor
+// ---------------------------------------------------------------------------
+describe('NodeEditor', () => {
+  const NODES: FlowNode[] = [
+    { id: '1', position: { x: 0, y: 0 }, data: { label: 'Start' } },
+    { id: '2', position: { x: 200, y: 100 }, data: { label: 'End' } },
+  ]
+  const EDGES: FlowEdge[] = [{ id: 'e1-2', source: '1', target: '2' }]
+
+  it('renders with default aria-label and forwards className', () => {
+    render(<Themed><NodeEditor nodes={NODES} edges={EDGES} className="custom" /></Themed>)
+    const el = screen.getByLabelText('Node editor canvas')
+    expect(el).toBeInTheDocument()
+    expect(el.className).toContain('custom')
+  })
+
+  it('forwards custom aria-label and style', () => {
+    render(<Themed><NodeEditor nodes={NODES} edges={EDGES} aria-label="My graph" style={{ height: '600px' }} /></Themed>)
+    const el = screen.getByLabelText('My graph')
+    expect(el.style.height).toBe('600px')
+  })
+
+  it('renders minimap, controls, and background by default', () => {
+    render(<Themed><NodeEditor nodes={NODES} edges={EDGES} /></Themed>)
+    expect(screen.getByTestId('mock-minimap')).toBeInTheDocument()
+    expect(screen.getByTestId('mock-controls')).toBeInTheDocument()
+    expect(screen.getByTestId('mock-background')).toBeInTheDocument()
+  })
+
+  it('hides minimap, controls, and background when disabled', () => {
+    render(<Themed><NodeEditor nodes={NODES} edges={EDGES} minimap={false} controls={false} background={false} /></Themed>)
+    expect(screen.queryByTestId('mock-minimap')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('mock-controls')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('mock-background')).not.toBeInTheDocument()
+  })
+
+  it('passes nodes and edges to ReactFlow', () => {
+    render(<Themed><NodeEditor nodes={NODES} edges={EDGES} /></Themed>)
+    const rf = screen.getByTestId('mock-reactflow')
+    expect(JSON.parse(rf.getAttribute('data-nodes') ?? '[]')).toHaveLength(2)
+    expect(JSON.parse(rf.getAttribute('data-edges') ?? '[]')).toHaveLength(1)
+  })
+
+  it('passes axe accessibility audit', async () => {
+    const { container } = render(<Themed><NodeEditor nodes={NODES} edges={EDGES} /></Themed>)
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
 
 // ---------------------------------------------------------------------------
 // Timeline

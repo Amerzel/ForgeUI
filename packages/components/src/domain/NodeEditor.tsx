@@ -59,6 +59,7 @@ export function NodeEditor({
 }: NodeEditorProps) {
   return (
     <div
+      role="img"
       aria-label={ariaLabel}
       className={cn('forge-node-editor', className)}
       style={{

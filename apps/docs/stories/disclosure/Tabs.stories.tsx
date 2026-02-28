@@ -1,65 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Accordion, Tabs } from '@forgeui/components'
+import { Tabs } from '@forgeui/components'
 
-const meta: Meta = {
-  title: 'Disclosure/Gallery',
+const meta: Meta<typeof Tabs> = {
+  title: 'Disclosure/Tabs',
+  component: Tabs,
   tags: ['autodocs'],
-  parameters: {
-    docs: { description: { component: 'Accordion and Tabs disclosure components.' } },
-  },
 }
 export default meta
-type Story = StoryObj
+type Story = StoryObj<typeof Tabs>
 
-const ACCORDION_ITEMS = [
-  {
-    value: 'scene',
-    trigger: 'Scene Settings',
-    content: 'Configure ambient lighting, fog density, and global illumination for the scene.',
-  },
-  {
-    value: 'physics',
-    trigger: 'Physics World',
-    content: 'Set gravity vector, collision layers, and simulation substeps.',
-  },
-  {
-    value: 'audio',
-    trigger: 'Audio Engine',
-    content: 'Master volume, spatial audio model, and reverb settings.',
-  },
-  {
-    value: 'disabled',
-    trigger: 'Locked Settings',
-    content: 'These settings are locked in this project.',
-    disabled: true,
-  },
-]
-
-// ---------------------------------------------------------------------------
-// Accordion
-// ---------------------------------------------------------------------------
-export const AccordionSingle: Story = {
-  name: 'Accordion — single',
-  render: () => (
-    <div style={{ maxWidth: '480px' }}>
-      <Accordion items={ACCORDION_ITEMS} type="single" collapsible />
-    </div>
-  ),
-}
-
-export const AccordionMultiple: Story = {
-  name: 'Accordion — multiple',
-  render: () => (
-    <div style={{ maxWidth: '480px' }}>
-      <Accordion items={ACCORDION_ITEMS} type="multiple" values={['scene', 'physics']} />
-    </div>
-  ),
-}
-
-// ---------------------------------------------------------------------------
-// Tabs — line variant
-// ---------------------------------------------------------------------------
 const TAB_ITEMS = [
   {
     value: 'inspector',
@@ -99,7 +49,7 @@ const TAB_ITEMS = [
   },
 ]
 
-export const TabsLine: Story = {
+export const Line: Story = {
   name: 'Tabs — line variant',
   render: function TabsLineDemo() {
     const [value, setValue] = useState('inspector')
@@ -111,7 +61,7 @@ export const TabsLine: Story = {
   },
 }
 
-export const TabsSolid: Story = {
+export const Solid: Story = {
   name: 'Tabs — solid variant',
   render: function TabsSolidDemo() {
     const [value, setValue] = useState('inspector')
@@ -123,7 +73,7 @@ export const TabsSolid: Story = {
   },
 }
 
-export const TabsVertical: Story = {
+export const Vertical: Story = {
   name: 'Tabs — vertical',
   render: function TabsVerticalDemo() {
     const [value, setValue] = useState('inspector')
