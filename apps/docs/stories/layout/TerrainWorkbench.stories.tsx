@@ -1,26 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import {
   ResizablePanel, ResizablePanelGroup,
   Tabs, ModuleToolbar,
   FileSourceBar, CodeBlock, JsonViewer,
-  DropZone, Slider, Select, Badge, Text,
+  TreeView, DropZone, Slider, Select, Badge, Text,
   Card, Stack, Flex, Group, ScrollArea,
   Button, Separator,
   TooltipProvider,
 } from '@forgeui/components'
-import type { FileSourceBarFile } from '@forgeui/components'
+import type { FileSourceBarFile, TreeNode } from '@forgeui/components'
 
 /**
  * Terrain Workbench — Layout Explorations
  *
- * These stories demonstrate recommended UI layouts for the ForgeWorkbench
- * Playground modules described in PRD-FORGE-WORKBENCH.md. Each story is a
- * self-contained, interactive mockup showing how ForgeUI components compose
- * into the workbench's five modules.
+ * Stories explore two approaches to the ForgeWorkbench UI:
  *
- * All layouts follow the Playground shell pattern: ModuleToolbar at the top,
- * FileSourceBar for file loading, ResizablePanelGroup for flexible panes.
+ * 1. **Per-module layouts** (stories 1–5): Each PRD module as a separate page.
+ *    Useful for understanding individual module needs, but fragments workflow.
+ *
+ * 2. **Unified Workspace** (recommended): Single workspace with shared data
+ *    context, mode switcher, contextual properties panel. Load files once,
+ *    switch focus modes without losing context.
  */
 const meta: Meta = {
   title: 'Layout/Terrain Workbench',
@@ -113,8 +114,820 @@ function TilePlaceholder({ id, color }: { id: string; color: string }) {
 }
 
 // ===========================================================================
-// Module 1: Tile Inspector
+// UNIFIED WORKSPACE (Recommended)
 // ===========================================================================
+
+type FocusMode = 'inspect' | 'paint' | 'effects' | 'fills' | 'pipeline'
+
+const MODE_ICONS: Record<FocusMode, string> = {
+  inspect: '🔍',
+  paint: '🖌',
+  effects: '⚡',
+  fills: '🖼',
+  pipeline: '🔨',
+}
+
+const MODE_LABELS: Record<FocusMode, string> = {
+  inspect: 'Inspect Tiles',
+  paint: 'Map Painter',
+  effects: 'Effect Tuning',
+  fills: 'Fill Quality',
+  pipeline: 'Pipeline',
+}
+
+const PACK_TREE: TreeNode[] = [
+  {
+    id: 'fills',
+    label: 'Fills (3)',
+    children: [
+      { id: 'fill-grass', label: 'grass-painterly.png' },
+      { id: 'fill-water', label: 'water-painterly.png' },
+      { id: 'fill-stone', label: 'stone-painterly.png' },
+    ],
+  },
+  {
+    id: 'pairs',
+    label: 'Pairs (3)',
+    children: [
+      {
+        id: 'pair-gw',
+        label: 'grass → water',
+        children: [
+          { id: 'gw-transitions', label: 'Transitions (14)' },
+          {
+            id: 'gw-effects',
+            label: 'Effects',
+            children: [
+              { id: 'gw-outline', label: 'outline (14)' },
+              { id: 'gw-cliff-face', label: 'cliff-face (14)' },
+              { id: 'gw-cliff-shadow', label: 'cliff-shadow (12)' },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'pair-gs',
+        label: 'grass → stone',
+        children: [
+          { id: 'gs-transitions', label: 'Transitions (14)' },
+          { id: 'gs-effects', label: 'Effects (42)' },
+        ],
+      },
+      {
+        id: 'pair-ss',
+        label: 'stone → sand',
+        children: [
+          { id: 'ss-transitions', label: 'Transitions (14)' },
+          { id: 'ss-effects', label: 'Effects (42)' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'gaps',
+    label: '⚠ Gaps (2)',
+    children: [
+      { id: 'gap-1', label: 'grass_water_ms5_cliff-shadow' },
+      { id: 'gap-2', label: 'grass_water_ms10_cliff-shadow' },
+    ],
+  },
+]
+
+// -- Viewport panels per mode -----------------------------------------------
+
+function InspectViewport({ selectedNode }: { selectedNode: string | null }) {
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)',
+        padding: 'var(--forge-space-2) var(--forge-space-3)',
+        borderBottom: '1px solid var(--forge-border)',
+        backgroundColor: 'var(--forge-surface)',
+      }}>
+        <Text size="xs" color="muted">View:</Text>
+        <Select
+          value="grid"
+          onValueChange={() => {}}
+          options={[
+            { label: 'Tile Grid', value: 'grid' },
+            { label: 'Atlas Overview', value: 'atlas' },
+          ]}
+        />
+        <Separator orientation="vertical" style={{ height: 20 }} />
+        <Text size="xs" color="muted">Show:</Text>
+        <Group gap={1}>
+          <Badge>Terrain</Badge>
+          <Badge variant="outline">Transitions</Badge>
+          <Badge variant="outline">Effects</Badge>
+        </Group>
+      </div>
+      <div style={{ flex: 1, padding: 'var(--forge-space-4)', overflow: 'auto' }}>
+        <Text size="xs" color="muted" style={{ display: 'block', marginBottom: 'var(--forge-space-2)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          {selectedNode?.startsWith('gw-') ? 'grass → water / ' + selectedNode.replace('gw-', '') : 'All Tiles (258)'}
+        </Text>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--forge-space-2)' }}>
+          {Array.from({ length: 14 }, (_, i) => (
+            <div
+              key={i}
+              title={`ms${i}`}
+              style={{
+                width: 64, height: 64,
+                backgroundColor: (i === 5 || i === 10) && selectedNode?.includes('cliff-shadow')
+                  ? 'color-mix(in srgb, var(--forge-danger) 15%, var(--forge-surface))'
+                  : 'color-mix(in srgb, var(--forge-info) 12%, var(--forge-surface))',
+                border: '1px solid var(--forge-border)',
+                borderRadius: 'var(--forge-radius-sm)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 'var(--forge-font-size-xs)',
+                color: (i === 5 || i === 10) && selectedNode?.includes('cliff-shadow') ? 'var(--forge-danger)' : 'var(--forge-info)',
+                cursor: 'pointer',
+              }}
+            >
+              ms{i}
+            </div>
+          ))}
+        </div>
+        {selectedNode?.includes('cliff-shadow') && (
+          <Text size="xs" style={{ color: 'var(--forge-danger)', marginTop: 'var(--forge-space-2)', display: 'block' }}>
+            ⚠ 2 missing effect tiles (ms5, ms10) — click to view gap details
+          </Text>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function PaintViewport() {
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)',
+        padding: 'var(--forge-space-2) var(--forge-space-3)',
+        borderBottom: '1px solid var(--forge-border)',
+        backgroundColor: 'var(--forge-surface)',
+      }}>
+        <Group gap={1}>
+          <Button size="sm" variant="solid">🖌 Paint</Button>
+          <Button size="sm" variant="outline">⬜ Erase</Button>
+          <Button size="sm" variant="outline">🔍 Inspect</Button>
+        </Group>
+        <Separator orientation="vertical" style={{ height: 20 }} />
+        <Text size="xs" color="muted">Grid:</Text>
+        <Select
+          value="16"
+          onValueChange={() => {}}
+          options={[
+            { label: '8×8', value: '8' },
+            { label: '16×16', value: '16' },
+            { label: '32×32', value: '32' },
+          ]}
+        />
+        <div style={{ flex: 1 }} />
+        <Group gap={1}>
+          {['Terrain', 'Transitions', 'Effects'].map(l => (
+            <Flex key={l} align="center" gap={1}>
+              <input type="checkbox" defaultChecked style={{ accentColor: 'var(--forge-accent)' }} />
+              <Text size="xs">{l}</Text>
+            </Flex>
+          ))}
+        </Group>
+      </div>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <PlaceholderCanvas label="16×16 — click to paint materials, MS classification updates live" />
+      </div>
+    </div>
+  )
+}
+
+function EffectsViewport() {
+  const [splitView, setSplitView] = useState('composite')
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)',
+        padding: 'var(--forge-space-2) var(--forge-space-3)',
+        borderBottom: '1px solid var(--forge-border)',
+        backgroundColor: 'var(--forge-surface)',
+      }}>
+        <Text size="xs" color="muted">Case:</Text>
+        <Select
+          value="ms3"
+          onValueChange={() => {}}
+          options={Array.from({ length: 14 }, (_, i) => ({ label: `MS-${i}`, value: `ms${i}` }))}
+        />
+        <Separator orientation="vertical" style={{ height: 20 }} />
+        <Group gap={1}>
+          {(['composite', 'mask', 'effect', 'split'] as const).map(v => (
+            <Button key={v} size="sm" variant={splitView === v ? 'solid' : 'outline'} onClick={() => setSplitView(v)}>
+              {v === 'composite' ? 'Composite' : v === 'mask' ? 'SDF Mask' : v === 'effect' ? 'Effect' : 'Split'}
+            </Button>
+          ))}
+        </Group>
+        <div style={{ flex: 1 }} />
+        <Group gap={1}>
+          <Button size="sm" variant="solid">B Higher ↑</Button>
+          <Button size="sm" variant="outline">A Higher ↑</Button>
+        </Group>
+      </div>
+      <div style={{ flex: 1, padding: 'var(--forge-space-4)', display: 'flex', gap: 'var(--forge-space-3)' }}>
+        {splitView === 'split' ? (
+          <>
+            <PlaceholderCanvas label="SDF Mask" />
+            <PlaceholderCanvas label="Effect Overlay" />
+            <PlaceholderCanvas label="Composite" />
+          </>
+        ) : (
+          <PlaceholderCanvas label={
+            splitView === 'mask' ? 'SDF Mask (blue → red gradient)'
+              : splitView === 'effect' ? 'Effect Overlay (alpha channel)'
+                : 'Fill + Mask + Effect'
+          } />
+        )}
+      </div>
+    </div>
+  )
+}
+
+function FillsViewport() {
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)',
+        padding: 'var(--forge-space-2) var(--forge-space-3)',
+        borderBottom: '1px solid var(--forge-border)',
+        backgroundColor: 'var(--forge-surface)',
+      }}>
+        <Text size="xs" color="muted">Grid:</Text>
+        <Select
+          value="4"
+          onValueChange={() => {}}
+          options={[
+            { label: '3×3', value: '3' },
+            { label: '4×4', value: '4' },
+            { label: '6×6', value: '6' },
+          ]}
+        />
+        <Separator orientation="vertical" style={{ height: 20 }} />
+        <Group gap={1}>
+          <Button size="sm" variant="outline">Seam Lines</Button>
+          <Button size="sm" variant="solid">Heat Map</Button>
+        </Group>
+        <div style={{ flex: 1 }} />
+        <DropZone
+          accept={['.png']}
+          multiple
+          onDrop={() => {}}
+          className="forge-inline-drop"
+        >
+          <Text size="xs" color="muted">+ Drop fills to compare</Text>
+        </DropZone>
+      </div>
+      <div style={{ flex: 1, padding: 'var(--forge-space-4)' }}>
+        <PlaceholderCanvas label="4×4 tiling grid — seam heat map overlay" />
+      </div>
+    </div>
+  )
+}
+
+function PipelineViewport() {
+  const [composeStatus, setComposeStatus] = useState<'idle' | 'running' | 'done'>('done')
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)',
+        padding: 'var(--forge-space-2) var(--forge-space-3)',
+        borderBottom: '1px solid var(--forge-border)',
+        backgroundColor: 'var(--forge-surface)',
+      }}>
+        <Group gap={1}>
+          <Button size="sm" variant="solid"
+            onClick={() => { setComposeStatus('running'); setTimeout(() => setComposeStatus('done'), 1500) }}
+            disabled={composeStatus === 'running'}
+          >
+            {composeStatus === 'running' ? '⏳ Composing…' : '🔨 Compose'}
+          </Button>
+          <Button size="sm" variant="outline">🗺 Resolve</Button>
+        </Group>
+        <Separator orientation="vertical" style={{ height: 20 }} />
+        <Group gap={1}>
+          {['Rendered', 'Diff', 'Layers'].map(v => (
+            <Button key={v} size="sm" variant={v === 'Rendered' ? 'solid' : 'outline'}>{v}</Button>
+          ))}
+        </Group>
+      </div>
+      <div style={{ flex: 1, padding: 'var(--forge-space-4)' }}>
+        <PlaceholderCanvas label="Resolved map — all layers composited" />
+      </div>
+    </div>
+  )
+}
+
+// -- Properties panels per mode / selection ---------------------------------
+
+function InspectProperties({ selectedNode }: { selectedNode: string | null }) {
+  if (selectedNode?.startsWith('gap-')) {
+    return (
+      <Stack gap={3} style={{ padding: 'var(--forge-space-3)' }}>
+        <Badge color="danger">Missing Tile</Badge>
+        <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '4px 12px' }}>
+          <Text size="xs" color="muted">Tile ID</Text>
+          <Text size="xs" style={{ fontFamily: 'var(--forge-font-mono)', wordBreak: 'break-all' }}>
+            {selectedNode === 'gap-1' ? 'grass_water_ms5_cliff-shadow' : 'grass_water_ms10_cliff-shadow'}
+          </Text>
+          <Text size="xs" color="muted">Pair</Text>
+          <Text size="xs">grass → water</Text>
+          <Text size="xs" color="muted">Effect</Text>
+          <Text size="xs">cliff-shadow</Text>
+          <Text size="xs" color="muted">Case</Text>
+          <Text size="xs">{selectedNode === 'gap-1' ? 'MS-5' : 'MS-10'}</Text>
+        </div>
+        <Separator />
+        <Text size="xs" color="muted">The transition tile exists but the corresponding cliff-shadow effect overlay is absent. This causes the renderer to skip the effect layer for this case.</Text>
+        <Button size="sm" variant="outline">→ Tune this effect</Button>
+      </Stack>
+    )
+  }
+
+  return (
+    <Stack gap={3} style={{ padding: 'var(--forge-space-3)' }}>
+      {/* Enlarged tile preview */}
+      <div style={{
+        width: '100%', aspectRatio: '1', maxWidth: 192, alignSelf: 'center',
+        backgroundColor: 'color-mix(in srgb, var(--forge-accent) 12%, var(--forge-surface-sunken))',
+        border: '1px solid var(--forge-border)',
+        borderRadius: 'var(--forge-radius-lg)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        color: 'var(--forge-text-disabled)', fontSize: 48,
+      }}>
+        🖼
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '4px 12px' }}>
+        <Text size="xs" color="muted">Tile ID</Text>
+        <Text size="xs" style={{ fontFamily: 'var(--forge-font-mono)', wordBreak: 'break-all' }}>grass_water_ms3_cliff-face</Text>
+        <Text size="xs" color="muted">Case</Text>
+        <Text size="xs">MS-3 (UL·UR)</Text>
+        <Text size="xs" color="muted">Pair</Text>
+        <Text size="xs">grass → water</Text>
+        <Text size="xs" color="muted">Effect</Text>
+        <Badge variant="outline">cliff-face</Badge>
+        <Text size="xs" color="muted">Layer</Text>
+        <Text size="xs">effects (order: 2)</Text>
+      </div>
+
+      <Separator />
+
+      {/* Corner bit diagram */}
+      <Text size="xs" color="muted" style={{ display: 'block' }}>Corner Bits (MS-3)</Text>
+      <div style={{
+        display: 'grid', gridTemplateColumns: '1fr 1fr',
+        width: 80, height: 80, gap: 2,
+      }}>
+        {['A', 'A', 'B', 'B'].map((m, i) => (
+          <div key={i} style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            backgroundColor: m === 'A'
+              ? 'color-mix(in srgb, var(--forge-success) 20%, var(--forge-surface))'
+              : 'color-mix(in srgb, var(--forge-info) 20%, var(--forge-surface))',
+            borderRadius: 'var(--forge-radius-sm)',
+            fontSize: 'var(--forge-font-size-xs)',
+            color: m === 'A' ? 'var(--forge-success)' : 'var(--forge-info)',
+            fontWeight: 600,
+          }}>
+            {m}
+          </div>
+        ))}
+      </div>
+
+      <Separator />
+
+      <JsonViewer
+        data={{ type: 'cliff-face', height: 12, darkness: 0.6, direction: 'south' }}
+        defaultExpandDepth={Infinity}
+        showCopy={false}
+      />
+    </Stack>
+  )
+}
+
+function PaintProperties() {
+  return (
+    <Stack gap={3} style={{ padding: 'var(--forge-space-3)' }}>
+      <Text size="xs" color="muted" style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>Cell (4, 7)</Text>
+      <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '4px 12px' }}>
+        <Text size="xs" color="muted">Material</Text>
+        <Text size="xs">grass</Text>
+        <Text size="xs" color="muted">MS Case</Text>
+        <Text size="xs">MS-6 (border)</Text>
+        <Text size="xs" color="muted">Tile ID</Text>
+        <Text size="xs" style={{ fontFamily: 'var(--forge-font-mono)', wordBreak: 'break-all' }}>grass_water_ms6</Text>
+      </div>
+      <Separator />
+      <Text size="xs" color="muted" style={{ display: 'block' }}>Layers at this cell:</Text>
+      <Stack gap={1}>
+        {['terrain: grass', 'transition: grass_water_ms6', 'outline: grass_water_ms6_outline', 'cliff-face: grass_water_ms6_cliff-face'].map(l => (
+          <Text key={l} size="xs" style={{ fontFamily: 'var(--forge-font-mono)', color: 'var(--forge-text-muted)' }}>{l}</Text>
+        ))}
+      </Stack>
+      <Separator />
+      <Text size="xs" color="muted" style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>Material Palette</Text>
+      <Stack gap={1}>
+        {[
+          { name: 'grass', color: 'success' },
+          { name: 'water', color: 'info' },
+          { name: 'stone', color: 'warning' },
+          { name: 'sand', color: 'accent' },
+        ].map(m => (
+          <Flex key={m.name} align="center" gap={2}>
+            <div style={{ width: 16, height: 16, borderRadius: 'var(--forge-radius-sm)', backgroundColor: `var(--forge-${m.color})`, opacity: 0.6 }} />
+            <Text size="xs" style={{ textTransform: 'capitalize' }}>{m.name}</Text>
+          </Flex>
+        ))}
+      </Stack>
+    </Stack>
+  )
+}
+
+function EffectsProperties() {
+  const [height, setHeight] = useState([12])
+  const [darkness, setDarkness] = useState([60])
+  const [depth, setDepth] = useState([32])
+  const [alpha, setAlpha] = useState([40])
+  const [outlineWidth, setOutlineWidth] = useState([2])
+
+  return (
+    <ScrollArea style={{ height: '100%' }}>
+      <Stack gap={4} style={{ padding: 'var(--forge-space-3)' }}>
+        {/* Cliff-face */}
+        <Stack gap={3}>
+          <Flex align="center" justify="between">
+            <Text size="xs" weight="semibold">Cliff Face</Text>
+            <Badge variant="outline">cliff-face</Badge>
+          </Flex>
+          <Stack gap={2}>
+            <Flex align="center" justify="between">
+              <Text size="xs" color="muted">Height</Text>
+              <Text size="xs" style={{ fontFamily: 'var(--forge-font-mono)' }}>{height[0]}px</Text>
+            </Flex>
+            <Slider min={1} max={32} step={1} value={height} onValueChange={setHeight} />
+          </Stack>
+          <Stack gap={2}>
+            <Flex align="center" justify="between">
+              <Text size="xs" color="muted">Darkness</Text>
+              <Text size="xs" style={{ fontFamily: 'var(--forge-font-mono)' }}>{(darkness[0] / 100).toFixed(2)}</Text>
+            </Flex>
+            <Slider min={0} max={100} step={1} value={darkness} onValueChange={setDarkness} />
+          </Stack>
+        </Stack>
+
+        <Separator />
+
+        {/* Cliff-shadow */}
+        <Stack gap={3}>
+          <Flex align="center" justify="between">
+            <Text size="xs" weight="semibold">Cliff Shadow</Text>
+            <Badge variant="outline">cliff-shadow</Badge>
+          </Flex>
+          <Stack gap={2}>
+            <Flex align="center" justify="between">
+              <Text size="xs" color="muted">Depth</Text>
+              <Text size="xs" style={{ fontFamily: 'var(--forge-font-mono)' }}>{depth[0]}px</Text>
+            </Flex>
+            <Slider min={1} max={64} step={1} value={depth} onValueChange={setDepth} />
+          </Stack>
+          <Stack gap={2}>
+            <Flex align="center" justify="between">
+              <Text size="xs" color="muted">Alpha</Text>
+              <Text size="xs" style={{ fontFamily: 'var(--forge-font-mono)' }}>{(alpha[0] / 100).toFixed(2)}</Text>
+            </Flex>
+            <Slider min={0} max={100} step={1} value={alpha} onValueChange={setAlpha} />
+          </Stack>
+        </Stack>
+
+        <Separator />
+
+        {/* Outline */}
+        <Stack gap={3}>
+          <Flex align="center" justify="between">
+            <Text size="xs" weight="semibold">Outline</Text>
+            <Badge variant="outline">outline</Badge>
+          </Flex>
+          <Stack gap={2}>
+            <Flex align="center" justify="between">
+              <Text size="xs" color="muted">Width</Text>
+              <Text size="xs" style={{ fontFamily: 'var(--forge-font-mono)' }}>{outlineWidth[0]}px</Text>
+            </Flex>
+            <Slider min={1} max={5} step={1} value={outlineWidth} onValueChange={setOutlineWidth} />
+          </Stack>
+          <Select
+            value="darken"
+            onValueChange={() => {}}
+            options={[
+              { label: 'Darken', value: 'darken' },
+              { label: 'Black', value: 'black' },
+              { label: 'None', value: 'none' },
+            ]}
+          />
+        </Stack>
+
+        <Separator />
+
+        {/* Direction filter mini grid */}
+        <Stack gap={2}>
+          <Text size="xs" color="muted" style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>Direction Filter</Text>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 2 }}>
+            {Array.from({ length: 14 }, (_, i) => (
+              <div key={i} style={{
+                padding: '3px', textAlign: 'center',
+                fontSize: 9, fontFamily: 'var(--forge-font-mono)',
+                backgroundColor: i % 2 === 1
+                  ? 'color-mix(in srgb, var(--forge-success) 15%, var(--forge-surface))'
+                  : 'color-mix(in srgb, var(--forge-danger) 10%, var(--forge-surface))',
+                color: i % 2 === 1 ? 'var(--forge-success)' : 'var(--forge-danger)',
+                borderRadius: 'var(--forge-radius-sm)',
+              }}>
+                {i}
+              </div>
+            ))}
+          </div>
+          <Text size="xs" color="muted">✓ 7 included · ✗ 7 excluded</Text>
+        </Stack>
+
+        <Separator />
+
+        {/* Live recipe fragment */}
+        <Stack gap={2}>
+          <Flex align="center" justify="between">
+            <Text size="xs" weight="semibold">Recipe Fragment</Text>
+            <Button size="sm" variant="outline">Export</Button>
+          </Flex>
+          <CodeBlock
+            language="json"
+            code={JSON.stringify({
+              outline: { width: outlineWidth[0], mode: 'darken' },
+              'cliff-face': { height: height[0], darkness: darkness[0] / 100 },
+              'cliff-shadow': { depth: depth[0], alpha: alpha[0] / 100 },
+            }, null, 2)}
+            showLineNumbers={false}
+          />
+        </Stack>
+      </Stack>
+    </ScrollArea>
+  )
+}
+
+function FillsProperties() {
+  return (
+    <ScrollArea style={{ height: '100%' }}>
+      <Stack gap={3} style={{ padding: 'var(--forge-space-3)' }}>
+        <Card>
+          <Card.Body>
+            <Flex align="center" justify="between">
+              <Stack gap={1}>
+                <Text size="xs" color="muted">Boundary RMSE</Text>
+                <Text size="2xl" weight="bold" style={{ color: 'var(--forge-success)' }}>4.2</Text>
+              </Stack>
+              <Badge color="success">PASS</Badge>
+            </Flex>
+            <Text size="xs" color="muted" style={{ marginTop: 'var(--forge-space-2)', display: 'block' }}>
+              Threshold: &lt;8.0 for painterly
+            </Text>
+          </Card.Body>
+        </Card>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--forge-space-2)' }}>
+          <Card><Card.Body><Text size="xs" color="muted">Dimensions</Text><Text size="sm" weight="semibold">256×256</Text></Card.Body></Card>
+          <Card><Card.Body><Text size="xs" color="muted">Tile Size</Text><Text size="sm" weight="semibold">64px</Text></Card.Body></Card>
+          <Card><Card.Body><Text size="xs" color="muted">Variants</Text><Text size="sm" weight="semibold">4×4</Text></Card.Body></Card>
+          <Card><Card.Body><Text size="xs" color="muted">Anti-Alias</Text><Text size="sm" weight="semibold">true</Text></Card.Body></Card>
+        </div>
+
+        <Separator />
+
+        <Stack gap={1}>
+          <Text size="xs" color="muted" style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>Style Recommendation</Text>
+          <Text size="xs">
+            Painterly at 64px with antiAlias=true. RMSE 4.2 is well within threshold. Noise amplitude 3–5 recommended.
+          </Text>
+        </Stack>
+      </Stack>
+    </ScrollArea>
+  )
+}
+
+function PipelineProperties() {
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Tabs
+        defaultValue="manifest"
+        items={[
+          {
+            value: 'manifest',
+            label: 'Manifest',
+            content: (
+              <ScrollArea style={{ flex: 1 }}>
+                <div style={{ padding: 'var(--forge-space-3)' }}>
+                  <JsonViewer data={MOCK_MANIFEST} defaultExpandDepth={2} searchable />
+                </div>
+              </ScrollArea>
+            ),
+          },
+          {
+            value: 'recipe',
+            label: 'Recipe',
+            content: (
+              <ScrollArea style={{ flex: 1 }}>
+                <div style={{ padding: 'var(--forge-space-3)' }}>
+                  <CodeBlock code={MOCK_RECIPE_JSON} language="json" showLineNumbers />
+                </div>
+              </ScrollArea>
+            ),
+          },
+          {
+            value: 'logs',
+            label: 'Output',
+            content: (
+              <ScrollArea style={{ flex: 1 }}>
+                <div style={{ padding: 'var(--forge-space-3)' }}>
+                  <CodeBlock
+                    language="text"
+                    showCopy={false}
+                    code={`[forge-tileset] compose v2.1.0
+[INFO]  Loading recipe: recipe.json
+[INFO]  Loading 3 fill textures…
+[OK]    grass-painterly.png (RMSE 4.2 ✓)
+[OK]    water-painterly.png (RMSE 3.8 ✓)
+[OK]    stone-painterly.png (RMSE 5.1 ✓)
+[INFO]  Composing 3 pairs × 14 cases…
+[INFO]  Rendering effects…
+[OK]    Atlas: 1024×2048 (258 tiles)
+[WARN]  2 cliff-shadow tiles missing
+[DONE]  Composed in 2.4s`}
+                  />
+                </div>
+              </ScrollArea>
+            ),
+          },
+        ]}
+      />
+    </div>
+  )
+}
+
+// -- Main unified story -----------------------------------------------------
+
+export const UnifiedWorkspace: Story = {
+  name: '★ Unified Workspace',
+  parameters: {
+    docs: {
+      description: {
+        story: `**Recommended layout.** Single workspace with shared file context, persistent browser panel, mode switcher, and contextual properties. All 5 modules accessible without re-loading files or losing context.
+
+Click the mode buttons in the bottom-left to switch focus. Click tree nodes in the left browser to navigate. The right properties panel adapts to the current mode and selection.`,
+      },
+    },
+  },
+  render: function UnifiedWorkspaceDemo() {
+    const [mode, setMode] = useState<FocusMode>('inspect')
+    const [packFile, setPackFile] = useState<FileSourceBarFile | null>({ name: 'terrain_pack.v1.png', size: 2097152, type: 'image/png' })
+    const [selectedNode, setSelectedNode] = useState<string | null>('gw-cliff-face')
+    const [expandedNodes, setExpandedNodes] = useState(['fills', 'pairs', 'pair-gw', 'gw-effects', 'gaps'])
+
+    const handleNodeSelect = useCallback((id: string) => {
+      setSelectedNode(id)
+      // Auto-switch mode based on what was clicked
+      if (id.startsWith('fill-')) setMode('fills')
+      else if (id.startsWith('gap-')) setMode('inspect')
+      else if (id.includes('effect') || id.includes('outline') || id.includes('cliff') || id.includes('shadow')) setMode('inspect')
+      else if (id.includes('transition')) setMode('inspect')
+    }, [])
+
+    const handleNodeExpand = useCallback((id: string, open: boolean) => {
+      setExpandedNodes(prev => open ? [...prev, id] : prev.filter(n => n !== id))
+    }, [])
+
+    return (
+      <TooltipProvider>
+        <div style={{ height: 720, display: 'flex', flexDirection: 'column', fontFamily: 'var(--forge-font-sans)' }}>
+          {/* ── Top toolbar ── */}
+          <ModuleToolbar badge="TW" title="Terrain Workbench"
+            actions={
+              <Group gap={2}>
+                <Badge variant="outline">258 tiles</Badge>
+                <Badge variant="outline">3 pairs</Badge>
+                <Badge color="danger" variant="outline">2 gaps</Badge>
+              </Group>
+            }
+          >
+            <FileSourceBar
+              file={packFile}
+              onLoad={() => setPackFile({ name: 'terrain_pack.v1.png', size: 2097152, type: 'image/png' })}
+              onClear={() => setPackFile(null)}
+              accept=".png + .json"
+              label="Terrain Pack"
+            />
+          </ModuleToolbar>
+
+          {/* ── Main area ── */}
+          <div style={{ flex: 1, minHeight: 0, display: 'flex' }}>
+            <ResizablePanelGroup direction="horizontal">
+              {/* ── Left: Browser + mode switcher ── */}
+              <ResizablePanel defaultSize={20} minSize={14} maxSize={30}>
+                <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                  {/* Pack tree */}
+                  <ScrollArea style={{ flex: 1 }}>
+                    <div style={{ padding: 'var(--forge-space-2)' }}>
+                      <TreeView
+                        nodes={PACK_TREE}
+                        selected={selectedNode ?? undefined}
+                        expanded={expandedNodes}
+                        onSelect={handleNodeSelect}
+                        onExpand={handleNodeExpand}
+                      />
+                    </div>
+                  </ScrollArea>
+
+                  {/* Mode switcher */}
+                  <div style={{
+                    borderTop: '1px solid var(--forge-border)',
+                    padding: 'var(--forge-space-2)',
+                    backgroundColor: 'var(--forge-surface)',
+                  }}>
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(5, 1fr)',
+                      gap: 2,
+                    }}>
+                      {(Object.keys(MODE_ICONS) as FocusMode[]).map(m => (
+                        <button
+                          key={m}
+                          type="button"
+                          onClick={() => setMode(m)}
+                          title={MODE_LABELS[m]}
+                          aria-label={MODE_LABELS[m]}
+                          aria-pressed={mode === m}
+                          style={{
+                            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
+                            padding: '6px 2px',
+                            border: 'none',
+                            borderRadius: 'var(--forge-radius-md)',
+                            backgroundColor: mode === m ? 'color-mix(in srgb, var(--forge-accent) 15%, var(--forge-surface))' : 'transparent',
+                            color: mode === m ? 'var(--forge-accent)' : 'var(--forge-text-muted)',
+                            cursor: 'pointer',
+                            fontSize: 16,
+                            lineHeight: 1,
+                          }}
+                        >
+                          <span>{MODE_ICONS[m]}</span>
+                          <span style={{ fontSize: 9, whiteSpace: 'nowrap' }}>
+                            {MODE_LABELS[m].split(' ')[0]}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </ResizablePanel>
+
+              {/* ── Center: Viewport (changes per mode) ── */}
+              <ResizablePanel defaultSize={55} minSize={35}>
+                {mode === 'inspect' && <InspectViewport selectedNode={selectedNode} />}
+                {mode === 'paint' && <PaintViewport />}
+                {mode === 'effects' && <EffectsViewport />}
+                {mode === 'fills' && <FillsViewport />}
+                {mode === 'pipeline' && <PipelineViewport />}
+              </ResizablePanel>
+
+              {/* ── Right: Properties (contextual) ── */}
+              <ResizablePanel defaultSize={25} minSize={18} maxSize={35}>
+                <div style={{ height: '100%', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--forge-surface)' }}>
+                  <div style={{
+                    padding: 'var(--forge-space-2) var(--forge-space-3)',
+                    borderBottom: '1px solid var(--forge-border)',
+                    display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)',
+                  }}>
+                    <Text size="sm" weight="semibold">
+                      {mode === 'inspect' ? 'Tile Detail' : mode === 'paint' ? 'Cell Inspector' : mode === 'effects' ? 'Effect Parameters' : mode === 'fills' ? 'Quality Metrics' : 'Pipeline'}
+                    </Text>
+                    <div style={{ flex: 1 }} />
+                    <Text size="xs" color="muted">{MODE_ICONS[mode]} {MODE_LABELS[mode]}</Text>
+                  </div>
+                  <div style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
+                    {mode === 'inspect' && <InspectProperties selectedNode={selectedNode} />}
+                    {mode === 'paint' && <PaintProperties />}
+                    {mode === 'effects' && <EffectsProperties />}
+                    {mode === 'fills' && <FillsProperties />}
+                    {mode === 'pipeline' && <PipelineProperties />}
+                  </div>
+                </div>
+              </ResizablePanel>
+            </ResizablePanelGroup>
+          </div>
+        </div>
+      </TooltipProvider>
+    )
+  },
+}
 
 export const TileInspector: Story = {
   name: '1 — Tile Inspector',
