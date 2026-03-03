@@ -106,3 +106,7 @@ pnpm typecheck  # TypeScript across all packages
 - **Monorepo**: pnpm workspaces + Turborepo (`tokens → hooks → components`; `icons` parallel)
 - **Testing**: Vitest + Testing Library + vitest-axe (zero-violation policy)
 - **Versioning**: Changesets with fixed group versioning
+
+## License
+
+[MIT](LICENSE)

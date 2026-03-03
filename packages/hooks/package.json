@@ -1,6 +1,7 @@
 {
   "name": "@forgeui/hooks",
   "version": "1.0.0",
+  "license": "MIT",
   "description": "ForgeUI hooks — useTheme and useTokens for palette/mode access and canvas-ready token values",
   "type": "module",
   "exports": {

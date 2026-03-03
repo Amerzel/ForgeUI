@@ -1,6 +1,7 @@
 {
   "name": "@forgeui/tokens",
   "version": "1.0.0",
+  "license": "MIT",
   "description": "ForgeUI design tokens — CSS variables and JS constants",
   "type": "module",
   "exports": {

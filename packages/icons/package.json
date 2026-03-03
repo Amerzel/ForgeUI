@@ -1,6 +1,7 @@
 {
   "name": "@forgeui/icons",
   "version": "1.0.0",
+  "license": "MIT",
   "description": "ForgeUI icon set — curated Lucide React + custom game development icons",
   "type": "module",
   "exports": {
