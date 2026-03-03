@@ -11,8 +11,16 @@ import {
   ComparisonSlider,
   LayerStack,
   NodeEditor,
+  AnimationPreview,
 } from '../index.js'
-import type { TimelineTrack, CanvasItem, Layer, FlowNode, FlowEdge } from '../index.js'
+import type {
+  TimelineTrack,
+  CanvasItem,
+  Layer,
+  FlowNode,
+  FlowEdge,
+  AnimationFrame,
+} from '../index.js'
 
 // Mock @xyflow/react — ReactFlow uses canvas/ResizeObserver APIs unavailable in JSDOM
 vi.mock('@xyflow/react', () => {
@@ -579,6 +587,189 @@ describe('LayerStack', () => {
     const { container } = render(
       <Themed>
         <LayerStack layers={LAYERS} selectedId="bg" />
+      </Themed>,
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// AnimationPreview
+// ---------------------------------------------------------------------------
+describe('AnimationPreview', () => {
+  const PIXEL =
+    'data:image/svg+xml,' +
+    encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><rect width="8" height="8" fill="#f00"/></svg>',
+    )
+
+  const FRAMES: AnimationFrame[] = [
+    { src: PIXEL, duration: 100 },
+    { src: PIXEL, duration: 100 },
+    { src: PIXEL, duration: 100 },
+    { src: PIXEL, duration: 100 },
+  ]
+
+  it('renders preview image with frame alt text', () => {
+    render(
+      <Themed>
+        <AnimationPreview frames={FRAMES} autoPlay={false} />
+      </Themed>,
+    )
+    expect(screen.getByAltText('Animation frame 1 of 4')).toBeInTheDocument()
+  })
+
+  it('forwards className and style', () => {
+    render(
+      <Themed>
+        <AnimationPreview
+          frames={FRAMES}
+          autoPlay={false}
+          className="custom"
+          style={{ maxWidth: '300px' }}
+        />
+      </Themed>,
+    )
+    const el = document.querySelector('.forge-animation-preview')
+    expect(el?.className).toContain('custom')
+    expect((el as HTMLElement).style.maxWidth).toBe('300px')
+  })
+
+  it('shows play/pause and frame step controls', () => {
+    render(
+      <Themed>
+        <AnimationPreview frames={FRAMES} autoPlay={false} />
+      </Themed>,
+    )
+    expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Previous frame' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Next frame' })).toBeInTheDocument()
+  })
+
+  it('shows frame counter', () => {
+    render(
+      <Themed>
+        <AnimationPreview frames={FRAMES} autoPlay={false} />
+      </Themed>,
+    )
+    expect(screen.getByText('1 / 4')).toBeInTheDocument()
+  })
+
+  it('toggles play/pause and fires onPlayStateChange', async () => {
+    const onPlayStateChange = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <AnimationPreview frames={FRAMES} autoPlay={false} onPlayStateChange={onPlayStateChange} />
+      </Themed>,
+    )
+    const playBtn = screen.getByRole('button', { name: 'Play' })
+    await user.click(playBtn)
+    expect(onPlayStateChange).toHaveBeenCalledWith(true)
+    expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument()
+  })
+
+  it('steps to next frame and fires onFrameChange', async () => {
+    const onFrameChange = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <AnimationPreview frames={FRAMES} autoPlay={false} onFrameChange={onFrameChange} />
+      </Themed>,
+    )
+    await user.click(screen.getByRole('button', { name: 'Next frame' }))
+    expect(onFrameChange).toHaveBeenCalledWith(1)
+    expect(screen.getByText('2 / 4')).toBeInTheDocument()
+  })
+
+  it('steps to previous frame with loop', async () => {
+    const onFrameChange = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <AnimationPreview frames={FRAMES} autoPlay={false} loop onFrameChange={onFrameChange} />
+      </Themed>,
+    )
+    await user.click(screen.getByRole('button', { name: 'Previous frame' }))
+    expect(onFrameChange).toHaveBeenCalledWith(3)
+    expect(screen.getByText('4 / 4')).toBeInTheDocument()
+  })
+
+  it('renders filmstrip thumbnails', () => {
+    render(
+      <Themed>
+        <AnimationPreview frames={FRAMES} autoPlay={false} />
+      </Themed>,
+    )
+    expect(screen.getByRole('group', { name: 'Animation frames' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Jump to frame 1' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Jump to frame 4' })).toBeInTheDocument()
+  })
+
+  it('jumps to frame on filmstrip click and fires onFrameChange', async () => {
+    const onFrameChange = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <AnimationPreview frames={FRAMES} autoPlay={false} onFrameChange={onFrameChange} />
+      </Themed>,
+    )
+    await user.click(screen.getByRole('button', { name: 'Jump to frame 3' }))
+    expect(onFrameChange).toHaveBeenCalledWith(2)
+    expect(screen.getByText('3 / 4')).toBeInTheDocument()
+  })
+
+  it('hides controls and filmstrip for single-frame input', () => {
+    render(
+      <Themed>
+        <AnimationPreview frames={[{ src: PIXEL, duration: 100 }]} />
+      </Themed>,
+    )
+    expect(screen.getByAltText('Animation frame 1 of 1')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Play' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Pause' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('group', { name: 'Animation frames' })).not.toBeInTheDocument()
+  })
+
+  it('hides filmstrip when showFilmstrip is false', () => {
+    render(
+      <Themed>
+        <AnimationPreview frames={FRAMES} autoPlay={false} showFilmstrip={false} />
+      </Themed>,
+    )
+    expect(screen.queryByRole('group', { name: 'Animation frames' })).not.toBeInTheDocument()
+    // Controls should still be visible
+    expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument()
+  })
+
+  it('shows metadata when enabled', () => {
+    render(
+      <Themed>
+        <AnimationPreview frames={FRAMES} autoPlay={false} showMetadata />
+      </Themed>,
+    )
+    expect(screen.getByText('400ms total')).toBeInTheDocument()
+    expect(screen.getByText('10.0 fps')).toBeInTheDocument()
+  })
+
+  it('pauses playback when stepping', async () => {
+    const onPlayStateChange = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <AnimationPreview frames={FRAMES} autoPlay onPlayStateChange={onPlayStateChange} />
+      </Themed>,
+    )
+    // Component auto-plays, so Pause button should be visible
+    expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Next frame' }))
+    expect(onPlayStateChange).toHaveBeenCalledWith(false)
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed>
+        <AnimationPreview frames={FRAMES} autoPlay={false} />
       </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()

@@ -90,6 +90,8 @@ export { ComparisonSlider } from './domain/ComparisonSlider.js'
 export type { ComparisonSliderProps } from './domain/ComparisonSlider.js'
 export { LayerStack } from './domain/LayerStack.js'
 export type { Layer, LayerStackProps } from './domain/LayerStack.js'
+export { AnimationPreview } from './domain/AnimationPreview.js'
+export type { AnimationFrame, AnimationPreviewProps } from './domain/AnimationPreview.js'
 
 // Phase 2b — Complex inputs
 export { DataTable } from './complex/DataTable.js'
