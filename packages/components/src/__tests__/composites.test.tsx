@@ -23,8 +23,9 @@ import {
   EntityCard,
   MiniMap,
   ApprovalPanel,
+  FileSourceBar,
 } from '../index.js'
-import type { Step, BreadcrumbItem, MenubarMenu } from '../index.js'
+import type { Step, BreadcrumbItem, MenubarMenu, FileSourceBarFile } from '../index.js'
 
 function Themed({ children }: { children: React.ReactNode }) {
   return <ThemeProvider>{children}</ThemeProvider>
@@ -1076,6 +1077,117 @@ describe('ApprovalPanel', () => {
         <ApprovalPanel title="Test" status="pending" onApprove={() => {}} onReject={() => {}}>
           <p>content</p>
         </ApprovalPanel>
+      </Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// FileSourceBar
+// ---------------------------------------------------------------------------
+describe('FileSourceBar', () => {
+  const FILE: FileSourceBarFile = { name: 'game-design.json', size: 24576, type: 'application/json' }
+
+  it('renders empty state', () => {
+    render(
+      <Themed>
+        <FileSourceBar onLoad={() => {}} label="Game Design Document" accept=".json" />
+      </Themed>
+    )
+    expect(screen.getByText(/No file loaded/)).toBeInTheDocument()
+    expect(screen.getByText(/Game Design Document/)).toBeInTheDocument()
+    expect(screen.getByText(/\.json/)).toBeInTheDocument()
+  })
+
+  it('renders loaded state with file name and size', () => {
+    render(
+      <Themed>
+        <FileSourceBar file={FILE} onLoad={() => {}} onClear={() => {}} />
+      </Themed>
+    )
+    expect(screen.getByText('game-design.json')).toBeInTheDocument()
+    expect(screen.getByText('(24.0 KB)')).toBeInTheDocument()
+  })
+
+  it('renders error state', () => {
+    render(
+      <Themed>
+        <FileSourceBar file={FILE} error="Invalid JSON: Unexpected token" onLoad={() => {}} onClear={() => {}} />
+      </Themed>
+    )
+    expect(screen.getByRole('alert')).toHaveTextContent('Invalid JSON: Unexpected token')
+  })
+
+  it('fires onLoad when Load button clicked', async () => {
+    const onLoad = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <FileSourceBar onLoad={onLoad} />
+      </Themed>
+    )
+    await user.click(screen.getByRole('button', { name: /Load/ }))
+    expect(onLoad).toHaveBeenCalledOnce()
+  })
+
+  it('fires onClear when Clear button clicked', async () => {
+    const onClear = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <FileSourceBar file={FILE} onLoad={() => {}} onClear={onClear} />
+      </Themed>
+    )
+    await user.click(screen.getByRole('button', { name: /Clear/ }))
+    expect(onClear).toHaveBeenCalledOnce()
+  })
+
+  it('hides Clear button in empty state', () => {
+    render(
+      <Themed>
+        <FileSourceBar onLoad={() => {}} onClear={() => {}} />
+      </Themed>
+    )
+    expect(screen.queryByRole('button', { name: /Clear/ })).not.toBeInTheDocument()
+  })
+
+  it('supports keyboard activation of buttons', async () => {
+    const onLoad = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <FileSourceBar onLoad={onLoad} />
+      </Themed>
+    )
+    const btn = screen.getByRole('button', { name: /Load/ })
+    btn.focus()
+    await user.keyboard('{Enter}')
+    expect(onLoad).toHaveBeenCalled()
+  })
+
+  it('has no axe violations (empty state)', async () => {
+    const { container } = render(
+      <Themed>
+        <FileSourceBar onLoad={() => {}} label="Test" />
+      </Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('has no axe violations (loaded state)', async () => {
+    const { container } = render(
+      <Themed>
+        <FileSourceBar file={FILE} onLoad={() => {}} onClear={() => {}} />
+      </Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('has no axe violations (error state)', async () => {
+    const { container } = render(
+      <Themed>
+        <FileSourceBar file={FILE} error="Something went wrong" onLoad={() => {}} onClear={() => {}} />
       </Themed>
     )
     expect(await axe(container)).toHaveNoViolations()

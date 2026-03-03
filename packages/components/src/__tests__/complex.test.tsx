@@ -14,6 +14,8 @@ import {
   EditableText,
   DiffViewer,
   FilterBar,
+  CodeBlock,
+  JsonViewer,
 } from '../index.js'
 import type { ColumnDef, CommandGroup, TreeNode, PropertySection, FilterDefinition, FilterState } from '../index.js'
 
@@ -707,6 +709,151 @@ describe('FilterBar', () => {
   it('has no axe violations', async () => {
     const { container } = render(
       <Themed><FilterBar filters={FILTERS} value={{}} onChange={() => {}} /></Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// CodeBlock
+// ---------------------------------------------------------------------------
+describe('CodeBlock', () => {
+  it('renders code content', () => {
+    render(
+      <Themed>
+        <CodeBlock code="const x = 1;" language="typescript" />
+      </Themed>
+    )
+    expect(screen.getByText(/const/)).toBeInTheDocument()
+  })
+
+  it('shows language label', () => {
+    render(
+      <Themed>
+        <CodeBlock code="echo hello" language="bash" />
+      </Themed>
+    )
+    expect(screen.getByText('bash')).toBeInTheDocument()
+  })
+
+  it('renders copy button', () => {
+    render(
+      <Themed>
+        <CodeBlock code="test" />
+      </Themed>
+    )
+    expect(screen.getByRole('button', { name: 'Copy code' })).toBeInTheDocument()
+  })
+
+  it('hides copy button when showCopy=false', () => {
+    render(
+      <Themed>
+        <CodeBlock code="test" showCopy={false} />
+      </Themed>
+    )
+    expect(screen.queryByRole('button', { name: 'Copy code' })).not.toBeInTheDocument()
+  })
+
+  it('renders line numbers when enabled', () => {
+    render(
+      <Themed>
+        <CodeBlock code={"line1\nline2\nline3"} showLineNumbers />
+      </Themed>
+    )
+    expect(screen.getByText('1')).toBeInTheDocument()
+    expect(screen.getByText('2')).toBeInTheDocument()
+    expect(screen.getByText('3')).toBeInTheDocument()
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed>
+        <CodeBlock code='{"key": "value"}' language="json" />
+      </Themed>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// JsonViewer
+// ---------------------------------------------------------------------------
+describe('JsonViewer', () => {
+  const SAMPLE = { name: 'Forge', version: 2, active: true, tags: ['ui', 'tools'] }
+
+  it('renders primitive values', () => {
+    render(
+      <Themed>
+        <JsonViewer data={SAMPLE} defaultExpandDepth={Infinity} />
+      </Themed>
+    )
+    expect(screen.getByText(/"Forge"/)).toBeInTheDocument()
+    expect(screen.getByText('2')).toBeInTheDocument()
+    expect(screen.getByText('true')).toBeInTheDocument()
+  })
+
+  it('renders collapsed by default at depth 1', () => {
+    render(
+      <Themed>
+        <JsonViewer data={SAMPLE} defaultExpandDepth={1} />
+      </Themed>
+    )
+    // Top-level expanded, but "tags" array collapsed — shows item count
+    expect(screen.getByText(/2 items/)).toBeInTheDocument()
+  })
+
+  it('expands on click', async () => {
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <JsonViewer data={{ nested: { a: 1 } }} defaultExpandDepth={1} />
+      </Themed>
+    )
+    // "nested" object should be collapsed, showing 1 item
+    expect(screen.getByText(/1 item(?!s)/)).toBeInTheDocument()
+    // Click to expand
+    await user.click(screen.getByRole('button', { name: /Expand nested/ }))
+    expect(screen.getByText('1')).toBeInTheDocument()
+  })
+
+  it('supports keyboard expand/collapse', async () => {
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <JsonViewer data={{ obj: { x: 1 } }} defaultExpandDepth={1} />
+      </Themed>
+    )
+    const toggleBtn = screen.getByRole('button', { name: /Expand obj/ })
+    toggleBtn.focus()
+    await user.keyboard('{Enter}')
+    expect(screen.getByText('1')).toBeInTheDocument()
+    await user.keyboard('{Enter}')
+    expect(screen.getByText(/1 item(?!s)/)).toBeInTheDocument()
+  })
+
+  it('renders search input when searchable', () => {
+    render(
+      <Themed>
+        <JsonViewer data={SAMPLE} searchable />
+      </Themed>
+    )
+    expect(screen.getByRole('searchbox')).toBeInTheDocument()
+  })
+
+  it('renders copy button', () => {
+    render(
+      <Themed>
+        <JsonViewer data={SAMPLE} />
+      </Themed>
+    )
+    expect(screen.getByRole('button', { name: 'Copy JSON' })).toBeInTheDocument()
+  })
+
+  it('has no axe violations', async () => {
+    const { container } = render(
+      <Themed>
+        <JsonViewer data={SAMPLE} defaultExpandDepth={Infinity} />
+      </Themed>
     )
     expect(await axe(container)).toHaveNoViolations()
   })

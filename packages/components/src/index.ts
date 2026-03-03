@@ -103,6 +103,10 @@ export { DiffViewer }          from './complex/DiffViewer.js'
 export type { DiffViewerProps, DiffLine } from './complex/DiffViewer.js'
 export { FilterBar }           from './complex/FilterBar.js'
 export type { FilterBarProps, FilterDefinition, FilterOption, FilterState } from './complex/FilterBar.js'
+export { CodeBlock }           from './complex/CodeBlock.js'
+export type { CodeBlockProps } from './complex/CodeBlock.js'
+export { JsonViewer }          from './complex/JsonViewer.js'
+export type { JsonViewerProps } from './complex/JsonViewer.js'
 
 // Phase 2a — Layout
 export { AppShell }            from './layout/AppShell.js'
@@ -137,6 +141,8 @@ export { MiniMap }             from './composites/MiniMap.js'
 export type { MiniMapProps, MiniMapViewport } from './composites/MiniMap.js'
 export { ApprovalPanel }      from './composites/ApprovalPanel.js'
 export type { ApprovalPanelProps } from './composites/ApprovalPanel.js'
+export { FileSourceBar }      from './composites/FileSourceBar.js'
+export type { FileSourceBarProps, FileSourceBarFile } from './composites/FileSourceBar.js'
 
 // Phase 1 — Primitives
 export { VisuallyHidden } from './primitives/VisuallyHidden.js'
