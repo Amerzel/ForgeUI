@@ -32,21 +32,27 @@ export const StackStory: Story = {
   render: () => (
     <Flex gap={8} p={6} wrap="wrap" align="flex-start">
       <Stack gap={2} style={{ width: 180 }}>
-        <Text size="sm" color="muted">gap=2 (8px)</Text>
+        <Text size="sm" color="muted">
+          gap=2 (8px)
+        </Text>
         <Block label="Item 1" />
         <Block label="Item 2" />
         <Block label="Item 3" />
       </Stack>
 
       <Stack gap={4} style={{ width: 180 }}>
-        <Text size="sm" color="muted">gap=4 (16px)</Text>
+        <Text size="sm" color="muted">
+          gap=4 (16px)
+        </Text>
         <Block label="Item 1" />
         <Block label="Item 2" />
         <Block label="Item 3" />
       </Stack>
 
       <Stack gap={2} reverse style={{ width: 180 }}>
-        <Text size="sm" color="muted">reverse=true</Text>
+        <Text size="sm" color="muted">
+          reverse=true
+        </Text>
         <Block label="1 (bottom)" />
         <Block label="2" />
         <Block label="3 (top)" />

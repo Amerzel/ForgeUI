@@ -38,20 +38,32 @@ export function Progress({
   showValue = false,
   className,
 }: ProgressProps) {
-  const percentage = value !== undefined ? Math.min(100, Math.max(0, (value / max) * 100)) : undefined
+  const percentage =
+    value !== undefined ? Math.min(100, Math.max(0, (value / max) * 100)) : undefined
   const isIndeterminate = value === undefined
 
   return (
-    <div className={cn('forge-progress', className)} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--forge-space-1)' }}>
+    <div
+      className={cn('forge-progress', className)}
+      style={{ display: 'flex', flexDirection: 'column', gap: 'var(--forge-space-1)' }}
+    >
       {(label || showValue) && (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           {label && (
-            <span style={{ fontSize: 'var(--forge-font-size-sm)', color: 'var(--forge-text-muted)' }}>
+            <span
+              style={{ fontSize: 'var(--forge-font-size-sm)', color: 'var(--forge-text-muted)' }}
+            >
               {label}
             </span>
           )}
           {showValue && percentage !== undefined && (
-            <span style={{ fontSize: 'var(--forge-font-size-xs)', color: 'var(--forge-text-muted)', fontFamily: 'var(--forge-font-mono)' }}>
+            <span
+              style={{
+                fontSize: 'var(--forge-font-size-xs)',
+                color: 'var(--forge-text-muted)',
+                fontFamily: 'var(--forge-font-mono)',
+              }}
+            >
               {Math.round(percentage)}%
             </span>
           )}
@@ -82,8 +94,12 @@ export function Progress({
             width: isIndeterminate ? '40%' : `${percentage}%`,
             backgroundColor: TRACK_COLOR[variant],
             borderRadius: 'var(--forge-radius-full)',
-            transition: isIndeterminate ? undefined : `width var(--forge-duration-normal) var(--forge-easing-default)`,
-            animation: isIndeterminate ? 'forge-progress-indeterminate 1.5s ease-in-out infinite' : undefined,
+            transition: isIndeterminate
+              ? undefined
+              : `width var(--forge-duration-normal) var(--forge-easing-default)`,
+            animation: isIndeterminate
+              ? 'forge-progress-indeterminate 1.5s ease-in-out infinite'
+              : undefined,
           }}
         />
         <style>{`

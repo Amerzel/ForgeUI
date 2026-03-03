@@ -5,26 +5,35 @@ const meta: Meta = {
   title: 'Domain/ComparisonSlider',
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'Before/after image comparison with a draggable divider. Keyboard-accessible with arrow keys.' } },
+    docs: {
+      description: {
+        component:
+          'Before/after image comparison with a draggable divider. Keyboard-accessible with arrow keys.',
+      },
+    },
     layout: 'fullscreen',
   },
 }
 export default meta
 type Story = StoryObj
 
-const BEFORE_IMAGE = 'data:image/svg+xml,' + encodeURIComponent(
-  `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="320">
+const BEFORE_IMAGE =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="320">
     <rect width="512" height="320" fill="#1e293b"/>
     <text x="256" y="140" font-size="24" fill="#64748b" text-anchor="middle">Before</text>
     <text x="256" y="180" font-size="14" fill="#475569" text-anchor="middle">Low resolution · No filtering</text>
     <rect x="80" y="220" width="100" height="60" rx="4" fill="#334155"/>
     <rect x="200" y="220" width="100" height="60" rx="4" fill="#334155"/>
     <rect x="320" y="220" width="100" height="60" rx="4" fill="#334155"/>
-  </svg>`
-)
+  </svg>`,
+  )
 
-const AFTER_IMAGE = 'data:image/svg+xml,' + encodeURIComponent(
-  `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="320">
+const AFTER_IMAGE =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="320">
     <defs>
       <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="#312e81"/>
@@ -37,14 +46,16 @@ const AFTER_IMAGE = 'data:image/svg+xml,' + encodeURIComponent(
     <rect x="80" y="220" width="100" height="60" rx="8" fill="#4338ca" opacity="0.8"/>
     <rect x="200" y="220" width="100" height="60" rx="8" fill="#4338ca" opacity="0.8"/>
     <rect x="320" y="220" width="100" height="60" rx="8" fill="#4338ca" opacity="0.8"/>
-  </svg>`
-)
+  </svg>`,
+  )
 
 export const BeforeAfter: Story = {
   name: 'Before / After',
   render: () => (
     <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-      <Text size="sm" style={{ fontWeight: 500 }}>Texture Upscale Comparison</Text>
+      <Text size="sm" style={{ fontWeight: 500 }}>
+        Texture Upscale Comparison
+      </Text>
       <ComparisonSlider
         before={BEFORE_IMAGE}
         after={AFTER_IMAGE}

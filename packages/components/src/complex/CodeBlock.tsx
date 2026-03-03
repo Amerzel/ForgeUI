@@ -11,10 +11,19 @@ function forgeTheme(): PrismTheme {
       backgroundColor: 'var(--forge-surface-sunken)',
     },
     styles: [
-      { types: ['comment', 'prolog', 'doctype', 'cdata'], style: { color: 'var(--forge-text-muted)' } },
+      {
+        types: ['comment', 'prolog', 'doctype', 'cdata'],
+        style: { color: 'var(--forge-text-muted)' },
+      },
       { types: ['punctuation'], style: { color: 'var(--forge-text-muted)' } },
-      { types: ['property', 'tag', 'boolean', 'number', 'constant', 'symbol'], style: { color: 'var(--forge-info)' } },
-      { types: ['selector', 'attr-name', 'string', 'char', 'builtin'], style: { color: 'var(--forge-success)' } },
+      {
+        types: ['property', 'tag', 'boolean', 'number', 'constant', 'symbol'],
+        style: { color: 'var(--forge-info)' },
+      },
+      {
+        types: ['selector', 'attr-name', 'string', 'char', 'builtin'],
+        style: { color: 'var(--forge-success)' },
+      },
       { types: ['operator', 'entity', 'url'], style: { color: 'var(--forge-warning)' } },
       { types: ['atrule', 'attr-value', 'keyword'], style: { color: 'var(--forge-accent)' } },
       { types: ['function', 'class-name'], style: { color: 'var(--forge-danger)' } },
@@ -94,7 +103,14 @@ export function CodeBlock({
           borderBottom: '1px solid var(--forge-border)',
         }}
       >
-        <span style={{ fontSize: 'var(--forge-font-size-xs)', color: 'var(--forge-text-muted)', textTransform: 'uppercase', letterSpacing: 'var(--forge-tracking-wide)' }}>
+        <span
+          style={{
+            fontSize: 'var(--forge-font-size-xs)',
+            color: 'var(--forge-text-muted)',
+            textTransform: 'uppercase',
+            letterSpacing: 'var(--forge-tracking-wide)',
+          }}
+        >
           {language}
         </span>
         {showCopy && (
@@ -118,9 +134,34 @@ export function CodeBlock({
             }}
           >
             {copied ? (
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
             ) : (
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
             )}
             {copied ? 'Copied' : 'Copy'}
           </button>

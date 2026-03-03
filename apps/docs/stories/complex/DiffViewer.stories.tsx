@@ -6,7 +6,9 @@ const meta: Meta<typeof DiffViewer> = {
   component: DiffViewer,
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'Line-by-line text diff viewer with unified and split modes.' } },
+    docs: {
+      description: { component: 'Line-by-line text diff viewer with unified and split modes.' },
+    },
   },
 }
 export default meta

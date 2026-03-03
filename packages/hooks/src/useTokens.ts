@@ -26,7 +26,9 @@ export interface UseTokensResult<TExtensions extends ExtensionTokens = Extension
  * // Access resolved token for canvas rendering
  * ctx.fillStyle = extensions['--lore-prophecy']
  */
-export function useTokens<TExtensions extends ExtensionTokens = ExtensionTokens>(): UseTokensResult<TExtensions> {
+export function useTokens<
+  TExtensions extends ExtensionTokens = ExtensionTokens,
+>(): UseTokensResult<TExtensions> {
   const ctx = use(ThemeContext)
   if (!ctx) {
     throw new Error('useTokens() must be used inside a <ThemeProvider>.')

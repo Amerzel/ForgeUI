@@ -32,11 +32,11 @@ export function Wrap({
 }: WrapProps) {
   const computedStyle: CSSProperties = {
     ...cleanStyle({
-      display:        'flex',
-      flexWrap:       'wrap',
-      flexDirection:  direction,
-      gap:            sp(gap ?? spacing ?? 2),
-      alignItems:     align,
+      display: 'flex',
+      flexWrap: 'wrap',
+      flexDirection: direction,
+      gap: sp(gap ?? spacing ?? 2),
+      alignItems: align,
       justifyContent: justify,
     }),
     ...style,

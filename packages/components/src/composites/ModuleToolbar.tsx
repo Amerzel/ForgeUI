@@ -30,28 +30,38 @@ export function ModuleToolbar({ badge, title, children, actions, className }: Mo
     >
       {/* Badge + title */}
       {badge && (
-        <span style={{
-          fontSize: 'var(--forge-font-size-xs)',
-          fontWeight: 'var(--forge-font-bold)',
-          fontFamily: 'var(--forge-font-mono)',
-          color: 'var(--forge-text-on-accent)',
-          backgroundColor: 'var(--forge-accent)',
-          padding: '2px 6px',
-          borderRadius: 'var(--forge-radius-sm)',
-          flexShrink: 0,
-        }}>{badge}</span>
+        <span
+          style={{
+            fontSize: 'var(--forge-font-size-xs)',
+            fontWeight: 'var(--forge-font-bold)',
+            fontFamily: 'var(--forge-font-mono)',
+            color: 'var(--forge-text-on-accent)',
+            backgroundColor: 'var(--forge-accent)',
+            padding: '2px 6px',
+            borderRadius: 'var(--forge-radius-sm)',
+            flexShrink: 0,
+          }}
+        >
+          {badge}
+        </span>
       )}
-      <span style={{
-        fontSize: 'var(--forge-font-size-sm)',
-        fontWeight: 'var(--forge-font-semibold)',
-        color: 'var(--forge-text)',
-        flexShrink: 0,
-      }}>{title}</span>
+      <span
+        style={{
+          fontSize: 'var(--forge-font-size-sm)',
+          fontWeight: 'var(--forge-font-semibold)',
+          color: 'var(--forge-text)',
+          flexShrink: 0,
+        }}
+      >
+        {title}
+      </span>
 
       {/* Middle content */}
       {children && (
         <>
-          <div style={{ width: 1, height: 20, backgroundColor: 'var(--forge-border)', flexShrink: 0 }} />
+          <div
+            style={{ width: 1, height: 20, backgroundColor: 'var(--forge-border)', flexShrink: 0 }}
+          />
           {children}
         </>
       )}

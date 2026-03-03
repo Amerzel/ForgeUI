@@ -17,7 +17,14 @@ interface RadioGroupProps {
 
 let _idCounter = 0
 
-export function RadioGroup({ options, value, onValueChange, orientation = 'vertical', disabled, name }: RadioGroupProps) {
+export function RadioGroup({
+  options,
+  value,
+  onValueChange,
+  orientation = 'vertical',
+  disabled,
+  name,
+}: RadioGroupProps) {
   const groupId = `forge-radio-${++_idCounter}`
 
   return (
@@ -37,7 +44,10 @@ export function RadioGroup({ options, value, onValueChange, orientation = 'verti
         const itemId = `${groupId}-${opt.value}`
         const isDisabled = disabled || opt.disabled
         return (
-          <div key={opt.value} style={{ display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)' }}>
+          <div
+            key={opt.value}
+            style={{ display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)' }}
+          >
             <RadixRadioGroup.Item
               id={itemId}
               value={opt.value}
@@ -58,7 +68,8 @@ export function RadioGroup({ options, value, onValueChange, orientation = 'verti
                 transition: `border-color var(--forge-duration-fast) var(--forge-easing-default)`,
               }}
               onFocus={(e) => {
-                e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+                e.currentTarget.style.outline =
+                  'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
                 e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
                 e.currentTarget.style.borderColor = 'var(--forge-accent)'
               }}

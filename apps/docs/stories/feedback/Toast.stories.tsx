@@ -17,27 +17,47 @@ export const Default: Story = {
   render: function ToastDemo() {
     const [toasts, setToasts] = useState<ToastItem[]>([])
 
-    const addToast = (variant: NonNullable<ToastItem['variant']>, title: string, description?: string) => {
+    const addToast = (
+      variant: NonNullable<ToastItem['variant']>,
+      title: string,
+      description?: string,
+    ) => {
       const id = String(++_toastId)
       const item: ToastItem = { id, title, variant, duration: 5000 }
       if (description) item.description = description
-      setToasts(prev => [...prev, item])
+      setToasts((prev) => [...prev, item])
     }
-    const dismiss = (id: string) => setToasts(prev => prev.filter(t => t.id !== id))
+    const dismiss = (id: string) => setToasts((prev) => prev.filter((t) => t.id !== id))
 
     return (
       <ToastProvider>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          <Button variant="secondary" size="sm" onClick={() => addToast('default', 'File saved', 'Changes saved to disk.')}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => addToast('default', 'File saved', 'Changes saved to disk.')}
+          >
             Default
           </Button>
-          <Button variant="secondary" size="sm" onClick={() => addToast('success', 'Build succeeded', 'All 12 assets compiled.')}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => addToast('success', 'Build succeeded', 'All 12 assets compiled.')}
+          >
             Success
           </Button>
-          <Button variant="secondary" size="sm" onClick={() => addToast('warning', 'Memory high', 'Asset pool at 87%.')}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => addToast('warning', 'Memory high', 'Asset pool at 87%.')}
+          >
             Warning
           </Button>
-          <Button variant="secondary" size="sm" onClick={() => addToast('danger', 'Compilation failed', 'Error in shader.glsl:42')}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => addToast('danger', 'Compilation failed', 'Error in shader.glsl:42')}
+          >
             Danger
           </Button>
         </div>

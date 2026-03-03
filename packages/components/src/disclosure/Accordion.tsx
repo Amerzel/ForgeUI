@@ -41,18 +41,19 @@ export function Accordion({
   collapsible = true,
   className,
 }: AccordionProps) {
-  const rootProps = type === 'single'
-    ? {
-        type: 'single' as const,
-        value,
-        onValueChange,
-        collapsible,
-      }
-    : {
-        type: 'multiple' as const,
-        value: values,
-        onValueChange: onValuesChange,
-      }
+  const rootProps =
+    type === 'single'
+      ? {
+          type: 'single' as const,
+          value,
+          onValueChange,
+          collapsible,
+        }
+      : {
+          type: 'multiple' as const,
+          value: values,
+          onValueChange: onValuesChange,
+        }
 
   return (
     <RadixAccordion.Root
@@ -100,14 +101,20 @@ export function Accordion({
                   transition: `background-color var(--forge-duration-fast) var(--forge-easing-default)`,
                 }}
                 onFocus={(e) => {
-                  e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+                  e.currentTarget.style.outline =
+                    'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
                   e.currentTarget.style.outlineOffset = '-2px'
                 }}
-                onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
-                onMouseEnter={(e) => {
-                  if (!item.disabled) e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'
+                onBlur={(e) => {
+                  e.currentTarget.style.outline = 'none'
                 }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent' }}
+                onMouseEnter={(e) => {
+                  if (!item.disabled)
+                    e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent'
+                }}
               >
                 {item.trigger}
                 <svg
@@ -117,7 +124,13 @@ export function Accordion({
                   style={CHEVRON_STYLE}
                   className="forge-accordion-chevron"
                 >
-                  <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path
+                    d="M3 5l4 4 4-4"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </RadixAccordion.Trigger>
             </h3>

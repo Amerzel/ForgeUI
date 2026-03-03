@@ -43,7 +43,12 @@ interface DataTableProps<TData> {
   className?: string
 }
 
-function CheckboxCell({ checked, indeterminate, onChange, ariaLabel }: {
+function CheckboxCell({
+  checked,
+  indeterminate,
+  onChange,
+  ariaLabel,
+}: {
   checked: boolean
   indeterminate?: boolean
   onChange: (v: boolean) => void
@@ -53,10 +58,17 @@ function CheckboxCell({ checked, indeterminate, onChange, ariaLabel }: {
     <input
       type="checkbox"
       checked={checked}
-      ref={(el) => { if (el) el.indeterminate = indeterminate ?? false }}
+      ref={(el) => {
+        if (el) el.indeterminate = indeterminate ?? false
+      }}
       aria-label={ariaLabel ?? 'Select row'}
       onChange={(e) => onChange(e.target.checked)}
-      style={{ width: '14px', height: '14px', cursor: 'pointer', accentColor: 'var(--forge-accent)' }}
+      style={{
+        width: '14px',
+        height: '14px',
+        cursor: 'pointer',
+        accentColor: 'var(--forge-accent)',
+      }}
     />
   )
 }
@@ -95,10 +107,7 @@ export function DataTable<TData>({
       />
     ),
     cell: ({ row }) => (
-      <CheckboxCell
-        checked={row.getIsSelected()}
-        onChange={(v) => row.toggleSelected(v)}
-      />
+      <CheckboxCell checked={row.getIsSelected()} onChange={(v) => row.toggleSelected(v)} />
     ),
     size: 40,
     enableSorting: false,
@@ -125,12 +134,13 @@ export function DataTable<TData>({
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: (updater) => {
-      setRowSelectionState(prev => {
+      setRowSelectionState((prev) => {
         const next = typeof updater === 'function' ? updater(prev) : updater
         if (onRowSelectionChange) {
-          const selectedRows = table.getRowModel().rows
-            .filter(row => next[row.id])
-            .map(row => row.original)
+          const selectedRows = table
+            .getRowModel()
+            .rows.filter((row) => next[row.id])
+            .map((row) => row.original)
           onRowSelectionChange(selectedRows)
         }
         return next
@@ -145,9 +155,7 @@ export function DataTable<TData>({
   const { rows } = table.getRowModel()
 
   // Pagination slice
-  const paginatedRows = enablePagination
-    ? rows.slice((page - 1) * pageSize, page * pageSize)
-    : rows
+  const paginatedRows = enablePagination ? rows.slice((page - 1) * pageSize, page * pageSize) : rows
 
   // Virtualization
   const containerRef = useRef<HTMLDivElement>(null)
@@ -165,7 +173,13 @@ export function DataTable<TData>({
   return (
     <div
       className={cn('forge-data-table', className)}
-      style={{ display: 'flex', flexDirection: 'column', gap: 'var(--forge-space-2)', position: 'relative', ...(enableVirtualization ? { flex: '1 1 auto', minHeight: 0, overflow: 'hidden' } : {}) }}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 'var(--forge-space-2)',
+        position: 'relative',
+        ...(enableVirtualization ? { flex: '1 1 auto', minHeight: 0, overflow: 'hidden' } : {}),
+      }}
     >
       {/* Column filter inputs */}
       {enableFiltering && (
@@ -173,9 +187,10 @@ export function DataTable<TData>({
           className="forge-data-table-toolbar"
           style={{ display: 'flex', gap: 'var(--forge-space-2)', flexWrap: 'wrap' }}
         >
-          {table.getAllLeafColumns()
-            .filter(col => col.id !== '__select__' && col.getCanFilter())
-            .map(col => (
+          {table
+            .getAllLeafColumns()
+            .filter((col) => col.id !== '__select__' && col.getCanFilter())
+            .map((col) => (
               <input
                 key={col.id}
                 type="text"
@@ -202,19 +217,26 @@ export function DataTable<TData>({
       {/* Table */}
       <div
         ref={containerRef}
-        style={{ overflowX: 'auto', overflowY: enableVirtualization ? 'auto' : undefined, position: 'relative', ...(enableVirtualization ? { flex: '1 1 auto', minHeight: 0 } : {}) }}
+        style={{
+          overflowX: 'auto',
+          overflowY: enableVirtualization ? 'auto' : undefined,
+          position: 'relative',
+          ...(enableVirtualization ? { flex: '1 1 auto', minHeight: 0 } : {}),
+        }}
       >
         {/* Loading overlay */}
         {loading && (
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'color-mix(in srgb, var(--forge-bg) 70%, transparent)',
-            zIndex: 1,
-          }}>
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'color-mix(in srgb, var(--forge-bg) 70%, transparent)',
+              zIndex: 1,
+            }}
+          >
             <Spinner label="Loading data" />
           </div>
         )}
@@ -229,9 +251,9 @@ export function DataTable<TData>({
           }}
         >
           <thead style={{ borderBottom: '1px solid var(--forge-border)' }}>
-            {headerGroups.map(hg => (
+            {headerGroups.map((hg) => (
               <tr key={hg.id}>
-                {hg.headers.map(header => {
+                {hg.headers.map((header) => {
                   const canSort = header.column.getCanSort()
                   const sorted = header.column.getIsSorted()
                   return (
@@ -252,18 +274,51 @@ export function DataTable<TData>({
                         userSelect: canSort ? 'none' : undefined,
                         width: enableColumnResizing ? header.getSize() : undefined,
                       }}
-                      aria-sort={sorted === 'asc' ? 'ascending' : sorted === 'desc' ? 'descending' : canSort ? 'none' : undefined}
+                      aria-sort={
+                        sorted === 'asc'
+                          ? 'ascending'
+                          : sorted === 'desc'
+                            ? 'descending'
+                            : canSort
+                              ? 'none'
+                              : undefined
+                      }
                       onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
                     >
                       {header.isPlaceholder ? null : (
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--forge-space-1)' }}>
+                        <span
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 'var(--forge-space-1)',
+                          }}
+                        >
                           {flexRender(header.column.columnDef.header, header.getContext())}
                           {canSort && sorted && (
-                            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                              {sorted === 'asc'
-                                ? <path d="M6 9V3M3 6l3-3 3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                                : <path d="M6 3v6M3 6l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                              }
+                            <svg
+                              width="10"
+                              height="10"
+                              viewBox="0 0 12 12"
+                              fill="none"
+                              aria-hidden="true"
+                            >
+                              {sorted === 'asc' ? (
+                                <path
+                                  d="M6 9V3M3 6l3-3 3 3"
+                                  stroke="currentColor"
+                                  strokeWidth="1.5"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              ) : (
+                                <path
+                                  d="M6 3v6M3 6l3 3 3-3"
+                                  stroke="currentColor"
+                                  strokeWidth="1.5"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              )}
                             </svg>
                           )}
                         </span>
@@ -281,10 +336,17 @@ export function DataTable<TData>({
                             width: '4px',
                             cursor: 'col-resize',
                             userSelect: 'none',
-                            backgroundColor: header.column.getIsResizing() ? 'var(--forge-accent)' : 'transparent',
+                            backgroundColor: header.column.getIsResizing()
+                              ? 'var(--forge-accent)'
+                              : 'transparent',
                           }}
-                          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--forge-accent)' }}
-                          onMouseLeave={(e) => { if (!header.column.getIsResizing()) e.currentTarget.style.backgroundColor = 'transparent' }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'var(--forge-accent)'
+                          }}
+                          onMouseLeave={(e) => {
+                            if (!header.column.getIsResizing())
+                              e.currentTarget.style.backgroundColor = 'transparent'
+                          }}
                         />
                       )}
                     </th>
@@ -299,7 +361,12 @@ export function DataTable<TData>({
               <tr>
                 <td
                   colSpan={allColumns.length}
-                  style={{ padding: 'var(--forge-space-8)', textAlign: 'center', color: 'var(--forge-text-muted)', fontSize: 'var(--forge-font-size-sm)' }}
+                  style={{
+                    padding: 'var(--forge-space-8)',
+                    textAlign: 'center',
+                    color: 'var(--forge-text-muted)',
+                    fontSize: 'var(--forge-font-size-sm)',
+                  }}
                 >
                   {empty}
                 </td>
@@ -309,7 +376,7 @@ export function DataTable<TData>({
                 {virtualizer.getTotalSize() > 0 && (
                   <tr style={{ height: `${virtualizer.getVirtualItems()[0]?.start ?? 0}px` }} />
                 )}
-                {displayRows.map(virtualRow => {
+                {displayRows.map((virtualRow) => {
                   const row = paginatedRows[virtualRow.index]
                   if (!row) return null
                   return (
@@ -317,12 +384,20 @@ export function DataTable<TData>({
                       key={row.id}
                       style={{
                         height: `${virtualRow.size}px`,
-                        backgroundColor: row.getIsSelected() ? 'color-mix(in srgb, var(--forge-accent) 8%, transparent)' : undefined,
+                        backgroundColor: row.getIsSelected()
+                          ? 'color-mix(in srgb, var(--forge-accent) 8%, transparent)'
+                          : undefined,
                       }}
-                      onMouseEnter={(e) => { if (!row.getIsSelected()) e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)' }}
-                      onMouseLeave={(e) => { if (!row.getIsSelected()) e.currentTarget.style.backgroundColor = 'transparent' }}
+                      onMouseEnter={(e) => {
+                        if (!row.getIsSelected())
+                          e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!row.getIsSelected())
+                          e.currentTarget.style.backgroundColor = 'transparent'
+                      }}
                     >
-                      {row.getVisibleCells().map(cell => (
+                      {row.getVisibleCells().map((cell) => (
                         <td
                           key={cell.id}
                           style={{
@@ -342,22 +417,33 @@ export function DataTable<TData>({
                   )
                 })}
                 {virtualizer.getTotalSize() > 0 && (
-                  <tr style={{ height: `${virtualizer.getTotalSize() - (virtualizer.getVirtualItems().at(-1)?.end ?? 0)}px` }} />
+                  <tr
+                    style={{
+                      height: `${virtualizer.getTotalSize() - (virtualizer.getVirtualItems().at(-1)?.end ?? 0)}px`,
+                    }}
+                  />
                 )}
               </>
             ) : (
-              paginatedRows.map(row => (
+              paginatedRows.map((row) => (
                 <tr
                   key={row.id}
                   style={{
-                    backgroundColor: row.getIsSelected() ? 'color-mix(in srgb, var(--forge-accent) 8%, transparent)' : undefined,
+                    backgroundColor: row.getIsSelected()
+                      ? 'color-mix(in srgb, var(--forge-accent) 8%, transparent)'
+                      : undefined,
                     borderBottom: '1px solid var(--forge-border-subtle)',
                     transition: `background-color var(--forge-duration-fast) var(--forge-easing-default)`,
                   }}
-                  onMouseEnter={(e) => { if (!row.getIsSelected()) e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)' }}
-                  onMouseLeave={(e) => { if (!row.getIsSelected()) e.currentTarget.style.backgroundColor = 'transparent' }}
+                  onMouseEnter={(e) => {
+                    if (!row.getIsSelected())
+                      e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!row.getIsSelected()) e.currentTarget.style.backgroundColor = 'transparent'
+                  }}
                 >
-                  {row.getVisibleCells().map(cell => (
+                  {row.getVisibleCells().map((cell) => (
                     <td
                       key={cell.id}
                       style={{
@@ -383,7 +469,10 @@ export function DataTable<TData>({
           pageSize={pageSize}
           total={rows.length}
           onPageChange={setPage}
-          onPageSizeChange={(s) => { setPageSize(s); setPage(1) }}
+          onPageSizeChange={(s) => {
+            setPageSize(s)
+            setPage(1)
+          }}
           className="forge-data-table-pagination"
         />
       )}

@@ -29,112 +29,112 @@ type PaletteName = 'hearth-bronze' | 'midnight-forge' | 'deep-space' | 'midnight
 
 const DARK_PALETTES: Record<PaletteName, PaletteBase> = {
   'hearth-bronze': {
-    bg:      '#0c0805',
+    bg: '#0c0805',
     surface: '#1a140f',
-    raised:  '#2a211a',
-    border:  '#3f3227',
-    text:    '#f2e9df',
-    muted:   '#9a8169',
-    accent:  '#d97706',
-    info:    '#3b82f6',
+    raised: '#2a211a',
+    border: '#3f3227',
+    text: '#f2e9df',
+    muted: '#9a8169',
+    accent: '#d97706',
+    info: '#3b82f6',
     success: '#4ade80',
     warning: '#fbbf24',
-    danger:  '#f87171',
+    danger: '#f87171',
   },
   'midnight-forge': {
-    bg:      '#0a0a1a',
+    bg: '#0a0a1a',
     surface: '#121830',
-    raised:  '#1e2d4a',
-    border:  '#2a3f5f',
-    text:    '#e0e4ec',
-    muted:   '#8892a8',
-    accent:  '#4f8ff7',
-    info:    '#3b82f6',
+    raised: '#1e2d4a',
+    border: '#2a3f5f',
+    text: '#e0e4ec',
+    muted: '#8892a8',
+    accent: '#4f8ff7',
+    info: '#3b82f6',
     success: '#34d399',
     warning: '#fbbf24',
-    danger:  '#f87171',
+    danger: '#f87171',
   },
   'deep-space': {
-    bg:      '#07090e',
+    bg: '#07090e',
     surface: '#0e1420',
-    raised:  '#162032',
-    border:  '#243044',
-    text:    '#d4dae5',
-    muted:   '#6b7a90',
-    accent:  '#14b8a6',
-    info:    '#38bdf8',
+    raised: '#162032',
+    border: '#243044',
+    text: '#d4dae5',
+    muted: '#6b7a90',
+    accent: '#14b8a6',
+    info: '#38bdf8',
     success: '#22c55e',
     warning: '#f59e0b',
-    danger:  '#ef4444',
+    danger: '#ef4444',
   },
   'midnight-forge-v2': {
-    bg:      '#080c14',
+    bg: '#080c14',
     surface: '#101828',
-    raised:  '#1a2540',
-    border:  '#283650',
-    text:    '#e2e8f0',
-    muted:   '#7889a4',
-    accent:  '#f59e0b',
-    info:    '#3b82f6',
+    raised: '#1a2540',
+    border: '#283650',
+    text: '#e2e8f0',
+    muted: '#7889a4',
+    accent: '#f59e0b',
+    info: '#3b82f6',
     success: '#34d399',
     warning: '#fb923c',
-    danger:  '#f87171',
+    danger: '#f87171',
   },
 }
 
 // Light mode uses a separate neutral mapping (not a reversed dark scale)
 const LIGHT_PALETTES: Record<PaletteName, PaletteBase> = {
   'hearth-bronze': {
-    bg:      '#faf8f5',
+    bg: '#faf8f5',
     surface: '#ffffff',
-    raised:  '#f2e9df',
-    border:  '#d1c1ad',
-    text:    '#1a140f',
-    muted:   '#6b5c4a',
-    accent:  '#b45309',  // darkened amber for light bg contrast
-    info:    '#1d4ed8',
+    raised: '#f2e9df',
+    border: '#d1c1ad',
+    text: '#1a140f',
+    muted: '#6b5c4a',
+    accent: '#b45309', // darkened amber for light bg contrast
+    info: '#1d4ed8',
     success: '#15803d',
     warning: '#b45309',
-    danger:  '#dc2626',
+    danger: '#dc2626',
   },
   'midnight-forge': {
-    bg:      '#f8faff',
+    bg: '#f8faff',
     surface: '#ffffff',
-    raised:  '#eef2ff',
-    border:  '#c7d2fe',
-    text:    '#0a0a1a',
-    muted:   '#4338ca',
-    accent:  '#2563eb',
-    info:    '#1d4ed8',
+    raised: '#eef2ff',
+    border: '#c7d2fe',
+    text: '#0a0a1a',
+    muted: '#4338ca',
+    accent: '#2563eb',
+    info: '#1d4ed8',
     success: '#047857',
     warning: '#b45309',
-    danger:  '#dc2626',
+    danger: '#dc2626',
   },
   'deep-space': {
-    bg:      '#f0f9ff',
+    bg: '#f0f9ff',
     surface: '#ffffff',
-    raised:  '#e0f2fe',
-    border:  '#7dd3fc',
-    text:    '#07090e',
-    muted:   '#0369a1',
-    accent:  '#0e7490',
-    info:    '#0284c7',
+    raised: '#e0f2fe',
+    border: '#7dd3fc',
+    text: '#07090e',
+    muted: '#0369a1',
+    accent: '#0e7490',
+    info: '#0284c7',
     success: '#15803d',
     warning: '#b45309',
-    danger:  '#dc2626',
+    danger: '#dc2626',
   },
   'midnight-forge-v2': {
-    bg:      '#f8fafc',
+    bg: '#f8fafc',
     surface: '#ffffff',
-    raised:  '#f1f5f9',
-    border:  '#cbd5e1',
-    text:    '#080c14',
-    muted:   '#475569',
-    accent:  '#d97706',
-    info:    '#1d4ed8',
+    raised: '#f1f5f9',
+    border: '#cbd5e1',
+    text: '#080c14',
+    muted: '#475569',
+    accent: '#d97706',
+    info: '#1d4ed8',
     success: '#047857',
     warning: '#c2410c',
-    danger:  '#dc2626',
+    danger: '#dc2626',
   },
 }
 
@@ -146,13 +146,13 @@ function buildBlock(palette: PaletteName, mode: 'dark' | 'light'): string {
   const p = mode === 'dark' ? DARK_PALETTES[palette] : LIGHT_PALETTES[palette]
 
   // Derived surface tokens
-  const surfaceHover   = lighten(p.surface, 0.04)
+  const surfaceHover = lighten(p.surface, 0.04)
   // surface-active = gray-700 equivalent = same as border token (both map to gray-700 in plan)
-  const surfaceActive  = p.border
-  const surfaceSunken  = darken(p.bg, 0.02)
-  const surfaceOverlay = alpha(p.bg, 0.60)
-  const bgOverlay      = 'rgb(0 0 0 / 0.60)'
-  const bgDisabled     = alpha(p.raised, 0.50)
+  const surfaceActive = p.border
+  const surfaceSunken = darken(p.bg, 0.02)
+  const surfaceOverlay = alpha(p.bg, 0.6)
+  const bgOverlay = 'rgb(0 0 0 / 0.60)'
+  const bgDisabled = alpha(p.raised, 0.5)
   const surfacePopover = mix(p.surface, p.raised, 0.5)
 
   // Derived border tokens
@@ -165,32 +165,32 @@ function buildBlock(palette: PaletteName, mode: 'dark' | 'light'): string {
   // Status quintuplets
   const makeStatus = (base: string) => ({
     base,
-    hover:      darken(base, 0.10),
-    bg:         alpha(base, 0.10),
-    border:     lighten(base, 0.15),
+    hover: darken(base, 0.1),
+    bg: alpha(base, 0.1),
+    border: lighten(base, 0.15),
     foreground: getAccessibleForeground(base),
   })
-  const statusInfo    = makeStatus(p.info)
+  const statusInfo = makeStatus(p.info)
   const statusSuccess = makeStatus(p.success)
   const statusWarning = makeStatus(p.warning)
-  const statusDanger  = makeStatus(p.danger)
+  const statusDanger = makeStatus(p.danger)
 
   // Text-on-color tokens
-  const textOnAccent  = getAccessibleForeground(p.accent)
-  const textOnInfo    = getAccessibleForeground(p.info)
+  const textOnAccent = getAccessibleForeground(p.accent)
+  const textOnInfo = getAccessibleForeground(p.info)
   const textOnSuccess = getAccessibleForeground(p.success)
   const textOnWarning = getAccessibleForeground(p.warning)
-  const textOnDanger  = getAccessibleForeground(p.danger)
+  const textOnDanger = getAccessibleForeground(p.danger)
 
   // Selection & highlight
-  const selectionBg   = alpha(p.accent, 0.30)
+  const selectionBg = alpha(p.accent, 0.3)
   const selectionText = p.text
-  const highlightBg   = alpha(p.accent, 0.25)
+  const highlightBg = alpha(p.accent, 0.25)
 
   // Scrollbar
-  const scrollbarTrack      = p.surface
-  const scrollbarThumb      = p.border
-  const scrollbarThumbHover = lighten(p.border, 0.10)
+  const scrollbarTrack = p.surface
+  const scrollbarThumb = p.border
+  const scrollbarThumbHover = lighten(p.border, 0.1)
 
   return `[data-palette="${palette}"][data-theme="${mode}"] {
   /* --- Surfaces --- */

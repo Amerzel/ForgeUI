@@ -17,7 +17,14 @@ import {
   CodeBlock,
   JsonViewer,
 } from '../index.js'
-import type { ColumnDef, CommandGroup, TreeNode, PropertySection, FilterDefinition, FilterState } from '../index.js'
+import type {
+  ColumnDef,
+  CommandGroup,
+  TreeNode,
+  PropertySection,
+  FilterDefinition,
+  FilterState,
+} from '../index.js'
 
 function Themed({ children }: { children: React.ReactNode }) {
   return <ThemeProvider>{children}</ThemeProvider>
@@ -31,7 +38,7 @@ describe('EditableText', () => {
     render(
       <Themed>
         <EditableText value="Hello world" onChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Hello world')).toBeInTheDocument()
   })
@@ -41,7 +48,7 @@ describe('EditableText', () => {
     render(
       <Themed>
         <EditableText value="Click me" onChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button'))
     expect(screen.getByRole('textbox')).toBeInTheDocument()
@@ -53,7 +60,7 @@ describe('EditableText', () => {
     render(
       <Themed>
         <EditableText value="Initial" onCommit={onCommit} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button'))
     const input = screen.getByRole('textbox')
@@ -69,7 +76,7 @@ describe('EditableText', () => {
     render(
       <Themed>
         <EditableText value="Original" onCancel={onCancel} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button'))
     await user.keyboard('{Escape}')
@@ -81,7 +88,7 @@ describe('EditableText', () => {
     render(
       <Themed>
         <EditableText value="" placeholder="Enter name" onChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Enter name')).toBeInTheDocument()
   })
@@ -90,7 +97,7 @@ describe('EditableText', () => {
     const { container } = render(
       <Themed>
         <EditableText value="Test value" onChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -104,7 +111,7 @@ describe('TagsInput', () => {
     render(
       <Themed>
         <TagsInput value={['react', 'typescript']} onChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('react')).toBeInTheDocument()
     expect(screen.getByText('typescript')).toBeInTheDocument()
@@ -116,7 +123,7 @@ describe('TagsInput', () => {
     render(
       <Themed>
         <TagsInput value={[]} onChange={onChange} />
-      </Themed>
+      </Themed>,
     )
     const input = screen.getByRole('textbox')
     await user.type(input, 'newtag')
@@ -130,7 +137,7 @@ describe('TagsInput', () => {
     render(
       <Themed>
         <TagsInput value={['vue', 'react']} onChange={onChange} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Remove react' }))
     expect(onChange).toHaveBeenCalledWith(['vue'])
@@ -141,7 +148,7 @@ describe('TagsInput', () => {
     render(
       <Themed>
         <TagsInput value={['a', 'b']} onChange={onChange} max={2} />
-      </Themed>
+      </Themed>,
     )
     // Input should not be present when at max
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
@@ -151,7 +158,7 @@ describe('TagsInput', () => {
     const { container } = render(
       <Themed>
         <TagsInput value={['tag1', 'tag2']} onChange={() => {}} placeholder="Add tag" />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -176,7 +183,7 @@ describe('TreeView', () => {
     render(
       <Themed>
         <TreeView nodes={NODES} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Scene')).toBeInTheDocument()
   })
@@ -185,7 +192,7 @@ describe('TreeView', () => {
     render(
       <Themed>
         <TreeView nodes={NODES} expanded={['root']} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Player')).toBeInTheDocument()
     expect(screen.getByText('Enemies')).toBeInTheDocument()
@@ -197,7 +204,7 @@ describe('TreeView', () => {
     render(
       <Themed>
         <TreeView nodes={NODES} onSelect={onSelect} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByText('Scene'))
     expect(onSelect).toHaveBeenCalledWith('root')
@@ -209,7 +216,7 @@ describe('TreeView', () => {
     render(
       <Themed>
         <TreeView nodes={NODES} onExpand={onExpand} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByText('Scene'))
     expect(onExpand).toHaveBeenCalledWith('root', true)
@@ -219,7 +226,7 @@ describe('TreeView', () => {
     render(
       <Themed>
         <TreeView nodes={NODES} selected="root" />
-      </Themed>
+      </Themed>,
     )
     const item = screen.getByRole('treeitem', { name: /Scene/i })
     // selected treeitem should exist
@@ -229,8 +236,14 @@ describe('TreeView', () => {
   it('has no axe violations', async () => {
     const { container } = render(
       <Themed>
-        <TreeView nodes={NODES} expanded={['root']} selected="player" onSelect={() => {}} onExpand={() => {}} />
-      </Themed>
+        <TreeView
+          nodes={NODES}
+          expanded={['root']}
+          selected="player"
+          onSelect={() => {}}
+          onExpand={() => {}}
+        />
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -251,7 +264,7 @@ describe('Combobox', () => {
     render(
       <Themed>
         <Combobox options={OPTIONS} placeholder="Pick a framework" />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Pick a framework')).toBeInTheDocument()
   })
@@ -260,7 +273,7 @@ describe('Combobox', () => {
     render(
       <Themed>
         <Combobox options={OPTIONS} value="react" />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('React')).toBeInTheDocument()
   })
@@ -270,7 +283,7 @@ describe('Combobox', () => {
     render(
       <Themed>
         <Combobox options={OPTIONS} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('combobox'))
     expect(screen.getByText('Vue')).toBeInTheDocument()
@@ -283,7 +296,7 @@ describe('Combobox', () => {
     render(
       <Themed>
         <Combobox options={OPTIONS} onChange={onChange} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('combobox'))
     await user.click(screen.getByText('Vue'))
@@ -294,7 +307,7 @@ describe('Combobox', () => {
     const { container } = render(
       <Themed>
         <Combobox options={OPTIONS} value="react" placeholder="Select" />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -308,7 +321,7 @@ describe('ColorPicker', () => {
     render(
       <Themed>
         <ColorPicker value="#ff0000" onChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('textbox', { name: 'Color value' })).toBeInTheDocument()
   })
@@ -321,7 +334,7 @@ describe('ColorPicker', () => {
           onChange={() => {}}
           swatches={['#ff0000', '#00ff00', '#0000ff']}
         />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Select color #00ff00' })).toBeInTheDocument()
   })
@@ -331,12 +344,8 @@ describe('ColorPicker', () => {
     const user = userEvent.setup()
     render(
       <Themed>
-        <ColorPicker
-          value="#ff0000"
-          onChange={onChange}
-          swatches={['#00ff00']}
-        />
-      </Themed>
+        <ColorPicker value="#ff0000" onChange={onChange} swatches={['#00ff00']} />
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Select color #00ff00' }))
     expect(onChange).toHaveBeenCalled()
@@ -346,7 +355,7 @@ describe('ColorPicker', () => {
     render(
       <Themed>
         <ColorPicker value="#ff000080" onChange={() => {}} alpha />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('slider', { name: 'Opacity' })).toBeInTheDocument()
   })
@@ -355,7 +364,7 @@ describe('ColorPicker', () => {
     const { container } = render(
       <Themed>
         <ColorPicker value="#3b82f6" onChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -373,7 +382,15 @@ describe('PropertyGrid', () => {
         { key: 'name', label: 'Name', type: 'text' },
         { key: 'visible', label: 'Visible', type: 'boolean' },
         { key: 'position', label: 'Position', type: 'vec3' },
-        { key: 'blendMode', label: 'Blend Mode', type: 'select', options: [{ label: 'Normal', value: 'normal' }, { label: 'Add', value: 'add' }] },
+        {
+          key: 'blendMode',
+          label: 'Blend Mode',
+          type: 'select',
+          options: [
+            { label: 'Normal', value: 'normal' },
+            { label: 'Add', value: 'add' },
+          ],
+        },
       ],
     },
   ]
@@ -386,7 +403,7 @@ describe('PropertyGrid', () => {
           values={{ name: 'Entity', visible: true, position: [0, 1, 0], blendMode: 'normal' }}
           onChange={() => {}}
         />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Transform')).toBeInTheDocument()
     expect(screen.getByText('Name')).toBeInTheDocument()
@@ -397,12 +414,8 @@ describe('PropertyGrid', () => {
     const onChange = vi.fn()
     render(
       <Themed>
-        <PropertyGrid
-          sections={SECTIONS}
-          values={{ name: 'Old' }}
-          onChange={onChange}
-        />
-      </Themed>
+        <PropertyGrid sections={SECTIONS} values={{ name: 'Old' }} onChange={onChange} />
+      </Themed>,
     )
     const input = screen.getByRole('textbox', { name: 'Name' })
     // Use fireEvent.change on controlled inputs to avoid re-render race
@@ -415,12 +428,8 @@ describe('PropertyGrid', () => {
     const user = userEvent.setup()
     render(
       <Themed>
-        <PropertyGrid
-          sections={SECTIONS}
-          values={{ visible: false }}
-          onChange={onChange}
-        />
-      </Themed>
+        <PropertyGrid sections={SECTIONS} values={{ visible: false }} onChange={onChange} />
+      </Themed>,
     )
     await user.click(screen.getByRole('checkbox', { name: 'Visible' }))
     expect(onChange).toHaveBeenCalledWith('visible', true)
@@ -434,7 +443,7 @@ describe('PropertyGrid', () => {
           values={{ name: 'Entity', visible: true, position: [0, 1, 0], blendMode: 'normal' }}
           onChange={() => {}}
         />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -454,9 +463,7 @@ describe('CommandPalette', () => {
     },
     {
       label: 'Edit',
-      items: [
-        { id: 'undo', label: 'Undo', keywords: ['revert', 'back'], onSelect: vi.fn() },
-      ],
+      items: [{ id: 'undo', label: 'Undo', keywords: ['revert', 'back'], onSelect: vi.fn() }],
     },
   ]
 
@@ -464,7 +471,7 @@ describe('CommandPalette', () => {
     render(
       <Themed>
         <CommandPalette open={false} onOpenChange={() => {}} groups={GROUPS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.queryByText('New File')).not.toBeInTheDocument()
   })
@@ -473,7 +480,7 @@ describe('CommandPalette', () => {
     render(
       <Themed>
         <CommandPalette open={true} onOpenChange={() => {}} groups={GROUPS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('New File')).toBeInTheDocument()
     expect(screen.getByText('Open File')).toBeInTheDocument()
@@ -484,7 +491,7 @@ describe('CommandPalette', () => {
     render(
       <Themed>
         <CommandPalette open={true} onOpenChange={() => {}} groups={GROUPS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('File')).toBeInTheDocument()
     expect(screen.getByText('Edit')).toBeInTheDocument()
@@ -495,7 +502,7 @@ describe('CommandPalette', () => {
     render(
       <Themed>
         <CommandPalette open={true} onOpenChange={onOpenChange} groups={GROUPS} />
-      </Themed>
+      </Themed>,
     )
     fireEvent.keyDown(document, { key: 'Escape' })
     await waitFor(() => expect(onOpenChange).toHaveBeenCalled())
@@ -505,7 +512,7 @@ describe('CommandPalette', () => {
     const { container } = render(
       <Themed>
         <CommandPalette open={true} onOpenChange={() => {}} groups={GROUPS} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -515,7 +522,11 @@ describe('CommandPalette', () => {
 // DataTable
 // ---------------------------------------------------------------------------
 describe('DataTable', () => {
-  interface Row { name: string; status: string; value: number }
+  interface Row {
+    name: string
+    status: string
+    value: number
+  }
 
   const DATA: Row[] = [
     { name: 'Alpha', status: 'active', value: 100 },
@@ -533,7 +544,7 @@ describe('DataTable', () => {
     render(
       <Themed>
         <DataTable columns={COLUMNS} data={DATA} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('table')).toBeInTheDocument()
     expect(screen.getByText('Alpha')).toBeInTheDocument()
@@ -545,7 +556,7 @@ describe('DataTable', () => {
     render(
       <Themed>
         <DataTable columns={COLUMNS} data={DATA} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('columnheader', { name: 'Name' })).toBeInTheDocument()
     expect(screen.getByRole('columnheader', { name: 'Status' })).toBeInTheDocument()
@@ -555,7 +566,7 @@ describe('DataTable', () => {
     render(
       <Themed>
         <DataTable columns={COLUMNS} data={[]} empty="No records found" />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('No records found')).toBeInTheDocument()
   })
@@ -564,7 +575,7 @@ describe('DataTable', () => {
     render(
       <Themed>
         <DataTable columns={COLUMNS} data={DATA} loading />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('status', { name: /Loading/i })).toBeInTheDocument()
   })
@@ -573,7 +584,7 @@ describe('DataTable', () => {
     render(
       <Themed>
         <DataTable columns={COLUMNS} data={DATA} rowSelection />
-      </Themed>
+      </Themed>,
     )
     const checkboxes = screen.getAllByRole('checkbox')
     // 1 header + 3 rows
@@ -584,7 +595,7 @@ describe('DataTable', () => {
     render(
       <Themed>
         <DataTable columns={COLUMNS} data={DATA} pagination pageSize={2} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('navigation', { name: 'Pagination' })).toBeInTheDocument()
   })
@@ -593,7 +604,7 @@ describe('DataTable', () => {
     render(
       <Themed>
         <DataTable columns={COLUMNS} data={DATA} filtering />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('textbox', { name: /Filter Name/i })).toBeInTheDocument()
   })
@@ -602,7 +613,7 @@ describe('DataTable', () => {
     const { container } = render(
       <Themed>
         <DataTable columns={COLUMNS} data={DATA} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -617,7 +628,9 @@ describe('DiffViewer', () => {
 
   it('renders unified diff with added and removed lines', () => {
     render(
-      <Themed><DiffViewer before={BEFORE} after={AFTER} /></Themed>
+      <Themed>
+        <DiffViewer before={BEFORE} after={AFTER} />
+      </Themed>,
     )
     expect(screen.getByText(/line one/)).toBeInTheDocument()
     expect(screen.getByText(/line TWO/)).toBeInTheDocument()
@@ -626,7 +639,15 @@ describe('DiffViewer', () => {
 
   it('renders split mode with labels', () => {
     render(
-      <Themed><DiffViewer before={BEFORE} after={AFTER} mode="split" beforeLabel="Original" afterLabel="Modified" /></Themed>
+      <Themed>
+        <DiffViewer
+          before={BEFORE}
+          after={AFTER}
+          mode="split"
+          beforeLabel="Original"
+          afterLabel="Modified"
+        />
+      </Themed>,
     )
     expect(screen.getByText('Original')).toBeInTheDocument()
     expect(screen.getByText('Modified')).toBeInTheDocument()
@@ -634,14 +655,18 @@ describe('DiffViewer', () => {
 
   it('handles identical content', () => {
     render(
-      <Themed><DiffViewer before="same" after="same" /></Themed>
+      <Themed>
+        <DiffViewer before="same" after="same" />
+      </Themed>,
     )
     expect(screen.getByText(/same/)).toBeInTheDocument()
   })
 
   it('has no axe violations', async () => {
     const { container } = render(
-      <Themed><DiffViewer before={BEFORE} after={AFTER} /></Themed>
+      <Themed>
+        <DiffViewer before={BEFORE} after={AFTER} />
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -652,20 +677,32 @@ describe('DiffViewer', () => {
 // ---------------------------------------------------------------------------
 describe('FilterBar', () => {
   const FILTERS: FilterDefinition[] = [
-    { id: 'type', label: 'Type', type: 'multi-select', options: [
-      { value: 'character', label: 'Character', count: 12 },
-      { value: 'location', label: 'Location', count: 8 },
-    ]},
-    { id: 'canon', label: 'Canon', type: 'single-select', options: [
-      { value: 'canon', label: 'Canon' },
-      { value: 'draft', label: 'Draft' },
-    ]},
+    {
+      id: 'type',
+      label: 'Type',
+      type: 'multi-select',
+      options: [
+        { value: 'character', label: 'Character', count: 12 },
+        { value: 'location', label: 'Location', count: 8 },
+      ],
+    },
+    {
+      id: 'canon',
+      label: 'Canon',
+      type: 'single-select',
+      options: [
+        { value: 'canon', label: 'Canon' },
+        { value: 'draft', label: 'Draft' },
+      ],
+    },
     { id: 'visible', label: 'Public Only', type: 'boolean' },
   ]
 
   it('renders all filter chips', () => {
     render(
-      <Themed><FilterBar filters={FILTERS} value={{}} onChange={() => {}} /></Themed>
+      <Themed>
+        <FilterBar filters={FILTERS} value={{}} onChange={() => {}} />
+      </Themed>,
     )
     expect(screen.getByText('Type')).toBeInTheDocument()
     expect(screen.getByText('Canon')).toBeInTheDocument()
@@ -675,7 +712,9 @@ describe('FilterBar', () => {
   it('toggles boolean filter on click', async () => {
     const onChange = vi.fn()
     render(
-      <Themed><FilterBar filters={FILTERS} value={{}} onChange={onChange} /></Themed>
+      <Themed>
+        <FilterBar filters={FILTERS} value={{}} onChange={onChange} />
+      </Themed>,
     )
     await userEvent.click(screen.getByText('Public Only'))
     expect(onChange).toHaveBeenCalledWith({ visible: true })
@@ -683,7 +722,9 @@ describe('FilterBar', () => {
 
   it('opens multi-select popover on click', async () => {
     render(
-      <Themed><FilterBar filters={FILTERS} value={{}} onChange={() => {}} /></Themed>
+      <Themed>
+        <FilterBar filters={FILTERS} value={{}} onChange={() => {}} />
+      </Themed>,
     )
     await userEvent.click(screen.getByText('Type'))
     expect(screen.getByText('Character')).toBeInTheDocument()
@@ -692,7 +733,9 @@ describe('FilterBar', () => {
 
   it('shows clear all when filters active', () => {
     render(
-      <Themed><FilterBar filters={FILTERS} value={{ visible: true }} onChange={() => {}} /></Themed>
+      <Themed>
+        <FilterBar filters={FILTERS} value={{ visible: true }} onChange={() => {}} />
+      </Themed>,
     )
     expect(screen.getByText('Clear all')).toBeInTheDocument()
   })
@@ -700,7 +743,9 @@ describe('FilterBar', () => {
   it('calls onChange with empty object on clear all', async () => {
     const onChange = vi.fn()
     render(
-      <Themed><FilterBar filters={FILTERS} value={{ visible: true }} onChange={onChange} /></Themed>
+      <Themed>
+        <FilterBar filters={FILTERS} value={{ visible: true }} onChange={onChange} />
+      </Themed>,
     )
     await userEvent.click(screen.getByText('Clear all'))
     expect(onChange).toHaveBeenCalledWith({})
@@ -708,7 +753,9 @@ describe('FilterBar', () => {
 
   it('has no axe violations', async () => {
     const { container } = render(
-      <Themed><FilterBar filters={FILTERS} value={{}} onChange={() => {}} /></Themed>
+      <Themed>
+        <FilterBar filters={FILTERS} value={{}} onChange={() => {}} />
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -722,7 +769,7 @@ describe('CodeBlock', () => {
     render(
       <Themed>
         <CodeBlock code="const x = 1;" language="typescript" />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText(/const/)).toBeInTheDocument()
   })
@@ -731,7 +778,7 @@ describe('CodeBlock', () => {
     render(
       <Themed>
         <CodeBlock code="echo hello" language="bash" />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('bash')).toBeInTheDocument()
   })
@@ -740,7 +787,7 @@ describe('CodeBlock', () => {
     render(
       <Themed>
         <CodeBlock code="test" />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Copy code' })).toBeInTheDocument()
   })
@@ -749,7 +796,7 @@ describe('CodeBlock', () => {
     render(
       <Themed>
         <CodeBlock code="test" showCopy={false} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.queryByRole('button', { name: 'Copy code' })).not.toBeInTheDocument()
   })
@@ -757,8 +804,8 @@ describe('CodeBlock', () => {
   it('renders line numbers when enabled', () => {
     render(
       <Themed>
-        <CodeBlock code={"line1\nline2\nline3"} showLineNumbers />
-      </Themed>
+        <CodeBlock code={'line1\nline2\nline3'} showLineNumbers />
+      </Themed>,
     )
     expect(screen.getByText('1')).toBeInTheDocument()
     expect(screen.getByText('2')).toBeInTheDocument()
@@ -769,7 +816,7 @@ describe('CodeBlock', () => {
     const { container } = render(
       <Themed>
         <CodeBlock code='{"key": "value"}' language="json" />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -785,7 +832,7 @@ describe('JsonViewer', () => {
     render(
       <Themed>
         <JsonViewer data={SAMPLE} defaultExpandDepth={Infinity} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText(/"Forge"/)).toBeInTheDocument()
     expect(screen.getByText('2')).toBeInTheDocument()
@@ -796,7 +843,7 @@ describe('JsonViewer', () => {
     render(
       <Themed>
         <JsonViewer data={SAMPLE} defaultExpandDepth={1} />
-      </Themed>
+      </Themed>,
     )
     // Top-level expanded, but "tags" array collapsed — shows item count
     expect(screen.getByText(/2 items/)).toBeInTheDocument()
@@ -807,7 +854,7 @@ describe('JsonViewer', () => {
     render(
       <Themed>
         <JsonViewer data={{ nested: { a: 1 } }} defaultExpandDepth={1} />
-      </Themed>
+      </Themed>,
     )
     // "nested" object should be collapsed, showing 1 item
     expect(screen.getByText(/1 item(?!s)/)).toBeInTheDocument()
@@ -821,7 +868,7 @@ describe('JsonViewer', () => {
     render(
       <Themed>
         <JsonViewer data={{ obj: { x: 1 } }} defaultExpandDepth={1} />
-      </Themed>
+      </Themed>,
     )
     const toggleBtn = screen.getByRole('button', { name: /Expand obj/ })
     toggleBtn.focus()
@@ -835,7 +882,7 @@ describe('JsonViewer', () => {
     render(
       <Themed>
         <JsonViewer data={SAMPLE} searchable />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('searchbox')).toBeInTheDocument()
   })
@@ -844,7 +891,7 @@ describe('JsonViewer', () => {
     render(
       <Themed>
         <JsonViewer data={SAMPLE} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Copy JSON' })).toBeInTheDocument()
   })
@@ -853,7 +900,7 @@ describe('JsonViewer', () => {
     const { container } = render(
       <Themed>
         <JsonViewer data={SAMPLE} defaultExpandDepth={Infinity} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })

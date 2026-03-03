@@ -38,10 +38,15 @@ describe('Drawer', () => {
   it('renders content when open=true', () => {
     render(
       <Themed>
-        <Drawer open={true} onOpenChange={() => {}} title="Settings" description="Adjust your settings.">
+        <Drawer
+          open={true}
+          onOpenChange={() => {}}
+          title="Settings"
+          description="Adjust your settings."
+        >
           <p>Drawer body</p>
         </Drawer>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('heading', { name: 'Settings' })).toBeInTheDocument()
     expect(screen.getByText('Adjust your settings.')).toBeInTheDocument()
@@ -54,7 +59,7 @@ describe('Drawer', () => {
         <Drawer open={false} onOpenChange={() => {}} title="Settings">
           <p>Drawer body</p>
         </Drawer>
-      </Themed>
+      </Themed>,
     )
     expect(screen.queryByText('Drawer body')).not.toBeInTheDocument()
   })
@@ -65,7 +70,7 @@ describe('Drawer', () => {
         <Drawer open={true} onOpenChange={() => {}} title="Close Test">
           content
         </Drawer>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Close drawer' })).toBeInTheDocument()
   })
@@ -73,10 +78,15 @@ describe('Drawer', () => {
   it('has no axe violations when open', async () => {
     const { container } = render(
       <Themed>
-        <Drawer open={true} onOpenChange={() => {}} title="Accessible Drawer" description="Drawer description.">
+        <Drawer
+          open={true}
+          onOpenChange={() => {}}
+          title="Accessible Drawer"
+          description="Drawer description."
+        >
           <p>Content</p>
         </Drawer>
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -92,7 +102,7 @@ describe('Collapsible', () => {
         <Collapsible trigger="Show more">
           <p>Hidden content</p>
         </Collapsible>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Show more')).toBeInTheDocument()
   })
@@ -104,7 +114,7 @@ describe('Collapsible', () => {
         <Collapsible trigger="Toggle">
           <p>Revealed content</p>
         </Collapsible>
-      </Themed>
+      </Themed>,
     )
     // Radix Collapsible removes closed content from DOM
     expect(screen.queryByText('Revealed content')).not.toBeInTheDocument()
@@ -118,7 +128,7 @@ describe('Collapsible', () => {
         <Collapsible trigger="Toggle" defaultOpen>
           <p>Open by default</p>
         </Collapsible>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Open by default')).toBeVisible()
   })
@@ -131,7 +141,7 @@ describe('Collapsible', () => {
         <Collapsible trigger="Toggle" onOpenChange={handler}>
           <p>content</p>
         </Collapsible>
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByText('Toggle'))
     expect(handler).toHaveBeenCalledWith(true)
@@ -143,7 +153,7 @@ describe('Collapsible', () => {
         <Collapsible trigger="Section">
           <p>Content</p>
         </Collapsible>
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -160,7 +170,7 @@ describe('Toolbar', () => {
           <Toolbar.Button>Bold</Toolbar.Button>
           <Toolbar.Button>Italic</Toolbar.Button>
         </Toolbar>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('toolbar', { name: 'Text formatting' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Bold' })).toBeInTheDocument()
@@ -175,7 +185,7 @@ describe('Toolbar', () => {
           <Toolbar.Separator />
           <Toolbar.Button>Paste</Toolbar.Button>
         </Toolbar>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('separator')).toBeInTheDocument()
   })
@@ -189,7 +199,7 @@ describe('Toolbar', () => {
             <Toolbar.ToggleItem value="center">Center</Toolbar.ToggleItem>
           </Toolbar.ToggleGroup>
         </Toolbar>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Left')).toBeInTheDocument()
     expect(screen.getByText('Center')).toBeInTheDocument()
@@ -201,7 +211,7 @@ describe('Toolbar', () => {
         <Toolbar aria-label="Accessible toolbar">
           <Toolbar.Button>Action</Toolbar.Button>
         </Toolbar>
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -221,7 +231,7 @@ describe('Steps', () => {
     render(
       <Themed>
         <Steps steps={STEPS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Setup')).toBeInTheDocument()
     expect(screen.getByText('Configure')).toBeInTheDocument()
@@ -232,7 +242,7 @@ describe('Steps', () => {
     render(
       <Themed>
         <Steps steps={STEPS} />
-      </Themed>
+      </Themed>,
     )
     const active = screen.getByText('Configure').closest('li')
     expect(active).toHaveAttribute('aria-current', 'step')
@@ -242,7 +252,7 @@ describe('Steps', () => {
     render(
       <Themed>
         <Steps steps={STEPS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Set your options')).toBeInTheDocument()
   })
@@ -251,7 +261,7 @@ describe('Steps', () => {
     const { container } = render(
       <Themed>
         <Steps steps={STEPS} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -265,7 +275,7 @@ describe('Avatar', () => {
     render(
       <Themed>
         <Avatar alt="James Smith" fallback="JS" />
-      </Themed>
+      </Themed>,
     )
     // Radix Avatar Fallback fires via async timer — use findByText
     expect(await screen.findByText('JS')).toBeInTheDocument()
@@ -275,7 +285,7 @@ describe('Avatar', () => {
     render(
       <Themed>
         <Avatar alt="James Smith" />
-      </Themed>
+      </Themed>,
     )
     expect(await screen.findByText('JA')).toBeInTheDocument()
   })
@@ -284,7 +294,7 @@ describe('Avatar', () => {
     const { container } = render(
       <Themed>
         <Avatar src="https://example.com/avatar.png" alt="Profile picture" />
-      </Themed>
+      </Themed>,
     )
     // jsdom does not load images; verify the root element renders
     expect(container.querySelector('.forge-avatar')).toBeInTheDocument()
@@ -294,7 +304,7 @@ describe('Avatar', () => {
     const { container } = render(
       <Themed>
         <Avatar alt="John Doe" fallback="JD" />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -310,7 +320,7 @@ describe('AspectRatio', () => {
         <AspectRatio ratio={16 / 9}>
           <img src="test.png" alt="Wide landscape" />
         </AspectRatio>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByAltText('Wide landscape')).toBeInTheDocument()
   })
@@ -319,9 +329,11 @@ describe('AspectRatio', () => {
     const { container } = render(
       <Themed>
         <AspectRatio ratio={4 / 3}>
-          <div role="img" aria-label="A picture">content</div>
+          <div role="img" aria-label="A picture">
+            content
+          </div>
         </AspectRatio>
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -341,7 +353,7 @@ describe('Breadcrumb', () => {
     render(
       <Themed>
         <Breadcrumb items={ITEMS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Home')).toBeInTheDocument()
     expect(screen.getByText('Projects')).toBeInTheDocument()
@@ -352,7 +364,7 @@ describe('Breadcrumb', () => {
     render(
       <Themed>
         <Breadcrumb items={ITEMS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('ForgeUI')).toHaveAttribute('aria-current', 'page')
   })
@@ -361,7 +373,7 @@ describe('Breadcrumb', () => {
     render(
       <Themed>
         <Breadcrumb items={ITEMS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/')
     expect(screen.getByRole('link', { name: 'Projects' })).toHaveAttribute('href', '/projects')
@@ -371,7 +383,7 @@ describe('Breadcrumb', () => {
     const { container } = render(
       <Themed>
         <Breadcrumb items={ITEMS} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -404,7 +416,7 @@ describe('Menubar', () => {
     render(
       <Themed>
         <Menubar menus={MENUS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('File')).toBeInTheDocument()
     expect(screen.getByText('Edit')).toBeInTheDocument()
@@ -415,7 +427,7 @@ describe('Menubar', () => {
     render(
       <Themed>
         <Menubar menus={MENUS} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByText('File'))
     expect(screen.getByText('New')).toBeInTheDocument()
@@ -426,7 +438,7 @@ describe('Menubar', () => {
     const { container } = render(
       <Themed>
         <Menubar menus={MENUS} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -453,7 +465,7 @@ describe('Table', () => {
             </Table.Row>
           </Table.Body>
         </Table>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('table')).toBeInTheDocument()
     expect(screen.getByText('Name')).toBeInTheDocument()
@@ -469,12 +481,14 @@ describe('Table', () => {
         <Table>
           <Table.Header>
             <Table.Row>
-              <Table.Head sortDirection="asc" onSort={onSort}>Name</Table.Head>
+              <Table.Head sortDirection="asc" onSort={onSort}>
+                Name
+              </Table.Head>
             </Table.Row>
           </Table.Header>
           <Table.Body />
         </Table>
-      </Themed>
+      </Themed>,
     )
     const th = screen.getByRole('columnheader', { name: /Name/ })
     expect(th).toHaveAttribute('aria-sort', 'ascending')
@@ -497,7 +511,7 @@ describe('Table', () => {
             </Table.Row>
           </Table.Body>
         </Table>
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -513,7 +527,7 @@ describe('AppShell', () => {
         <AppShell>
           <p>Main content</p>
         </AppShell>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Main content')).toBeInTheDocument()
     expect(screen.getByRole('main')).toBeInTheDocument()
@@ -522,10 +536,8 @@ describe('AppShell', () => {
   it('renders nav slot', () => {
     render(
       <Themed>
-        <AppShell nav={<span>TopNav</span>}>
-          content
-        </AppShell>
-      </Themed>
+        <AppShell nav={<span>TopNav</span>}>content</AppShell>
+      </Themed>,
     )
     expect(screen.getByRole('banner')).toBeInTheDocument()
     expect(screen.getByText('TopNav')).toBeInTheDocument()
@@ -534,10 +546,8 @@ describe('AppShell', () => {
   it('renders sidebar slot', () => {
     render(
       <Themed>
-        <AppShell sidebar={<span>SidePanel</span>}>
-          content
-        </AppShell>
-      </Themed>
+        <AppShell sidebar={<span>SidePanel</span>}>content</AppShell>
+      </Themed>,
     )
     expect(screen.getByRole('complementary')).toBeInTheDocument()
     expect(screen.getByText('SidePanel')).toBeInTheDocument()
@@ -549,7 +559,7 @@ describe('AppShell', () => {
         <AppShell nav={<span>Nav</span>} sidebar={<span>Sidebar</span>}>
           <p>Main</p>
         </AppShell>
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -563,7 +573,7 @@ describe('DropZone', () => {
     render(
       <Themed>
         <DropZone onDrop={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText(/Drop files here or click to browse/)).toBeInTheDocument()
   })
@@ -572,7 +582,7 @@ describe('DropZone', () => {
     render(
       <Themed>
         <DropZone onDrop={() => {}} accept={['.png', '.jpg']} maxSize={5 * 1024 * 1024} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText(/\.png/)).toBeInTheDocument()
     expect(screen.getByText(/5\.0 MB/)).toBeInTheDocument()
@@ -584,7 +594,7 @@ describe('DropZone', () => {
         <DropZone onDrop={() => {}}>
           <span>Custom drop UI</span>
         </DropZone>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Custom drop UI')).toBeInTheDocument()
   })
@@ -593,7 +603,7 @@ describe('DropZone', () => {
     render(
       <Themed>
         <DropZone onDrop={() => {}} accept={['.png']} />
-      </Themed>
+      </Themed>,
     )
     const file = new File(['hello'], 'test.txt', { type: 'text/plain' })
     const dt = { files: Object.assign([file], { item: () => file, length: 1 }) }
@@ -608,7 +618,7 @@ describe('DropZone', () => {
     render(
       <Themed>
         <DropZone onDrop={onDrop} accept={['.png']} />
-      </Themed>
+      </Themed>,
     )
     const file = new File(['img'], 'photo.png', { type: 'image/png' })
     const dt = { files: Object.assign([file], { item: () => file, length: 1 }) }
@@ -622,7 +632,7 @@ describe('DropZone', () => {
     const { container } = render(
       <Themed>
         <DropZone onDrop={() => {}} accept={['.png', '.jpg']} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -636,7 +646,7 @@ describe('Pagination', () => {
     render(
       <Themed>
         <Pagination page={1} pageSize={10} total={50} onPageChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('navigation', { name: 'Pagination' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Page 1' })).toBeInTheDocument()
@@ -647,7 +657,7 @@ describe('Pagination', () => {
     render(
       <Themed>
         <Pagination page={2} pageSize={10} total={50} onPageChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('11–20 of 50')).toBeInTheDocument()
   })
@@ -656,7 +666,7 @@ describe('Pagination', () => {
     render(
       <Themed>
         <Pagination page={1} pageSize={10} total={30} onPageChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled()
   })
@@ -665,7 +675,7 @@ describe('Pagination', () => {
     render(
       <Themed>
         <Pagination page={3} pageSize={10} total={30} onPageChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Next page' })).toBeDisabled()
   })
@@ -676,7 +686,7 @@ describe('Pagination', () => {
     render(
       <Themed>
         <Pagination page={1} pageSize={10} total={30} onPageChange={onPageChange} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Next page' }))
     expect(onPageChange).toHaveBeenCalledWith(2)
@@ -686,7 +696,7 @@ describe('Pagination', () => {
     render(
       <Themed>
         <Pagination page={2} pageSize={10} total={30} onPageChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Page 2' })).toHaveAttribute('aria-current', 'page')
   })
@@ -696,12 +706,14 @@ describe('Pagination', () => {
     render(
       <Themed>
         <Pagination
-          page={1} pageSize={10} total={100}
+          page={1}
+          pageSize={10}
+          total={100}
           onPageChange={() => {}}
           pageSizeOptions={[10, 25, 50]}
           onPageSizeChange={onPageSizeChange}
         />
-      </Themed>
+      </Themed>,
     )
     const select = screen.getByRole('combobox')
     expect(select).toBeInTheDocument()
@@ -713,7 +725,7 @@ describe('Pagination', () => {
     render(
       <Themed>
         <Pagination page={1} pageSize={10} total={0} onPageChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('No results')).toBeInTheDocument()
   })
@@ -722,7 +734,7 @@ describe('Pagination', () => {
     const { container } = render(
       <Themed>
         <Pagination page={2} pageSize={10} total={50} onPageChange={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -733,40 +745,68 @@ describe('Pagination', () => {
 // ---------------------------------------------------------------------------
 describe('StatCard', () => {
   it('renders label and value', () => {
-    render(<Themed><StatCard label="Entities" value={142} /></Themed>)
+    render(
+      <Themed>
+        <StatCard label="Entities" value={142} />
+      </Themed>,
+    )
     expect(screen.getByText('Entities')).toBeInTheDocument()
     expect(screen.getByText('142')).toBeInTheDocument()
   })
 
   it('renders delta when provided', () => {
-    render(<Themed><StatCard label="Quests" value={38} delta="+3" /></Themed>)
+    render(
+      <Themed>
+        <StatCard label="Quests" value={38} delta="+3" />
+      </Themed>,
+    )
     expect(screen.getByText('+3')).toBeInTheDocument()
   })
 
   it('renders icon when provided', () => {
-    render(<Themed><StatCard label="Level" value={12} icon="⚔️" /></Themed>)
+    render(
+      <Themed>
+        <StatCard label="Level" value={12} icon="⚔️" />
+      </Themed>,
+    )
     expect(screen.getByText('⚔️')).toBeInTheDocument()
   })
 
   it('fires onClick when clicked', async () => {
     const user = userEvent.setup()
     const onClick = vi.fn()
-    render(<Themed><StatCard label="Zones" value={6} onClick={onClick} /></Themed>)
+    render(
+      <Themed>
+        <StatCard label="Zones" value={6} onClick={onClick} />
+      </Themed>,
+    )
     await user.click(screen.getByRole('button'))
     expect(onClick).toHaveBeenCalledOnce()
   })
 
   it('has role=button only when clickable', () => {
-    const { rerender } = render(<Themed><StatCard label="A" value={1} /></Themed>)
+    const { rerender } = render(
+      <Themed>
+        <StatCard label="A" value={1} />
+      </Themed>,
+    )
     expect(screen.queryByRole('button')).not.toBeInTheDocument()
-    rerender(<Themed><StatCard label="A" value={1} onClick={() => {}} /></Themed>)
+    rerender(
+      <Themed>
+        <StatCard label="A" value={1} onClick={() => {}} />
+      </Themed>,
+    )
     expect(screen.getByRole('button')).toBeInTheDocument()
   })
 
   it('responds to Enter key when clickable', async () => {
     const user = userEvent.setup()
     const onClick = vi.fn()
-    render(<Themed><StatCard label="X" value={0} onClick={onClick} /></Themed>)
+    render(
+      <Themed>
+        <StatCard label="X" value={0} onClick={onClick} />
+      </Themed>,
+    )
     screen.getByRole('button').focus()
     await user.keyboard('{Enter}')
     expect(onClick).toHaveBeenCalledOnce()
@@ -774,7 +814,9 @@ describe('StatCard', () => {
 
   it('has no axe violations', async () => {
     const { container } = render(
-      <Themed><StatCard label="Factions" value={7} icon="🛡️" delta="+1" /></Themed>
+      <Themed>
+        <StatCard label="Factions" value={7} icon="🛡️" delta="+1" />
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -785,29 +827,47 @@ describe('StatCard', () => {
 // ---------------------------------------------------------------------------
 describe('HealthRow', () => {
   it('renders name and detail', () => {
-    render(<Themed><HealthRow name="Entity Store" status="ok" detail="142 artifacts" /></Themed>)
+    render(
+      <Themed>
+        <HealthRow name="Entity Store" status="ok" detail="142 artifacts" />
+      </Themed>,
+    )
     expect(screen.getByText('Entity Store')).toBeInTheDocument()
     expect(screen.getByText('142 artifacts')).toBeInTheDocument()
   })
 
   it('renders icon when provided', () => {
-    render(<Themed><HealthRow name="Rules" status="ok" detail="Valid" icon="📐" /></Themed>)
+    render(
+      <Themed>
+        <HealthRow name="Rules" status="ok" detail="Valid" icon="📐" />
+      </Themed>,
+    )
     expect(screen.getByText('📐')).toBeInTheDocument()
   })
 
   it('has status role with accessible label', () => {
-    render(<Themed><HealthRow name="Pipeline" status="error" detail="2 issues" /></Themed>)
+    render(
+      <Themed>
+        <HealthRow name="Pipeline" status="error" detail="2 issues" />
+      </Themed>,
+    )
     expect(screen.getByRole('status', { name: 'Pipeline: Error' })).toBeInTheDocument()
   })
 
   it('shows spinner for running status', () => {
-    const { container } = render(<Themed><HealthRow name="Build" status="running" detail="Building…" /></Themed>)
+    const { container } = render(
+      <Themed>
+        <HealthRow name="Build" status="running" detail="Building…" />
+      </Themed>,
+    )
     expect(container.querySelector('svg')).toBeInTheDocument()
   })
 
   it('has no axe violations', async () => {
     const { container } = render(
-      <Themed><HealthRow name="Terrain" status="warn" detail="1 gap" icon="🏔️" /></Themed>
+      <Themed>
+        <HealthRow name="Terrain" status="warn" detail="1 gap" icon="🏔️" />
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -818,41 +878,67 @@ describe('HealthRow', () => {
 // ---------------------------------------------------------------------------
 describe('NavItem', () => {
   it('renders label', () => {
-    render(<Themed><NavItem label="Entities" /></Themed>)
+    render(
+      <Themed>
+        <NavItem label="Entities" />
+      </Themed>,
+    )
     expect(screen.getByRole('button', { name: /Entities/ })).toBeInTheDocument()
   })
 
   it('renders icon when provided', () => {
-    render(<Themed><NavItem label="Quests" icon="📜" /></Themed>)
+    render(
+      <Themed>
+        <NavItem label="Quests" icon="📜" />
+      </Themed>,
+    )
     expect(screen.getByText('📜')).toBeInTheDocument()
   })
 
   it('renders count badge when provided', () => {
-    render(<Themed><NavItem label="Entities" count={142} /></Themed>)
+    render(
+      <Themed>
+        <NavItem label="Entities" count={142} />
+      </Themed>,
+    )
     expect(screen.getByText('142')).toBeInTheDocument()
   })
 
   it('sets aria-current=page when active', () => {
-    render(<Themed><NavItem label="Active" active /></Themed>)
+    render(
+      <Themed>
+        <NavItem label="Active" active />
+      </Themed>,
+    )
     expect(screen.getByRole('button')).toHaveAttribute('aria-current', 'page')
   })
 
   it('fires onClick', async () => {
     const user = userEvent.setup()
     const onClick = vi.fn()
-    render(<Themed><NavItem label="Click" onClick={onClick} /></Themed>)
+    render(
+      <Themed>
+        <NavItem label="Click" onClick={onClick} />
+      </Themed>,
+    )
     await user.click(screen.getByRole('button'))
     expect(onClick).toHaveBeenCalledOnce()
   })
 
   it('is disabled when disabled=true', () => {
-    render(<Themed><NavItem label="Disabled" disabled /></Themed>)
+    render(
+      <Themed>
+        <NavItem label="Disabled" disabled />
+      </Themed>,
+    )
     expect(screen.getByRole('button')).toBeDisabled()
   })
 
   it('has no axe violations', async () => {
     const { container } = render(
-      <Themed><NavItem label="Entities" icon="👤" active count={42} /></Themed>
+      <Themed>
+        <NavItem label="Entities" icon="👤" active count={42} />
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -863,13 +949,21 @@ describe('NavItem', () => {
 // ---------------------------------------------------------------------------
 describe('ModuleToolbar', () => {
   it('renders title', () => {
-    render(<Themed><ModuleToolbar title="Entities" /></Themed>)
+    render(
+      <Themed>
+        <ModuleToolbar title="Entities" />
+      </Themed>,
+    )
     expect(screen.getByRole('toolbar', { name: 'Entities' })).toBeInTheDocument()
     expect(screen.getByText('Entities')).toBeInTheDocument()
   })
 
   it('renders badge when provided', () => {
-    render(<Themed><ModuleToolbar badge="EA" title="Entities" /></Themed>)
+    render(
+      <Themed>
+        <ModuleToolbar badge="EA" title="Entities" />
+      </Themed>,
+    )
     expect(screen.getByText('EA')).toBeInTheDocument()
   })
 
@@ -879,7 +973,7 @@ describe('ModuleToolbar', () => {
         <ModuleToolbar title="Entities">
           <span>View switcher</span>
         </ModuleToolbar>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('View switcher')).toBeInTheDocument()
   })
@@ -888,14 +982,16 @@ describe('ModuleToolbar', () => {
     render(
       <Themed>
         <ModuleToolbar title="Entities" actions={<button>Save</button>} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument()
   })
 
   it('has no axe violations', async () => {
     const { container } = render(
-      <Themed><ModuleToolbar badge="QF" title="Quests" actions={<button>Add</button>} /></Themed>
+      <Themed>
+        <ModuleToolbar badge="QF" title="Quests" actions={<button>Add</button>} />
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -907,7 +1003,9 @@ describe('ModuleToolbar', () => {
 describe('EntityCard', () => {
   it('renders name and type', () => {
     render(
-      <Themed><EntityCard name="Gandalf" type="Character" /></Themed>
+      <Themed>
+        <EntityCard name="Gandalf" type="Character" />
+      </Themed>,
     )
     expect(screen.getByText('Gandalf')).toBeInTheDocument()
     expect(screen.getByText('Character')).toBeInTheDocument()
@@ -915,14 +1013,23 @@ describe('EntityCard', () => {
 
   it('renders status badge', () => {
     render(
-      <Themed><EntityCard name="Mordor" type="Location" status="Canon" statusColor="var(--forge-success)" /></Themed>
+      <Themed>
+        <EntityCard
+          name="Mordor"
+          type="Location"
+          status="Canon"
+          statusColor="var(--forge-success)"
+        />
+      </Themed>,
     )
     expect(screen.getByText('Canon')).toBeInTheDocument()
   })
 
   it('renders tags', () => {
     render(
-      <Themed><EntityCard name="Sting" type="Item" tags={['weapon', 'elvish']} /></Themed>
+      <Themed>
+        <EntityCard name="Sting" type="Item" tags={['weapon', 'elvish']} />
+      </Themed>,
     )
     expect(screen.getByText('weapon')).toBeInTheDocument()
     expect(screen.getByText('elvish')).toBeInTheDocument()
@@ -930,7 +1037,9 @@ describe('EntityCard', () => {
 
   it('renders metadata', () => {
     render(
-      <Themed><EntityCard name="Test" type="Character" meta={[{ label: 'Age', value: '42' }]} /></Themed>
+      <Themed>
+        <EntityCard name="Test" type="Character" meta={[{ label: 'Age', value: '42' }]} />
+      </Themed>,
     )
     expect(screen.getByText('Age')).toBeInTheDocument()
     expect(screen.getByText('42')).toBeInTheDocument()
@@ -939,7 +1048,9 @@ describe('EntityCard', () => {
   it('handles click and selected state', async () => {
     const onClick = vi.fn()
     render(
-      <Themed><EntityCard name="Test" type="NPC" selected onClick={onClick} /></Themed>
+      <Themed>
+        <EntityCard name="Test" type="NPC" selected onClick={onClick} />
+      </Themed>,
     )
     const button = screen.getByRole('button')
     expect(button).toHaveAttribute('aria-pressed', 'true')
@@ -949,7 +1060,9 @@ describe('EntityCard', () => {
 
   it('has no axe violations', async () => {
     const { container } = render(
-      <Themed><EntityCard name="Test" type="Character" status="Draft" tags={['npc']} /></Themed>
+      <Themed>
+        <EntityCard name="Test" type="Character" status="Draft" tags={['npc']} />
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -962,8 +1075,12 @@ describe('MiniMap', () => {
   it('renders with aria-label', () => {
     render(
       <Themed>
-        <MiniMap contentWidth={1000} contentHeight={800} viewport={{ x: 0, y: 0, width: 400, height: 300 }} />
-      </Themed>
+        <MiniMap
+          contentWidth={1000}
+          contentHeight={800}
+          viewport={{ x: 0, y: 0, width: 400, height: 300 }}
+        />
+      </Themed>,
     )
     expect(screen.getByRole('img', { name: 'Minimap navigation' })).toBeInTheDocument()
   })
@@ -971,10 +1088,14 @@ describe('MiniMap', () => {
   it('renders children content', () => {
     render(
       <Themed>
-        <MiniMap contentWidth={1000} contentHeight={800} viewport={{ x: 0, y: 0, width: 400, height: 300 }}>
+        <MiniMap
+          contentWidth={1000}
+          contentHeight={800}
+          viewport={{ x: 0, y: 0, width: 400, height: 300 }}
+        >
           <div data-testid="map-content">dots</div>
         </MiniMap>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByTestId('map-content')).toBeInTheDocument()
   })
@@ -983,8 +1104,13 @@ describe('MiniMap', () => {
     const onChange = vi.fn()
     render(
       <Themed>
-        <MiniMap contentWidth={1000} contentHeight={800} viewport={{ x: 0, y: 0, width: 400, height: 300 }} onViewportChange={onChange} />
-      </Themed>
+        <MiniMap
+          contentWidth={1000}
+          contentHeight={800}
+          viewport={{ x: 0, y: 0, width: 400, height: 300 }}
+          onViewportChange={onChange}
+        />
+      </Themed>,
     )
     const map = screen.getByRole('img')
     fireEvent.pointerDown(map, { clientX: 100, clientY: 70 })
@@ -994,8 +1120,12 @@ describe('MiniMap', () => {
   it('has no axe violations', async () => {
     const { container } = render(
       <Themed>
-        <MiniMap contentWidth={1000} contentHeight={800} viewport={{ x: 0, y: 0, width: 400, height: 300 }} />
-      </Themed>
+        <MiniMap
+          contentWidth={1000}
+          contentHeight={800}
+          viewport={{ x: 0, y: 0, width: 400, height: 300 }}
+        />
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -1011,7 +1141,7 @@ describe('ApprovalPanel', () => {
         <ApprovalPanel title="Entity Update" status="pending">
           <p>Review content</p>
         </ApprovalPanel>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Entity Update')).toBeInTheDocument()
     expect(screen.getByText('Pending Review')).toBeInTheDocument()
@@ -1024,7 +1154,7 @@ describe('ApprovalPanel', () => {
         <ApprovalPanel title="Test" onApprove={() => {}} onReject={() => {}}>
           <p>content</p>
         </ApprovalPanel>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Approve' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Reject' })).toBeInTheDocument()
@@ -1036,7 +1166,7 @@ describe('ApprovalPanel', () => {
         <ApprovalPanel title="Test" status="approved" onApprove={() => {}}>
           <p>content</p>
         </ApprovalPanel>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Approved')).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Approve' })).not.toBeInTheDocument()
@@ -1049,7 +1179,7 @@ describe('ApprovalPanel', () => {
         <ApprovalPanel title="Test" onApprove={onApprove}>
           <p>content</p>
         </ApprovalPanel>
-      </Themed>
+      </Themed>,
     )
     const textarea = screen.getByPlaceholderText('Add rationale (optional)…')
     await userEvent.type(textarea, 'Looks good')
@@ -1064,7 +1194,7 @@ describe('ApprovalPanel', () => {
         <ApprovalPanel title="Test" onReject={onReject}>
           <p>content</p>
         </ApprovalPanel>
-      </Themed>
+      </Themed>,
     )
     await userEvent.type(screen.getByPlaceholderText('Add rationale (optional)…'), 'Needs work')
     await userEvent.click(screen.getByRole('button', { name: 'Reject' }))
@@ -1077,7 +1207,7 @@ describe('ApprovalPanel', () => {
         <ApprovalPanel title="Test" status="pending" onApprove={() => {}} onReject={() => {}}>
           <p>content</p>
         </ApprovalPanel>
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -1087,13 +1217,17 @@ describe('ApprovalPanel', () => {
 // FileSourceBar
 // ---------------------------------------------------------------------------
 describe('FileSourceBar', () => {
-  const FILE: FileSourceBarFile = { name: 'game-design.json', size: 24576, type: 'application/json' }
+  const FILE: FileSourceBarFile = {
+    name: 'game-design.json',
+    size: 24576,
+    type: 'application/json',
+  }
 
   it('renders empty state', () => {
     render(
       <Themed>
         <FileSourceBar onLoad={() => {}} label="Game Design Document" accept=".json" />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText(/No file loaded/)).toBeInTheDocument()
     expect(screen.getByText(/Game Design Document/)).toBeInTheDocument()
@@ -1104,7 +1238,7 @@ describe('FileSourceBar', () => {
     render(
       <Themed>
         <FileSourceBar file={FILE} onLoad={() => {}} onClear={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('game-design.json')).toBeInTheDocument()
     expect(screen.getByText('(24.0 KB)')).toBeInTheDocument()
@@ -1113,8 +1247,13 @@ describe('FileSourceBar', () => {
   it('renders error state', () => {
     render(
       <Themed>
-        <FileSourceBar file={FILE} error="Invalid JSON: Unexpected token" onLoad={() => {}} onClear={() => {}} />
-      </Themed>
+        <FileSourceBar
+          file={FILE}
+          error="Invalid JSON: Unexpected token"
+          onLoad={() => {}}
+          onClear={() => {}}
+        />
+      </Themed>,
     )
     expect(screen.getByRole('alert')).toHaveTextContent('Invalid JSON: Unexpected token')
   })
@@ -1125,7 +1264,7 @@ describe('FileSourceBar', () => {
     render(
       <Themed>
         <FileSourceBar onLoad={onLoad} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: /Load/ }))
     expect(onLoad).toHaveBeenCalledOnce()
@@ -1137,7 +1276,7 @@ describe('FileSourceBar', () => {
     render(
       <Themed>
         <FileSourceBar file={FILE} onLoad={() => {}} onClear={onClear} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: /Clear/ }))
     expect(onClear).toHaveBeenCalledOnce()
@@ -1147,7 +1286,7 @@ describe('FileSourceBar', () => {
     render(
       <Themed>
         <FileSourceBar onLoad={() => {}} onClear={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.queryByRole('button', { name: /Clear/ })).not.toBeInTheDocument()
   })
@@ -1158,7 +1297,7 @@ describe('FileSourceBar', () => {
     render(
       <Themed>
         <FileSourceBar onLoad={onLoad} />
-      </Themed>
+      </Themed>,
     )
     const btn = screen.getByRole('button', { name: /Load/ })
     btn.focus()
@@ -1170,7 +1309,7 @@ describe('FileSourceBar', () => {
     const { container } = render(
       <Themed>
         <FileSourceBar onLoad={() => {}} label="Test" />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -1179,7 +1318,7 @@ describe('FileSourceBar', () => {
     const { container } = render(
       <Themed>
         <FileSourceBar file={FILE} onLoad={() => {}} onClear={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -1187,8 +1326,13 @@ describe('FileSourceBar', () => {
   it('has no axe violations (error state)', async () => {
     const { container } = render(
       <Themed>
-        <FileSourceBar file={FILE} error="Something went wrong" onLoad={() => {}} onClear={() => {}} />
-      </Themed>
+        <FileSourceBar
+          file={FILE}
+          error="Something went wrong"
+          onLoad={() => {}}
+          onClear={() => {}}
+        />
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })

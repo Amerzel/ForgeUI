@@ -64,7 +64,16 @@ export function CommandPalette({
             outline: 'none',
           }}
         >
-          <RadixDialog.Title style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap' }}>
+          <RadixDialog.Title
+            style={{
+              position: 'absolute',
+              width: '1px',
+              height: '1px',
+              overflow: 'hidden',
+              clip: 'rect(0,0,0,0)',
+              whiteSpace: 'nowrap',
+            }}
+          >
             Command Palette
           </RadixDialog.Title>
           <RadixDialog.Description style={{ display: 'none' }}>
@@ -82,16 +91,30 @@ export function CommandPalette({
             shouldFilter={true}
           >
             {/* Search input */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 'var(--forge-space-2)',
-              padding: `var(--forge-space-3) var(--forge-space-4)`,
-              borderBottom: '1px solid var(--forge-border)',
-            }}>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ color: 'var(--forge-text-muted)', flexShrink: 0 }}>
-                <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.5"/>
-                <path d="M12 12l2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 'var(--forge-space-2)',
+                padding: `var(--forge-space-3) var(--forge-space-4)`,
+                borderBottom: '1px solid var(--forge-border)',
+              }}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                aria-hidden="true"
+                style={{ color: 'var(--forge-text-muted)', flexShrink: 0 }}
+              >
+                <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.5" />
+                <path
+                  d="M12 12l2.5 2.5"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
               </svg>
               <Command.Input
                 placeholder={placeholder}
@@ -105,41 +128,53 @@ export function CommandPalette({
                   color: 'var(--forge-text)',
                 }}
               />
-              <kbd style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                padding: '2px 6px',
-                backgroundColor: 'var(--forge-surface)',
-                border: '1px solid var(--forge-border)',
-                borderRadius: 'var(--forge-radius-sm)',
-                fontSize: 'var(--forge-font-size-xs)',
-                fontFamily: 'var(--forge-font-mono)',
-                color: 'var(--forge-text-muted)',
-              }}>
+              <kbd
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '2px 6px',
+                  backgroundColor: 'var(--forge-surface)',
+                  border: '1px solid var(--forge-border)',
+                  borderRadius: 'var(--forge-radius-sm)',
+                  fontSize: 'var(--forge-font-size-xs)',
+                  fontFamily: 'var(--forge-font-mono)',
+                  color: 'var(--forge-text-muted)',
+                }}
+              >
                 Esc
               </kbd>
             </div>
 
             {/* Results */}
-            <Command.List style={{ maxHeight: '360px', overflowY: 'auto', padding: 'var(--forge-space-1)' }}>
-              <Command.Empty style={{
-                padding: 'var(--forge-space-8)',
-                textAlign: 'center',
-                color: 'var(--forge-text-muted)',
-                fontSize: 'var(--forge-font-size-sm)',
-              }}>
+            <Command.List
+              style={{ maxHeight: '360px', overflowY: 'auto', padding: 'var(--forge-space-1)' }}
+            >
+              <Command.Empty
+                style={{
+                  padding: 'var(--forge-space-8)',
+                  textAlign: 'center',
+                  color: 'var(--forge-text-muted)',
+                  fontSize: 'var(--forge-font-size-sm)',
+                }}
+              >
                 {empty}
               </Command.Empty>
 
-              {groups.map(group => (
-                <Command.Group
-                  key={group.label}
-                  style={{ marginBottom: 'var(--forge-space-1)' }}
-                >
-                  <div style={{ padding: `var(--forge-space-1) var(--forge-space-2)`, fontSize: 'var(--forge-font-size-xs)', fontWeight: 'var(--forge-font-semibold)', color: 'var(--forge-text-muted)', textTransform: 'uppercase', letterSpacing: 'var(--forge-tracking-wide)' }}>
+              {groups.map((group) => (
+                <Command.Group key={group.label} style={{ marginBottom: 'var(--forge-space-1)' }}>
+                  <div
+                    style={{
+                      padding: `var(--forge-space-1) var(--forge-space-2)`,
+                      fontSize: 'var(--forge-font-size-xs)',
+                      fontWeight: 'var(--forge-font-semibold)',
+                      color: 'var(--forge-text-muted)',
+                      textTransform: 'uppercase',
+                      letterSpacing: 'var(--forge-tracking-wide)',
+                    }}
+                  >
                     {group.label}
                   </div>
-                  {group.items.map(item => (
+                  {group.items.map((item) => (
                     <Command.Item
                       key={item.id}
                       value={`${item.label} ${item.keywords?.join(' ') ?? ''}`}
@@ -165,13 +200,28 @@ export function CommandPalette({
                       }}
                     >
                       {item.icon && (
-                        <span aria-hidden="true" style={{ display: 'flex', alignItems: 'center', flexShrink: 0, color: 'var(--forge-text-muted)', width: '16px' }}>
+                        <span
+                          aria-hidden="true"
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            flexShrink: 0,
+                            color: 'var(--forge-text-muted)',
+                            width: '16px',
+                          }}
+                        >
                           {item.icon}
                         </span>
                       )}
                       <span style={{ flex: '1 1 auto' }}>{item.label}</span>
                       {item.shortcut && (
-                        <kbd style={{ fontSize: 'var(--forge-font-size-xs)', fontFamily: 'var(--forge-font-mono)', color: 'var(--forge-text-muted)' }}>
+                        <kbd
+                          style={{
+                            fontSize: 'var(--forge-font-size-xs)',
+                            fontFamily: 'var(--forge-font-mono)',
+                            color: 'var(--forge-text-muted)',
+                          }}
+                        >
                           {item.shortcut}
                         </kbd>
                       )}

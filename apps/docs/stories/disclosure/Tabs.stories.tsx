@@ -79,7 +79,12 @@ export const Vertical: Story = {
     const [value, setValue] = useState('inspector')
     return (
       <div style={{ maxWidth: '540px' }}>
-        <Tabs items={TAB_ITEMS.slice(0, 3)} value={value} onValueChange={setValue} orientation="vertical" />
+        <Tabs
+          items={TAB_ITEMS.slice(0, 3)}
+          value={value}
+          onValueChange={setValue}
+          orientation="vertical"
+        />
       </div>
     )
   },

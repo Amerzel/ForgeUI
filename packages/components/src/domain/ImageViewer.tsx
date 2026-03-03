@@ -47,14 +47,22 @@ export function ImageViewer({
   const [zoom, setZoomState] = useState(1)
   const [pan, setPan] = useState({ x: 0, y: 0 })
   const [imgSize, setImgSize] = useState({ w: 0, h: 0 })
-  const [panState, setPanState] = useState<{ startX: number; startY: number; origX: number; origY: number } | null>(null)
+  const [panState, setPanState] = useState<{
+    startX: number
+    startY: number
+    origX: number
+    origY: number
+  } | null>(null)
   const fitZoomRef = useRef(1)
 
-  const setZoom = useCallback((z: number) => {
-    const clamped = Math.max(minZoom, Math.min(maxZoom, z))
-    setZoomState(clamped)
-    onZoomChange?.(clamped)
-  }, [minZoom, maxZoom, onZoomChange])
+  const setZoom = useCallback(
+    (z: number) => {
+      const clamped = Math.max(minZoom, Math.min(maxZoom, z))
+      setZoomState(clamped)
+      onZoomChange?.(clamped)
+    },
+    [minZoom, maxZoom, onZoomChange],
+  )
 
   // Fit image to container
   const fitToContainer = useCallback(() => {
@@ -108,7 +116,7 @@ export function ImageViewer({
       const factor = e.deltaY < 0 ? ZOOM_STEP : 1 / ZOOM_STEP
       const newZoom = Math.max(minZoom, Math.min(maxZoom, zoom * factor))
       const scale = newZoom / zoom
-      setPan(prev => ({
+      setPan((prev) => ({
         x: cursorX - scale * (cursorX - prev.x),
         y: cursorY - scale * (cursorY - prev.y),
       }))
@@ -135,49 +143,58 @@ export function ImageViewer({
   }, [zoom, imgSize, fitToContainer, setZoom])
 
   // Pan with drag
-  const handlePointerDown = useCallback((e: React.PointerEvent) => {
-    if (e.button !== 0) return
-    e.currentTarget.setPointerCapture(e.pointerId)
-    setPanState({ startX: e.clientX, startY: e.clientY, origX: pan.x, origY: pan.y })
-  }, [pan])
+  const handlePointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      if (e.button !== 0) return
+      e.currentTarget.setPointerCapture(e.pointerId)
+      setPanState({ startX: e.clientX, startY: e.clientY, origX: pan.x, origY: pan.y })
+    },
+    [pan],
+  )
 
-  const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (!panState) return
-    setPan({
-      x: panState.origX + (e.clientX - panState.startX),
-      y: panState.origY + (e.clientY - panState.startY),
-    })
-  }, [panState])
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent) => {
+      if (!panState) return
+      setPan({
+        x: panState.origX + (e.clientX - panState.startX),
+        y: panState.origY + (e.clientY - panState.startY),
+      })
+    },
+    [panState],
+  )
 
   const handlePointerUp = useCallback(() => {
     setPanState(null)
   }, [])
 
   // Keyboard shortcuts
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    const container = containerRef.current
-    if (!container) return
-    if (e.key === '+' || e.key === '=') {
-      e.preventDefault()
-      const newZoom = Math.min(maxZoom, zoom * ZOOM_STEP)
-      const cw = container.clientWidth / 2
-      const ch = container.clientHeight / 2
-      const scale = newZoom / zoom
-      setPan(prev => ({ x: cw - scale * (cw - prev.x), y: ch - scale * (ch - prev.y) }))
-      setZoom(newZoom)
-    } else if (e.key === '-') {
-      e.preventDefault()
-      const newZoom = Math.max(minZoom, zoom / ZOOM_STEP)
-      const cw = container.clientWidth / 2
-      const ch = container.clientHeight / 2
-      const scale = newZoom / zoom
-      setPan(prev => ({ x: cw - scale * (cw - prev.x), y: ch - scale * (ch - prev.y) }))
-      setZoom(newZoom)
-    } else if (e.key === '0') {
-      e.preventDefault()
-      fitToContainer()
-    }
-  }, [zoom, minZoom, maxZoom, setZoom, fitToContainer])
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      const container = containerRef.current
+      if (!container) return
+      if (e.key === '+' || e.key === '=') {
+        e.preventDefault()
+        const newZoom = Math.min(maxZoom, zoom * ZOOM_STEP)
+        const cw = container.clientWidth / 2
+        const ch = container.clientHeight / 2
+        const scale = newZoom / zoom
+        setPan((prev) => ({ x: cw - scale * (cw - prev.x), y: ch - scale * (ch - prev.y) }))
+        setZoom(newZoom)
+      } else if (e.key === '-') {
+        e.preventDefault()
+        const newZoom = Math.max(minZoom, zoom / ZOOM_STEP)
+        const cw = container.clientWidth / 2
+        const ch = container.clientHeight / 2
+        const scale = newZoom / zoom
+        setPan((prev) => ({ x: cw - scale * (cw - prev.x), y: ch - scale * (ch - prev.y) }))
+        setZoom(newZoom)
+      } else if (e.key === '0') {
+        e.preventDefault()
+        fitToContainer()
+      }
+    },
+    [zoom, minZoom, maxZoom, setZoom, fitToContainer],
+  )
 
   const imageRendering = renderMode === 'pixelated' ? 'pixelated' : 'auto'
   const checkerSize = 12
@@ -270,7 +287,10 @@ export function ImageViewer({
           <button
             type="button"
             aria-label="Zoom out"
-            onClick={(e) => { e.stopPropagation(); setZoom(zoom / ZOOM_STEP) }}
+            onClick={(e) => {
+              e.stopPropagation()
+              setZoom(zoom / ZOOM_STEP)
+            }}
             style={{
               background: 'none',
               border: 'none',
@@ -280,7 +300,9 @@ export function ImageViewer({
               padding: '2px 6px',
               borderRadius: 'var(--forge-radius-sm)',
             }}
-          >−</button>
+          >
+            −
+          </button>
           <span
             aria-label={`Zoom: ${Math.round(zoom * 100)}%`}
             style={{
@@ -291,11 +313,16 @@ export function ImageViewer({
               textAlign: 'center',
               userSelect: 'none',
             }}
-          >{Math.round(zoom * 100)}%</span>
+          >
+            {Math.round(zoom * 100)}%
+          </span>
           <button
             type="button"
             aria-label="Zoom in"
-            onClick={(e) => { e.stopPropagation(); setZoom(zoom * ZOOM_STEP) }}
+            onClick={(e) => {
+              e.stopPropagation()
+              setZoom(zoom * ZOOM_STEP)
+            }}
             style={{
               background: 'none',
               border: 'none',
@@ -305,11 +332,16 @@ export function ImageViewer({
               padding: '2px 6px',
               borderRadius: 'var(--forge-radius-sm)',
             }}
-          >+</button>
+          >
+            +
+          </button>
           <button
             type="button"
             aria-label="Fit to view"
-            onClick={(e) => { e.stopPropagation(); fitToContainer() }}
+            onClick={(e) => {
+              e.stopPropagation()
+              fitToContainer()
+            }}
             style={{
               background: 'none',
               border: '1px solid var(--forge-border)',
@@ -320,7 +352,9 @@ export function ImageViewer({
               borderRadius: 'var(--forge-radius-sm)',
               marginLeft: 'var(--forge-space-1)',
             }}
-          >Fit</button>
+          >
+            Fit
+          </button>
         </div>
       )}
 

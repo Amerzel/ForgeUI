@@ -14,9 +14,18 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
 }
 
 const SIZE_STYLE: Record<TextareaSize, React.CSSProperties> = {
-  sm: { fontSize: 'var(--forge-font-size-sm)',   padding: 'var(--forge-space-1) var(--forge-space-2)' },
-  md: { fontSize: 'var(--forge-font-size-base)', padding: 'var(--forge-space-2) var(--forge-space-3)' },
-  lg: { fontSize: 'var(--forge-font-size-md)',   padding: 'var(--forge-space-3) var(--forge-space-4)' },
+  sm: {
+    fontSize: 'var(--forge-font-size-sm)',
+    padding: 'var(--forge-space-1) var(--forge-space-2)',
+  },
+  md: {
+    fontSize: 'var(--forge-font-size-base)',
+    padding: 'var(--forge-space-2) var(--forge-space-3)',
+  },
+  lg: {
+    fontSize: 'var(--forge-font-size-md)',
+    padding: 'var(--forge-space-3) var(--forge-space-4)',
+  },
 }
 
 export function Textarea({
@@ -73,12 +82,20 @@ export function Textarea({
         cursor: disabled ? 'not-allowed' : 'text',
         outline: 'none',
         transition: `border-color var(--forge-duration-fast) var(--forge-easing-default)`,
-        boxShadow: focused ? `0 0 0 2px color-mix(in srgb, ${borderColor} 25%, transparent)` : undefined,
+        boxShadow: focused
+          ? `0 0 0 2px color-mix(in srgb, ${borderColor} 25%, transparent)`
+          : undefined,
         ...SIZE_STYLE[size],
         ...style,
       }}
-      onFocus={(e) => { setFocused(true); props.onFocus?.(e) }}
-      onBlur={(e) => { setFocused(false); props.onBlur?.(e) }}
+      onFocus={(e) => {
+        setFocused(true)
+        props.onFocus?.(e)
+      }}
+      onBlur={(e) => {
+        setFocused(false)
+        props.onBlur?.(e)
+      }}
       {...props}
     />
   )

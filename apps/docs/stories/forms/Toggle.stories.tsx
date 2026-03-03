@@ -17,11 +17,21 @@ export const Default: Story = {
     const [italic, setItalic] = useState(true)
     return (
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <Toggle pressed={bold} onPressedChange={setBold} aria-label="Bold">B</Toggle>
-        <Toggle pressed={italic} onPressedChange={setItalic} variant="outline" aria-label="Italic">I</Toggle>
-        <Toggle pressed={false} size="sm" aria-label="Small toggle">S</Toggle>
-        <Toggle pressed={false} size="lg" aria-label="Large toggle">L</Toggle>
-        <Toggle disabled aria-label="Disabled toggle">D</Toggle>
+        <Toggle pressed={bold} onPressedChange={setBold} aria-label="Bold">
+          B
+        </Toggle>
+        <Toggle pressed={italic} onPressedChange={setItalic} variant="outline" aria-label="Italic">
+          I
+        </Toggle>
+        <Toggle pressed={false} size="sm" aria-label="Small toggle">
+          S
+        </Toggle>
+        <Toggle pressed={false} size="lg" aria-label="Large toggle">
+          L
+        </Toggle>
+        <Toggle disabled aria-label="Disabled toggle">
+          D
+        </Toggle>
       </div>
     )
   },

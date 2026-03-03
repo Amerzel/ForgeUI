@@ -21,7 +21,16 @@ export function TimelineIcon({ size = 20, color = 'currentColor', ...props }: Ic
       <path d="M4 13 L6 11 L8 13 L6 15 Z" fill={color} />
       <path d="M14 13 L16 11 L18 13 L16 15 Z" fill={color} />
       {/* Playhead */}
-      <line x1="10" y1="2" x2="10" y2="18" stroke={color} strokeWidth="1" strokeDasharray="2 1" strokeLinecap="round" />
+      <line
+        x1="10"
+        y1="2"
+        x2="10"
+        y2="18"
+        stroke={color}
+        strokeWidth="1"
+        strokeDasharray="2 1"
+        strokeLinecap="round"
+      />
     </svg>
   )
 }

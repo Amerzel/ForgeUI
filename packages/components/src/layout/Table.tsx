@@ -50,16 +50,27 @@ function TableHeader({ className, children, ...props }: TableHeaderProps) {
 }
 
 function TableBody({ className, children, ...props }: TableBodyProps) {
-  return <tbody className={cn('forge-table-body', className)} {...props}>{children}</tbody>
+  return (
+    <tbody className={cn('forge-table-body', className)} {...props}>
+      {children}
+    </tbody>
+  )
 }
 
 function TableRow({ className, children, ...props }: TableRowProps) {
   return (
     <tr
       className={cn('forge-table-row', className)}
-      style={{ borderBottom: '1px solid var(--forge-border-subtle)', transition: `background-color var(--forge-duration-fast) var(--forge-easing-default)` }}
-      onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)' }}
-      onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent' }}
+      style={{
+        borderBottom: '1px solid var(--forge-border-subtle)',
+        transition: `background-color var(--forge-duration-fast) var(--forge-easing-default)`,
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = 'transparent'
+      }}
       {...props}
     >
       {children}
@@ -72,7 +83,15 @@ function TableHead({ className, children, sortDirection, onSort, ...props }: Tab
   return (
     <th
       className={cn('forge-table-head', className)}
-      aria-sort={sortDirection === 'asc' ? 'ascending' : sortDirection === 'desc' ? 'descending' : isSortable ? 'none' : undefined}
+      aria-sort={
+        sortDirection === 'asc'
+          ? 'ascending'
+          : sortDirection === 'desc'
+            ? 'descending'
+            : isSortable
+              ? 'none'
+              : undefined
+      }
       style={{
         padding: `var(--forge-space-2) var(--forge-space-3)`,
         textAlign: 'left',
@@ -91,13 +110,39 @@ function TableHead({ className, children, sortDirection, onSort, ...props }: Tab
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--forge-space-1)' }}>
         {children}
         {isSortable && (
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" style={{ opacity: sortDirection ? 1 : 0.4 }}>
-            {sortDirection === 'asc'
-              ? <path d="M6 9V3M3 6l3-3 3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              : sortDirection === 'desc'
-                ? <path d="M6 3v6M3 6l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                : <path d="M3 4l3-2 3 2M3 8l3 2 3-2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-            }
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            aria-hidden="true"
+            style={{ opacity: sortDirection ? 1 : 0.4 }}
+          >
+            {sortDirection === 'asc' ? (
+              <path
+                d="M6 9V3M3 6l3-3 3 3"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            ) : sortDirection === 'desc' ? (
+              <path
+                d="M6 3v6M3 6l3 3 3-3"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            ) : (
+              <path
+                d="M3 4l3-2 3 2M3 8l3 2 3-2"
+                stroke="currentColor"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            )}
           </svg>
         )}
       </span>
@@ -109,7 +154,11 @@ function TableCell({ className, children, ...props }: TableCellProps) {
   return (
     <td
       className={cn('forge-table-cell', className)}
-      style={{ padding: `var(--forge-space-2-5) var(--forge-space-3)`, color: 'var(--forge-text)', verticalAlign: 'middle' }}
+      style={{
+        padding: `var(--forge-space-2-5) var(--forge-space-3)`,
+        color: 'var(--forge-text)',
+        verticalAlign: 'middle',
+      }}
       {...props}
     >
       {children}

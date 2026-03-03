@@ -6,7 +6,11 @@ const meta: Meta<typeof ApprovalPanel> = {
   component: ApprovalPanel,
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'Review panel with approve/reject workflow and rationale capture.' } },
+    docs: {
+      description: {
+        component: 'Review panel with approve/reject workflow and rationale capture.',
+      },
+    },
   },
 }
 export default meta
@@ -15,7 +19,7 @@ type Story = StoryObj<typeof ApprovalPanel>
 export const Pending: Story = {
   args: {
     title: 'Update Character Age',
-    description: 'AI agent proposes updating Gandalf\'s age based on Silmarillion cross-references.',
+    description: "AI agent proposes updating Gandalf's age based on Silmarillion cross-references.",
     status: 'pending',
     onApprove: (r: string) => console.log('Approved:', r),
     onReject: (r: string) => console.log('Rejected:', r),
@@ -37,7 +41,9 @@ export const Rejected: Story = {
     title: 'Rename to Gandalf the White',
     description: 'AI suggests renaming based on late-story events.',
     status: 'rejected',
-    children: <Text size="sm">Rejected: Character is known as "the Grey" for most of the narrative.</Text>,
+    children: (
+      <Text size="sm">Rejected: Character is known as "the Grey" for most of the narrative.</Text>
+    ),
   },
 }
 

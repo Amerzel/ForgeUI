@@ -175,9 +175,9 @@ describe('getAccessibleForeground', () => {
 describe('WCAG AA contrast validation', () => {
   // Key token pairs from hearth-bronze dark — must meet 4.5:1 for normal text
   const cases: Array<[string, string, string]> = [
-    ['text on bg',      '#f2e9df', '#0c0805'],
+    ['text on bg', '#f2e9df', '#0c0805'],
     ['text on surface', '#f2e9df', '#1a140f'],
-    ['accent on bg',    '#d97706', '#0c0805'],
+    ['accent on bg', '#d97706', '#0c0805'],
   ]
 
   for (const [name, fg, bg] of cases) {
@@ -200,8 +200,11 @@ describe('WCAG AA contrast validation', () => {
 // ---------------------------------------------------------------------------
 function rgbToHsl333(hex: string): [number, number, number] {
   const [r, g, b] = hexToRgb(hex)
-  const rn = r / 255, gn = g / 255, bn = b / 255
-  const max = Math.max(rn, gn, bn), min = Math.min(rn, gn, bn)
+  const rn = r / 255,
+    gn = g / 255,
+    bn = b / 255
+  const max = Math.max(rn, gn, bn),
+    min = Math.min(rn, gn, bn)
   const l = (max + min) / 2
   if (max === min) return [0, 0, l]
   const d = max - min

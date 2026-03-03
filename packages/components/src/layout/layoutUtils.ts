@@ -16,16 +16,48 @@ export function sp(val: SpaceValue | undefined): string | undefined {
 }
 
 const SEMANTIC_COLORS = new Set([
-  'bg', 'surface', 'surface-raised', 'surface-hover', 'surface-active',
-  'surface-sunken', 'surface-overlay', 'surface-popover', 'bg-overlay', 'bg-disabled',
-  'border', 'border-subtle', 'border-strong',
-  'text', 'text-muted', 'text-disabled',
-  'text-on-accent', 'text-on-info', 'text-on-success', 'text-on-warning', 'text-on-danger',
+  'bg',
+  'surface',
+  'surface-raised',
+  'surface-hover',
+  'surface-active',
+  'surface-sunken',
+  'surface-overlay',
+  'surface-popover',
+  'bg-overlay',
+  'bg-disabled',
+  'border',
+  'border-subtle',
+  'border-strong',
+  'text',
+  'text-muted',
+  'text-disabled',
+  'text-on-accent',
+  'text-on-info',
+  'text-on-success',
+  'text-on-warning',
+  'text-on-danger',
   'accent',
-  'info',    'info-hover',    'info-bg',    'info-border',    'info-foreground',
-  'success', 'success-hover', 'success-bg', 'success-border', 'success-foreground',
-  'warning', 'warning-hover', 'warning-bg', 'warning-border', 'warning-foreground',
-  'danger',  'danger-hover',  'danger-bg',  'danger-border',  'danger-foreground',
+  'info',
+  'info-hover',
+  'info-bg',
+  'info-border',
+  'info-foreground',
+  'success',
+  'success-hover',
+  'success-bg',
+  'success-border',
+  'success-foreground',
+  'warning',
+  'warning-hover',
+  'warning-bg',
+  'warning-border',
+  'warning-foreground',
+  'danger',
+  'danger-hover',
+  'danger-bg',
+  'danger-border',
+  'danger-foreground',
 ])
 
 /** Converts a semantic color alias or passes through raw CSS color strings. */
@@ -45,10 +77,13 @@ export function rad(val: string | undefined): string | undefined {
 }
 
 /** Removes undefined keys from a style object. */
-export function cleanStyle(obj: Record<string, string | number | undefined>): Record<string, string | number> {
-  return Object.fromEntries(
-    Object.entries(obj).filter(([, v]) => v !== undefined),
-  ) as Record<string, string | number>
+export function cleanStyle(
+  obj: Record<string, string | number | undefined>,
+): Record<string, string | number> {
+  return Object.fromEntries(Object.entries(obj).filter(([, v]) => v !== undefined)) as Record<
+    string,
+    string | number
+  >
 }
 
 /**
@@ -88,16 +123,16 @@ export interface SpacingShorthandProps {
 export function resolveSpacing(props: SpacingShorthandProps): Record<string, string | number> {
   const { p, px, py, pt, pb, pl, pr, m, mx, my, mt, mb, ml, mr, bg, c, radius } = props
   return cleanStyle({
-    paddingTop:      sp(pt ?? py ?? p),
-    paddingBottom:   sp(pb ?? py ?? p),
-    paddingLeft:     sp(pl ?? px ?? p),
-    paddingRight:    sp(pr ?? px ?? p),
-    marginTop:       sp(mt ?? my ?? m),
-    marginBottom:    sp(mb ?? my ?? m),
-    marginLeft:      sp(ml ?? mx ?? m),
-    marginRight:     sp(mr ?? mx ?? m),
+    paddingTop: sp(pt ?? py ?? p),
+    paddingBottom: sp(pb ?? py ?? p),
+    paddingLeft: sp(pl ?? px ?? p),
+    paddingRight: sp(pr ?? px ?? p),
+    marginTop: sp(mt ?? my ?? m),
+    marginBottom: sp(mb ?? my ?? m),
+    marginLeft: sp(ml ?? mx ?? m),
+    marginRight: sp(mr ?? mx ?? m),
     backgroundColor: col(bg),
-    color:           c ? (col(c) ?? c) : undefined,
-    borderRadius:    rad(radius),
+    color: c ? (col(c) ?? c) : undefined,
+    borderRadius: rad(radius),
   })
 }

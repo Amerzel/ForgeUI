@@ -23,9 +23,24 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const SIZE_STYLE: Record<ButtonSize, React.CSSProperties> = {
-  sm: { height: '28px', paddingInline: 'var(--forge-space-3)',  fontSize: 'var(--forge-font-size-sm)',   gap: 'var(--forge-space-1)' },
-  md: { height: '34px', paddingInline: 'var(--forge-space-4)',  fontSize: 'var(--forge-font-size-base)', gap: 'var(--forge-space-2)' },
-  lg: { height: '42px', paddingInline: 'var(--forge-space-5)',  fontSize: 'var(--forge-font-size-md)',   gap: 'var(--forge-space-2)' },
+  sm: {
+    height: '28px',
+    paddingInline: 'var(--forge-space-3)',
+    fontSize: 'var(--forge-font-size-sm)',
+    gap: 'var(--forge-space-1)',
+  },
+  md: {
+    height: '34px',
+    paddingInline: 'var(--forge-space-4)',
+    fontSize: 'var(--forge-font-size-base)',
+    gap: 'var(--forge-space-2)',
+  },
+  lg: {
+    height: '42px',
+    paddingInline: 'var(--forge-space-5)',
+    fontSize: 'var(--forge-font-size-md)',
+    gap: 'var(--forge-space-2)',
+  },
 }
 
 const VARIANT_STYLE: Record<ButtonVariant, React.CSSProperties> = {
@@ -53,10 +68,10 @@ const VARIANT_STYLE: Record<ButtonVariant, React.CSSProperties> = {
 }
 
 const HOVER_STYLE: Record<ButtonVariant, React.CSSProperties> = {
-  primary:   { filter: 'brightness(0.9)' },
+  primary: { filter: 'brightness(0.9)' },
   secondary: { backgroundColor: 'var(--forge-surface-active)' },
-  ghost:     { backgroundColor: 'var(--forge-surface-hover)' },
-  danger:    { filter: 'brightness(0.9)' },
+  ghost: { backgroundColor: 'var(--forge-surface-hover)' },
+  danger: { filter: 'brightness(0.9)' },
 }
 
 /**
@@ -123,11 +138,18 @@ export function Button({
         outline: 'none',
         ...style,
       }}
-      onMouseEnter={(e) => { setHovered(true); onMouseEnter?.(e) }}
-      onMouseLeave={(e) => { setHovered(false); onMouseLeave?.(e) }}
+      onMouseEnter={(e) => {
+        setHovered(true)
+        onMouseEnter?.(e)
+      }}
+      onMouseLeave={(e) => {
+        setHovered(false)
+        onMouseLeave?.(e)
+      }}
       onFocus={(e) => {
         if (e.target === e.currentTarget) {
-          e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+          e.currentTarget.style.outline =
+            'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
           e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
         }
       }}

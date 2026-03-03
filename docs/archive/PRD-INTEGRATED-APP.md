@@ -44,6 +44,7 @@ This document describes what that architecture would look like, what it enables,
 **Primary user:** A solo game developer who owns the full toolchain. They design lore, generate assets, run pipelines, and inspect builds — often in the same work session.
 
 Pain points today:
+
 - Switching between multiple terminals, scripts, and standalone apps breaks flow
 - No way to see "the state of the whole project" at a glance
 - Repetitive configuration across tools (e.g., project path, palette, active world)
@@ -93,13 +94,13 @@ Deep links work out of the box — sharing a URL opens the exact view.
 
 A single global store manages cross-cutting state:
 
-| Slice | Contents |
-|---|---|
-| `project` | Active project path, name, last opened |
-| `world` | Active LoreEngine world — available to all tools |
-| `pipeline` | Last pipeline run status, log tail |
-| `ui` | Sidebar collapsed, active panel, theme overrides |
-| `notifications` | Toast queue, background job status |
+| Slice           | Contents                                         |
+| --------------- | ------------------------------------------------ |
+| `project`       | Active project path, name, last opened           |
+| `world`         | Active LoreEngine world — available to all tools |
+| `pipeline`      | Last pipeline run status, log tail               |
+| `ui`            | Sidebar collapsed, active panel, theme overrides |
+| `notifications` | Toast queue, background job status               |
 
 Each tool may have its own local state for UI-only concerns (selected row, scroll position), but business data flows through the global store so any view can read it.
 
@@ -124,20 +125,24 @@ CLI tools (PipelineInspector, build scripts, etc.) are invoked via a thin local 
 ## 6. Key Features
 
 ### 6.1 Unified Navigation
+
 - ForgeUI `AppShell` provides the outer chrome: sidebar nav, top toolbar, breadcrumb
 - No separate per-tool chrome to configure — each tool renders into a shared slot
 - Keyboard shortcuts are global (`Cmd+K` command palette across all tools)
 
 ### 6.2 Cross-Tool Awareness
+
 - "Context bar" at top of every view shows active project, active world, last pipeline status
 - Entities, factions, and assets created in one tool can be browsed from another
 - Global search indexes content from all tools
 
 ### 6.3 Integrated CLI Output
+
 - Every CLI invocation surfaces in a shared "Output" panel (like VS Code's terminal panel)
 - Build errors link directly to the relevant tool view
 
 ### 6.4 Single Settings Surface
+
 - Theme, project path, keybindings, and per-tool config all in one Settings view
 - No per-tool config files scattered across the filesystem (or they are managed from here)
 
@@ -146,6 +151,7 @@ CLI tools (PipelineInspector, build scripts, etc.) are invoked via a thin local 
 ## 7. Development Experience
 
 ### 7.1 Repository Structure
+
 ```
 apps/
   workstation/          ← the integrated app
@@ -161,6 +167,7 @@ apps/
 ```
 
 ### 7.2 Workflow
+
 - One `pnpm dev` starts the whole app
 - One `pnpm test` runs all tests (single Vitest config)
 - One Storybook covers all components + views
@@ -172,23 +179,23 @@ apps/
 
 ### Advantages
 
-| Advantage | Detail |
-|---|---|
-| Simplest mental model | One app, one router, one store — no protocol between parts |
+| Advantage             | Detail                                                             |
+| --------------------- | ------------------------------------------------------------------ |
+| Simplest mental model | One app, one router, one store — no protocol between parts         |
 | Richest cross-tool UX | Shared state enables contextual awareness that is hard to retrofit |
-| Fastest to build v1 | No framework/module infrastructure to design upfront |
-| Easy refactoring | Moving code between tools is a file move, not a package change |
-| Single deploy | One build artifact, one version, one URL |
+| Fastest to build v1   | No framework/module infrastructure to design upfront               |
+| Easy refactoring      | Moving code between tools is a file move, not a package change     |
+| Single deploy         | One build artifact, one version, one URL                           |
 
 ### Disadvantages
 
-| Disadvantage | Detail |
-|---|---|
-| Coupling risk | A bug in one tool's state slice can affect all tools |
-| Scaling teams | If more than one person works in this codebase, merge conflicts increase |
-| Bundle size | All tools load upfront unless aggressive code-splitting is applied manually |
-| Hard to isolate | Testing one tool in isolation requires mocking the global store |
-| Migration risk | LoreEngine and AssetGenerator have existing codebases — integrating them means a larger rewrite |
+| Disadvantage    | Detail                                                                                          |
+| --------------- | ----------------------------------------------------------------------------------------------- |
+| Coupling risk   | A bug in one tool's state slice can affect all tools                                            |
+| Scaling teams   | If more than one person works in this codebase, merge conflicts increase                        |
+| Bundle size     | All tools load upfront unless aggressive code-splitting is applied manually                     |
+| Hard to isolate | Testing one tool in isolation requires mocking the global store                                 |
+| Migration risk  | LoreEngine and AssetGenerator have existing codebases — integrating them means a larger rewrite |
 
 ---
 
@@ -197,10 +204,12 @@ apps/
 The integrated approach requires either:
 
 **Option A: Big bang rewrite**
+
 - Port LoreEngine and AssetGenerator views into the new app all at once
 - High risk, long runway before value
 
 **Option B: Strangler fig**
+
 - Ship the shell + one tool first (LoreEngine, as the most complex UI)
 - Embed the other tools as iframes temporarily, replace with native views over time
 - Lower risk but the iframe phase produces a suboptimal UX

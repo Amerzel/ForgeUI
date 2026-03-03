@@ -38,7 +38,15 @@ interface PropertyGridProps {
 // Property editors
 // ---------------------------------------------------------------------------
 
-function TextEditor({ item, value, onChange }: { item: PropertyItem; value: unknown; onChange: (v: string) => void }) {
+function TextEditor({
+  item,
+  value,
+  onChange,
+}: {
+  item: PropertyItem
+  value: unknown
+  onChange: (v: string) => void
+}) {
   return (
     <input
       type="text"
@@ -58,13 +66,26 @@ function TextEditor({ item, value, onChange }: { item: PropertyItem; value: unkn
         outline: 'none',
       }}
       onChange={(e) => onChange(e.target.value)}
-      onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)' }}
-      onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+      onFocus={(e) => {
+        e.currentTarget.style.outline =
+          'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+      }}
+      onBlur={(e) => {
+        e.currentTarget.style.outline = 'none'
+      }}
     />
   )
 }
 
-function NumberEditor({ item, value, onChange }: { item: PropertyItem; value: unknown; onChange: (v: number) => void }) {
+function NumberEditor({
+  item,
+  value,
+  onChange,
+}: {
+  item: PropertyItem
+  value: unknown
+  onChange: (v: number) => void
+}) {
   return (
     <input
       type="number"
@@ -87,13 +108,26 @@ function NumberEditor({ item, value, onChange }: { item: PropertyItem; value: un
         outline: 'none',
       }}
       onChange={(e) => onChange(Number(e.target.value))}
-      onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)' }}
-      onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+      onFocus={(e) => {
+        e.currentTarget.style.outline =
+          'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+      }}
+      onBlur={(e) => {
+        e.currentTarget.style.outline = 'none'
+      }}
     />
   )
 }
 
-function ColorEditor({ item, value, onChange }: { item: PropertyItem; value: unknown; onChange: (v: string) => void }) {
+function ColorEditor({
+  item,
+  value,
+  onChange,
+}: {
+  item: PropertyItem
+  value: unknown
+  onChange: (v: string) => void
+}) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)' }}>
       <input
@@ -112,17 +146,38 @@ function ColorEditor({ item, value, onChange }: { item: PropertyItem; value: unk
         }}
         onChange={(e) => onChange(e.target.value)}
       />
-      <span style={{ fontFamily: 'var(--forge-font-mono)', fontSize: 'var(--forge-font-size-xs)', color: 'var(--forge-text-muted)' }}>
+      <span
+        style={{
+          fontFamily: 'var(--forge-font-mono)',
+          fontSize: 'var(--forge-font-size-xs)',
+          color: 'var(--forge-text-muted)',
+        }}
+      >
         {String((value ?? '#000000') as string | number)}
       </span>
     </div>
   )
 }
 
-function BooleanEditor({ item, value, onChange }: { item: PropertyItem; value: unknown; onChange: (v: boolean) => void }) {
+function BooleanEditor({
+  item,
+  value,
+  onChange,
+}: {
+  item: PropertyItem
+  value: unknown
+  onChange: (v: boolean) => void
+}) {
   const checked = Boolean(value)
   return (
-    <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)', cursor: item.disabled ? 'not-allowed' : 'pointer' }}>
+    <label
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 'var(--forge-space-2)',
+        cursor: item.disabled ? 'not-allowed' : 'pointer',
+      }}
+    >
       <input
         type="checkbox"
         checked={checked}
@@ -131,14 +186,27 @@ function BooleanEditor({ item, value, onChange }: { item: PropertyItem; value: u
         onChange={(e) => onChange(e.target.checked)}
         style={{ width: '14px', height: '14px', cursor: 'inherit' }}
       />
-      <span style={{ fontSize: 'var(--forge-font-size-sm)', color: checked ? 'var(--forge-text)' : 'var(--forge-text-muted)' }}>
+      <span
+        style={{
+          fontSize: 'var(--forge-font-size-sm)',
+          color: checked ? 'var(--forge-text)' : 'var(--forge-text-muted)',
+        }}
+      >
         {checked ? 'true' : 'false'}
       </span>
     </label>
   )
 }
 
-function SelectEditor({ item, value, onChange }: { item: PropertyItem; value: unknown; onChange: (v: string) => void }) {
+function SelectEditor({
+  item,
+  value,
+  onChange,
+}: {
+  item: PropertyItem
+  value: unknown
+  onChange: (v: string) => void
+}) {
   return (
     <select
       value={String((value ?? '') as string | number)}
@@ -159,15 +227,25 @@ function SelectEditor({ item, value, onChange }: { item: PropertyItem; value: un
       }}
       onChange={(e) => onChange(e.target.value)}
     >
-      {item.options?.map(opt => (
-        <option key={opt.value} value={opt.value}>{opt.label}</option>
+      {item.options?.map((opt) => (
+        <option key={opt.value} value={opt.value}>
+          {opt.label}
+        </option>
       ))}
     </select>
   )
 }
 
-function Vec2Editor({ item, value, onChange }: { item: PropertyItem; value: unknown; onChange: (v: [number, number]) => void }) {
-  const arr = Array.isArray(value) ? value as number[] : [0, 0]
+function Vec2Editor({
+  item,
+  value,
+  onChange,
+}: {
+  item: PropertyItem
+  value: unknown
+  onChange: (v: [number, number]) => void
+}) {
+  const arr = Array.isArray(value) ? (value as number[]) : [0, 0]
   const inputStyle: React.CSSProperties = {
     width: '60px',
     height: '24px',
@@ -183,7 +261,16 @@ function Vec2Editor({ item, value, onChange }: { item: PropertyItem; value: unkn
   return (
     <div style={{ display: 'flex', gap: 'var(--forge-space-1)', alignItems: 'center' }}>
       {['X', 'Y'].map((axis, i) => (
-        <label key={axis} style={{ display: 'flex', alignItems: 'center', gap: '2px', fontSize: 'var(--forge-font-size-xs)', color: 'var(--forge-text-muted)' }}>
+        <label
+          key={axis}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2px',
+            fontSize: 'var(--forge-font-size-xs)',
+            color: 'var(--forge-text-muted)',
+          }}
+        >
           {axis}
           <input
             type="number"
@@ -204,8 +291,16 @@ function Vec2Editor({ item, value, onChange }: { item: PropertyItem; value: unkn
   )
 }
 
-function Vec3Editor({ item, value, onChange }: { item: PropertyItem; value: unknown; onChange: (v: [number, number, number]) => void }) {
-  const arr = Array.isArray(value) ? value as number[] : [0, 0, 0]
+function Vec3Editor({
+  item,
+  value,
+  onChange,
+}: {
+  item: PropertyItem
+  value: unknown
+  onChange: (v: [number, number, number]) => void
+}) {
+  const arr = Array.isArray(value) ? (value as number[]) : [0, 0, 0]
   const inputStyle: React.CSSProperties = {
     width: '50px',
     height: '24px',
@@ -221,7 +316,16 @@ function Vec3Editor({ item, value, onChange }: { item: PropertyItem; value: unkn
   return (
     <div style={{ display: 'flex', gap: 'var(--forge-space-1)', alignItems: 'center' }}>
       {['X', 'Y', 'Z'].map((axis, i) => (
-        <label key={axis} style={{ display: 'flex', alignItems: 'center', gap: '2px', fontSize: 'var(--forge-font-size-xs)', color: 'var(--forge-text-muted)' }}>
+        <label
+          key={axis}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2px',
+            fontSize: 'var(--forge-font-size-xs)',
+            color: 'var(--forge-text-muted)',
+          }}
+        >
           {axis}
           <input
             type="number"
@@ -242,16 +346,32 @@ function Vec3Editor({ item, value, onChange }: { item: PropertyItem; value: unkn
   )
 }
 
-function PropertyEditor({ item, value, onChange }: { item: PropertyItem; value: unknown; onChange: (v: unknown) => void }) {
+function PropertyEditor({
+  item,
+  value,
+  onChange,
+}: {
+  item: PropertyItem
+  value: unknown
+  onChange: (v: unknown) => void
+}) {
   switch (item.type) {
-    case 'text':    return <TextEditor item={item} value={value} onChange={onChange} />
-    case 'number':  return <NumberEditor item={item} value={value} onChange={onChange} />
-    case 'color':   return <ColorEditor item={item} value={value} onChange={onChange} />
-    case 'boolean': return <BooleanEditor item={item} value={value} onChange={onChange} />
-    case 'select':  return <SelectEditor item={item} value={value} onChange={onChange} />
-    case 'vec2':    return <Vec2Editor item={item} value={value} onChange={onChange} />
-    case 'vec3':    return <Vec3Editor item={item} value={value} onChange={onChange} />
-    default:        return null
+    case 'text':
+      return <TextEditor item={item} value={value} onChange={onChange} />
+    case 'number':
+      return <NumberEditor item={item} value={value} onChange={onChange} />
+    case 'color':
+      return <ColorEditor item={item} value={value} onChange={onChange} />
+    case 'boolean':
+      return <BooleanEditor item={item} value={value} onChange={onChange} />
+    case 'select':
+      return <SelectEditor item={item} value={value} onChange={onChange} />
+    case 'vec2':
+      return <Vec2Editor item={item} value={value} onChange={onChange} />
+    case 'vec3':
+      return <Vec3Editor item={item} value={value} onChange={onChange} />
+    default:
+      return null
   }
 }
 
@@ -259,20 +379,31 @@ function PropertyEditor({ item, value, onChange }: { item: PropertyItem; value: 
 // PropertyGrid
 // ---------------------------------------------------------------------------
 export function PropertyGrid({ sections, values, onChange, className }: PropertyGridProps) {
-  const handleChange = useCallback((key: string, value: unknown) => {
-    onChange(key, value)
-  }, [onChange])
+  const handleChange = useCallback(
+    (key: string, value: unknown) => {
+      onChange(key, value)
+    },
+    [onChange],
+  )
 
   return (
     <div
       className={cn('forge-property-grid', className)}
       style={{ display: 'flex', flexDirection: 'column', gap: 0 }}
     >
-      {sections.map(section => (
+      {sections.map((section) => (
         <Collapsible
           key={section.label}
           trigger={
-            <span style={{ fontSize: 'var(--forge-font-size-xs)', fontWeight: 'var(--forge-font-semibold)', textTransform: 'uppercase', letterSpacing: 'var(--forge-tracking-wide)', color: 'var(--forge-text-muted)' }}>
+            <span
+              style={{
+                fontSize: 'var(--forge-font-size-xs)',
+                fontWeight: 'var(--forge-font-semibold)',
+                textTransform: 'uppercase',
+                letterSpacing: 'var(--forge-tracking-wide)',
+                color: 'var(--forge-text-muted)',
+              }}
+            >
               {section.label}
             </span>
           }
@@ -280,7 +411,7 @@ export function PropertyGrid({ sections, values, onChange, className }: Property
           className="forge-property-section"
         >
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {section.items.map(item => (
+            {section.items.map((item) => (
               <div
                 key={item.key}
                 style={{

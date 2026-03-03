@@ -31,7 +31,7 @@ export default [
     },
     plugins: {
       '@typescript-eslint': tsPlugin,
-      'react': reactPlugin,
+      react: reactPlugin,
       'react-hooks': reactHooks,
       'jsx-a11y': jsxA11y,
     },

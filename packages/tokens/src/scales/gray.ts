@@ -59,4 +59,3 @@ export const grayMidnightForgeV2Scale = {
   '900': '#101828',
   '950': '#080c14',
 } as const
-

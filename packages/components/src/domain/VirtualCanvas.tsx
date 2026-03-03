@@ -52,33 +52,58 @@ export function VirtualCanvas({
 }: VirtualCanvasProps) {
   const [internalViewport, setInternalViewport] = useState<CanvasViewport>({ x: 0, y: 0, zoom: 1 })
   const [selectedId, setSelectedId] = useState<string | null>(null)
-  const [dragState, setDragState] = useState<{ id: string; startX: number; startY: number; originalX: number; originalY: number } | null>(null)
-  const [panState, setPanState] = useState<{ startX: number; startY: number; originalPanX: number; originalPanY: number } | null>(null)
+  const [dragState, setDragState] = useState<{
+    id: string
+    startX: number
+    startY: number
+    originalX: number
+    originalY: number
+  } | null>(null)
+  const [panState, setPanState] = useState<{
+    startX: number
+    startY: number
+    originalPanX: number
+    originalPanY: number
+  } | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const viewport = controlledViewport ?? internalViewport
-  const setViewport = useCallback((next: CanvasViewport) => {
-    if (controlledViewport === undefined) setInternalViewport(next)
-    onViewportChange?.(next)
-  }, [controlledViewport, onViewportChange])
+  const setViewport = useCallback(
+    (next: CanvasViewport) => {
+      if (controlledViewport === undefined) setInternalViewport(next)
+      onViewportChange?.(next)
+    },
+    [controlledViewport, onViewportChange],
+  )
 
   // Pan with middle-mouse or space+drag
-  const handleCanvasPointerDown = useCallback((e: React.PointerEvent) => {
-    if (e.button === 1 || (e.button === 0 && e.altKey)) {
-      e.preventDefault()
-      e.currentTarget.setPointerCapture(e.pointerId)
-      setPanState({ startX: e.clientX, startY: e.clientY, originalPanX: viewport.x, originalPanY: viewport.y })
-      setSelectedId(null)
-    }
-  }, [viewport])
+  const handleCanvasPointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      if (e.button === 1 || (e.button === 0 && e.altKey)) {
+        e.preventDefault()
+        e.currentTarget.setPointerCapture(e.pointerId)
+        setPanState({
+          startX: e.clientX,
+          startY: e.clientY,
+          originalPanX: viewport.x,
+          originalPanY: viewport.y,
+        })
+        setSelectedId(null)
+      }
+    },
+    [viewport],
+  )
 
-  const handleCanvasPointerMove = useCallback((e: React.PointerEvent) => {
-    if (panState) {
-      const dx = e.clientX - panState.startX
-      const dy = e.clientY - panState.startY
-      setViewport({ ...viewport, x: panState.originalPanX + dx, y: panState.originalPanY + dy })
-    }
-  }, [panState, viewport, setViewport])
+  const handleCanvasPointerMove = useCallback(
+    (e: React.PointerEvent) => {
+      if (panState) {
+        const dx = e.clientX - panState.startX
+        const dy = e.clientY - panState.startY
+        setViewport({ ...viewport, x: panState.originalPanX + dx, y: panState.originalPanY + dy })
+      }
+    },
+    [panState, viewport, setViewport],
+  )
 
   const handleCanvasPointerUp = useCallback(() => {
     setPanState(null)
@@ -114,15 +139,24 @@ export function VirtualCanvas({
     e.stopPropagation()
     e.currentTarget.setPointerCapture(e.pointerId)
     setSelectedId(item.id)
-    setDragState({ id: item.id, startX: e.clientX, startY: e.clientY, originalX: item.x, originalY: item.y })
+    setDragState({
+      id: item.id,
+      startX: e.clientX,
+      startY: e.clientY,
+      originalX: item.x,
+      originalY: item.y,
+    })
   }, [])
 
-  const handleItemPointerMove = useCallback((e: React.PointerEvent, item: CanvasItem) => {
-    if (!dragState || dragState.id !== item.id) return
-    const dx = (e.clientX - dragState.startX) / viewport.zoom
-    const dy = (e.clientY - dragState.startY) / viewport.zoom
-    onItemChange?.({ ...item, x: dragState.originalX + dx, y: dragState.originalY + dy })
-  }, [dragState, viewport.zoom, onItemChange])
+  const handleItemPointerMove = useCallback(
+    (e: React.PointerEvent, item: CanvasItem) => {
+      if (!dragState || dragState.id !== item.id) return
+      const dx = (e.clientX - dragState.startX) / viewport.zoom
+      const dy = (e.clientY - dragState.startY) / viewport.zoom
+      onItemChange?.({ ...item, x: dragState.originalX + dx, y: dragState.originalY + dy })
+    },
+    [dragState, viewport.zoom, onItemChange],
+  )
 
   const handleItemPointerUp = useCallback(() => {
     setDragState(null)
@@ -131,8 +165,8 @@ export function VirtualCanvas({
   // Grid dots rendered via CSS background-image
   const gridDotSize = 1.5
   const gridSpacing = gridSize * viewport.zoom
-  const dotX = (viewport.x % gridSpacing + gridSpacing) % gridSpacing
-  const dotY = (viewport.y % gridSpacing + gridSpacing) % gridSpacing
+  const dotX = ((viewport.x % gridSpacing) + gridSpacing) % gridSpacing
+  const dotY = ((viewport.y % gridSpacing) + gridSpacing) % gridSpacing
 
   return (
     <div
@@ -184,7 +218,7 @@ export function VirtualCanvas({
         }}
       >
         {/* Render items */}
-        {items.map(item => (
+        {items.map((item) => (
           <div
             key={item.id}
             data-canvas-item-id={item.id}
@@ -253,8 +287,14 @@ export function VirtualCanvas({
           cursor: 'pointer',
           outline: 'none',
         }}
-        onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'; e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)' }}
-        onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+        onFocus={(e) => {
+          e.currentTarget.style.outline =
+            'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+          e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
+        }}
+        onBlur={(e) => {
+          e.currentTarget.style.outline = 'none'
+        }}
       >
         Reset
       </button>

@@ -1,7 +1,7 @@
 name: Cross-Tool Issue
 description: An issue that spans multiple Forge tools or involves shared contracts.
-title: "cross-tool: short description"
-labels: ["scope: cross-tool", "status: triage"]
+title: 'cross-tool: short description'
+labels: ['scope: cross-tool', 'status: triage']
 body:
   - type: markdown
     attributes:
@@ -55,7 +55,7 @@ body:
     attributes:
       label: Contract involved
       description: Which shared schema or contract is affected?
-      placeholder: "e.g. zone_spec.schema.json, entity_definition.schema.json"
+      placeholder: 'e.g. zone_spec.schema.json, entity_definition.schema.json'
 
   - type: textarea
     id: description
@@ -70,8 +70,8 @@ body:
     attributes:
       label: Breaking change?
       options:
-        - "No — backward compatible"
-        - "Yes — requires coordinated update"
+        - 'No — backward compatible'
+        - 'Yes — requires coordinated update'
     validations:
       required: true
 

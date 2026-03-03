@@ -16,8 +16,15 @@ export const Default: Story = {
     const [side, setSide] = useState<'left' | 'right' | 'top' | 'bottom'>('right')
     return (
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-        {(['right', 'left', 'bottom'] as const).map(s => (
-          <Button key={s} variant="secondary" onClick={() => { setSide(s); setOpen(true) }}>
+        {(['right', 'left', 'bottom'] as const).map((s) => (
+          <Button
+            key={s}
+            variant="secondary"
+            onClick={() => {
+              setSide(s)
+              setOpen(true)
+            }}
+          >
             Open {s}
           </Button>
         ))}
@@ -28,20 +35,43 @@ export const Default: Story = {
           title="Entity Inspector"
           description="View and edit component properties for the selected entity."
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '0 24px 24px' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px',
+              padding: '0 24px 24px',
+            }}
+          >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Text size="sm" style={{ color: 'var(--forge-text-muted)' }}>Transform</Text>
+              <Text size="sm" style={{ color: 'var(--forge-text-muted)' }}>
+                Transform
+              </Text>
               <Badge>Active</Badge>
             </div>
-            {['Position', 'Rotation', 'Scale'].map(prop => (
-              <div key={prop} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid var(--forge-border-subtle)' }}>
+            {['Position', 'Rotation', 'Scale'].map((prop) => (
+              <div
+                key={prop}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '8px 0',
+                  borderBottom: '1px solid var(--forge-border-subtle)',
+                }}
+              >
                 <Text size="sm">{prop}</Text>
-                <Text size="sm" style={{ color: 'var(--forge-text-muted)', fontFamily: 'var(--forge-font-mono)' }}>
+                <Text
+                  size="sm"
+                  style={{ color: 'var(--forge-text-muted)', fontFamily: 'var(--forge-font-mono)' }}
+                >
                   {prop === 'Scale' ? '1.0, 1.0, 1.0' : '0.0, 0.0, 0.0'}
                 </Text>
               </div>
             ))}
-            <Button variant="primary" onClick={() => setOpen(false)}>Close Inspector</Button>
+            <Button variant="primary" onClick={() => setOpen(false)}>
+              Close Inspector
+            </Button>
           </div>
         </Drawer>
       </div>

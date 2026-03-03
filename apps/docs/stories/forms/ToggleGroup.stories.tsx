@@ -17,13 +17,13 @@ export const Default: Story = {
     const [fmt, setFmt] = useState<string[]>(['bold'])
 
     const ALIGN_ITEMS = [
-      { value: 'left',   label: '⬅',   'aria-label': 'Align left' },
-      { value: 'center', label: '↔',   'aria-label': 'Align center' },
-      { value: 'right',  label: '➡',   'aria-label': 'Align right' },
+      { value: 'left', label: '⬅', 'aria-label': 'Align left' },
+      { value: 'center', label: '↔', 'aria-label': 'Align center' },
+      { value: 'right', label: '➡', 'aria-label': 'Align right' },
     ]
     const FMT_ITEMS = [
-      { value: 'bold',      label: 'B', 'aria-label': 'Bold' },
-      { value: 'italic',    label: 'I', 'aria-label': 'Italic' },
+      { value: 'bold', label: 'B', 'aria-label': 'Bold' },
+      { value: 'italic', label: 'I', 'aria-label': 'Italic' },
       { value: 'underline', label: 'U', 'aria-label': 'Underline' },
     ]
     return (
@@ -32,7 +32,9 @@ export const Default: Story = {
           type="single"
           items={ALIGN_ITEMS}
           value={align}
-          onValueChange={(v) => { if (v) setAlign(v) }}
+          onValueChange={(v) => {
+            if (v) setAlign(v)
+          }}
           aria-label="Text alignment"
         />
         <ToggleGroup

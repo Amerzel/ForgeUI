@@ -7,7 +7,11 @@ const meta: Meta<typeof EntityCard> = {
   component: EntityCard,
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'Rich metadata card for entities in knowledge graphs, catalogs, and lists.' } },
+    docs: {
+      description: {
+        component: 'Rich metadata card for entities in knowledge graphs, catalogs, and lists.',
+      },
+    },
   },
 }
 export default meta
@@ -56,14 +60,46 @@ export const EntityList: Story = {
   render: function EntityListDemo() {
     const [selected, setSelected] = useState('1')
     const entities = [
-      { id: '1', name: 'Gandalf', type: 'Character', typeIcon: '🧙', status: 'Canon', statusColor: 'var(--forge-success)', tags: ['wizard'] },
-      { id: '2', name: 'Mordor', type: 'Location', typeIcon: '🏔', status: 'Canon', statusColor: 'var(--forge-success)', tags: ['evil'] },
-      { id: '3', name: 'Frodo', type: 'Character', typeIcon: '🧑', status: 'Draft', statusColor: 'var(--forge-warning)', tags: ['hobbit'] },
-      { id: '4', name: 'The Fellowship', type: 'Faction', typeIcon: '🤝', status: 'Draft', statusColor: 'var(--forge-warning)', tags: ['alliance'] },
+      {
+        id: '1',
+        name: 'Gandalf',
+        type: 'Character',
+        typeIcon: '🧙',
+        status: 'Canon',
+        statusColor: 'var(--forge-success)',
+        tags: ['wizard'],
+      },
+      {
+        id: '2',
+        name: 'Mordor',
+        type: 'Location',
+        typeIcon: '🏔',
+        status: 'Canon',
+        statusColor: 'var(--forge-success)',
+        tags: ['evil'],
+      },
+      {
+        id: '3',
+        name: 'Frodo',
+        type: 'Character',
+        typeIcon: '🧑',
+        status: 'Draft',
+        statusColor: 'var(--forge-warning)',
+        tags: ['hobbit'],
+      },
+      {
+        id: '4',
+        name: 'The Fellowship',
+        type: 'Faction',
+        typeIcon: '🤝',
+        status: 'Draft',
+        statusColor: 'var(--forge-warning)',
+        tags: ['alliance'],
+      },
     ]
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '320px' }}>
-        {entities.map(e => (
+        {entities.map((e) => (
           <EntityCard
             key={e.id}
             name={e.name}

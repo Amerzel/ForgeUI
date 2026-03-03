@@ -14,18 +14,34 @@ interface CardRootProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const PADDING_VARS: Record<CardPadding, string> = {
   none: '0',
-  sm:   'var(--forge-space-3)',
-  md:   'var(--forge-space-4)',
-  lg:   'var(--forge-space-6)',
+  sm: 'var(--forge-space-3)',
+  md: 'var(--forge-space-4)',
+  lg: 'var(--forge-space-6)',
 }
 
 const VARIANT_STYLE: Record<CardVariant, React.CSSProperties> = {
-  default:  { backgroundColor: 'var(--forge-surface-raised)', border: '1px solid var(--forge-border)', boxShadow: 'var(--forge-shadow-sm)' },
-  ghost:    { backgroundColor: 'transparent', border: 'none', boxShadow: 'none' },
-  outlined: { backgroundColor: 'transparent', border: '1px solid var(--forge-border)', boxShadow: 'none' },
+  default: {
+    backgroundColor: 'var(--forge-surface-raised)',
+    border: '1px solid var(--forge-border)',
+    boxShadow: 'var(--forge-shadow-sm)',
+  },
+  ghost: { backgroundColor: 'transparent', border: 'none', boxShadow: 'none' },
+  outlined: {
+    backgroundColor: 'transparent',
+    border: '1px solid var(--forge-border)',
+    boxShadow: 'none',
+  },
 }
 
-function CardRoot({ asChild = false, variant = 'default', padding = 'md', elevated = false, className, style, ...props }: CardRootProps) {
+function CardRoot({
+  asChild = false,
+  variant = 'default',
+  padding = 'md',
+  elevated = false,
+  className,
+  style,
+  ...props
+}: CardRootProps) {
   const Comp = asChild ? Slot : 'div'
   return (
     <Comp
@@ -34,7 +50,9 @@ function CardRoot({ asChild = false, variant = 'default', padding = 'md', elevat
         borderRadius: 'var(--forge-radius-lg)',
         padding: PADDING_VARS[padding],
         ...VARIANT_STYLE[variant],
-        ...(elevated ? { boxShadow: 'var(--forge-shadow-lg)', backgroundColor: 'var(--forge-surface-raised)' } : {}),
+        ...(elevated
+          ? { boxShadow: 'var(--forge-shadow-lg)', backgroundColor: 'var(--forge-surface-raised)' }
+          : {}),
         ...style,
       }}
       {...props}
@@ -61,7 +79,13 @@ function CardHeader({ className, style, ...props }: React.HTMLAttributes<HTMLDiv
 }
 
 function CardBody({ className, style, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('forge-card__body', className)} style={{ flex: '1 1 auto', ...style }} {...props} />
+  return (
+    <div
+      className={cn('forge-card__body', className)}
+      style={{ flex: '1 1 auto', ...style }}
+      {...props}
+    />
+  )
 }
 
 function CardFooter({ className, style, ...props }: React.HTMLAttributes<HTMLDivElement>) {
@@ -89,6 +113,6 @@ function CardFooter({ className, style, ...props }: React.HTMLAttributes<HTMLDiv
  */
 export const Card = Object.assign(CardRoot, {
   Header: CardHeader,
-  Body:   CardBody,
+  Body: CardBody,
   Footer: CardFooter,
 })

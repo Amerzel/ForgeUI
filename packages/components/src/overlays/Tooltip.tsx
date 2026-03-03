@@ -2,7 +2,6 @@ import * as RadixTooltip from '@radix-ui/react-tooltip'
 import { usePortalContainer } from '@forgeui/hooks'
 import { cn } from '../lib/cn.js'
 
-
 type TooltipSide = 'top' | 'right' | 'bottom' | 'left'
 
 export interface TooltipProps {
@@ -42,9 +41,7 @@ export function Tooltip({
 
   return (
     <RadixTooltip.Root delayDuration={delayDuration}>
-      <RadixTooltip.Trigger asChild>
-        {children}
-      </RadixTooltip.Trigger>
+      <RadixTooltip.Trigger asChild>{children}</RadixTooltip.Trigger>
 
       <RadixTooltip.Portal container={portalContainer}>
         <RadixTooltip.Content

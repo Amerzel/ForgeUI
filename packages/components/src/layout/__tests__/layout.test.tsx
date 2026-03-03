@@ -19,8 +19,7 @@ function wrap(ui: React.ReactElement) {
 
 /** Navigate past the ThemeProvider wrapper div to the first rendered component */
 function getEl(container: HTMLElement) {
-  return container.querySelector('[data-forge-provider]')
-    ?.firstElementChild as HTMLElement
+  return container.querySelector('[data-forge-provider]')?.firstElementChild as HTMLElement
 }
 
 // ---------------------------------------------------------------------------
@@ -47,7 +46,11 @@ describe('Box', () => {
   })
 
   it('specific padding overrides shorthand', () => {
-    const { container } = wrap(<Box p={4} pl={2}>content</Box>)
+    const { container } = wrap(
+      <Box p={4} pl={2}>
+        content
+      </Box>,
+    )
     const el = getEl(container)
     expect(el.style.paddingLeft).toBe('var(--forge-space-2)')
     expect(el.style.paddingRight).toBe('var(--forge-space-4)')
@@ -78,14 +81,22 @@ describe('Box', () => {
   })
 
   it('merges consumer style prop', () => {
-    const { container } = wrap(<Box p={4} style={{ border: '1px solid red' }}>content</Box>)
+    const { container } = wrap(
+      <Box p={4} style={{ border: '1px solid red' }}>
+        content
+      </Box>,
+    )
     const el = getEl(container)
     expect(el.style.border).toBe('1px solid red')
     expect(el.style.paddingLeft).toBe('var(--forge-space-4)')
   })
 
   it('passes axe', async () => {
-    const { container } = wrap(<Box><p>Hello</p></Box>)
+    const { container } = wrap(
+      <Box>
+        <p>Hello</p>
+      </Box>,
+    )
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })
@@ -96,32 +107,54 @@ describe('Box', () => {
 // ---------------------------------------------------------------------------
 describe('Stack', () => {
   it('renders a column flex container', () => {
-    const { container } = wrap(<Stack><div>a</div><div>b</div></Stack>)
+    const { container } = wrap(
+      <Stack>
+        <div>a</div>
+        <div>b</div>
+      </Stack>,
+    )
     const el = getEl(container)
     expect(el.style.display).toBe('flex')
     expect(el.style.flexDirection).toBe('column')
   })
 
   it('applies gap token', () => {
-    const { container } = wrap(<Stack gap={4}><div>a</div></Stack>)
+    const { container } = wrap(
+      <Stack gap={4}>
+        <div>a</div>
+      </Stack>,
+    )
     const el = getEl(container)
     expect(el.style.gap).toBe('var(--forge-space-4)')
   })
 
   it('accepts spacing alias', () => {
-    const { container } = wrap(<Stack spacing={2}><div>a</div></Stack>)
+    const { container } = wrap(
+      <Stack spacing={2}>
+        <div>a</div>
+      </Stack>,
+    )
     const el = getEl(container)
     expect(el.style.gap).toBe('var(--forge-space-2)')
   })
 
   it('renders column-reverse when reverse=true', () => {
-    const { container } = wrap(<Stack reverse><div>a</div></Stack>)
+    const { container } = wrap(
+      <Stack reverse>
+        <div>a</div>
+      </Stack>,
+    )
     const el = getEl(container)
     expect(el.style.flexDirection).toBe('column-reverse')
   })
 
   it('passes axe', async () => {
-    const { container } = wrap(<Stack><p>A</p><p>B</p></Stack>)
+    const { container } = wrap(
+      <Stack>
+        <p>A</p>
+        <p>B</p>
+      </Stack>,
+    )
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })
@@ -132,25 +165,41 @@ describe('Stack', () => {
 // ---------------------------------------------------------------------------
 describe('Flex', () => {
   it('renders a flex container', () => {
-    const { container } = wrap(<Flex><div>a</div></Flex>)
+    const { container } = wrap(
+      <Flex>
+        <div>a</div>
+      </Flex>,
+    )
     const el = getEl(container)
     expect(el.style.display).toBe('flex')
   })
 
   it('applies direction prop', () => {
-    const { container } = wrap(<Flex direction="row-reverse"><div>a</div></Flex>)
+    const { container } = wrap(
+      <Flex direction="row-reverse">
+        <div>a</div>
+      </Flex>,
+    )
     const el = getEl(container)
     expect(el.style.flexDirection).toBe('row-reverse')
   })
 
   it('renders inline-flex when inline=true', () => {
-    const { container } = wrap(<Flex inline><span>a</span></Flex>)
+    const { container } = wrap(
+      <Flex inline>
+        <span>a</span>
+      </Flex>,
+    )
     const el = getEl(container)
     expect(el.style.display).toBe('inline-flex')
   })
 
   it('passes axe', async () => {
-    const { container } = wrap(<Flex><p>A</p></Flex>)
+    const { container } = wrap(
+      <Flex>
+        <p>A</p>
+      </Flex>,
+    )
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })
@@ -161,26 +210,44 @@ describe('Flex', () => {
 // ---------------------------------------------------------------------------
 describe('Group', () => {
   it('renders a row flex container', () => {
-    const { container } = wrap(<Group><span>a</span><span>b</span></Group>)
+    const { container } = wrap(
+      <Group>
+        <span>a</span>
+        <span>b</span>
+      </Group>,
+    )
     const el = getEl(container)
     expect(el.style.display).toBe('flex')
     expect(el.style.flexDirection).toBe('row')
   })
 
   it('defaults align to center', () => {
-    const { container } = wrap(<Group><span>a</span></Group>)
+    const { container } = wrap(
+      <Group>
+        <span>a</span>
+      </Group>,
+    )
     const el = getEl(container)
     expect(el.style.alignItems).toBe('center')
   })
 
   it('defaults gap to space-2', () => {
-    const { container } = wrap(<Group><span>a</span></Group>)
+    const { container } = wrap(
+      <Group>
+        <span>a</span>
+      </Group>,
+    )
     const el = getEl(container)
     expect(el.style.gap).toBe('var(--forge-space-2)')
   })
 
   it('passes axe', async () => {
-    const { container } = wrap(<Group><span>A</span><span>B</span></Group>)
+    const { container } = wrap(
+      <Group>
+        <span>A</span>
+        <span>B</span>
+      </Group>,
+    )
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })
@@ -191,19 +258,31 @@ describe('Group', () => {
 // ---------------------------------------------------------------------------
 describe('Grid', () => {
   it('renders a grid container', () => {
-    const { container } = wrap(<Grid columns={3}><div>a</div></Grid>)
+    const { container } = wrap(
+      <Grid columns={3}>
+        <div>a</div>
+      </Grid>,
+    )
     const el = getEl(container)
     expect(el.style.display).toBe('grid')
   })
 
   it('converts numeric columns to repeat(N, 1fr)', () => {
-    const { container } = wrap(<Grid columns={3}><div>a</div></Grid>)
+    const { container } = wrap(
+      <Grid columns={3}>
+        <div>a</div>
+      </Grid>,
+    )
     const el = getEl(container)
     expect(el.style.gridTemplateColumns).toBe('repeat(3, 1fr)')
   })
 
   it('passes string columns through', () => {
-    const { container } = wrap(<Grid columns="300px 1fr 360px"><div>a</div></Grid>)
+    const { container } = wrap(
+      <Grid columns="300px 1fr 360px">
+        <div>a</div>
+      </Grid>,
+    )
     const el = getEl(container)
     expect(el.style.gridTemplateColumns).toBe('300px 1fr 360px')
   })
@@ -212,14 +291,19 @@ describe('Grid', () => {
     const { container } = wrap(
       <Grid columns={12}>
         <Grid.Col span={4}>a</Grid.Col>
-      </Grid>
+      </Grid>,
     )
     const col = container.querySelector('[data-forge-provider] > div > div') as HTMLElement
     expect(col.style.gridColumn).toBe('span 4 / span 4')
   })
 
   it('passes axe', async () => {
-    const { container } = wrap(<Grid columns={2}><div>A</div><div>B</div></Grid>)
+    const { container } = wrap(
+      <Grid columns={2}>
+        <div>A</div>
+        <div>B</div>
+      </Grid>,
+    )
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })
@@ -244,7 +328,11 @@ describe('Center', () => {
   })
 
   it('passes axe', async () => {
-    const { container } = wrap(<Center><p>Centered</p></Center>)
+    const { container } = wrap(
+      <Center>
+        <p>Centered</p>
+      </Center>,
+    )
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })
@@ -255,14 +343,26 @@ describe('Center', () => {
 // ---------------------------------------------------------------------------
 describe('Spacer', () => {
   it('renders with flex: 1 1', () => {
-    const { container } = wrap(<Flex><span>a</span><Spacer /><span>b</span></Flex>)
+    const { container } = wrap(
+      <Flex>
+        <span>a</span>
+        <Spacer />
+        <span>b</span>
+      </Flex>,
+    )
     const spacer = container.querySelector('[data-forge-provider] > div > div') as HTMLElement
     expect(spacer.style.flexGrow).toBe('1')
     expect(spacer.style.flexShrink).toBe('1')
   })
 
   it('passes axe', async () => {
-    const { container } = wrap(<Flex><span>A</span><Spacer /><span>B</span></Flex>)
+    const { container } = wrap(
+      <Flex>
+        <span>A</span>
+        <Spacer />
+        <span>B</span>
+      </Flex>,
+    )
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })
@@ -292,7 +392,11 @@ describe('Container', () => {
   })
 
   it('passes axe', async () => {
-    const { container } = wrap(<Container><p>Content</p></Container>)
+    const { container } = wrap(
+      <Container>
+        <p>Content</p>
+      </Container>,
+    )
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })
@@ -303,20 +407,33 @@ describe('Container', () => {
 // ---------------------------------------------------------------------------
 describe('SimpleGrid', () => {
   it('renders a grid with equal columns', () => {
-    const { container } = wrap(<SimpleGrid cols={3}><div>a</div></SimpleGrid>)
+    const { container } = wrap(
+      <SimpleGrid cols={3}>
+        <div>a</div>
+      </SimpleGrid>,
+    )
     const el = getEl(container)
     expect(el.style.display).toBe('grid')
     expect(el.style.gridTemplateColumns).toBe('repeat(3, 1fr)')
   })
 
   it('uses auto-fit with minChildWidth', () => {
-    const { container } = wrap(<SimpleGrid minChildWidth="200px"><div>a</div></SimpleGrid>)
+    const { container } = wrap(
+      <SimpleGrid minChildWidth="200px">
+        <div>a</div>
+      </SimpleGrid>,
+    )
     const el = getEl(container)
     expect(el.style.gridTemplateColumns).toBe('repeat(auto-fit, minmax(200px, 1fr))')
   })
 
   it('passes axe', async () => {
-    const { container } = wrap(<SimpleGrid cols={2}><div>A</div><div>B</div></SimpleGrid>)
+    const { container } = wrap(
+      <SimpleGrid cols={2}>
+        <div>A</div>
+        <div>B</div>
+      </SimpleGrid>,
+    )
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })
@@ -327,20 +444,33 @@ describe('SimpleGrid', () => {
 // ---------------------------------------------------------------------------
 describe('Wrap', () => {
   it('renders flex-wrap container', () => {
-    const { container } = wrap(<Wrap><span>a</span></Wrap>)
+    const { container } = wrap(
+      <Wrap>
+        <span>a</span>
+      </Wrap>,
+    )
     const el = getEl(container)
     expect(el.style.display).toBe('flex')
     expect(el.style.flexWrap).toBe('wrap')
   })
 
   it('defaults gap to space-2', () => {
-    const { container } = wrap(<Wrap><span>a</span></Wrap>)
+    const { container } = wrap(
+      <Wrap>
+        <span>a</span>
+      </Wrap>,
+    )
     const el = getEl(container)
     expect(el.style.gap).toBe('var(--forge-space-2)')
   })
 
   it('passes axe', async () => {
-    const { container } = wrap(<Wrap><span>A</span><span>B</span></Wrap>)
+    const { container } = wrap(
+      <Wrap>
+        <span>A</span>
+        <span>B</span>
+      </Wrap>,
+    )
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })

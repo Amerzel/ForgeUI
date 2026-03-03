@@ -6,7 +6,11 @@ const meta: Meta<typeof SectionHeader> = {
   component: SectionHeader,
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'Uppercase mono-font section label with optional description and action slot.' } },
+    docs: {
+      description: {
+        component: 'Uppercase mono-font section label with optional description and action slot.',
+      },
+    },
   },
 }
 export default meta
@@ -30,7 +34,11 @@ export const WithAction: Story = {
   name: 'With Action',
   args: {
     children: 'Recent Activity',
-    action: <Button variant="ghost" size="sm">View All</Button>,
+    action: (
+      <Button variant="ghost" size="sm">
+        View All
+      </Button>
+    ),
   },
 }
 
@@ -39,7 +47,13 @@ export const SectionLayout: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '480px' }}>
       <div>
-        <SectionHeader action={<Button variant="ghost" size="sm">Edit</Button>}>
+        <SectionHeader
+          action={
+            <Button variant="ghost" size="sm">
+              Edit
+            </Button>
+          }
+        >
           General Settings
         </SectionHeader>
         <Text size="sm" style={{ color: 'var(--forge-text-muted)', padding: '8px 0' }}>

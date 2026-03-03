@@ -46,10 +46,13 @@ export function Collapsible({
           fontSize: 'var(--forge-font-size-base)',
         }}
         onFocus={(e) => {
-          e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+          e.currentTarget.style.outline =
+            'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
           e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
         }}
-        onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+        onBlur={(e) => {
+          e.currentTarget.style.outline = 'none'
+        }}
       >
         <span style={{ flex: '1 1 auto', textAlign: 'left' }}>{trigger}</span>
         <svg
@@ -59,15 +62,23 @@ export function Collapsible({
           fill="none"
           aria-hidden="true"
           className="forge-collapsible-chevron"
-          style={{ flexShrink: 0, color: 'var(--forge-text-muted)', transition: `transform var(--forge-duration-fast) var(--forge-easing-default)` }}
+          style={{
+            flexShrink: 0,
+            color: 'var(--forge-text-muted)',
+            transition: `transform var(--forge-duration-fast) var(--forge-easing-default)`,
+          }}
         >
-          <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path
+            d="M3 5l4 4 4-4"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </RadixCollapsible.Trigger>
 
-      <RadixCollapsible.Content style={{ overflow: 'hidden' }}>
-        {children}
-      </RadixCollapsible.Content>
+      <RadixCollapsible.Content style={{ overflow: 'hidden' }}>{children}</RadixCollapsible.Content>
 
       <style>{`
         .forge-collapsible-trigger[data-state="open"] .forge-collapsible-chevron {

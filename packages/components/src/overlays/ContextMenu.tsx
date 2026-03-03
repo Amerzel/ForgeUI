@@ -17,7 +17,11 @@ function renderItems(items: MenuEntry[], portalContainer: HTMLElement | undefine
       return (
         <RadixContextMenu.Separator
           key={i}
-          style={{ height: '1px', backgroundColor: 'var(--forge-border)', margin: `var(--forge-space-1) 0` }}
+          style={{
+            height: '1px',
+            backgroundColor: 'var(--forge-border)',
+            margin: `var(--forge-space-1) 0`,
+          }}
         />
       )
     }
@@ -33,15 +37,39 @@ function renderItems(items: MenuEntry[], portalContainer: HTMLElement | undefine
               color: sub.disabled ? 'var(--forge-text-disabled)' : 'var(--forge-text)',
               justifyContent: 'space-between',
             }}
-            onFocus={(e) => { e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)' }}
-            onBlur={(e) => { e.currentTarget.style.backgroundColor = '' }}
+            onFocus={(e) => {
+              e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.backgroundColor = ''
+            }}
           >
             <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)' }}>
-              {sub.icon && <span aria-hidden="true" style={{ color: 'var(--forge-text-muted)', width: '16px' }}>{sub.icon}</span>}
+              {sub.icon && (
+                <span
+                  aria-hidden="true"
+                  style={{ color: 'var(--forge-text-muted)', width: '16px' }}
+                >
+                  {sub.icon}
+                </span>
+              )}
               {sub.label}
             </span>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" style={{ color: 'var(--forge-text-muted)' }}>
-              <path d="M4 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              aria-hidden="true"
+              style={{ color: 'var(--forge-text-muted)' }}
+            >
+              <path
+                d="M4 2l4 4-4 4"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </RadixContextMenu.SubTrigger>
           <RadixContextMenu.Portal container={portalContainer}>
@@ -64,23 +92,37 @@ function renderItems(items: MenuEntry[], portalContainer: HTMLElement | undefine
           ...MENU_ITEM_BASE,
           color: item.disabled
             ? 'var(--forge-text-disabled)'
-            : isDanger ? 'var(--forge-danger)' : 'var(--forge-text)',
+            : isDanger
+              ? 'var(--forge-danger)'
+              : 'var(--forge-text)',
         }}
         onFocus={(e) => {
           e.currentTarget.style.backgroundColor = isDanger
             ? 'color-mix(in srgb, var(--forge-danger) 10%, transparent)'
             : 'var(--forge-surface-hover)'
         }}
-        onBlur={(e) => { e.currentTarget.style.backgroundColor = '' }}
+        onBlur={(e) => {
+          e.currentTarget.style.backgroundColor = ''
+        }}
       >
         {item.icon && (
-          <span aria-hidden="true" style={{ color: 'var(--forge-text-muted)', width: '16px', flexShrink: 0 }}>
+          <span
+            aria-hidden="true"
+            style={{ color: 'var(--forge-text-muted)', width: '16px', flexShrink: 0 }}
+          >
             {item.icon}
           </span>
         )}
         <span style={{ flex: '1 1 auto' }}>{item.label}</span>
         {item.shortcut && (
-          <span style={{ fontSize: 'var(--forge-font-size-xs)', color: 'var(--forge-text-muted)', fontFamily: 'var(--forge-font-mono)', flexShrink: 0 }}>
+          <span
+            style={{
+              fontSize: 'var(--forge-font-size-xs)',
+              color: 'var(--forge-text-muted)',
+              fontFamily: 'var(--forge-font-mono)',
+              flexShrink: 0,
+            }}
+          >
             {item.shortcut}
           </span>
         )}
@@ -93,9 +135,7 @@ export function ContextMenu({ children, items, className }: ContextMenuProps) {
   const portalContainer = usePortalContainer()
   return (
     <RadixContextMenu.Root>
-      <RadixContextMenu.Trigger asChild>
-        {children}
-      </RadixContextMenu.Trigger>
+      <RadixContextMenu.Trigger asChild>{children}</RadixContextMenu.Trigger>
 
       <RadixContextMenu.Portal container={portalContainer}>
         <RadixContextMenu.Content

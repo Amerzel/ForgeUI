@@ -20,14 +20,7 @@ export interface GridColProps extends HTMLAttributes<HTMLDivElement> {
   area?: string
 }
 
-function GridCol({
-  span,
-  offset,
-  rowSpan,
-  area,
-  style,
-  ...props
-}: GridColProps) {
+function GridCol({ span, offset, rowSpan, area, style, ...props }: GridColProps) {
   let gridColumn: string | undefined
   if (span !== undefined) {
     if (typeof span === 'number') gridColumn = `span ${span} / span ${span}`
@@ -38,9 +31,10 @@ function GridCol({
   const computedStyle: CSSProperties = {
     ...cleanStyle({
       gridColumn,
-      gridRow:    rowSpan !== undefined ? `span ${rowSpan} / span ${rowSpan}` : undefined,
-      gridArea:   area,
-      marginLeft: offset !== undefined ? `calc(${offset} / var(--grid-cols, 12) * 100%)` : undefined,
+      gridRow: rowSpan !== undefined ? `span ${rowSpan} / span ${rowSpan}` : undefined,
+      gridArea: area,
+      marginLeft:
+        offset !== undefined ? `calc(${offset} / var(--grid-cols, 12) * 100%)` : undefined,
     }),
     ...style,
   }
@@ -93,25 +87,23 @@ function GridRoot({
 }: GridProps) {
   let templateColumns: string | undefined
   if (columns !== undefined) {
-    templateColumns = typeof columns === 'number'
-      ? `repeat(${columns}, 1fr)`
-      : columns
+    templateColumns = typeof columns === 'number' ? `repeat(${columns}, 1fr)` : columns
   }
 
   const computedStyle: CSSProperties = {
     ...cleanStyle({
-      display:             'grid',
+      display: 'grid',
       gridTemplateColumns: templateColumns,
-      gridTemplateRows:    rows,
-      gridTemplateAreas:   areas,
-      gap:                 sp(gap),
-      columnGap:           sp(columnGap),
-      rowGap:              sp(rowGap),
-      alignItems:          align,
-      justifyContent:      justify,
-      gridAutoFlow:        autoFlow,
-      gridAutoColumns:     autoColumns,
-      gridAutoRows:        autoRows,
+      gridTemplateRows: rows,
+      gridTemplateAreas: areas,
+      gap: sp(gap),
+      columnGap: sp(columnGap),
+      rowGap: sp(rowGap),
+      alignItems: align,
+      justifyContent: justify,
+      gridAutoFlow: autoFlow,
+      gridAutoColumns: autoColumns,
+      gridAutoRows: autoRows,
     }),
     ...style,
   }

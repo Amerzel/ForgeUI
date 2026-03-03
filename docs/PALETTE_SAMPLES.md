@@ -449,34 +449,35 @@ colors.
 
 ## Comparison Matrix
 
-| # | Name | Base Tone | Accent | Radius | Risk |
-|---|------|-----------|--------|--------|------|
-| 1 | Midnight Forge | Navy | Blue | 6px | Safe/generic — could be any IDE |
-| 2 | Obsidian | Neutral | Violet | 4px | Minimal; purple may not feel "game dev" |
-| 3 | Ember | Warm brown | Amber | 6-8px | Thematic but can feel muddy |
-| 4 | Neon Terminal | Dark blue | Cyan | 2px | Eye fatigue in long sessions |
-| 5 | Slate | Cool gray-purple | Indigo | 8px | Too subtle for status indicators |
-| 6 | Deep Space | Dark blue | Teal | 6px | Strong identity; distinct from blue-accent themes |
-| 7 | Graphite | Warm neutral | Green | 6px | Accent = Success collision |
-| 8 | Void | True black | Blue | 6px | Flat, poor surface differentiation |
-| 9 | Amethyst | Purple | Purple | 8px | Polarizing; strong brand or strong rejection |
-| 10 | Midnight Forge v2 | Navy | Amber | 6px | Gold-on-navy = high identity; warm+cool balance |
+| #   | Name              | Base Tone        | Accent | Radius | Risk                                              |
+| --- | ----------------- | ---------------- | ------ | ------ | ------------------------------------------------- |
+| 1   | Midnight Forge    | Navy             | Blue   | 6px    | Safe/generic — could be any IDE                   |
+| 2   | Obsidian          | Neutral          | Violet | 4px    | Minimal; purple may not feel "game dev"           |
+| 3   | Ember             | Warm brown       | Amber  | 6-8px  | Thematic but can feel muddy                       |
+| 4   | Neon Terminal     | Dark blue        | Cyan   | 2px    | Eye fatigue in long sessions                      |
+| 5   | Slate             | Cool gray-purple | Indigo | 8px    | Too subtle for status indicators                  |
+| 6   | Deep Space        | Dark blue        | Teal   | 6px    | Strong identity; distinct from blue-accent themes |
+| 7   | Graphite          | Warm neutral     | Green  | 6px    | Accent = Success collision                        |
+| 8   | Void              | True black       | Blue   | 6px    | Flat, poor surface differentiation                |
+| 9   | Amethyst          | Purple           | Purple | 8px    | Polarizing; strong brand or strong rejection      |
+| 10  | Midnight Forge v2 | Navy             | Amber  | 6px    | Gold-on-navy = high identity; warm+cool balance   |
 
 ## Design Language Variables Beyond Color
 
 Each palette implies different decisions about:
 
-| Decision | Options shown above |
-|----------|-------------------|
-| **Border radius** | 2px (sharp/technical), 4px (precise), 6px (balanced), 8px (soft/friendly) |
-| **Badge style** | Solid fill, semitransparent fill (15-20% opacity), outline-only, pill vs rounded-rect |
-| **Button variants** | Filled primary, border-only secondary, ghost (text-only) danger vs filled danger |
+| Decision            | Options shown above                                                                       |
+| ------------------- | ----------------------------------------------------------------------------------------- |
+| **Border radius**   | 2px (sharp/technical), 4px (precise), 6px (balanced), 8px (soft/friendly)                 |
+| **Badge style**     | Solid fill, semitransparent fill (15-20% opacity), outline-only, pill vs rounded-rect     |
+| **Button variants** | Filled primary, border-only secondary, ghost (text-only) danger vs filled danger          |
 | **Elevation model** | Shadows (Samples 1,3,5), borders only (8), glow effects (4), color differentiation (most) |
-| **Input focus** | Ring outline (most), glow (4), color border shift |
+| **Input focus**     | Ring outline (most), glow (4), color border shift                                         |
 
 ## Recommendation
 
 **Samples 1, 6, and 10** form the strongest shortlist for a game dev tool suite:
+
 - **1 (Midnight Forge)** if you want safe, professional, and familiar.
 - **6 (Deep Space)** if you want distinct without being divisive — teal accent is uncommon and memorable.
 - **10 (Midnight Forge v2)** if you want the strongest "ForgeUI" brand identity — amber/gold on navy literally evokes a forge.

@@ -40,11 +40,28 @@ const ITEM_STYLE: React.CSSProperties = {
                color var(--forge-duration-fast) var(--forge-easing-default)`,
 }
 
-export function ToggleGroup({ type, items, value, onValueChange, orientation = 'horizontal', disabled, className }: ToggleGroupProps) {
+export function ToggleGroup({
+  type,
+  items,
+  value,
+  onValueChange,
+  orientation = 'horizontal',
+  disabled,
+  className,
+}: ToggleGroupProps) {
   // Cast to satisfy Radix's discriminated union types
-  const rootProps = type === 'single'
-    ? { type: 'single' as const, value: value as string, onValueChange: onValueChange as (v: string) => void }
-    : { type: 'multiple' as const, value: value as string[], onValueChange: onValueChange as (v: string[]) => void }
+  const rootProps =
+    type === 'single'
+      ? {
+          type: 'single' as const,
+          value: value as string,
+          onValueChange: onValueChange as (v: string) => void,
+        }
+      : {
+          type: 'multiple' as const,
+          value: value as string[],
+          onValueChange: onValueChange as (v: string[]) => void,
+        }
 
   return (
     <RadixToggleGroup.Root
@@ -77,10 +94,13 @@ export function ToggleGroup({ type, items, value, onValueChange, orientation = '
             cursor: item.disabled ? 'not-allowed' : 'pointer',
           }}
           onFocus={(e) => {
-            e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+            e.currentTarget.style.outline =
+              'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
             e.currentTarget.style.outlineOffset = '-2px'
           }}
-          onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+          onBlur={(e) => {
+            e.currentTarget.style.outline = 'none'
+          }}
           // data-state="on" is set by Radix — we style pressed state via CSS data attribute
         >
           {item.label}

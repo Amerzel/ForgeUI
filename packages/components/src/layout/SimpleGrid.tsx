@@ -37,11 +37,11 @@ export function SimpleGrid({
 
   const computedStyle: CSSProperties = {
     ...cleanStyle({
-      display:             'grid',
+      display: 'grid',
       gridTemplateColumns: templateColumns,
-      gap:                 sp(spacing),
-      columnGap:           sp(spacingX),
-      rowGap:              sp(spacingY),
+      gap: sp(spacing),
+      columnGap: sp(spacingX),
+      rowGap: sp(spacingY),
     }),
     ...style,
   }

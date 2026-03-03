@@ -28,11 +28,13 @@ Dependencies are noted where a task cannot start until another is complete.
 > Depends on: T1.1–T1.4 complete.
 
 ### Package scaffold
+
 - [x] **T2.1** — Create `packages/tokens/package.json`: exports map (`./`, `./color`, `./tokens.css`), `sideEffects: ["*.css"]`, tsup build script
 - [x] **T2.2** — Create `packages/tokens/tsconfig.json` extending root, with `composite: true`
 - [x] **T2.3** — Configure `packages/tokens/tsup.config.ts`: ESM + CJS + `.d.ts`; copy `tokens.css` to dist
 
 ### Color scales
+
 - [x] **T2.4** — Implement gray scale for all 4 palettes as static TS objects in `src/scales/gray.ts`:
   - Hearth Bronze: warm/brown tint from step 750 upward (values from PLAN.md)
   - Midnight Forge: navy/blue tint
@@ -46,6 +48,7 @@ Dependencies are noted where a task cannot start until another is complete.
 - [x] **T2.6** — Run scale generator and commit outputs for all 7 hues (Blue, Red, Green, Amber, Purple, Teal, Orange) using anchors from PLAN.md
 
 ### Utilities
+
 - [x] **T2.7** — Implement `src/color.ts`:
   - `lighten(color, amount)`: lightens by amount (0–1) in HSL
   - `darken(color, amount)`: darkens by amount (0–1) in HSL
@@ -58,6 +61,7 @@ Dependencies are noted where a task cannot start until another is complete.
   - `getAccessibleForeground(bgColor)`: returns `'#000000'` or `'#ffffff'`
 
 ### Non-color tokens
+
 - [x] **T2.8** — Implement `src/scales/spacing.ts`: multiplier-based scale (`space-0` through `space-64`), including `space-px` and `space-0.5` exceptions
 - [x] **T2.9** — Implement `src/scales/typography.ts`: font stacks, font sizes (11–30px) with line heights, font weights, leading scale, tracking scale
 - [x] **T2.10** — Implement `src/scales/radius.ts`: none/sm(2px)/md(3px)/lg(6px)/xl(8px)/full(9999px)
@@ -67,6 +71,7 @@ Dependencies are noted where a task cannot start until another is complete.
 - [x] **T2.14** — Implement `src/scales/misc.ts`: focus ring tokens, opacity scale, icon sizes, container widths, backdrop blur, selection/scrollbar colors
 
 ### Semantic tokens
+
 - [x] **T2.15** — Implement `src/semantic/index.ts`: resolve semantic aliases for all 4 palettes × 2 modes using `color.ts` functions at build time:
   - Surface hierarchy (`bg`, `surface`, `surface-raised`, `surface-hover`, `surface-active`, `surface-sunken`, `surface-overlay`, `surface-popover`, `bg-overlay`, `bg-disabled`)
   - Border hierarchy (`border`, `border-subtle`, `border-strong`)
@@ -76,12 +81,15 @@ Dependencies are noted where a task cannot start until another is complete.
   - Text-on-color tokens (`text-on-accent`, `text-on-info`, `text-on-success`, `text-on-warning`, `text-on-danger`)
 
 ### CSS output
+
 - [x] **T2.16** — Generate `src/tokens.css`: all 8 blocks (`[data-palette][data-theme]` combinations) with full CSS custom property declarations for every semantic and scale token; verify manually against PLAN.md values
 
 ### JS exports
+
 - [x] **T2.17** — Implement `src/index.ts`: export `tokens` (raw scales as JS object), `semantic` (semantic aliases), and `generateCssVars(palette, mode)` helper that returns a CSS variable block string for use in SSR or custom injection
 
 ### Validation
+
 - [x] **T2.18** — Write unit tests for `color.ts` utilities (round-trip hex, contrast ratios, known values)
 - [x] **T2.19** — Write contrast validation tests: assert all semantic text/bg pairs meet WCAG AA (4.5:1 normal, 3:1 large); flag muted text and danger button fill issues noted in PLAN.md
 
@@ -249,9 +257,11 @@ Dependencies are noted where a task cannot start until another is complete.
 > Depends on: Track 12 complete (Phase 1 published).
 
 ### Overlays
+
 - [x] **T13.1** — `Drawer`: extends Radix Dialog with `side` (left/right/top/bottom), `open`, `title`; slide-in animation using easing-default; non-blocking alternative to Dialog; same focus-trap + scroll-lock
 
 ### Composites
+
 - [x] **T13.2** — `Toolbar`: wraps Radix Toolbar; roving tabindex keyboard focus between items; accepts `Button`, `IconButton`, `Toggle`, `ToggleGroup`, `Separator` as children with proper `Toolbar.Button`/`Toolbar.Link` wrappers
 - [x] **T13.3** — `ResizablePanelGroup`: native HTML drag resize (no external lib unless necessary); `direction` (horizontal/vertical); panel size constraints (min/max); sizes persisted to localStorage by `storageKey` prop
 - [x] **T13.4** — `Collapsible`: wraps Radix Collapsible; `open`, `onOpenChange`, `defaultOpen`; animated expand/collapse for single regions; simpler than Accordion for one-off use
@@ -259,12 +269,14 @@ Dependencies are noted where a task cannot start until another is complete.
 - [x] **T13.6** — `Steps`: `steps` (array of `{label, description?, status: 'pending'|'active'|'completed'|'error'}`); horizontal indicator; visual connectors between steps; used for pipeline flows and import wizards
 
 ### Data Display
+
 - [x] **T13.7** — `Avatar`: wraps Radix Avatar; `src`, `alt`, `fallback` (initials string); size tokens; fallback renders colored background with initials when image fails to load
 - [x] **T13.8** — `AspectRatio`: wraps Radix AspectRatio; `ratio` prop (e.g., `16/9`); constrains child to exact ratio; used for asset thumbnails
 - [x] **T13.9** — `Table`: semantic HTML table; compound `Table.Header`, `Table.Body`, `Table.Row`, `Table.Cell`, `Table.Head`; styled with forge tokens; for static/small data (use DataTable for large sets); sortable header cells optional
 - [x] **T13.10** — `Breadcrumb`: `items` (array of `{label, href?}`); current page item has `aria-current="page"`; separator between items (chevron icon); last item non-link
 
 ### Layout
+
 - [x] **T13.11** — `AppShell`: root layout wrapper; `sidebar` slot, `nav` slot, `main` slot; fixed-viewport (dvh/dvw); minimum 1280×720; CSS grid layout; sidebar width configurable via prop or CSS variable
 - [x] **T13.12** — `DropZone`: `accept` (MIME types/extensions), `multiple`, `maxSize`, `onDrop`, `onError`; visual drag-over state (dashed border + accent color); click-to-browse fallback; file type/size validation with error display; accessible via keyboard
 - [x] **T13.13** — `Pagination`: `page`, `pageSize`, `total`, `onPageChange`, `onPageSizeChange`; prev/next buttons; page number buttons (with ellipsis for large ranges); page size selector using Select component
@@ -346,23 +358,23 @@ Dependencies are noted where a task cannot start until another is complete.
 
 ## Summary
 
-| Track | Tasks | Blocked by |
-|-------|-------|------------|
-| T1 Infrastructure | 10 | — |
-| T2 tokens package | 19 | T1 |
-| T3 icons package | 4 | T1 |
-| T4 hooks package | 4 | T2 |
-| T5 components setup | 6 | T2, T4 |
-| T6 Storybook | 6 | T5 |
-| T7 Primitives (13) | 15 | T5 |
-| T8 Forms (11) | 13 | T7.1–T7.3 |
-| T9 Disclosure (2) | 3 | T5 |
-| T10 Feedback (4) | 5 | T7.4 |
-| T11 Overlays (5) | 6 | T7.12 |
-| T12 Phase 1 integration | 5 | T7–T11 |
-| T13 Phase 2a (13) | 14 | T12 |
-| T14 Phase 2b (8) | 9 | T13 |
-| T15 Phase 3 (3) | 4 | T14 |
-| T16 Theme extensions | 3 | T5.6 |
-| T17 Rollout (9 tools) | 9 | T15 |
-| **Total** | **135** | |
+| Track                   | Tasks   | Blocked by |
+| ----------------------- | ------- | ---------- |
+| T1 Infrastructure       | 10      | —          |
+| T2 tokens package       | 19      | T1         |
+| T3 icons package        | 4       | T1         |
+| T4 hooks package        | 4       | T2         |
+| T5 components setup     | 6       | T2, T4     |
+| T6 Storybook            | 6       | T5         |
+| T7 Primitives (13)      | 15      | T5         |
+| T8 Forms (11)           | 13      | T7.1–T7.3  |
+| T9 Disclosure (2)       | 3       | T5         |
+| T10 Feedback (4)        | 5       | T7.4       |
+| T11 Overlays (5)        | 6       | T7.12      |
+| T12 Phase 1 integration | 5       | T7–T11     |
+| T13 Phase 2a (13)       | 14      | T12        |
+| T14 Phase 2b (8)        | 9       | T13        |
+| T15 Phase 3 (3)         | 4       | T14        |
+| T16 Theme extensions    | 3       | T5.6       |
+| T17 Rollout (9 tools)   | 9       | T15        |
+| **Total**               | **135** |            |

@@ -21,22 +21,34 @@ export const Default: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', padding: '40px 20px' }}>
       <Tooltip content="Save document (⌘S)">
-        <Button variant="ghost" size="sm" aria-label="Save">💾 Save</Button>
+        <Button variant="ghost" size="sm" aria-label="Save">
+          💾 Save
+        </Button>
       </Tooltip>
       <Tooltip content="Top tooltip" side="top">
-        <Button variant="secondary" size="sm">Top</Button>
+        <Button variant="secondary" size="sm">
+          Top
+        </Button>
       </Tooltip>
       <Tooltip content="Right tooltip" side="right">
-        <Button variant="secondary" size="sm">Right</Button>
+        <Button variant="secondary" size="sm">
+          Right
+        </Button>
       </Tooltip>
       <Tooltip content="Bottom tooltip" side="bottom">
-        <Button variant="secondary" size="sm">Bottom</Button>
+        <Button variant="secondary" size="sm">
+          Bottom
+        </Button>
       </Tooltip>
       <Tooltip content="Left tooltip" side="left">
-        <Button variant="secondary" size="sm">Left</Button>
+        <Button variant="secondary" size="sm">
+          Left
+        </Button>
       </Tooltip>
       <Tooltip content="This won't show" disabled>
-        <Button variant="secondary" size="sm">Disabled tooltip</Button>
+        <Button variant="secondary" size="sm">
+          Disabled tooltip
+        </Button>
       </Tooltip>
     </div>
   ),

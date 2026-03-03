@@ -18,7 +18,14 @@ export const Default: Story = {
       <>
         <button
           onClick={() => setOpen(true)}
-          style={{ padding: '8px 16px', background: 'var(--forge-danger)', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+          style={{
+            padding: '8px 16px',
+            background: 'var(--forge-danger)',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer',
+          }}
         >
           Delete file
         </button>
@@ -29,7 +36,9 @@ export const Default: Story = {
           description="This action cannot be undone. The file will be permanently removed."
           confirmLabel="Delete"
           cancelLabel="Cancel"
-          onConfirm={() => { setOpen(false) }}
+          onConfirm={() => {
+            setOpen(false)
+          }}
           destructive
         />
       </>

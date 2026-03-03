@@ -23,21 +23,22 @@ const DELTA_COLOR: Record<string, string> = {
   '-': 'var(--forge-danger)',
 }
 
-export function StatCard({
-  label,
-  value,
-  delta,
-  icon,
-  color,
-  onClick,
-  className,
-}: StatCardProps) {
+export function StatCard({ label, value, delta, icon, color, onClick, className }: StatCardProps) {
   return (
     <div
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
       onClick={onClick}
-      onKeyDown={onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } } : undefined}
+      onKeyDown={
+        onClick
+          ? (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                onClick()
+              }
+            }
+          : undefined
+      }
       className={cn('forge-stat-card', className)}
       style={{
         padding: 'var(--forge-space-4)',
@@ -49,34 +50,57 @@ export function StatCard({
       }}
     >
       {/* Label row */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)', marginBottom: 'var(--forge-space-2)' }}>
-        {icon && <span style={{ fontSize: 'var(--forge-font-size-sm)', opacity: 0.6 }} aria-hidden="true">{icon}</span>}
-        <span style={{
-          fontSize: 'var(--forge-font-size-xs)',
-          color: 'var(--forge-text-muted)',
-          textTransform: 'uppercase',
-          letterSpacing: '0.05em',
-          fontWeight: 'var(--forge-font-medium)',
-        }}>{label}</span>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--forge-space-2)',
+          marginBottom: 'var(--forge-space-2)',
+        }}
+      >
+        {icon && (
+          <span style={{ fontSize: 'var(--forge-font-size-sm)', opacity: 0.6 }} aria-hidden="true">
+            {icon}
+          </span>
+        )}
+        <span
+          style={{
+            fontSize: 'var(--forge-font-size-xs)',
+            color: 'var(--forge-text-muted)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+            fontWeight: 'var(--forge-font-medium)',
+          }}
+        >
+          {label}
+        </span>
       </div>
 
       {/* Value row */}
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--forge-space-2)' }}>
-        <span style={{
-          fontSize: 'var(--forge-font-size-2xl)',
-          fontWeight: 'var(--forge-font-bold)',
-          color: color ? `var(--forge-${color})` : 'var(--forge-text)',
-          lineHeight: 1,
-        }}>{value}</span>
+        <span
+          style={{
+            fontSize: 'var(--forge-font-size-2xl)',
+            fontWeight: 'var(--forge-font-bold)',
+            color: color ? `var(--forge-${color})` : 'var(--forge-text)',
+            lineHeight: 1,
+          }}
+        >
+          {value}
+        </span>
         {delta && (
-          <span style={{
-            fontSize: 'var(--forge-font-size-xs)',
-            fontWeight: 'var(--forge-font-medium)',
-            color: DELTA_COLOR[delta.charAt(0)] ?? 'var(--forge-text-muted)',
-            padding: '1px 6px',
-            borderRadius: 'var(--forge-radius-sm)',
-            backgroundColor: `color-mix(in srgb, ${DELTA_COLOR[delta.charAt(0)] ?? 'var(--forge-text-muted)'} 12%, transparent)`,
-          }}>{delta}</span>
+          <span
+            style={{
+              fontSize: 'var(--forge-font-size-xs)',
+              fontWeight: 'var(--forge-font-medium)',
+              color: DELTA_COLOR[delta.charAt(0)] ?? 'var(--forge-text-muted)',
+              padding: '1px 6px',
+              borderRadius: 'var(--forge-radius-sm)',
+              backgroundColor: `color-mix(in srgb, ${DELTA_COLOR[delta.charAt(0)] ?? 'var(--forge-text-muted)'} 12%, transparent)`,
+            }}
+          >
+            {delta}
+          </span>
         )}
       </div>
     </div>

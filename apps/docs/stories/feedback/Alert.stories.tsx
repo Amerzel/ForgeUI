@@ -39,7 +39,15 @@ export const Dismissible: Story = {
         Use the toolbar above to switch palettes and modes.
       </Alert>
     ) : (
-      <button onClick={() => setVisible(true)} style={{ color: 'var(--forge-accent)', background: 'none', border: 'none', cursor: 'pointer' }}>
+      <button
+        onClick={() => setVisible(true)}
+        style={{
+          color: 'var(--forge-accent)',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+        }}
+      >
         Show alert again
       </button>
     )

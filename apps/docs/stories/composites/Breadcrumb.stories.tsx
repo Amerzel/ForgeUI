@@ -11,7 +11,7 @@ type Story = StoryObj
 
 const CRUMBS: BreadcrumbItem[] = [
   { label: 'Project', href: '#' },
-  { label: 'Assets',  href: '#' },
+  { label: 'Assets', href: '#' },
   { label: 'Textures', href: '#' },
   { label: 'diffuse_albedo.png' },
 ]

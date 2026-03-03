@@ -72,7 +72,13 @@ interface PageButtonProps {
   children: React.ReactNode
 }
 
-function PageButton({ onClick, disabled, active, children, 'aria-label': ariaLabel }: PageButtonProps) {
+function PageButton({
+  onClick,
+  disabled,
+  active,
+  children,
+  'aria-label': ariaLabel,
+}: PageButtonProps) {
   return (
     <button
       type="button"
@@ -84,14 +90,29 @@ function PageButton({ onClick, disabled, active, children, 'aria-label': ariaLab
         ...BTN_BASE,
         backgroundColor: active ? 'var(--forge-accent)' : 'var(--forge-surface)',
         borderColor: active ? 'var(--forge-accent)' : 'var(--forge-border)',
-        color: active ? 'var(--forge-accent-text)' : disabled ? 'var(--forge-text-disabled)' : 'var(--forge-text)',
+        color: active
+          ? 'var(--forge-accent-text)'
+          : disabled
+            ? 'var(--forge-text-disabled)'
+            : 'var(--forge-text)',
         cursor: disabled ? 'not-allowed' : 'pointer',
         opacity: disabled && !active ? 0.5 : 1,
       }}
-      onMouseEnter={(e) => { if (!disabled && !active) e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)' }}
-      onMouseLeave={(e) => { if (!disabled && !active) e.currentTarget.style.backgroundColor = 'var(--forge-surface)' }}
-      onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'; e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)' }}
-      onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+      onMouseEnter={(e) => {
+        if (!disabled && !active)
+          e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'
+      }}
+      onMouseLeave={(e) => {
+        if (!disabled && !active) e.currentTarget.style.backgroundColor = 'var(--forge-surface)'
+      }}
+      onFocus={(e) => {
+        e.currentTarget.style.outline =
+          'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+        e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
+      }}
+      onBlur={(e) => {
+        e.currentTarget.style.outline = 'none'
+      }}
     >
       {children}
     </button>
@@ -128,7 +149,13 @@ export function Pagination({
       }}
     >
       {/* Results summary */}
-      <span style={{ fontSize: 'var(--forge-font-size-sm)', color: 'var(--forge-text-muted)', marginRight: 'var(--forge-space-2)' }}>
+      <span
+        style={{
+          fontSize: 'var(--forge-font-size-sm)',
+          color: 'var(--forge-text-muted)',
+          marginRight: 'var(--forge-space-2)',
+        }}
+      >
         {total === 0 ? 'No results' : `${start}–${end} of ${total}`}
       </span>
 
@@ -139,7 +166,13 @@ export function Pagination({
         aria-label="Previous page"
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M10 12L6 8l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path
+            d="M10 12L6 8l4-4"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </PageButton>
 
@@ -149,7 +182,11 @@ export function Pagination({
           <span
             key={`ellipsis-${i}`}
             aria-hidden="true"
-            style={{ padding: '0 var(--forge-space-1)', color: 'var(--forge-text-muted)', fontSize: 'var(--forge-font-size-sm)' }}
+            style={{
+              padding: '0 var(--forge-space-1)',
+              color: 'var(--forge-text-muted)',
+              fontSize: 'var(--forge-font-size-sm)',
+            }}
           >
             …
           </span>
@@ -162,7 +199,7 @@ export function Pagination({
           >
             {p}
           </PageButton>
-        )
+        ),
       )}
 
       {/* Next */}
@@ -172,13 +209,28 @@ export function Pagination({
         aria-label="Next page"
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M6 12l4-4-4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path
+            d="M6 12l4-4-4-4"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </PageButton>
 
       {/* Page size selector */}
       {onPageSizeChange && (
-        <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)', marginLeft: 'var(--forge-space-2)', fontSize: 'var(--forge-font-size-sm)', color: 'var(--forge-text-muted)' }}>
+        <label
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 'var(--forge-space-2)',
+            marginLeft: 'var(--forge-space-2)',
+            fontSize: 'var(--forge-font-size-sm)',
+            color: 'var(--forge-text-muted)',
+          }}
+        >
           Per page:
           <select
             value={pageSize}
@@ -192,8 +244,10 @@ export function Pagination({
               backgroundPosition: 'right var(--forge-space-2) center',
             }}
           >
-            {pageSizeOptions.map(s => (
-              <option key={s} value={s}>{s}</option>
+            {pageSizeOptions.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
             ))}
           </select>
         </label>

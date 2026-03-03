@@ -64,34 +64,92 @@ export function FileSourceBar({
     >
       {/* Icon */}
       {hasError ? (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--forge-warning)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink: 0 }}>
-          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="var(--forge-warning)"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          style={{ flexShrink: 0 }}
+        >
+          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
         </svg>
       ) : (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--forge-text-muted)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink: 0 }}>
-          <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="var(--forge-text-muted)"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          style={{ flexShrink: 0 }}
+        >
+          <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+          <path d="M14 2v4a2 2 0 0 0 2 2h4" />
         </svg>
       )}
 
       {/* Content area */}
-      <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)' }}>
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--forge-space-2)',
+        }}
+      >
         {hasError ? (
-          <span role="alert" style={{ color: 'var(--forge-danger)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <span
+            role="alert"
+            style={{
+              color: 'var(--forge-danger)',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
             {error}
           </span>
         ) : hasFile ? (
           <>
-            <span style={{ color: 'var(--forge-text)', fontFamily: 'var(--forge-font-mono)', fontSize: 'var(--forge-font-size-xs)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <span
+              style={{
+                color: 'var(--forge-text)',
+                fontFamily: 'var(--forge-font-mono)',
+                fontSize: 'var(--forge-font-size-xs)',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
               {file.name}
             </span>
-            <span style={{ color: 'var(--forge-text-muted)', fontSize: 'var(--forge-font-size-xs)', flexShrink: 0 }}>
+            <span
+              style={{
+                color: 'var(--forge-text-muted)',
+                fontSize: 'var(--forge-font-size-xs)',
+                flexShrink: 0,
+              }}
+            >
               ({formatFileSize(file.size)})
             </span>
           </>
         ) : (
           <>
             {label && (
-              <span style={{ color: 'var(--forge-text-muted)', fontWeight: 'var(--forge-font-medium)' }}>
+              <span
+                style={{ color: 'var(--forge-text-muted)', fontWeight: 'var(--forge-font-medium)' }}
+              >
                 {label}
               </span>
             )}
@@ -103,7 +161,14 @@ export function FileSourceBar({
       </div>
 
       {/* Actions */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--forge-space-1)', flexShrink: 0 }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--forge-space-1)',
+          flexShrink: 0,
+        }}
+      >
         <button
           type="button"
           onClick={onLoad}

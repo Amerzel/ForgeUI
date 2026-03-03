@@ -68,42 +68,42 @@ Layout primitives accept shorthand props that resolve to CSS custom properties. 
 
 **Spacing scale** (maps to `var(--forge-space-N)`):
 
-| Prop value | CSS output | Pixels (approx) |
-|---|---|---|
-| `0` | `0` | 0 |
-| `0.5` | `var(--forge-space-0.5)` | 2 |
-| `1` | `var(--forge-space-1)` | 4 |
-| `2` | `var(--forge-space-2)` | 8 |
-| `3` | `var(--forge-space-3)` | 12 |
-| `4` | `var(--forge-space-4)` | 16 |
-| `5` | `var(--forge-space-5)` | 20 |
-| `6` | `var(--forge-space-6)` | 24 |
-| `8` | `var(--forge-space-8)` | 32 |
-| `10` | `var(--forge-space-10)` | 40 |
-| `12` | `var(--forge-space-12)` | 48 |
-| `16` | `var(--forge-space-16)` | 64 |
-| `'px'` | `1px` | 1 |
+| Prop value | CSS output               | Pixels (approx) |
+| ---------- | ------------------------ | --------------- |
+| `0`        | `0`                      | 0               |
+| `0.5`      | `var(--forge-space-0.5)` | 2               |
+| `1`        | `var(--forge-space-1)`   | 4               |
+| `2`        | `var(--forge-space-2)`   | 8               |
+| `3`        | `var(--forge-space-3)`   | 12              |
+| `4`        | `var(--forge-space-4)`   | 16              |
+| `5`        | `var(--forge-space-5)`   | 20              |
+| `6`        | `var(--forge-space-6)`   | 24              |
+| `8`        | `var(--forge-space-8)`   | 32              |
+| `10`       | `var(--forge-space-10)`  | 40              |
+| `12`       | `var(--forge-space-12)`  | 48              |
+| `16`       | `var(--forge-space-16)`  | 64              |
+| `'px'`     | `1px`                    | 1               |
 
 ### 2.2 Semantic colors
 
 Use semantic color names for `bg` and `c` (color) props — never hardcode hex:
 
-| Token | Usage |
-|---|---|
-| `bg` | Page background |
-| `surface` | Card / panel backgrounds |
-| `surface-raised` | Elevated cards, popovers |
-| `surface-hover` | Hover state backgrounds |
-| `border` | Standard dividers |
-| `border-subtle` | Faint dividers |
-| `text` | Primary text |
-| `text-muted` | Secondary / label text |
-| `text-disabled` | Disabled state text |
-| `accent` | Brand color highlights |
-| `info` · `info-bg` · `info-border` | Informational |
-| `success` · `success-bg` · `success-border` | Positive / done |
-| `warning` · `warning-bg` · `warning-border` | Caution |
-| `danger` · `danger-bg` · `danger-border` | Destructive / error |
+| Token                                       | Usage                    |
+| ------------------------------------------- | ------------------------ |
+| `bg`                                        | Page background          |
+| `surface`                                   | Card / panel backgrounds |
+| `surface-raised`                            | Elevated cards, popovers |
+| `surface-hover`                             | Hover state backgrounds  |
+| `border`                                    | Standard dividers        |
+| `border-subtle`                             | Faint dividers           |
+| `text`                                      | Primary text             |
+| `text-muted`                                | Secondary / label text   |
+| `text-disabled`                             | Disabled state text      |
+| `accent`                                    | Brand color highlights   |
+| `info` · `info-bg` · `info-border`          | Informational            |
+| `success` · `success-bg` · `success-border` | Positive / done          |
+| `warning` · `warning-bg` · `warning-border` | Caution                  |
+| `danger` · `danger-bg` · `danger-border`    | Destructive / error      |
 
 ### 2.3 No Tailwind
 
@@ -202,7 +202,7 @@ Fills remaining flex space. Use inside `Flex` or `Group` to push items apart.
 ```tsx
 <Flex>
   <Logo />
-  <Spacer />          {/* ← pushes everything after it to the right */}
+  <Spacer /> {/* ← pushes everything after it to the right */}
   <Button>Help</Button>
   <Button variant="primary">Save</Button>
 </Flex>
@@ -215,27 +215,47 @@ No props beyond `style`.
 CSS Grid. `columns` accepts a number (equal fractions) or a template string.
 
 ```tsx
-{/* Three-panel editor shell */}
-<Grid columns="220px 1fr 280px" style={{ height: '100vh' }}>
+{
+  /* Three-panel editor shell */
+}
+;<Grid columns="220px 1fr 280px" style={{ height: '100vh' }}>
   <Sidebar />
   <Canvas />
   <Inspector />
 </Grid>
 
-{/* Equal columns */}
-<Grid columns={3} gap={3}>…</Grid>
-
-{/* Grid.Col for span / area */}
-<Grid columns={12} gap={2}>
-  <Grid.Col span={8}><MainContent /></Grid.Col>
-  <Grid.Col span={4}><Sidebar /></Grid.Col>
+{
+  /* Equal columns */
+}
+;<Grid columns={3} gap={3}>
+  …
 </Grid>
 
-{/* Named areas */}
-<Grid areas='"header header" "sidebar main"' columns="200px 1fr" rows="48px 1fr">
-  <Grid.Col area="header"><Header /></Grid.Col>
-  <Grid.Col area="sidebar"><Sidebar /></Grid.Col>
-  <Grid.Col area="main"><Main /></Grid.Col>
+{
+  /* Grid.Col for span / area */
+}
+;<Grid columns={12} gap={2}>
+  <Grid.Col span={8}>
+    <MainContent />
+  </Grid.Col>
+  <Grid.Col span={4}>
+    <Sidebar />
+  </Grid.Col>
+</Grid>
+
+{
+  /* Named areas */
+}
+;<Grid areas='"header header" "sidebar main"' columns="200px 1fr" rows="48px 1fr">
+  <Grid.Col area="header">
+    <Header />
+  </Grid.Col>
+  <Grid.Col area="sidebar">
+    <Sidebar />
+  </Grid.Col>
+  <Grid.Col area="main">
+    <Main />
+  </Grid.Col>
 </Grid>
 ```
 
@@ -278,14 +298,23 @@ Max-width wrapper with auto side margins. Use for readable content widths.
 Equal-column grid shorthand. Use `minChildWidth` for responsive auto-fit.
 
 ```tsx
-{/* Fixed columns */}
-<SimpleGrid cols={4} spacing={3}>
-  <StatCard /><StatCard /><StatCard /><StatCard />
+{
+  /* Fixed columns */
+}
+;<SimpleGrid cols={4} spacing={3}>
+  <StatCard />
+  <StatCard />
+  <StatCard />
+  <StatCard />
 </SimpleGrid>
 
-{/* Responsive: fills as many columns as fit, each at least 200px */}
-<SimpleGrid minChildWidth="200px" spacing={3}>
-  {items.map(i => <Card key={i.id}>…</Card>)}
+{
+  /* Responsive: fills as many columns as fit, each at least 200px */
+}
+;<SimpleGrid minChildWidth="200px" spacing={3}>
+  {items.map((i) => (
+    <Card key={i.id}>…</Card>
+  ))}
 </SimpleGrid>
 ```
 
@@ -297,7 +326,11 @@ Flex-wrap container. Use for tag lists, badge groups, button chips.
 
 ```tsx
 <Wrap gap={2}>
-  {tags.map(t => <Badge key={t} variant="subtle">{t}</Badge>)}
+  {tags.map((t) => (
+    <Badge key={t} variant="subtle">
+      {t}
+    </Badge>
+  ))}
 </Wrap>
 ```
 
@@ -406,9 +439,7 @@ Flex-wrap container. Use for tag lists, badge groups, button chips.
 ### ScrollArea
 
 ```tsx
-<ScrollArea style={{ height: 300 }}>
-  {longList}
-</ScrollArea>
+<ScrollArea style={{ height: 300 }}>{longList}</ScrollArea>
 ```
 
 ### AlertDialog
@@ -479,7 +510,7 @@ Always use `FormField` to wrap form controls — it handles label, error, and he
 <Select
   id="faction-select"
   value={faction}
-  onChange={e => setFaction(e.target.value)}
+  onChange={(e) => setFaction(e.target.value)}
   options={[
     { value: 'ironback', label: 'Ironback Clan' },
     { value: 'sunguard', label: 'Sunguard' },
@@ -560,11 +591,7 @@ Searchable dropdown with custom options.
 Free-form tag entry with keyboard support (Enter/Backspace).
 
 ```tsx
-<TagsInput
-  value={tags}
-  onChange={setTags}
-  placeholder="Add trait…"
-/>
+<TagsInput value={tags} onChange={setTags} placeholder="Add trait…" />
 ```
 
 ### ColorPicker
@@ -615,9 +642,15 @@ Free-form tag entry with keyboard support (Enter/Backspace).
     <Tabs.Trigger value="lore">Lore</Tabs.Trigger>
     <Tabs.Trigger value="events">Events</Tabs.Trigger>
   </Tabs.List>
-  <Tabs.Content value="stats"><StatsPanel /></Tabs.Content>
-  <Tabs.Content value="lore"><LorePanel /></Tabs.Content>
-  <Tabs.Content value="events"><EventsPanel /></Tabs.Content>
+  <Tabs.Content value="stats">
+    <StatsPanel />
+  </Tabs.Content>
+  <Tabs.Content value="lore">
+    <LorePanel />
+  </Tabs.Content>
+  <Tabs.Content value="events">
+    <EventsPanel />
+  </Tabs.Content>
 </Tabs>
 ```
 
@@ -669,7 +702,7 @@ Free-form tag entry with keyboard support (Enter/Backspace).
 
 ```tsx
 // In your app root:
-<ToastProvider>
+;<ToastProvider>
   <App />
   <ToastList />
 </ToastProvider>
@@ -691,12 +724,20 @@ addToast({ title: 'Build failed', variant: 'danger', description: 'See log for d
 ```tsx
 <Dialog open={open} onOpenChange={setOpen} title="Create Entity">
   <Stack gap={3}>
-    <FormField label="Name"><Input /></FormField>
-    <FormField label="Type"><Select options={typeOptions} /></FormField>
+    <FormField label="Name">
+      <Input />
+    </FormField>
+    <FormField label="Type">
+      <Select options={typeOptions} />
+    </FormField>
   </Stack>
   <Dialog.Footer>
-    <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
-    <Button variant="primary" onClick={handleCreate}>Create</Button>
+    <Button variant="ghost" onClick={() => setOpen(false)}>
+      Cancel
+    </Button>
+    <Button variant="primary" onClick={handleCreate}>
+      Create
+    </Button>
   </Dialog.Footer>
 </Dialog>
 ```
@@ -740,10 +781,7 @@ Same `items` API as DropdownMenu, wraps children with right-click trigger.
 ### Popover
 
 ```tsx
-<Popover
-  trigger={<Button variant="ghost">Filters</Button>}
-  title="Filter options"
->
+<Popover trigger={<Button variant="ghost">Filters</Button>} title="Filter options">
   <Stack gap={2}>
     <Checkbox label="Show archived" />
     <Checkbox label="Show drafts" />
@@ -760,11 +798,7 @@ Same `items` API as DropdownMenu, wraps children with right-click trigger.
 Full-page layout with sidebar, header, and main content area.
 
 ```tsx
-<AppShell
-  sidebar={<SidebarNav />}
-  header={<Toolbar />}
-  footer={<StatusBar />}
->
+<AppShell sidebar={<SidebarNav />} header={<Toolbar />} footer={<StatusBar />}>
   <MainContent />
 </AppShell>
 ```
@@ -881,7 +915,7 @@ Semantic HTML table with ForgeUI styling.
     </Table.Row>
   </Table.Head>
   <Table.Body>
-    {entities.map(e => (
+    {entities.map((e) => (
       <Table.Row key={e.id}>
         <Table.Cell>{e.name}</Table.Cell>
         <Table.Cell>{e.faction}</Table.Cell>
@@ -905,11 +939,7 @@ Semantic HTML table with ForgeUI styling.
 ### Pagination
 
 ```tsx
-<Pagination
-  page={page}
-  totalPages={totalPages}
-  onPageChange={setPage}
-/>
+<Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
 ```
 
 ### AspectRatio
@@ -962,7 +992,9 @@ Standardized toolbar with badge, title, middle content slot, and right-side acti
 ```tsx
 <ModuleToolbar badge="EA" title="Entities" actions={<Button size="sm">+ Entity</Button>}>
   <Badge style={{ cursor: 'pointer' }}>Catalog</Badge>
-  <Badge variant="subtle" style={{ cursor: 'pointer' }}>Graph</Badge>
+  <Badge variant="subtle" style={{ cursor: 'pointer' }}>
+    Graph
+  </Badge>
 </ModuleToolbar>
 ```
 
@@ -1036,9 +1068,7 @@ Global search/command launcher. Bind to `⌘K`.
     },
     {
       label: 'Navigation',
-      items: [
-        { id: 'lore', label: 'Go to Lore Editor', onSelect: () => navigate('/lore') },
-      ],
+      items: [{ id: 'lore', label: 'Go to Lore Editor', onSelect: () => navigate('/lore') }],
     },
   ]}
 />
@@ -1055,9 +1085,11 @@ Collapsible tree for hierarchical data (scene graphs, file trees).
       id: 'world',
       label: 'Eldenmoor',
       children: [
-        { id: 'factions', label: 'Factions', children: [
-          { id: 'ironback', label: 'Ironback Clan' },
-        ]},
+        {
+          id: 'factions',
+          label: 'Factions',
+          children: [{ id: 'ironback', label: 'Ironback Clan' }],
+        },
       ],
     },
   ]}
@@ -1095,7 +1127,7 @@ Click-to-edit inline text field.
 ```tsx
 <EditableText
   value={entity.name}
-  onChange={name => updateEntity({ name })}
+  onChange={(name) => updateEntity({ name })}
   placeholder="Unnamed entity"
 />
 ```
@@ -1224,7 +1256,14 @@ Ordered layer list with visibility toggle, lock toggle, opacity editing, drag-to
 ```tsx
 <LayerStack
   layers={[
-    { id: 'bg', label: 'Background', visible: true, locked: false, opacity: 100, thumbnail: '/layers/bg.png' },
+    {
+      id: 'bg',
+      label: 'Background',
+      visible: true,
+      locked: false,
+      opacity: 100,
+      thumbnail: '/layers/bg.png',
+    },
     { id: 'chars', label: 'Characters', visible: true, locked: false, opacity: 80 },
     { id: 'fx', label: 'Effects', visible: false, locked: true, opacity: 50 },
   ]}
@@ -1285,7 +1324,9 @@ Scaled-down viewport navigation widget for large canvases, graphs, or maps. Show
   height={140}
 >
   {/* Optional: render dots/shapes as minimap content */}
-  {nodes.map(n => <circle cx={n.x} cy={n.y} r={4} fill="var(--forge-accent)" />)}
+  {nodes.map((n) => (
+    <circle cx={n.x} cy={n.y} r={4} fill="var(--forge-accent)" />
+  ))}
 </MiniMap>
 ```
 
@@ -1301,7 +1342,7 @@ Line-by-line text diff with unified or split modes. Uses LCS algorithm with no e
 <DiffViewer
   before={originalText}
   after={modifiedText}
-  mode="unified"         // or "split"
+  mode="unified" // or "split"
   beforeLabel="Original"
   afterLabel="Modified"
 />
@@ -1318,14 +1359,24 @@ Horizontal chip-based filter bar with popovers for multi-select, single-select, 
 ```tsx
 <FilterBar
   filters={[
-    { id: 'type', label: 'Type', type: 'multi-select', options: [
-      { value: 'character', label: 'Character', count: 12 },
-      { value: 'location', label: 'Location', count: 8 },
-    ]},
-    { id: 'canon', label: 'Canon State', type: 'single-select', options: [
-      { value: 'canon', label: 'Canon' },
-      { value: 'draft', label: 'Draft' },
-    ]},
+    {
+      id: 'type',
+      label: 'Type',
+      type: 'multi-select',
+      options: [
+        { value: 'character', label: 'Character', count: 12 },
+        { value: 'location', label: 'Location', count: 8 },
+      ],
+    },
+    {
+      id: 'canon',
+      label: 'Canon State',
+      type: 'single-select',
+      options: [
+        { value: 'canon', label: 'Canon' },
+        { value: 'draft', label: 'Draft' },
+      ],
+    },
     { id: 'public', label: 'Public Only', type: 'boolean' },
   ]}
   value={filterState}
@@ -1364,10 +1415,16 @@ Review panel with status badge, content area, and approve/reject workflow with r
 ```tsx
 <Box px={4} py={2} bg="surface" style={{ borderBottom: '1px solid var(--forge-border)' }}>
   <Group gap={2}>
-    <Heading level={3} size="sm">Tool Name</Heading>
+    <Heading level={3} size="sm">
+      Tool Name
+    </Heading>
     <Spacer />
-    <Button size="sm" variant="ghost">Help</Button>
-    <Button size="sm" variant="primary">Save</Button>
+    <Button size="sm" variant="ghost">
+      Help
+    </Button>
+    <Button size="sm" variant="primary">
+      Save
+    </Button>
   </Group>
 </Box>
 ```
@@ -1390,8 +1447,12 @@ Review panel with status badge, content area, and approve/reject workflow with r
     <Text weight="semibold">Section Title</Text>
     <Separator />
   </Stack>
-  <FormField label="Field A"><Input /></FormField>
-  <FormField label="Field B"><Input /></FormField>
+  <FormField label="Field A">
+    <Input />
+  </FormField>
+  <FormField label="Field B">
+    <Input />
+  </FormField>
 </Stack>
 ```
 
@@ -1420,8 +1481,10 @@ Review panel with status badge, content area, and approve/reject workflow with r
 
 ```tsx
 <Wrap gap={2}>
-  {traits.map(t => (
-    <Badge key={t} variant="subtle" color="warning">{t}</Badge>
+  {traits.map((t) => (
+    <Badge key={t} variant="subtle" color="warning">
+      {t}
+    </Badge>
   ))}
 </Wrap>
 ```
@@ -1433,8 +1496,12 @@ Review panel with status badge, content area, and approve/reject workflow with r
   <Stack gap={3} style={{ textAlign: 'center' }}>
     <Text size="3xl">🌍</Text>
     <Text weight="semibold">No worlds yet</Text>
-    <Text color="muted" size="sm">Create your first world to get started.</Text>
-    <Button variant="primary" onClick={handleCreate}>Create World</Button>
+    <Text color="muted" size="sm">
+      Create your first world to get started.
+    </Text>
+    <Button variant="primary" onClick={handleCreate}>
+      Create World
+    </Button>
   </Stack>
 </Center>
 ```
@@ -1481,4 +1548,4 @@ If a component behaves unexpectedly, produces accessibility violations, or doesn
 
 ---
 
-*This guide is updated with each ForgeUI release. If something is missing or wrong, please file an issue.*
+_This guide is updated with each ForgeUI release. If something is missing or wrong, please file an issue._

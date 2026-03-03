@@ -24,7 +24,7 @@ export function ScrollArea({
   style,
   children,
 }: ScrollAreaProps) {
-  const showVertical   = orientation === 'vertical' || orientation === 'both'
+  const showVertical = orientation === 'vertical' || orientation === 'both'
   const showHorizontal = orientation === 'horizontal' || orientation === 'both'
 
   const thumbStyle: React.CSSProperties = {

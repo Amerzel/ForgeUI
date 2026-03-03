@@ -27,7 +27,11 @@ export function Kbd({ keys, className, ...props }: KbdProps) {
           {i > 0 && (
             <span
               aria-hidden="true"
-              style={{ color: 'var(--forge-text-muted)', fontSize: 'var(--forge-font-size-xs)', userSelect: 'none' }}
+              style={{
+                color: 'var(--forge-text-muted)',
+                fontSize: 'var(--forge-font-size-xs)',
+                userSelect: 'none',
+              }}
             >
               +
             </span>

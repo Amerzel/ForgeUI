@@ -6,7 +6,11 @@ const meta: Meta<typeof JsonViewer> = {
   component: JsonViewer,
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'Interactive collapsible JSON viewer with search/filter and copy support.' } },
+    docs: {
+      description: {
+        component: 'Interactive collapsible JSON viewer with search/filter and copy support.',
+      },
+    },
   },
 }
 export default meta

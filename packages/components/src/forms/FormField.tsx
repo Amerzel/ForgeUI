@@ -44,7 +44,11 @@ export function FormField({
           {required && (
             <span
               aria-hidden="true"
-              style={{ color: 'var(--forge-danger)', fontSize: 'var(--forge-font-size-sm)', lineHeight: 1 }}
+              style={{
+                color: 'var(--forge-danger)',
+                fontSize: 'var(--forge-font-size-sm)',
+                lineHeight: 1,
+              }}
             >
               *
             </span>

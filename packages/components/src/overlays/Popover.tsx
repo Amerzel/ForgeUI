@@ -32,9 +32,7 @@ export function Popover({
   const portalContainer = usePortalContainer()
   return (
     <RadixPopover.Root open={open} onOpenChange={onOpenChange}>
-      <RadixPopover.Trigger asChild>
-        {trigger}
-      </RadixPopover.Trigger>
+      <RadixPopover.Trigger asChild>{trigger}</RadixPopover.Trigger>
 
       <RadixPopover.Portal container={portalContainer}>
         <RadixPopover.Content
@@ -61,9 +59,7 @@ export function Popover({
           }}
         >
           {children}
-          <RadixPopover.Arrow
-            style={{ fill: 'var(--forge-surface-popover)' }}
-          />
+          <RadixPopover.Arrow style={{ fill: 'var(--forge-surface-popover)' }} />
         </RadixPopover.Content>
       </RadixPopover.Portal>
 

@@ -25,10 +25,15 @@ describe('Dialog', () => {
   it('renders content when open=true', () => {
     render(
       <Themed>
-        <Dialog open={true} onOpenChange={() => {}} title="Settings" description="Adjust your preferences.">
+        <Dialog
+          open={true}
+          onOpenChange={() => {}}
+          title="Settings"
+          description="Adjust your preferences."
+        >
           <p>Dialog body</p>
         </Dialog>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Settings')).toBeInTheDocument()
     expect(screen.getByText('Adjust your preferences.')).toBeInTheDocument()
@@ -41,7 +46,7 @@ describe('Dialog', () => {
         <Dialog open={false} onOpenChange={() => {}} title="Settings">
           <p>Hidden body</p>
         </Dialog>
-      </Themed>
+      </Themed>,
     )
     expect(screen.queryByText('Settings')).not.toBeInTheDocument()
   })
@@ -54,7 +59,7 @@ describe('Dialog', () => {
         <Dialog open={true} onOpenChange={onOpenChange} title="Edit">
           <p>Body</p>
         </Dialog>
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Close dialog' }))
     expect(onOpenChange).toHaveBeenCalledWith(false)
@@ -67,7 +72,7 @@ describe('Dialog', () => {
         <Dialog trigger={<button>Open</button>} title="My Dialog">
           <p>Content here</p>
         </Dialog>
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Open' }))
     expect(screen.getByRole('heading', { name: 'My Dialog' })).toBeInTheDocument()
@@ -76,10 +81,15 @@ describe('Dialog', () => {
   it('has no a11y violations when open', async () => {
     const { container } = render(
       <Themed>
-        <Dialog open={true} onOpenChange={() => {}} title="Confirm action" description="This cannot be undone.">
+        <Dialog
+          open={true}
+          onOpenChange={() => {}}
+          title="Confirm action"
+          description="This cannot be undone."
+        >
           <p>Proceed?</p>
         </Dialog>
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -97,7 +107,7 @@ describe('Tooltip', () => {
             <button>Hover me</button>
           </Tooltip>
         </TooltipProvider>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Hover me' })).toBeInTheDocument()
   })
@@ -111,7 +121,7 @@ describe('Tooltip', () => {
             <button>Target</button>
           </Tooltip>
         </TooltipProvider>
-      </Themed>
+      </Themed>,
     )
     await user.tab()
     expect(screen.getByRole('tooltip', { name: 'Tooltip text' })).toBeInTheDocument()
@@ -126,7 +136,7 @@ describe('Tooltip', () => {
             <button>Target</button>
           </Tooltip>
         </TooltipProvider>
-      </Themed>
+      </Themed>,
     )
     await user.tab()
     expect(screen.queryByText('Hidden tip')).not.toBeInTheDocument()
@@ -140,7 +150,7 @@ describe('Tooltip', () => {
             <button aria-label="Save">💾</button>
           </Tooltip>
         </TooltipProvider>
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -154,7 +164,7 @@ describe('DropdownMenu', () => {
     render(
       <Themed>
         <DropdownMenu trigger={<button>Open menu</button>} items={MENU_ITEMS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Open menu' })).toBeInTheDocument()
   })
@@ -164,7 +174,7 @@ describe('DropdownMenu', () => {
     render(
       <Themed>
         <DropdownMenu trigger={<button>Actions</button>} items={MENU_ITEMS} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Actions' }))
     expect(screen.getByRole('menuitem', { name: 'Copy ⌘C' })).toBeInTheDocument()
@@ -178,7 +188,7 @@ describe('DropdownMenu', () => {
     render(
       <Themed>
         <DropdownMenu trigger={<button>Menu</button>} items={items} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Menu' }))
     await user.click(screen.getByRole('menuitem', { name: 'Export' }))
@@ -188,8 +198,13 @@ describe('DropdownMenu', () => {
   it('has no a11y violations when open', async () => {
     const { container } = render(
       <Themed>
-        <DropdownMenu trigger={<button>Menu</button>} items={MENU_ITEMS} open={true} onOpenChange={() => {}} />
-      </Themed>
+        <DropdownMenu
+          trigger={<button>Menu</button>}
+          items={MENU_ITEMS}
+          open={true}
+          onOpenChange={() => {}}
+        />
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -205,7 +220,7 @@ describe('ContextMenu', () => {
         <ContextMenu items={MENU_ITEMS}>
           <div data-testid="ctx-area">Right-click here</div>
         </ContextMenu>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByTestId('ctx-area')).toBeInTheDocument()
   })
@@ -216,7 +231,7 @@ describe('ContextMenu', () => {
         <ContextMenu items={MENU_ITEMS}>
           <div>Right-click area</div>
         </ContextMenu>
-      </Themed>
+      </Themed>,
     )
     fireEvent.contextMenu(screen.getByText('Right-click area'))
     expect(screen.getByRole('menuitem', { name: 'Copy ⌘C' })).toBeInTheDocument()
@@ -228,7 +243,7 @@ describe('ContextMenu', () => {
         <ContextMenu items={MENU_ITEMS}>
           <div>Right-click area</div>
         </ContextMenu>
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -244,7 +259,7 @@ describe('Popover', () => {
         <Popover trigger={<button>Open popover</button>}>
           <p>Popover content</p>
         </Popover>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Open popover' })).toBeInTheDocument()
   })
@@ -256,7 +271,7 @@ describe('Popover', () => {
         <Popover trigger={<button>Filters</button>}>
           <p>Filter options here</p>
         </Popover>
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Filters' }))
     expect(screen.getByText('Filter options here')).toBeInTheDocument()
@@ -270,7 +285,7 @@ describe('Popover', () => {
         <Popover trigger={<button>Open</button>} onOpenChange={onOpenChange}>
           <p>Content</p>
         </Popover>
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Open' }))
     expect(onOpenChange).toHaveBeenCalledWith(true)
@@ -282,7 +297,7 @@ describe('Popover', () => {
         <Popover trigger={<button>Open</button>}>
           <p>Panel content</p>
         </Popover>
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })

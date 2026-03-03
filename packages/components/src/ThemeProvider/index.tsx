@@ -50,8 +50,12 @@ export function ThemeProvider({
   }, [])
 
   // Sync controlled props into state when parent changes them
-  useEffect(() => { setPalette(paletteProp) }, [paletteProp])
-  useEffect(() => { setMode(modeProp) }, [modeProp])
+  useEffect(() => {
+    setPalette(paletteProp)
+  }, [paletteProp])
+  useEffect(() => {
+    setMode(modeProp)
+  }, [modeProp])
 
   const resolvedTokens = useMemo(() => resolveTokens(palette, mode), [palette, mode])
 

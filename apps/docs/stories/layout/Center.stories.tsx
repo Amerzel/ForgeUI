@@ -13,13 +13,24 @@ export const CenterStory: Story = {
   render: () => (
     <Stack gap={6} p={6}>
       <div>
-        <Text size="sm" color="muted">Center in fixed-height container</Text>
-        <Center style={{ height: 120, marginTop: 8, border: '1px dashed var(--forge-border)', borderRadius: 4 }}>
+        <Text size="sm" color="muted">
+          Center in fixed-height container
+        </Text>
+        <Center
+          style={{
+            height: 120,
+            marginTop: 8,
+            border: '1px dashed var(--forge-border)',
+            borderRadius: 4,
+          }}
+        >
           <Badge color="accent">Centered</Badge>
         </Center>
       </div>
       <div>
-        <Text size="sm" color="muted">inline=true</Text>
+        <Text size="sm" color="muted">
+          inline=true
+        </Text>
         <Center inline style={{ marginTop: 8 }}>
           <Text size="sm">Inline centered</Text>
         </Center>

@@ -40,12 +40,20 @@ function formatTime(seconds: number): string {
   return `${m}:${String(s).padStart(2, '0')}.${f}`
 }
 
-function Ruler({ duration, zoom, scrollLeft: _scrollLeft }: { duration: number; zoom: number; scrollLeft: number }) {
+function Ruler({
+  duration,
+  zoom,
+  scrollLeft: _scrollLeft,
+}: {
+  duration: number
+  zoom: number
+  scrollLeft: number
+}) {
   const totalWidth = duration * zoom
   // Tick interval: aim for ~60-80px between ticks
   const rawInterval = 80 / zoom
   const intervals = [0.1, 0.2, 0.5, 1, 2, 5, 10, 30, 60]
-  const interval = intervals.find(i => i >= rawInterval) ?? 60
+  const interval = intervals.find((i) => i >= rawInterval) ?? 60
 
   const ticks: number[] = []
   for (let t = 0; t <= duration + interval; t += interval) {
@@ -59,14 +67,27 @@ function Ruler({ duration, zoom, scrollLeft: _scrollLeft }: { duration: number; 
       style={{ display: 'block', overflow: 'visible' }}
       aria-hidden="true"
     >
-      {ticks.map(t => {
+      {ticks.map((t) => {
         const x = t * zoom
-        const isMajor = (t % (interval * 5)) < 0.001
+        const isMajor = t % (interval * 5) < 0.001
         return (
           <g key={t} transform={`translate(${x}, 0)`}>
-            <line x1={0} y1={RULER_HEIGHT - (isMajor ? 12 : 6)} x2={0} y2={RULER_HEIGHT} stroke="var(--forge-border)" strokeWidth={1} />
+            <line
+              x1={0}
+              y1={RULER_HEIGHT - (isMajor ? 12 : 6)}
+              x2={0}
+              y2={RULER_HEIGHT}
+              stroke="var(--forge-border)"
+              strokeWidth={1}
+            />
             {isMajor && (
-              <text x={3} y={RULER_HEIGHT - 14} fontSize="10" fill="var(--forge-text-muted)" fontFamily="var(--forge-font-mono)">
+              <text
+                x={3}
+                y={RULER_HEIGHT - 14}
+                fontSize="10"
+                fill="var(--forge-text-muted)"
+                fontFamily="var(--forge-font-mono)"
+              >
                 {formatTime(t)}
               </text>
             )}
@@ -85,7 +106,13 @@ interface ClipBlockProps {
   onResizeEnd: (duration: number) => void
 }
 
-function ClipBlock({ clip, zoom, trackHeight: _trackHeight, onDragEnd, onResizeEnd }: ClipBlockProps) {
+function ClipBlock({
+  clip,
+  zoom,
+  trackHeight: _trackHeight,
+  onDragEnd,
+  onResizeEnd,
+}: ClipBlockProps) {
   const dragRef = useRef<{ startX: number; originalStart: number } | null>(null)
   const resizeRef = useRef<{ startX: number; originalDuration: number } | null>(null)
 
@@ -100,7 +127,8 @@ function ClipBlock({ clip, zoom, trackHeight: _trackHeight, onDragEnd, onResizeE
     const delta = (e.clientX - dragRef.current.startX) / zoom
     const newStart = Math.max(0, dragRef.current.originalStart + delta)
     // Visual feedback only — committed on pointer up
-    ;(e.currentTarget as HTMLDivElement).style.transform = `translateX(${(newStart - clip.start) * zoom}px)`
+    ;(e.currentTarget as HTMLDivElement).style.transform =
+      `translateX(${(newStart - clip.start) * zoom}px)`
   }
 
   const handleDragPointerUp = (e: React.PointerEvent) => {
@@ -156,17 +184,19 @@ function ClipBlock({ clip, zoom, trackHeight: _trackHeight, onDragEnd, onResizeE
     >
       {/* Label */}
       {clip.label && (
-        <span style={{
-          display: 'block',
-          padding: '2px var(--forge-space-1-5)',
-          fontSize: 'var(--forge-font-size-xs)',
-          color: clipColor,
-          fontFamily: 'var(--forge-font-sans)',
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          pointerEvents: 'none',
-        }}>
+        <span
+          style={{
+            display: 'block',
+            padding: '2px var(--forge-space-1-5)',
+            fontSize: 'var(--forge-font-size-xs)',
+            color: clipColor,
+            fontFamily: 'var(--forge-font-sans)',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            pointerEvents: 'none',
+          }}
+        >
           {clip.label}
         </span>
       )}
@@ -187,8 +217,12 @@ function ClipBlock({ clip, zoom, trackHeight: _trackHeight, onDragEnd, onResizeE
         onPointerDown={handleResizePointerDown}
         onPointerMove={handleResizePointerMove}
         onPointerUp={handleResizePointerUp}
-        onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.8' }}
-        onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.4' }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.opacity = '0.8'
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.opacity = '0.4'
+        }}
       />
     </div>
   )
@@ -210,26 +244,35 @@ export function Timeline({
 
   const totalWidth = duration * zoom
 
-  const handleZoom = useCallback((newZoom: number) => {
-    const clamped = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newZoom))
-    setZoom(clamped)
-    onZoomChange?.(clamped)
-  }, [onZoomChange])
+  const handleZoom = useCallback(
+    (newZoom: number) => {
+      const clamped = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newZoom))
+      setZoom(clamped)
+      onZoomChange?.(clamped)
+    },
+    [onZoomChange],
+  )
 
-  const handleWheel = useCallback((e: React.WheelEvent) => {
-    if (e.ctrlKey || e.metaKey) {
-      e.preventDefault()
-      handleZoom(zoom * (e.deltaY < 0 ? 1.15 : 0.87))
-    }
-  }, [zoom, handleZoom])
+  const handleWheel = useCallback(
+    (e: React.WheelEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault()
+        handleZoom(zoom * (e.deltaY < 0 ? 1.15 : 0.87))
+      }
+    },
+    [zoom, handleZoom],
+  )
 
-  const handleRulerClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!scrollRef.current) return
-    const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect()
-    const clickX = e.clientX - rect.left + (scrollRef.current.scrollLeft)
-    const time = Math.max(0, Math.min(duration, clickX / zoom))
-    onSeek?.(time)
-  }, [zoom, duration, onSeek])
+  const handleRulerClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (!scrollRef.current) return
+      const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect()
+      const clickX = e.clientX - rect.left + scrollRef.current.scrollLeft
+      const time = Math.max(0, Math.min(duration, clickX / zoom))
+      onSeek?.(time)
+    },
+    [zoom, duration, onSeek],
+  )
 
   // Keep playhead visible
   useEffect(() => {
@@ -257,50 +300,97 @@ export function Timeline({
       }}
     >
       {/* Toolbar */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--forge-space-3)',
-        padding: `var(--forge-space-2) var(--forge-space-3)`,
-        borderBottom: '1px solid var(--forge-border)',
-        backgroundColor: 'var(--forge-surface)',
-        flexShrink: 0,
-      }}>
-        <span style={{ fontSize: 'var(--forge-font-size-sm)', fontFamily: 'var(--forge-font-mono)', color: 'var(--forge-text)', minWidth: '60px' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--forge-space-3)',
+          padding: `var(--forge-space-2) var(--forge-space-3)`,
+          borderBottom: '1px solid var(--forge-border)',
+          backgroundColor: 'var(--forge-surface)',
+          flexShrink: 0,
+        }}
+      >
+        <span
+          style={{
+            fontSize: 'var(--forge-font-size-sm)',
+            fontFamily: 'var(--forge-font-mono)',
+            color: 'var(--forge-text)',
+            minWidth: '60px',
+          }}
+        >
           {formatTime(currentTime)}
         </span>
-        <span style={{ fontSize: 'var(--forge-font-size-xs)', color: 'var(--forge-text-muted)', marginLeft: 'auto' }}>
+        <span
+          style={{
+            fontSize: 'var(--forge-font-size-xs)',
+            color: 'var(--forge-text-muted)',
+            marginLeft: 'auto',
+          }}
+        >
           Zoom:
         </span>
         <button
           type="button"
           aria-label="Zoom out"
           onClick={() => handleZoom(zoom * 0.75)}
-          style={{ background: 'none', border: '1px solid var(--forge-border)', borderRadius: 'var(--forge-radius-sm)', cursor: 'pointer', color: 'var(--forge-text-muted)', padding: '2px 6px', fontSize: 'var(--forge-font-size-sm)' }}
-        >−</button>
-        <span style={{ fontSize: 'var(--forge-font-size-xs)', fontFamily: 'var(--forge-font-mono)', color: 'var(--forge-text-muted)', minWidth: '40px', textAlign: 'center' }}>
+          style={{
+            background: 'none',
+            border: '1px solid var(--forge-border)',
+            borderRadius: 'var(--forge-radius-sm)',
+            cursor: 'pointer',
+            color: 'var(--forge-text-muted)',
+            padding: '2px 6px',
+            fontSize: 'var(--forge-font-size-sm)',
+          }}
+        >
+          −
+        </button>
+        <span
+          style={{
+            fontSize: 'var(--forge-font-size-xs)',
+            fontFamily: 'var(--forge-font-mono)',
+            color: 'var(--forge-text-muted)',
+            minWidth: '40px',
+            textAlign: 'center',
+          }}
+        >
           {Math.round(zoom)}
         </span>
         <button
           type="button"
           aria-label="Zoom in"
           onClick={() => handleZoom(zoom * 1.33)}
-          style={{ background: 'none', border: '1px solid var(--forge-border)', borderRadius: 'var(--forge-radius-sm)', cursor: 'pointer', color: 'var(--forge-text-muted)', padding: '2px 6px', fontSize: 'var(--forge-font-size-sm)' }}
-        >+</button>
+          style={{
+            background: 'none',
+            border: '1px solid var(--forge-border)',
+            borderRadius: 'var(--forge-radius-sm)',
+            cursor: 'pointer',
+            color: 'var(--forge-text-muted)',
+            padding: '2px 6px',
+            fontSize: 'var(--forge-font-size-sm)',
+          }}
+        >
+          +
+        </button>
       </div>
 
       {/* Main area */}
       <div style={{ display: 'flex', flex: '1 1 auto', minHeight: 0, overflow: 'hidden' }}>
         {/* Track labels */}
-        <div style={{
-          flexShrink: 0,
-          width: `${HEADER_WIDTH}px`,
-          borderRight: '1px solid var(--forge-border)',
-          backgroundColor: 'var(--forge-surface)',
-        }}>
+        <div
+          style={{
+            flexShrink: 0,
+            width: `${HEADER_WIDTH}px`,
+            borderRight: '1px solid var(--forge-border)',
+            backgroundColor: 'var(--forge-surface)',
+          }}
+        >
           {/* Ruler placeholder */}
-          <div style={{ height: `${RULER_HEIGHT}px`, borderBottom: '1px solid var(--forge-border)' }} />
-          {tracks.map(track => (
+          <div
+            style={{ height: `${RULER_HEIGHT}px`, borderBottom: '1px solid var(--forge-border)' }}
+          />
+          {tracks.map((track) => (
             <div
               key={track.id}
               style={{
@@ -331,14 +421,26 @@ export function Timeline({
             {/* Ruler */}
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <div
-              style={{ height: `${RULER_HEIGHT}px`, borderBottom: '1px solid var(--forge-border)', position: 'sticky', top: 0, zIndex: 2, backgroundColor: 'var(--forge-surface)', cursor: 'pointer' }}
+              style={{
+                height: `${RULER_HEIGHT}px`,
+                borderBottom: '1px solid var(--forge-border)',
+                position: 'sticky',
+                top: 0,
+                zIndex: 2,
+                backgroundColor: 'var(--forge-surface)',
+                cursor: 'pointer',
+              }}
               onClick={handleRulerClick}
             >
-              <Ruler duration={duration} zoom={zoom} scrollLeft={scrollRef.current?.scrollLeft ?? 0} />
+              <Ruler
+                duration={duration}
+                zoom={zoom}
+                scrollLeft={scrollRef.current?.scrollLeft ?? 0}
+              />
             </div>
 
             {/* Tracks */}
-            {tracks.map(track => (
+            {tracks.map((track) => (
               <div
                 key={track.id}
                 style={{
@@ -348,7 +450,7 @@ export function Timeline({
                   backgroundColor: 'var(--forge-bg)',
                 }}
               >
-                {track.clips.map(clip => (
+                {track.clips.map((clip) => (
                   <ClipBlock
                     key={clip.id}
                     clip={clip}
@@ -376,7 +478,15 @@ export function Timeline({
                 pointerEvents: 'none',
               }}
             >
-              <div style={{ width: '8px', height: '8px', backgroundColor: 'var(--forge-danger)', borderRadius: '50%', transform: 'translate(-3px, 0)' }} />
+              <div
+                style={{
+                  width: '8px',
+                  height: '8px',
+                  backgroundColor: 'var(--forge-danger)',
+                  borderRadius: '50%',
+                  transform: 'translate(-3px, 0)',
+                }}
+              />
             </div>
           </div>
         </div>

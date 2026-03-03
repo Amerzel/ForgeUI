@@ -20,7 +20,11 @@ function renderItems(items: MenuEntry[], portalContainer: HTMLElement | undefine
       return (
         <RadixMenubar.Separator
           key={i}
-          style={{ height: '1px', backgroundColor: 'var(--forge-border)', margin: `var(--forge-space-1) 0` }}
+          style={{
+            height: '1px',
+            backgroundColor: 'var(--forge-border)',
+            margin: `var(--forge-space-1) 0`,
+          }}
         />
       )
     }
@@ -30,17 +34,45 @@ function renderItems(items: MenuEntry[], portalContainer: HTMLElement | undefine
       return (
         <RadixMenubar.Sub key={i}>
           <RadixMenubar.SubTrigger
-            style={{ ...MENU_ITEM_BASE, color: sub.disabled ? 'var(--forge-text-disabled)' : 'var(--forge-text)', justifyContent: 'space-between' }}
+            style={{
+              ...MENU_ITEM_BASE,
+              color: sub.disabled ? 'var(--forge-text-disabled)' : 'var(--forge-text)',
+              justifyContent: 'space-between',
+            }}
             disabled={sub.disabled}
-            onFocus={(e) => { e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)' }}
-            onBlur={(e) => { e.currentTarget.style.backgroundColor = '' }}
+            onFocus={(e) => {
+              e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.backgroundColor = ''
+            }}
           >
             <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)' }}>
-              {sub.icon && <span aria-hidden="true" style={{ color: 'var(--forge-text-muted)', width: '16px' }}>{sub.icon}</span>}
+              {sub.icon && (
+                <span
+                  aria-hidden="true"
+                  style={{ color: 'var(--forge-text-muted)', width: '16px' }}
+                >
+                  {sub.icon}
+                </span>
+              )}
               {sub.label}
             </span>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" style={{ color: 'var(--forge-text-muted)' }}>
-              <path d="M4 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              aria-hidden="true"
+              style={{ color: 'var(--forge-text-muted)' }}
+            >
+              <path
+                d="M4 2l4 4-4 4"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </RadixMenubar.SubTrigger>
           <RadixMenubar.Portal container={portalContainer}>
@@ -61,19 +93,39 @@ function renderItems(items: MenuEntry[], portalContainer: HTMLElement | undefine
         onSelect={item.onSelect}
         style={{
           ...MENU_ITEM_BASE,
-          color: item.disabled ? 'var(--forge-text-disabled)' : isDanger ? 'var(--forge-danger)' : 'var(--forge-text)',
+          color: item.disabled
+            ? 'var(--forge-text-disabled)'
+            : isDanger
+              ? 'var(--forge-danger)'
+              : 'var(--forge-text)',
         }}
         onFocus={(e) => {
           e.currentTarget.style.backgroundColor = isDanger
             ? 'color-mix(in srgb, var(--forge-danger) 10%, transparent)'
             : 'var(--forge-surface-hover)'
         }}
-        onBlur={(e) => { e.currentTarget.style.backgroundColor = '' }}
+        onBlur={(e) => {
+          e.currentTarget.style.backgroundColor = ''
+        }}
       >
-        {item.icon && <span aria-hidden="true" style={{ color: 'var(--forge-text-muted)', width: '16px', flexShrink: 0 }}>{item.icon}</span>}
+        {item.icon && (
+          <span
+            aria-hidden="true"
+            style={{ color: 'var(--forge-text-muted)', width: '16px', flexShrink: 0 }}
+          >
+            {item.icon}
+          </span>
+        )}
         <span style={{ flex: '1 1 auto' }}>{item.label}</span>
         {item.shortcut && (
-          <span style={{ fontSize: 'var(--forge-font-size-xs)', color: 'var(--forge-text-muted)', fontFamily: 'var(--forge-font-mono)', flexShrink: 0 }}>
+          <span
+            style={{
+              fontSize: 'var(--forge-font-size-xs)',
+              color: 'var(--forge-text-muted)',
+              fontFamily: 'var(--forge-font-mono)',
+              flexShrink: 0,
+            }}
+          >
             {item.shortcut}
           </span>
         )}
@@ -116,8 +168,14 @@ export function Menubar({ menus, className }: MenubarProps) {
               outline: 'none',
               userSelect: 'none',
             }}
-            onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'; e.currentTarget.style.outlineOffset = '-1px' }}
-            onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+            onFocus={(e) => {
+              e.currentTarget.style.outline =
+                'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+              e.currentTarget.style.outlineOffset = '-1px'
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.outline = 'none'
+            }}
             className="forge-menubar-trigger"
           >
             {menu.label}

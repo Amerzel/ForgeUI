@@ -13,11 +13,7 @@ interface LabelProps extends React.ComponentPropsWithoutRef<typeof RadixLabel.Ro
 export function Label({ className, disabled, ...props }: LabelProps) {
   return (
     <RadixLabel.Root
-      className={cn(
-        'forge-label',
-        disabled && 'forge-label--disabled',
-        className,
-      )}
+      className={cn('forge-label', disabled && 'forge-label--disabled', className)}
       style={{
         display: 'inline-block',
         fontSize: 'var(--forge-font-size-sm)',

@@ -3,13 +3,25 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'vitest-axe'
 import { ThemeProvider } from '../ThemeProvider/index.js'
-import { Timeline, VirtualCanvas, DrawingCanvas, ImageViewer, ComparisonSlider, LayerStack, NodeEditor } from '../index.js'
+import {
+  Timeline,
+  VirtualCanvas,
+  DrawingCanvas,
+  ImageViewer,
+  ComparisonSlider,
+  LayerStack,
+  NodeEditor,
+} from '../index.js'
 import type { TimelineTrack, CanvasItem, Layer, FlowNode, FlowEdge } from '../index.js'
 
 // Mock @xyflow/react — ReactFlow uses canvas/ResizeObserver APIs unavailable in JSDOM
 vi.mock('@xyflow/react', () => {
   const ReactFlow = ({ children, ...props }: Record<string, unknown>) => (
-    <div data-testid="mock-reactflow" data-nodes={JSON.stringify(props.nodes)} data-edges={JSON.stringify(props.edges)}>
+    <div
+      data-testid="mock-reactflow"
+      data-nodes={JSON.stringify(props.nodes)}
+      data-edges={JSON.stringify(props.edges)}
+    >
       {children as React.ReactNode}
     </div>
   )
@@ -35,41 +47,71 @@ describe('NodeEditor', () => {
   const EDGES: FlowEdge[] = [{ id: 'e1-2', source: '1', target: '2' }]
 
   it('renders with default aria-label and forwards className', () => {
-    render(<Themed><NodeEditor nodes={NODES} edges={EDGES} className="custom" /></Themed>)
+    render(
+      <Themed>
+        <NodeEditor nodes={NODES} edges={EDGES} className="custom" />
+      </Themed>,
+    )
     const el = screen.getByLabelText('Node editor canvas')
     expect(el).toBeInTheDocument()
     expect(el.className).toContain('custom')
   })
 
   it('forwards custom aria-label and style', () => {
-    render(<Themed><NodeEditor nodes={NODES} edges={EDGES} aria-label="My graph" style={{ height: '600px' }} /></Themed>)
+    render(
+      <Themed>
+        <NodeEditor nodes={NODES} edges={EDGES} aria-label="My graph" style={{ height: '600px' }} />
+      </Themed>,
+    )
     const el = screen.getByLabelText('My graph')
     expect(el.style.height).toBe('600px')
   })
 
   it('renders minimap, controls, and background by default', () => {
-    render(<Themed><NodeEditor nodes={NODES} edges={EDGES} /></Themed>)
+    render(
+      <Themed>
+        <NodeEditor nodes={NODES} edges={EDGES} />
+      </Themed>,
+    )
     expect(screen.getByTestId('mock-minimap')).toBeInTheDocument()
     expect(screen.getByTestId('mock-controls')).toBeInTheDocument()
     expect(screen.getByTestId('mock-background')).toBeInTheDocument()
   })
 
   it('hides minimap, controls, and background when disabled', () => {
-    render(<Themed><NodeEditor nodes={NODES} edges={EDGES} minimap={false} controls={false} background={false} /></Themed>)
+    render(
+      <Themed>
+        <NodeEditor
+          nodes={NODES}
+          edges={EDGES}
+          minimap={false}
+          controls={false}
+          background={false}
+        />
+      </Themed>,
+    )
     expect(screen.queryByTestId('mock-minimap')).not.toBeInTheDocument()
     expect(screen.queryByTestId('mock-controls')).not.toBeInTheDocument()
     expect(screen.queryByTestId('mock-background')).not.toBeInTheDocument()
   })
 
   it('passes nodes and edges to ReactFlow', () => {
-    render(<Themed><NodeEditor nodes={NODES} edges={EDGES} /></Themed>)
+    render(
+      <Themed>
+        <NodeEditor nodes={NODES} edges={EDGES} />
+      </Themed>,
+    )
     const rf = screen.getByTestId('mock-reactflow')
     expect(JSON.parse(rf.getAttribute('data-nodes') ?? '[]')).toHaveLength(2)
     expect(JSON.parse(rf.getAttribute('data-edges') ?? '[]')).toHaveLength(1)
   })
 
   it('passes axe accessibility audit', async () => {
-    const { container } = render(<Themed><NodeEditor nodes={NODES} edges={EDGES} /></Themed>)
+    const { container } = render(
+      <Themed>
+        <NodeEditor nodes={NODES} edges={EDGES} />
+      </Themed>,
+    )
     expect(await axe(container)).toHaveNoViolations()
   })
 })
@@ -90,9 +132,7 @@ describe('Timeline', () => {
     {
       id: 'track2',
       label: 'Camera',
-      clips: [
-        { id: 'clip3', start: 0, duration: 5, label: 'Shot A' },
-      ],
+      clips: [{ id: 'clip3', start: 0, duration: 5, label: 'Shot A' }],
     },
   ]
 
@@ -100,7 +140,7 @@ describe('Timeline', () => {
     render(
       <Themed>
         <Timeline tracks={TRACKS} currentTime={0} duration={10} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Character Rig')).toBeInTheDocument()
     expect(screen.getByText('Camera')).toBeInTheDocument()
@@ -110,7 +150,7 @@ describe('Timeline', () => {
     render(
       <Themed>
         <Timeline tracks={TRACKS} currentTime={0} duration={10} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Walk Cycle')).toBeInTheDocument()
     expect(screen.getByText('Idle')).toBeInTheDocument()
@@ -121,7 +161,7 @@ describe('Timeline', () => {
     render(
       <Themed>
         <Timeline tracks={TRACKS} currentTime={1.5} duration={10} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('0:01.5')).toBeInTheDocument()
   })
@@ -130,7 +170,7 @@ describe('Timeline', () => {
     render(
       <Themed>
         <Timeline tracks={TRACKS} currentTime={0} duration={10} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Zoom in' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Zoom out' })).toBeInTheDocument()
@@ -141,8 +181,14 @@ describe('Timeline', () => {
     const user = userEvent.setup()
     render(
       <Themed>
-        <Timeline tracks={TRACKS} currentTime={0} duration={10} onZoomChange={onZoomChange} zoom={80} />
-      </Themed>
+        <Timeline
+          tracks={TRACKS}
+          currentTime={0}
+          duration={10}
+          onZoomChange={onZoomChange}
+          zoom={80}
+        />
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Zoom in' }))
     expect(onZoomChange).toHaveBeenCalled()
@@ -152,7 +198,7 @@ describe('Timeline', () => {
     const { container } = render(
       <Themed>
         <Timeline tracks={TRACKS} currentTime={0} duration={10} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -171,7 +217,7 @@ describe('VirtualCanvas', () => {
     render(
       <Themed>
         <VirtualCanvas items={ITEMS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Node A')).toBeInTheDocument()
     expect(screen.getByText('Node B')).toBeInTheDocument()
@@ -181,7 +227,7 @@ describe('VirtualCanvas', () => {
     render(
       <Themed>
         <VirtualCanvas items={ITEMS} viewport={{ x: 0, y: 0, zoom: 1 }} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByLabelText('Zoom: 100%')).toBeInTheDocument()
   })
@@ -190,7 +236,7 @@ describe('VirtualCanvas', () => {
     render(
       <Themed>
         <VirtualCanvas items={ITEMS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Reset viewport' })).toBeInTheDocument()
   })
@@ -205,7 +251,7 @@ describe('VirtualCanvas', () => {
           viewport={{ x: 50, y: 50, zoom: 1.5 }}
           onViewportChange={onViewportChange}
         />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Reset viewport' }))
     expect(onViewportChange).toHaveBeenCalledWith({ x: 0, y: 0, zoom: 1 })
@@ -217,7 +263,7 @@ describe('VirtualCanvas', () => {
         <VirtualCanvas items={[]}>
           <div>Custom canvas content</div>
         </VirtualCanvas>
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Custom canvas content')).toBeInTheDocument()
   })
@@ -227,7 +273,7 @@ describe('VirtualCanvas', () => {
     render(
       <Themed>
         <VirtualCanvas items={ITEMS} />
-      </Themed>
+      </Themed>,
     )
     const node = screen.getByText('Node A').closest('[data-canvas-item-id]')
     expect(node).toBeInTheDocument()
@@ -240,7 +286,7 @@ describe('VirtualCanvas', () => {
     const { container } = render(
       <Themed>
         <VirtualCanvas items={ITEMS} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -254,7 +300,7 @@ describe('DrawingCanvas', () => {
     render(
       <Themed>
         <DrawingCanvas width={256} height={256} tool="brush" brushSize={10} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('application', { name: 'Drawing canvas' })).toBeInTheDocument()
   })
@@ -263,7 +309,7 @@ describe('DrawingCanvas', () => {
     render(
       <Themed>
         <DrawingCanvas width={256} height={256} tool="brush" brushSize={10} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByTestId('drawing-layer')).toBeInTheDocument()
   })
@@ -272,7 +318,7 @@ describe('DrawingCanvas', () => {
     render(
       <Themed>
         <DrawingCanvas width={128} height={128} tool="eraser" brushSize={20} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByLabelText('Tool: eraser, Size: 20px')).toBeInTheDocument()
   })
@@ -280,8 +326,14 @@ describe('DrawingCanvas', () => {
   it('shows loading state when background image is set', () => {
     render(
       <Themed>
-        <DrawingCanvas width={256} height={256} tool="brush" brushSize={10} backgroundImage="test.png" />
-      </Themed>
+        <DrawingCanvas
+          width={256}
+          height={256}
+          tool="brush"
+          brushSize={10}
+          backgroundImage="test.png"
+        />
+      </Themed>,
     )
     expect(screen.getByLabelText('Loading background image')).toBeInTheDocument()
   })
@@ -290,7 +342,7 @@ describe('DrawingCanvas', () => {
     const { container } = render(
       <Themed>
         <DrawingCanvas width={256} height={256} tool="brush" brushSize={10} />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -304,16 +356,18 @@ describe('ImageViewer', () => {
     render(
       <Themed>
         <ImageViewer src="test.png" alt="Test image" />
-      </Themed>
+      </Themed>,
     )
-    expect(screen.getByRole('application', { name: 'Image viewer: Test image' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('application', { name: 'Image viewer: Test image' }),
+    ).toBeInTheDocument()
   })
 
   it('renders zoom controls', () => {
     render(
       <Themed>
         <ImageViewer src="test.png" alt="Test image" />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Zoom in' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Zoom out' })).toBeInTheDocument()
@@ -324,7 +378,7 @@ describe('ImageViewer', () => {
     render(
       <Themed>
         <ImageViewer src="test.png" alt="Test" showControls={false} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.queryByRole('button', { name: 'Zoom in' })).not.toBeInTheDocument()
   })
@@ -333,7 +387,7 @@ describe('ImageViewer', () => {
     render(
       <Themed>
         <ImageViewer src="test.png" alt="Test" toolbar={<button>Download</button>} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument()
   })
@@ -342,7 +396,7 @@ describe('ImageViewer', () => {
     const { container } = render(
       <Themed>
         <ImageViewer src="test.png" alt="Test image" />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -356,7 +410,7 @@ describe('ComparisonSlider', () => {
     render(
       <Themed>
         <ComparisonSlider before="a.png" after="b.png" />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('slider', { name: 'Image comparison slider' })).toBeInTheDocument()
   })
@@ -364,8 +418,13 @@ describe('ComparisonSlider', () => {
   it('displays labels', () => {
     render(
       <Themed>
-        <ComparisonSlider before="a.png" after="b.png" beforeLabel="Original" afterLabel="Processed" />
-      </Themed>
+        <ComparisonSlider
+          before="a.png"
+          after="b.png"
+          beforeLabel="Original"
+          afterLabel="Processed"
+        />
+      </Themed>,
     )
     expect(screen.getByText('Original')).toBeInTheDocument()
     expect(screen.getByText('Processed')).toBeInTheDocument()
@@ -375,7 +434,7 @@ describe('ComparisonSlider', () => {
     render(
       <Themed>
         <ComparisonSlider before="a.png" after="b.png" initialPosition={75} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('slider')).toHaveAttribute('aria-valuenow', '75')
   })
@@ -385,8 +444,13 @@ describe('ComparisonSlider', () => {
     const user = userEvent.setup()
     render(
       <Themed>
-        <ComparisonSlider before="a.png" after="b.png" position={50} onPositionChange={onPositionChange} />
-      </Themed>
+        <ComparisonSlider
+          before="a.png"
+          after="b.png"
+          position={50}
+          onPositionChange={onPositionChange}
+        />
+      </Themed>,
     )
     const slider = screen.getByRole('slider')
     slider.focus()
@@ -398,7 +462,7 @@ describe('ComparisonSlider', () => {
     const { container } = render(
       <Themed>
         <ComparisonSlider before="a.png" after="b.png" beforeLabel="Before" afterLabel="After" />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })
@@ -418,7 +482,7 @@ describe('LayerStack', () => {
     render(
       <Themed>
         <LayerStack layers={LAYERS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Background')).toBeInTheDocument()
     expect(screen.getByText('Characters')).toBeInTheDocument()
@@ -429,7 +493,7 @@ describe('LayerStack', () => {
     render(
       <Themed>
         <LayerStack layers={LAYERS} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByText('Layers (3)')).toBeInTheDocument()
   })
@@ -439,7 +503,7 @@ describe('LayerStack', () => {
     render(
       <Themed>
         <LayerStack layers={LAYERS} onAdd={onAdd} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Add layer' })).toBeInTheDocument()
   })
@@ -450,7 +514,7 @@ describe('LayerStack', () => {
     render(
       <Themed>
         <LayerStack layers={LAYERS} onAdd={onAdd} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Add layer' }))
     expect(onAdd).toHaveBeenCalled()
@@ -462,7 +526,7 @@ describe('LayerStack', () => {
     render(
       <Themed>
         <LayerStack layers={LAYERS} onSelect={onSelect} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByText('Characters'))
     expect(onSelect).toHaveBeenCalledWith('chars')
@@ -474,7 +538,7 @@ describe('LayerStack', () => {
     render(
       <Themed>
         <LayerStack layers={LAYERS} onToggleVisibility={onToggle} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Hide Background' }))
     expect(onToggle).toHaveBeenCalledWith('bg')
@@ -486,7 +550,7 @@ describe('LayerStack', () => {
     render(
       <Themed>
         <LayerStack layers={LAYERS} onToggleLock={onToggle} />
-      </Themed>
+      </Themed>,
     )
     await user.click(screen.getByRole('button', { name: 'Unlock Effects' }))
     expect(onToggle).toHaveBeenCalledWith('fx')
@@ -496,7 +560,7 @@ describe('LayerStack', () => {
     render(
       <Themed>
         <LayerStack layers={LAYERS} onRemove={() => {}} />
-      </Themed>
+      </Themed>,
     )
     expect(screen.getByRole('button', { name: 'Remove Background' })).toBeInTheDocument()
   })
@@ -505,7 +569,7 @@ describe('LayerStack', () => {
     render(
       <Themed>
         <LayerStack layers={LAYERS} selectedId="chars" />
-      </Themed>
+      </Themed>,
     )
     const item = screen.getByRole('listitem', { name: /Characters/ })
     expect(item).toHaveAttribute('data-selected', 'true')
@@ -515,7 +579,7 @@ describe('LayerStack', () => {
     const { container } = render(
       <Themed>
         <LayerStack layers={LAYERS} selectedId="bg" />
-      </Themed>
+      </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
   })

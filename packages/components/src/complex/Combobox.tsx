@@ -60,7 +60,7 @@ export function Combobox({
     if (controlledSearch === undefined) setInternalSearch(v)
   }
 
-  const selectedOption = options.find(o => o.value === value)
+  const selectedOption = options.find((o) => o.value === value)
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -93,7 +93,7 @@ export function Combobox({
         aria-label={selectedOption?.label ?? placeholder}
         aria-disabled={disabled}
         disabled={disabled}
-        onClick={() => setOpen(prev => !prev)}
+        onClick={() => setOpen((prev) => !prev)}
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -109,15 +109,41 @@ export function Combobox({
           fontFamily: 'var(--forge-font-sans)',
           cursor: disabled ? 'not-allowed' : 'pointer',
           outline: 'none',
-          boxShadow: open ? '0 0 0 var(--forge-focus-ring-width) color-mix(in srgb, var(--forge-accent) 30%, transparent)' : undefined,
+          boxShadow: open
+            ? '0 0 0 var(--forge-focus-ring-width) color-mix(in srgb, var(--forge-accent) 30%, transparent)'
+            : undefined,
           transition: `border-color var(--forge-duration-fast) var(--forge-easing-default)`,
         }}
-        onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'; e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)' }}
-        onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+        onFocus={(e) => {
+          e.currentTarget.style.outline =
+            'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+          e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
+        }}
+        onBlur={(e) => {
+          e.currentTarget.style.outline = 'none'
+        }}
       >
         <span>{selectedOption?.label ?? placeholder}</span>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" style={{ color: 'var(--forge-text-muted)', flexShrink: 0, transform: open ? 'rotate(180deg)' : undefined, transition: `transform var(--forge-duration-fast) var(--forge-easing-default)` }}>
-          <path d="M3 4.5l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          aria-hidden="true"
+          style={{
+            color: 'var(--forge-text-muted)',
+            flexShrink: 0,
+            transform: open ? 'rotate(180deg)' : undefined,
+            transition: `transform var(--forge-duration-fast) var(--forge-easing-default)`,
+          }}
+        >
+          <path
+            d="M3 4.5l3 3 3-3"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </button>
 
@@ -140,20 +166,37 @@ export function Combobox({
                 outline: 'none',
               }}
             />
-            <Command.List id={listboxId} style={{ maxHeight: '200px', overflowY: 'auto', padding: 'var(--forge-space-1)' }}>
+            <Command.List
+              id={listboxId}
+              style={{ maxHeight: '200px', overflowY: 'auto', padding: 'var(--forge-space-1)' }}
+            >
               {loading && (
                 <Command.Loading>
-                  <div style={{ padding: 'var(--forge-space-3)', textAlign: 'center', color: 'var(--forge-text-muted)', fontSize: 'var(--forge-font-size-sm)' }}>
+                  <div
+                    style={{
+                      padding: 'var(--forge-space-3)',
+                      textAlign: 'center',
+                      color: 'var(--forge-text-muted)',
+                      fontSize: 'var(--forge-font-size-sm)',
+                    }}
+                  >
                     Loading…
                   </div>
                 </Command.Loading>
               )}
               <Command.Empty>
-                <div style={{ padding: 'var(--forge-space-3)', textAlign: 'center', color: 'var(--forge-text-muted)', fontSize: 'var(--forge-font-size-sm)' }}>
+                <div
+                  style={{
+                    padding: 'var(--forge-space-3)',
+                    textAlign: 'center',
+                    color: 'var(--forge-text-muted)',
+                    fontSize: 'var(--forge-font-size-sm)',
+                  }}
+                >
                   {empty}
                 </div>
               </Command.Empty>
-              {options.map(opt => (
+              {options.map((opt) => (
                 <Command.Item
                   key={opt.value}
                   value={opt.value}
@@ -167,16 +210,36 @@ export function Combobox({
                     borderRadius: 'var(--forge-radius-sm)',
                     cursor: opt.disabled ? 'not-allowed' : 'pointer',
                     fontSize: 'var(--forge-font-size-sm)',
-                    color: opt.disabled ? 'var(--forge-text-disabled)' : opt.value === value ? 'var(--forge-accent)' : 'var(--forge-text)',
-                    backgroundColor: opt.value === value ? 'color-mix(in srgb, var(--forge-accent) 10%, transparent)' : undefined,
+                    color: opt.disabled
+                      ? 'var(--forge-text-disabled)'
+                      : opt.value === value
+                        ? 'var(--forge-accent)'
+                        : 'var(--forge-text)',
+                    backgroundColor:
+                      opt.value === value
+                        ? 'color-mix(in srgb, var(--forge-accent) 10%, transparent)'
+                        : undefined,
                     listStyle: 'none',
                   }}
                   className="forge-combobox-item"
                 >
                   {opt.label}
                   {opt.value === value && (
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" style={{ marginLeft: 'auto', color: 'var(--forge-accent)' }}>
-                      <path d="M1 6l3 3 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      aria-hidden="true"
+                      style={{ marginLeft: 'auto', color: 'var(--forge-accent)' }}
+                    >
+                      <path
+                        d="M1 6l3 3 7-7"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   )}
                 </Command.Item>

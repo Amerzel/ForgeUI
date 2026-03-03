@@ -6,7 +6,12 @@ const meta: Meta<typeof HealthRow> = {
   component: HealthRow,
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'Status indicator row with colored dot, icon, name, and detail text. Use for service health, pipeline status, etc.' } },
+    docs: {
+      description: {
+        component:
+          'Status indicator row with colored dot, icon, name, and detail text. Use for service health, pipeline status, etc.',
+      },
+    },
   },
 }
 export default meta
@@ -52,7 +57,9 @@ export const ServiceDashboard: Story = {
   name: 'Service Dashboard',
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', maxWidth: '400px' }}>
-      <Text size="sm" style={{ fontWeight: 500, marginBottom: '8px' }}>Service Health</Text>
+      <Text size="sm" style={{ fontWeight: 500, marginBottom: '8px' }}>
+        Service Health
+      </Text>
       <HealthRow name="Asset Pipeline" status="ok" detail="Healthy · 4ms" icon="🔧" />
       <HealthRow name="Build Server" status="ok" detail="Healthy · 12ms" icon="🖥" />
       <HealthRow name="Texture Compiler" status="running" detail="Processing batch 3/8" icon="🎨" />

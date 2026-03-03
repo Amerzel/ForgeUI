@@ -52,8 +52,10 @@ export function Tabs({
           flexDirection: isVertical ? 'column' : 'row',
           gap: variant === 'solid' ? 'var(--forge-space-1)' : 0,
           flexShrink: 0,
-          borderBottom: !isVertical && variant === 'line' ? '1px solid var(--forge-border)' : undefined,
-          borderRight: isVertical && variant === 'line' ? '1px solid var(--forge-border)' : undefined,
+          borderBottom:
+            !isVertical && variant === 'line' ? '1px solid var(--forge-border)' : undefined,
+          borderRight:
+            isVertical && variant === 'line' ? '1px solid var(--forge-border)' : undefined,
           padding: variant === 'solid' ? 'var(--forge-space-1)' : undefined,
           backgroundColor: variant === 'solid' ? 'var(--forge-surface)' : undefined,
           borderRadius: variant === 'solid' ? 'var(--forge-radius-md)' : undefined,
@@ -87,10 +89,13 @@ export function Tabs({
                            background-color var(--forge-duration-fast) var(--forge-easing-default)`,
             }}
             onFocus={(e) => {
-              e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+              e.currentTarget.style.outline =
+                'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
               e.currentTarget.style.outlineOffset = '-2px'
             }}
-            onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+            onBlur={(e) => {
+              e.currentTarget.style.outline = 'none'
+            }}
           >
             {item.label}
           </RadixTabs.Trigger>
@@ -120,11 +125,14 @@ export function Tabs({
           onFocus={(e) => {
             // Only show ring when focused via keyboard, not when content is clicked
             if (e.target === e.currentTarget) {
-              e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+              e.currentTarget.style.outline =
+                'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
               e.currentTarget.style.outlineOffset = '-2px'
             }
           }}
-          onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+          onBlur={(e) => {
+            e.currentTarget.style.outline = 'none'
+          }}
         >
           {item.content}
         </RadixTabs.Content>

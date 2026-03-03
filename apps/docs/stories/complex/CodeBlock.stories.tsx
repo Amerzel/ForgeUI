@@ -6,7 +6,12 @@ const meta: Meta<typeof CodeBlock> = {
   component: CodeBlock,
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'Syntax-highlighted read-only code block with copy button and optional line numbers.' } },
+    docs: {
+      description: {
+        component:
+          'Syntax-highlighted read-only code block with copy button and optional line numbers.',
+      },
+    },
   },
 }
 export default meta

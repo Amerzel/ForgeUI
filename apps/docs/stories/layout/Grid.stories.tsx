@@ -32,15 +32,23 @@ export const GridStory: Story = {
   render: () => (
     <Stack gap={6} p={6}>
       <div>
-        <Text size="sm" color="muted">columns=3 (equal thirds)</Text>
+        <Text size="sm" color="muted">
+          columns=3 (equal thirds)
+        </Text>
         <Grid columns={3} gap={3} style={{ marginTop: 8 }}>
-          <Block label="1" /><Block label="2" /><Block label="3" />
-          <Block label="4" /><Block label="5" /><Block label="6" />
+          <Block label="1" />
+          <Block label="2" />
+          <Block label="3" />
+          <Block label="4" />
+          <Block label="5" />
+          <Block label="6" />
         </Grid>
       </div>
 
       <div>
-        <Text size="sm" color="muted">Custom template: &quot;300px 1fr 360px&quot; (inspector layout)</Text>
+        <Text size="sm" color="muted">
+          Custom template: &quot;300px 1fr 360px&quot; (inspector layout)
+        </Text>
         <Grid columns="300px 1fr 360px" gap={2} style={{ marginTop: 8 }}>
           <Block label="Sidebar (300px)" color="surface" />
           <Block label="Canvas (1fr)" color="surface-raised" />
@@ -49,18 +57,32 @@ export const GridStory: Story = {
       </div>
 
       <div>
-        <Text size="sm" color="muted">Grid.Col span</Text>
+        <Text size="sm" color="muted">
+          Grid.Col span
+        </Text>
         <Grid columns={12} gap={2} style={{ marginTop: 8 }}>
-          <Grid.Col span={8}><Block label="span 8" /></Grid.Col>
-          <Grid.Col span={4}><Block label="span 4" /></Grid.Col>
-          <Grid.Col span={4}><Block label="span 4" /></Grid.Col>
-          <Grid.Col span={4}><Block label="span 4" /></Grid.Col>
-          <Grid.Col span={4}><Block label="span 4" /></Grid.Col>
+          <Grid.Col span={8}>
+            <Block label="span 8" />
+          </Grid.Col>
+          <Grid.Col span={4}>
+            <Block label="span 4" />
+          </Grid.Col>
+          <Grid.Col span={4}>
+            <Block label="span 4" />
+          </Grid.Col>
+          <Grid.Col span={4}>
+            <Block label="span 4" />
+          </Grid.Col>
+          <Grid.Col span={4}>
+            <Block label="span 4" />
+          </Grid.Col>
         </Grid>
       </div>
 
       <div>
-        <Text size="sm" color="muted">Named template areas</Text>
+        <Text size="sm" color="muted">
+          Named template areas
+        </Text>
         <Grid
           areas={'"header header" "sidebar main"'}
           columns="200px 1fr"
@@ -68,9 +90,15 @@ export const GridStory: Story = {
           gap={2}
           style={{ marginTop: 8, height: 160 }}
         >
-          <Grid.Col area="header"><Block label="header" color="surface" /></Grid.Col>
-          <Grid.Col area="sidebar"><Block label="sidebar" /></Grid.Col>
-          <Grid.Col area="main"><Block label="main" color="surface-raised" /></Grid.Col>
+          <Grid.Col area="header">
+            <Block label="header" color="surface" />
+          </Grid.Col>
+          <Grid.Col area="sidebar">
+            <Block label="sidebar" />
+          </Grid.Col>
+          <Grid.Col area="main">
+            <Block label="main" color="surface-raised" />
+          </Grid.Col>
         </Grid>
       </div>
     </Stack>

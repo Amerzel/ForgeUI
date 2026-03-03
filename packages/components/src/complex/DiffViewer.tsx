@@ -118,9 +118,17 @@ function UnifiedView({ lines }: { lines: DiffLine[] }) {
         >
           <LineNumber value={line.oldLine} />
           <LineNumber value={line.newLine} />
-          <span role="cell" style={{
-            color: line.type === 'add' ? 'var(--forge-success)' : line.type === 'remove' ? 'var(--forge-danger)' : 'var(--forge-text)',
-          }}>
+          <span
+            role="cell"
+            style={{
+              color:
+                line.type === 'add'
+                  ? 'var(--forge-success)'
+                  : line.type === 'remove'
+                    ? 'var(--forge-danger)'
+                    : 'var(--forge-text)',
+            }}
+          >
             {LINE_PREFIX[line.type]} {line.content}
           </span>
         </div>
@@ -129,7 +137,15 @@ function UnifiedView({ lines }: { lines: DiffLine[] }) {
   )
 }
 
-function SplitView({ lines, beforeLabel, afterLabel }: { lines: DiffLine[]; beforeLabel: string; afterLabel: string }) {
+function SplitView({
+  lines,
+  beforeLabel,
+  afterLabel,
+}: {
+  lines: DiffLine[]
+  beforeLabel: string
+  afterLabel: string
+}) {
   const leftLines: (DiffLine | null)[] = []
   const rightLines: (DiffLine | null)[] = []
 
@@ -189,9 +205,12 @@ function SplitView({ lines, beforeLabel, afterLabel }: { lines: DiffLine[]; befo
             }}
           >
             <LineNumber value={p.left?.oldLine} />
-            <span role="cell" style={{
-              color: p.left?.type === 'remove' ? 'var(--forge-danger)' : 'var(--forge-text)',
-            }}>
+            <span
+              role="cell"
+              style={{
+                color: p.left?.type === 'remove' ? 'var(--forge-danger)' : 'var(--forge-text)',
+              }}
+            >
               {p.left ? `${LINE_PREFIX[p.left.type]} ${p.left.content}` : ''}
             </span>
           </div>
@@ -217,9 +236,12 @@ function SplitView({ lines, beforeLabel, afterLabel }: { lines: DiffLine[]; befo
             }}
           >
             <LineNumber value={p.right?.newLine} />
-            <span role="cell" style={{
-              color: p.right?.type === 'add' ? 'var(--forge-success)' : 'var(--forge-text)',
-            }}>
+            <span
+              role="cell"
+              style={{
+                color: p.right?.type === 'add' ? 'var(--forge-success)' : 'var(--forge-text)',
+              }}
+            >
               {p.right ? `${LINE_PREFIX[p.right.type]} ${p.right.content}` : ''}
             </span>
           </div>

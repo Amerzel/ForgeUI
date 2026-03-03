@@ -7,7 +7,12 @@ const meta: Meta = {
   title: 'Domain/DrawingCanvas',
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'Freehand brush/eraser overlay for inpainting masks. Supports smooth stroke interpolation, multiple brush sizes, and mask export.' } },
+    docs: {
+      description: {
+        component:
+          'Freehand brush/eraser overlay for inpainting masks. Supports smooth stroke interpolation, multiple brush sizes, and mask export.',
+      },
+    },
     layout: 'fullscreen',
   },
 }
@@ -24,19 +29,46 @@ export const InpaintingMask: Story = {
     return (
       <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Text size="sm" style={{ fontWeight: 500 }}>Inpainting Mask Editor</Text>
-          <Badge>{tool === 'brush' ? 'Brush' : 'Eraser'} · {brushSize}px</Badge>
+          <Text size="sm" style={{ fontWeight: 500 }}>
+            Inpainting Mask Editor
+          </Text>
+          <Badge>
+            {tool === 'brush' ? 'Brush' : 'Eraser'} · {brushSize}px
+          </Badge>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '4px' }}>
-            <Button variant={tool === 'brush' ? 'primary' : 'ghost'} size="sm" onClick={() => setTool('brush')}>🖌 Brush</Button>
-            <Button variant={tool === 'eraser' ? 'primary' : 'ghost'} size="sm" onClick={() => setTool('eraser')}>◻ Eraser</Button>
-            <Button variant="ghost" size="sm" onClick={() => canvasRef.current?.clear()}>🗑 Clear</Button>
-            <Button variant="ghost" size="sm" onClick={() => canvasRef.current?.invert()}>◐ Invert</Button>
+            <Button
+              variant={tool === 'brush' ? 'primary' : 'ghost'}
+              size="sm"
+              onClick={() => setTool('brush')}
+            >
+              🖌 Brush
+            </Button>
+            <Button
+              variant={tool === 'eraser' ? 'primary' : 'ghost'}
+              size="sm"
+              onClick={() => setTool('eraser')}
+            >
+              ◻ Eraser
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => canvasRef.current?.clear()}>
+              🗑 Clear
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => canvasRef.current?.invert()}>
+              ◐ Invert
+            </Button>
           </div>
         </div>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <Text size="xs" style={{ color: 'var(--forge-text-muted)' }}>Size:</Text>
-          {[8, 16, 24, 48].map(size => (
-            <Button key={size} variant={brushSize === size ? 'secondary' : 'ghost'} size="sm" onClick={() => setBrushSize(size)}>
+          <Text size="xs" style={{ color: 'var(--forge-text-muted)' }}>
+            Size:
+          </Text>
+          {[8, 16, 24, 48].map((size) => (
+            <Button
+              key={size}
+              variant={brushSize === size ? 'secondary' : 'ghost'}
+              size="sm"
+              onClick={() => setBrushSize(size)}
+            >
               {size}px
             </Button>
           ))}
@@ -48,7 +80,10 @@ export const InpaintingMask: Story = {
           tool={tool}
           brushSize={brushSize}
           brushColor="rgba(255, 0, 0, 0.5)"
-          style={{ border: '1px solid var(--forge-border)', borderRadius: 'var(--forge-radius-md)' }}
+          style={{
+            border: '1px solid var(--forge-border)',
+            borderRadius: 'var(--forge-radius-md)',
+          }}
         />
         <Text size="xs" style={{ color: 'var(--forge-text-muted)' }}>
           Click and drag to paint · Switch between brush and eraser · Use Clear/Invert controls

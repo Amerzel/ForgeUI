@@ -1,6 +1,9 @@
 import * as RadixSlider from '@radix-ui/react-slider'
 
-interface SliderProps extends Omit<React.ComponentPropsWithoutRef<typeof RadixSlider.Root>, 'value' | 'defaultValue'> {
+interface SliderProps extends Omit<
+  React.ComponentPropsWithoutRef<typeof RadixSlider.Root>,
+  'value' | 'defaultValue'
+> {
   value?: number[]
   defaultValue?: number[]
   /** Accessible label forwarded to each thumb (required for single-thumb sliders) */
@@ -9,7 +12,14 @@ interface SliderProps extends Omit<React.ComponentPropsWithoutRef<typeof RadixSl
   'aria-labelledby'?: string
 }
 
-export function Slider({ value, defaultValue = [0], disabled, 'aria-label': ariaLabel, 'aria-labelledby': ariaLabelledBy, ...props }: SliderProps) {
+export function Slider({
+  value,
+  defaultValue = [0],
+  disabled,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  ...props
+}: SliderProps) {
   return (
     <RadixSlider.Root
       value={value}
@@ -63,12 +73,19 @@ export function Slider({ value, defaultValue = [0], disabled, 'aria-label': aria
             transition: `transform var(--forge-duration-fast) var(--forge-easing-default)`,
           }}
           onFocus={(e) => {
-            e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+            e.currentTarget.style.outline =
+              'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
             e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
           }}
-          onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
-          onMouseDown={(e) => { e.currentTarget.style.cursor = 'grabbing' }}
-          onMouseUp={(e) => { e.currentTarget.style.cursor = 'grab' }}
+          onBlur={(e) => {
+            e.currentTarget.style.outline = 'none'
+          }}
+          onMouseDown={(e) => {
+            e.currentTarget.style.cursor = 'grabbing'
+          }}
+          onMouseUp={(e) => {
+            e.currentTarget.style.cursor = 'grab'
+          }}
         />
       ))}
     </RadixSlider.Root>

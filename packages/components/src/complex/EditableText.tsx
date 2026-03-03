@@ -68,13 +68,20 @@ export function EditableText({
           fontWeight: 'inherit',
           width: '100%',
           outline: 'none',
-          boxShadow: '0 0 0 var(--forge-focus-ring-width) color-mix(in srgb, var(--forge-accent) 30%, transparent)',
+          boxShadow:
+            '0 0 0 var(--forge-focus-ring-width) color-mix(in srgb, var(--forge-accent) 30%, transparent)',
         }}
         onChange={(e) => setDraft(e.target.value)}
         onBlur={commit}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') { e.preventDefault(); commit() }
-          if (e.key === 'Escape') { e.preventDefault(); cancel() }
+          if (e.key === 'Enter') {
+            e.preventDefault()
+            commit()
+          }
+          if (e.key === 'Escape') {
+            e.preventDefault()
+            cancel()
+          }
         }}
       />
     )
@@ -99,11 +106,26 @@ export function EditableText({
         transition: `background-color var(--forge-duration-fast) var(--forge-easing-default)`,
       }}
       onClick={() => !disabled && setEditing(true)}
-      onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && !disabled) { e.preventDefault(); setEditing(true) } }}
-      onMouseEnter={(e) => { if (!disabled) e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)' }}
-      onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent' }}
-      onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'; e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)' }}
-      onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+      onKeyDown={(e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && !disabled) {
+          e.preventDefault()
+          setEditing(true)
+        }
+      }}
+      onMouseEnter={(e) => {
+        if (!disabled) e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = 'transparent'
+      }}
+      onFocus={(e) => {
+        e.currentTarget.style.outline =
+          'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+        e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
+      }}
+      onBlur={(e) => {
+        e.currentTarget.style.outline = 'none'
+      }}
     >
       {value || <span style={{ fontStyle: 'italic' }}>{placeholder}</span>}
     </span>

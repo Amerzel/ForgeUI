@@ -89,20 +89,20 @@ upper steps.
 > Hex values below are for the **Hearth Bronze** default. The warm-tinted grays
 > (750–950) will differ per alternate theme.
 
-| Step | Variable | Hex |
-|------|----------|-----|
-| 50 | `--forge-gray-50` | `#faf8f5` |
-| 100 | `--forge-gray-100` | `#f2e9df` |
-| 200 | `--forge-gray-200` | `#e5d9cb` |
-| 300 | `--forge-gray-300` | `#d1c1ad` |
-| 400 | `--forge-gray-400` | `#9a8169` |
-| 500 | `--forge-gray-500` | `#6b5c4a` |
-| 600 | `--forge-gray-600` | `#4f4234` |
-| 700 | `--forge-gray-700` | `#3f3227` |
-| 750 | `--forge-gray-750` | `#332a1f` |
-| 800 | `--forge-gray-800` | `#2a211a` |
-| 900 | `--forge-gray-900` | `#1a140f` |
-| 950 | `--forge-gray-950` | `#0c0805` |
+| Step | Variable           | Hex       |
+| ---- | ------------------ | --------- |
+| 50   | `--forge-gray-50`  | `#faf8f5` |
+| 100  | `--forge-gray-100` | `#f2e9df` |
+| 200  | `--forge-gray-200` | `#e5d9cb` |
+| 300  | `--forge-gray-300` | `#d1c1ad` |
+| 400  | `--forge-gray-400` | `#9a8169` |
+| 500  | `--forge-gray-500` | `#6b5c4a` |
+| 600  | `--forge-gray-600` | `#4f4234` |
+| 700  | `--forge-gray-700` | `#3f3227` |
+| 750  | `--forge-gray-750` | `#332a1f` |
+| 800  | `--forge-gray-800` | `#2a211a` |
+| 900  | `--forge-gray-900` | `#1a140f` |
+| 950  | `--forge-gray-950` | `#0c0805` |
 
 Same 50–950 scale (including step 750) applies to the hue palettes below.
 
@@ -114,15 +114,15 @@ space. The `@forgeui/tokens` build step produces the full 12-step scale from the
 anchors. The generated values are committed to source control so consumers never depend
 on the build step at runtime.
 
-| Hue | 50 (lightest) | 500 (midpoint) | 950 (darkest) | Use |
-|-----|---------------|----------------|---------------|-----|
-| **Blue** | `#eff6ff` | `#3b82f6` | `#172554` | Info states, links, focus rings (alternate palettes) |
-| **Red** | `#fef2f2` | `#ef4444` | `#450a0a` | Danger/error states, destructive actions |
-| **Green** | `#f0fdf4` | `#22c55e` | `#052e16` | Success/valid states, confirmations |
-| **Amber** | `#fffbeb` | `#f59e0b` | `#451a03` | Warning states, pending, accents |
-| **Purple** | `#faf5ff` | `#a855f7` | `#3b0764` | Badges, tags, decorative accents |
-| **Teal** | `#f0fdfa` | `#14b8a6` | `#042f2e` | Info (alternate), accents (Deep Space palette) |
-| **Orange** | `#fff7ed` | `#f97316` | `#431407` | Accents (Molten Core), warm highlights |
+| Hue        | 50 (lightest) | 500 (midpoint) | 950 (darkest) | Use                                                  |
+| ---------- | ------------- | -------------- | ------------- | ---------------------------------------------------- |
+| **Blue**   | `#eff6ff`     | `#3b82f6`      | `#172554`     | Info states, links, focus rings (alternate palettes) |
+| **Red**    | `#fef2f2`     | `#ef4444`      | `#450a0a`     | Danger/error states, destructive actions             |
+| **Green**  | `#f0fdf4`     | `#22c55e`      | `#052e16`     | Success/valid states, confirmations                  |
+| **Amber**  | `#fffbeb`     | `#f59e0b`      | `#451a03`     | Warning states, pending, accents                     |
+| **Purple** | `#faf5ff`     | `#a855f7`      | `#3b0764`     | Badges, tags, decorative accents                     |
+| **Teal**   | `#f0fdfa`     | `#14b8a6`      | `#042f2e`     | Info (alternate), accents (Deep Space palette)       |
+| **Orange** | `#fff7ed`     | `#f97316`      | `#431407`     | Accents (Molten Core), warm highlights               |
 
 > **Generation rule:** Given anchors at steps 50, 500, and 950, the build script
 > interpolates in OKLCH to produce steps 100, 200, 300, 400, 600, 700, 750, 800,
@@ -132,25 +132,25 @@ on the build step at runtime.
 
 #### Semantic Mapping (Dark Mode Default)
 
-| Semantic Alias | Derivation | Hearth Bronze Value |
-|-----------|-----------|-------|
-| `--forge-bg` | `gray-950` | `#0c0805` |
-| `--forge-surface` | `gray-900` | `#1a140f` |
-| `--forge-surface-raised` | `gray-800` | `#2a211a` |
-| `--forge-surface-hover` | `lighten(surface, 0.04)` | `#221a14` |
-| `--forge-surface-active` | `gray-700` | `#3f3227` |
-| `--forge-surface-sunken` | `darken(bg, 0.02)` | `#080502` |
-| `--forge-surface-overlay` | `alpha(gray-950, 0.60)` | `rgb(12 8 5 / 0.60)` |
-| `--forge-surface-popover` | `mix(surface, raised, 0.5)` | `#221b15` |
-| `--forge-bg-overlay` | `rgb(0 0 0 / 0.60)` | `rgb(0 0 0 / 0.60)` |
-| `--forge-bg-disabled` | `alpha(gray-800, 0.50)` | `rgb(42 33 26 / 0.50)` |
-| `--forge-border` | `gray-700` | `#3f3227` |
-| `--forge-border-subtle` | `gray-750` | `#332a1f` |
-| `--forge-border-strong` | `gray-600` | `#4f4234` |
-| `--forge-accent` | palette-specific | `#d97706` |
-| `--forge-text` | `gray-100` | `#f2e9df` |
-| `--forge-text-muted` | `gray-400` | `#9a8169` |
-| `--forge-text-disabled` | `gray-500` | `#6b5c4a` |
+| Semantic Alias            | Derivation                  | Hearth Bronze Value    |
+| ------------------------- | --------------------------- | ---------------------- |
+| `--forge-bg`              | `gray-950`                  | `#0c0805`              |
+| `--forge-surface`         | `gray-900`                  | `#1a140f`              |
+| `--forge-surface-raised`  | `gray-800`                  | `#2a211a`              |
+| `--forge-surface-hover`   | `lighten(surface, 0.04)`    | `#221a14`              |
+| `--forge-surface-active`  | `gray-700`                  | `#3f3227`              |
+| `--forge-surface-sunken`  | `darken(bg, 0.02)`          | `#080502`              |
+| `--forge-surface-overlay` | `alpha(gray-950, 0.60)`     | `rgb(12 8 5 / 0.60)`   |
+| `--forge-surface-popover` | `mix(surface, raised, 0.5)` | `#221b15`              |
+| `--forge-bg-overlay`      | `rgb(0 0 0 / 0.60)`         | `rgb(0 0 0 / 0.60)`    |
+| `--forge-bg-disabled`     | `alpha(gray-800, 0.50)`     | `rgb(42 33 26 / 0.50)` |
+| `--forge-border`          | `gray-700`                  | `#3f3227`              |
+| `--forge-border-subtle`   | `gray-750`                  | `#332a1f`              |
+| `--forge-border-strong`   | `gray-600`                  | `#4f4234`              |
+| `--forge-accent`          | palette-specific            | `#d97706`              |
+| `--forge-text`            | `gray-100`                  | `#f2e9df`              |
+| `--forge-text-muted`      | `gray-400`                  | `#9a8169`              |
+| `--forge-text-disabled`   | `gray-500`                  | `#6b5c4a`              |
 
 > **Derivation functions** reference the `color.ts` API (`lighten`, `darken`, `alpha`,
 > `mix`). These are resolved at **build time** and baked into the CSS as static values.
@@ -162,13 +162,13 @@ Guarantee readable foreground text on filled backgrounds. Each value is resolved
 build time via `getAccessibleForeground(fillColor)`, which returns `#000000` or
 `#ffffff` based on the WCAG luminance contrast ratio.
 
-| Token | Derivation | Hearth Bronze Value |
-|-------|-----------|---------------------|
-| `--forge-text-on-accent` | `getAccessibleForeground(accent)` | `#ffffff` (white on `#d97706`) |
-| `--forge-text-on-info` | `getAccessibleForeground(info)` | `#ffffff` (white on `#3b82f6`) |
-| `--forge-text-on-success` | `getAccessibleForeground(success)` | `#000000` (dark on `#4ade80`) |
-| `--forge-text-on-warning` | `getAccessibleForeground(warning)` | `#000000` (dark on `#fbbf24`) |
-| `--forge-text-on-danger` | `getAccessibleForeground(danger)` | `#ffffff` (white on `#ef4444`) |
+| Token                     | Derivation                         | Hearth Bronze Value            |
+| ------------------------- | ---------------------------------- | ------------------------------ |
+| `--forge-text-on-accent`  | `getAccessibleForeground(accent)`  | `#ffffff` (white on `#d97706`) |
+| `--forge-text-on-info`    | `getAccessibleForeground(info)`    | `#ffffff` (white on `#3b82f6`) |
+| `--forge-text-on-success` | `getAccessibleForeground(success)` | `#000000` (dark on `#4ade80`)  |
+| `--forge-text-on-warning` | `getAccessibleForeground(warning)` | `#000000` (dark on `#fbbf24`)  |
+| `--forge-text-on-danger`  | `getAccessibleForeground(danger)`  | `#ffffff` (white on `#ef4444`) |
 
 > These values are **palette-specific** since each palette may have different accent/status
 > colors. They are regenerated per palette at build time. The `-foreground` suffix on
@@ -176,28 +176,29 @@ build time via `getAccessibleForeground(fillColor)`, which returns `#000000` or
 > text-on-color token.
 
 #### Semantic Status
+
 Mapped to vibrant scales (Blue, Red, Green, Amber). Each status color is a **quintuplet**
 derived from the base value using formulas. The base value is palette-specific (see
 Palette Selection table); all variants are formula-derived at build time.
 
 **Derivation formulas** (applied identically to info, success, warning, danger):
 
-| Suffix | Derivation | Example (info = `blue-500`) |
-|--------|------------|---------------------------|
-| *(base)* | Palette-specific base | `#3b82f6` |
-| `-hover` | `darken(base, 0.10)` | `#2563eb` (≈ `blue-600`) |
-| `-bg` | `alpha(base, 0.10)` | `rgb(59 130 246 / 0.10)` |
-| `-border` | Scale step -100 from base (500→400) | `#60a5fa` (≈ `blue-400`) |
-| `-foreground` | `getAccessibleForeground(base)` | `#ffffff` |
+| Suffix        | Derivation                          | Example (info = `blue-500`) |
+| ------------- | ----------------------------------- | --------------------------- |
+| _(base)_      | Palette-specific base               | `#3b82f6`                   |
+| `-hover`      | `darken(base, 0.10)`                | `#2563eb` (≈ `blue-600`)    |
+| `-bg`         | `alpha(base, 0.10)`                 | `rgb(59 130 246 / 0.10)`    |
+| `-border`     | Scale step -100 from base (500→400) | `#60a5fa` (≈ `blue-400`)    |
+| `-foreground` | `getAccessibleForeground(base)`     | `#ffffff`                   |
 
 **Base values per status** (palette-invariant unless overridden in Palette Selection table):
 
-| Status | Default Base | Hue Scale |
-|--------|-------------|-----------|
-| `--forge-info` | `blue-500` (`#3b82f6`) | Blue |
-| `--forge-success` | `green-500` (`#22c55e`) | Green |
-| `--forge-warning` | `amber-500` (`#f59e0b`) | Amber |
-| `--forge-danger` | `red-500` (`#ef4444`) | Red |
+| Status            | Default Base            | Hue Scale |
+| ----------------- | ----------------------- | --------- |
+| `--forge-info`    | `blue-500` (`#3b82f6`)  | Blue      |
+| `--forge-success` | `green-500` (`#22c55e`) | Green     |
+| `--forge-warning` | `amber-500` (`#f59e0b`) | Amber     |
+| `--forge-danger`  | `red-500` (`#ef4444`)   | Red       |
 
 > **Note:** The Palette Selection table can override these per-palette (e.g., Deep Space
 > uses `#38bdf8` for info instead of the default). When overridden, the derivation
@@ -211,27 +212,27 @@ Palette Selection table); all variants are formula-derived at build time.
 
 The naming convention is **multiplier-based**: `--forge-space-N` = `N × 4px`.
 
-| Token | Value |
-|-------|-------|
-| `--forge-space-0` | `0px` |
-| `--forge-space-px` | `1px` |
-| `--forge-space-0.5` | `2px` |
-| `--forge-space-1` | `4px` |
-| `--forge-space-2` | `8px` |
-| `--forge-space-3` | `12px` |
-| `--forge-space-4` | `16px` |
-| `--forge-space-5` | `20px` |
-| `--forge-space-6` | `24px` |
-| `--forge-space-8` | `32px` |
-| `--forge-space-10` | `40px` |
-| `--forge-space-12` | `48px` |
-| `--forge-space-16` | `64px` |
-| `--forge-space-20` | `80px` |
-| `--forge-space-24` | `96px` |
-| `--forge-space-32` | `128px` |
-| `--forge-space-40` | `160px` |
-| `--forge-space-48` | `192px` |
-| `--forge-space-64` | `256px` |
+| Token               | Value   |
+| ------------------- | ------- |
+| `--forge-space-0`   | `0px`   |
+| `--forge-space-px`  | `1px`   |
+| `--forge-space-0.5` | `2px`   |
+| `--forge-space-1`   | `4px`   |
+| `--forge-space-2`   | `8px`   |
+| `--forge-space-3`   | `12px`  |
+| `--forge-space-4`   | `16px`  |
+| `--forge-space-5`   | `20px`  |
+| `--forge-space-6`   | `24px`  |
+| `--forge-space-8`   | `32px`  |
+| `--forge-space-10`  | `40px`  |
+| `--forge-space-12`  | `48px`  |
+| `--forge-space-16`  | `64px`  |
+| `--forge-space-20`  | `80px`  |
+| `--forge-space-24`  | `96px`  |
+| `--forge-space-32`  | `128px` |
+| `--forge-space-40`  | `160px` |
+| `--forge-space-48`  | `192px` |
+| `--forge-space-64`  | `256px` |
 
 > **Exceptions:** `space-0`, `space-px`, and `space-0.5` are sub-unit values that
 > do not follow the `N × 4px` rule. They exist for fine alignment needs (borders,
@@ -244,67 +245,67 @@ The naming convention is **multiplier-based**: `--forge-space-N` = `N × 4px`.
 
 Three font stacks cover all use cases across the 9-tool suite.
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `--forge-font-sans` | `'Inter', system-ui, sans-serif` | Body text, labels, UI chrome |
-| `--forge-font-display` | `'Geist', 'Inter', system-ui, sans-serif` | Page titles, hero headings |
-| `--forge-font-mono` | `'JetBrains Mono', 'Fira Code', monospace` | Code, numeric values, terminal output |
+| Token                  | Value                                      | Use                                   |
+| ---------------------- | ------------------------------------------ | ------------------------------------- |
+| `--forge-font-sans`    | `'Inter', system-ui, sans-serif`           | Body text, labels, UI chrome          |
+| `--forge-font-display` | `'Geist', 'Inter', system-ui, sans-serif`  | Page titles, hero headings            |
+| `--forge-font-mono`    | `'JetBrains Mono', 'Fira Code', monospace` | Code, numeric values, terminal output |
 
 #### Font Size Scale
 
 > **Naming:** Font sizes use `--forge-font-size-*` (not `--forge-text-*`) to avoid
 > collision with `--forge-text-{semantic}` color tokens (e.g., `--forge-text-muted`).
 
-| Token | Size | Line Height | Use |
-|-------|------|-------------|-----|
-| `--forge-font-size-xs` | `11px` | `16px` | Metadata, timestamps, compact labels |
-| `--forge-font-size-sm` | `13px` | `20px` | Secondary text, descriptions, form hints |
-| `--forge-font-size-base` | `14px` | `22px` | Default body text, inputs, buttons |
-| `--forge-font-size-md` | `16px` | `24px` | Emphasized text, section labels |
-| `--forge-font-size-lg` | `18px` | `28px` | Subheadings, card titles |
-| `--forge-font-size-xl` | `20px` | `28px` | Page section headings |
-| `--forge-font-size-2xl` | `24px` | `32px` | Page titles |
-| `--forge-font-size-3xl` | `30px` | `36px` | Hero headings, display text |
+| Token                    | Size   | Line Height | Use                                      |
+| ------------------------ | ------ | ----------- | ---------------------------------------- |
+| `--forge-font-size-xs`   | `11px` | `16px`      | Metadata, timestamps, compact labels     |
+| `--forge-font-size-sm`   | `13px` | `20px`      | Secondary text, descriptions, form hints |
+| `--forge-font-size-base` | `14px` | `22px`      | Default body text, inputs, buttons       |
+| `--forge-font-size-md`   | `16px` | `24px`      | Emphasized text, section labels          |
+| `--forge-font-size-lg`   | `18px` | `28px`      | Subheadings, card titles                 |
+| `--forge-font-size-xl`   | `20px` | `28px`      | Page section headings                    |
+| `--forge-font-size-2xl`  | `24px` | `32px`      | Page titles                              |
+| `--forge-font-size-3xl`  | `30px` | `36px`      | Hero headings, display text              |
 
 Note: `14px` is the default base size — game dev tools are information-dense and benefit
 from a slightly smaller base than typical web apps (16px).
 
 #### Font Weight Scale
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `--forge-font-normal` | `400` | Body text |
-| `--forge-font-medium` | `500` | Labels, slightly emphasized text |
-| `--forge-font-semibold` | `600` | Section headers, button text |
-| `--forge-font-bold` | `700` | Page titles, strong emphasis |
+| Token                   | Value | Use                              |
+| ----------------------- | ----- | -------------------------------- |
+| `--forge-font-normal`   | `400` | Body text                        |
+| `--forge-font-medium`   | `500` | Labels, slightly emphasized text |
+| `--forge-font-semibold` | `600` | Section headers, button text     |
+| `--forge-font-bold`     | `700` | Page titles, strong emphasis     |
 
 #### Line Height Scale
 
 Independent line-height tokens for use outside the font-size presets (e.g., adjusting density in data tables or code blocks).
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `--forge-leading-tight` | `1.25` | Compact UI (data tables, dense lists) |
-| `--forge-leading-normal` | `1.5` | Default body text |
+| Token                     | Value  | Use                                     |
+| ------------------------- | ------ | --------------------------------------- |
+| `--forge-leading-tight`   | `1.25` | Compact UI (data tables, dense lists)   |
+| `--forge-leading-normal`  | `1.5`  | Default body text                       |
 | `--forge-leading-relaxed` | `1.75` | Long-form content, improved readability |
 
 #### Letter Spacing Scale
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `--forge-tracking-tight` | `-0.01em` | Large headings (optical correction) |
-| `--forge-tracking-normal` | `0` | Default — no adjustment |
-| `--forge-tracking-wide` | `0.05em` | All-caps labels, overlines |
+| Token                     | Value     | Use                                 |
+| ------------------------- | --------- | ----------------------------------- |
+| `--forge-tracking-tight`  | `-0.01em` | Large headings (optical correction) |
+| `--forge-tracking-normal` | `0`       | Default — no adjustment             |
+| `--forge-tracking-wide`   | `0.05em`  | All-caps labels, overlines          |
 
 ### Border Radius
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `--forge-radius-none` | `0px` | No rounding (sharp edges) |
-| `--forge-radius-sm` | `2px` | Subtle rounding (inline tags, small chips) |
-| `--forge-radius-md` | `3px` | Default (buttons, inputs, cards, dropdowns) |
-| `--forge-radius-lg` | `6px` | Larger containers (dialogs, drawers, panels) |
-| `--forge-radius-xl` | `8px` | Feature cards, hero sections |
+| Token                 | Value    | Use                                          |
+| --------------------- | -------- | -------------------------------------------- |
+| `--forge-radius-none` | `0px`    | No rounding (sharp edges)                    |
+| `--forge-radius-sm`   | `2px`    | Subtle rounding (inline tags, small chips)   |
+| `--forge-radius-md`   | `3px`    | Default (buttons, inputs, cards, dropdowns)  |
+| `--forge-radius-lg`   | `6px`    | Larger containers (dialogs, drawers, panels) |
+| `--forge-radius-xl`   | `8px`    | Feature cards, hero sections                 |
 | `--forge-radius-full` | `9999px` | Pill shapes (toggle pills, circular avatars) |
 
 `--forge-radius-md` (3px) is the default for most components. This tight radius pairs
@@ -315,28 +316,28 @@ surfaces with crisp edges, like hand-forged metalwork.
 
 Dark UIs need higher shadow opacity to be visible against dark surfaces.
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `--forge-shadow-none` | `none` | Reset / remove shadow |
-| `--forge-shadow-sm` | `0 1px 2px rgb(0 0 0 / 0.5)` | Subtle lift (cards) |
-| `--forge-shadow-md` | `0 4px 8px rgb(0 0 0 / 0.6)` | Dropdowns, tooltips |
-| `--forge-shadow-lg` | `0 8px 24px rgb(0 0 0 / 0.7)` | Modals, dialogs |
-| `--forge-shadow-xl` | `0 16px 48px rgb(0 0 0 / 0.8)` | Command palettes, large modals |
-| `--forge-shadow-inset` | `inset 0 1px 2px rgb(0 0 0 / 0.5)` | Pressed/input states |
+| Token                        | Value                                 | Use                                           |
+| ---------------------------- | ------------------------------------- | --------------------------------------------- |
+| `--forge-shadow-none`        | `none`                                | Reset / remove shadow                         |
+| `--forge-shadow-sm`          | `0 1px 2px rgb(0 0 0 / 0.5)`          | Subtle lift (cards)                           |
+| `--forge-shadow-md`          | `0 4px 8px rgb(0 0 0 / 0.6)`          | Dropdowns, tooltips                           |
+| `--forge-shadow-lg`          | `0 8px 24px rgb(0 0 0 / 0.7)`         | Modals, dialogs                               |
+| `--forge-shadow-xl`          | `0 16px 48px rgb(0 0 0 / 0.8)`        | Command palettes, large modals                |
+| `--forge-shadow-inset`       | `inset 0 1px 2px rgb(0 0 0 / 0.5)`    | Pressed/input states                          |
 | `--forge-shadow-ring-accent` | `0 0 0 3px var(--forge-accent / 0.4)` | Colored focus glow for accent-filled elements |
 
 ### Animation & Motion
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `--forge-duration-instant` | `0ms` | Programmatic state changes (no visible transition) |
-| `--forge-duration-fast` | `100ms` | Hover, focus feedback |
-| `--forge-duration-normal` | `200ms` | Panels, dropdowns |
-| `--forge-duration-slow` | `400ms` | Page transitions, modals |
-| `--forge-easing-default` | `cubic-bezier(0, 0, 0.2, 1)` | Ease-out — default for enter animations and most UI transitions |
-| `--forge-easing-in` | `cubic-bezier(0.4, 0, 1, 1)` | Ease-in — exit animations |
-| `--forge-easing-out` | `cubic-bezier(0, 0, 0.2, 1)` | Ease-out — alias for clarity when paired with `easing-in` |
-| `--forge-easing-in-out` | `cubic-bezier(0.4, 0, 0.2, 1)` | Symmetric ease — looping animations, resizing, drag |
+| Token                      | Value                          | Use                                                             |
+| -------------------------- | ------------------------------ | --------------------------------------------------------------- |
+| `--forge-duration-instant` | `0ms`                          | Programmatic state changes (no visible transition)              |
+| `--forge-duration-fast`    | `100ms`                        | Hover, focus feedback                                           |
+| `--forge-duration-normal`  | `200ms`                        | Panels, dropdowns                                               |
+| `--forge-duration-slow`    | `400ms`                        | Page transitions, modals                                        |
+| `--forge-easing-default`   | `cubic-bezier(0, 0, 0.2, 1)`   | Ease-out — default for enter animations and most UI transitions |
+| `--forge-easing-in`        | `cubic-bezier(0.4, 0, 1, 1)`   | Ease-in — exit animations                                       |
+| `--forge-easing-out`       | `cubic-bezier(0, 0, 0.2, 1)`   | Ease-out — alias for clarity when paired with `easing-in`       |
+| `--forge-easing-in-out`    | `cubic-bezier(0.4, 0, 0.2, 1)` | Symmetric ease — looping animations, resizing, drag             |
 
 > **Note:** `easing-default` is an **ease-out** curve, optimized for elements
 > entering the viewport. It was previously mislabeled as "general purpose." The
@@ -345,6 +346,7 @@ Dark UIs need higher shadow opacity to be visible against dark surfaces.
 
 All duration tokens respect `prefers-reduced-motion`. When the user's OS requests
 reduced motion, `base.css` overrides all duration tokens to `0ms`:
+
 ```css
 @media (prefers-reduced-motion: reduce) {
   :root {
@@ -354,19 +356,21 @@ reduced motion, `base.css` overrides all duration tokens to `0ms`:
   }
 }
 ```
+
 Components that use these tokens automatically become motion-safe with no extra work.
 
 ### Focus Ring
 
 A consistent focus indicator across all interactive components.
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `--forge-focus-ring-color` | `var(--forge-accent)` | Ring color; defaults to accent for brand consistency |
-| `--forge-focus-ring-width` | `2px` | Ring thickness |
-| `--forge-focus-ring-offset` | `2px` | Gap between element edge and ring |
+| Token                       | Value                 | Use                                                  |
+| --------------------------- | --------------------- | ---------------------------------------------------- |
+| `--forge-focus-ring-color`  | `var(--forge-accent)` | Ring color; defaults to accent for brand consistency |
+| `--forge-focus-ring-width`  | `2px`                 | Ring thickness                                       |
+| `--forge-focus-ring-offset` | `2px`                 | Gap between element edge and ring                    |
 
 Applied via a shared utility style:
+
 ```css
 .focus-ring:focus-visible {
   outline: var(--forge-focus-ring-width) solid var(--forge-focus-ring-color);
@@ -378,121 +382,152 @@ Applied via a shared utility style:
 
 Fixed scale to prevent z-index wars across tools.
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `--forge-z-base` | `0` | Default stacking |
-| `--forge-z-dropdown` | `100` | Dropdowns, popovers |
-| `--forge-z-sticky` | `200` | Sticky headers, toolbars |
-| `--forge-z-overlay` | `300` | Overlays, backdrops |
-| `--forge-z-modal` | `400` | Dialogs, modals |
-| `--forge-z-toast` | `500` | Notifications, toasts |
-| `--forge-z-tooltip` | `600` | Tooltips (always on top) |
+| Token                | Value | Use                      |
+| -------------------- | ----- | ------------------------ |
+| `--forge-z-base`     | `0`   | Default stacking         |
+| `--forge-z-dropdown` | `100` | Dropdowns, popovers      |
+| `--forge-z-sticky`   | `200` | Sticky headers, toolbars |
+| `--forge-z-overlay`  | `300` | Overlays, backdrops      |
+| `--forge-z-modal`    | `400` | Dialogs, modals          |
+| `--forge-z-toast`    | `500` | Notifications, toasts    |
+| `--forge-z-tooltip`  | `600` | Tooltips (always on top) |
 
 ### Opacity Scale
 
 Standardized opacity values for overlays, disabled states, and tinted backgrounds.
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `--forge-opacity-subtle` | `0.08` | Hover tints, status-color backgrounds |
-| `--forge-opacity-light` | `0.15` | Selected row highlights, badge backgrounds |
-| `--forge-opacity-medium` | `0.40` | Disabled overlays, placeholder images |
-| `--forge-opacity-heavy` | `0.60` | Modal backdrops, dimming overlays |
+| Token                    | Value  | Use                                        |
+| ------------------------ | ------ | ------------------------------------------ |
+| `--forge-opacity-subtle` | `0.08` | Hover tints, status-color backgrounds      |
+| `--forge-opacity-light`  | `0.15` | Selected row highlights, badge backgrounds |
+| `--forge-opacity-medium` | `0.40` | Disabled overlays, placeholder images      |
+| `--forge-opacity-heavy`  | `0.60` | Modal backdrops, dimming overlays          |
 
 ### Icon Sizes
 
 Consistent icon dimensions across components. Icons always render in a square bounding box.
 
-| Token | Value | Use |
-|-------|-------|-----|
+| Token             | Value  | Use                                      |
+| ----------------- | ------ | ---------------------------------------- |
 | `--forge-icon-xs` | `14px` | Inline metadata icons, badge decorations |
-| `--forge-icon-sm` | `16px` | Button icons, form field icons |
-| `--forge-icon-md` | `20px` | Default standalone icons, nav items |
-| `--forge-icon-lg` | `24px` | Page headers, empty state illustrations |
+| `--forge-icon-sm` | `16px` | Button icons, form field icons           |
+| `--forge-icon-md` | `20px` | Default standalone icons, nav items      |
+| `--forge-icon-lg` | `24px` | Page headers, empty state illustrations  |
 
 ### Container Widths
 
 Max-width constraints for content areas and floating UI.
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `--forge-max-w-prose` | `65ch` | Long-form text content (descriptions, docs) |
-| `--forge-max-w-sm` | `384px` | Small dialogs, popovers |
-| `--forge-max-w-md` | `512px` | Default dialogs, settings panels |
-| `--forge-max-w-lg` | `768px` | Wide dialogs, data tables in overlays |
+| Token                 | Value   | Use                                         |
+| --------------------- | ------- | ------------------------------------------- |
+| `--forge-max-w-prose` | `65ch`  | Long-form text content (descriptions, docs) |
+| `--forge-max-w-sm`    | `384px` | Small dialogs, popovers                     |
+| `--forge-max-w-md`    | `512px` | Default dialogs, settings panels            |
+| `--forge-max-w-lg`    | `768px` | Wide dialogs, data tables in overlays       |
 
 ### Backdrop Blur
 
-| Token | Value | Use |
-|-------|-------|-----|
+| Token                  | Value | Use                                            |
+| ---------------------- | ----- | ---------------------------------------------- |
 | `--forge-blur-overlay` | `8px` | Frosted-glass effect on modal/drawer backdrops |
 
 ### Selection & Highlight Colors
 
-| Token | Use |
-|-------|-----|
-| `--forge-selection-bg` | Text selection background (CSS `::selection`) |
-| `--forge-selection-text` | Text selection foreground |
-| `--forge-highlight-bg` | Search/filter match highlight |
+| Token                    | Use                                           |
+| ------------------------ | --------------------------------------------- |
+| `--forge-selection-bg`   | Text selection background (CSS `::selection`) |
+| `--forge-selection-text` | Text selection foreground                     |
+| `--forge-highlight-bg`   | Search/filter match highlight                 |
 
 ### Scrollbar Colors
 
 Custom scrollbar styling for dark theme consistency. Applied via CSS scrollbar-color property and `::-webkit-scrollbar` pseudo-elements.
 
-| Token | Use |
-|-------|-----|
-| `--forge-scrollbar-track` | Scrollbar track (gutter) background |
-| `--forge-scrollbar-thumb` | Scrollbar thumb (draggable handle) |
-| `--forge-scrollbar-thumb-hover` | Thumb on hover |
+| Token                           | Use                                 |
+| ------------------------------- | ----------------------------------- |
+| `--forge-scrollbar-track`       | Scrollbar track (gutter) background |
+| `--forge-scrollbar-thumb`       | Scrollbar thumb (draggable handle)  |
+| `--forge-scrollbar-thumb-hover` | Thumb on hover                      |
 
 ### JS-Accessible Tokens
+
 Critical for tool development (Node editors, Graph views, Canvas maps).
 
 #### Raw Scales
+
 ```typescript
 // @forgeui/tokens
 export const tokens = {
   colors: {
     gray: { 50: '#faf8f5', /* ... */ 750: '#332a1f', /* ... */ 950: '#0c0805' },
-    blue: { /* ... */ },
-    teal: { /* ... */ },
-    orange: { /* ... */ },
+    blue: {
+      /* ... */
+    },
+    teal: {
+      /* ... */
+    },
+    orange: {
+      /* ... */
+    },
   },
   spacing: {
-    1:  { css: '4px',   value: 4   },
-    2:  { css: '8px',   value: 8   },
-    3:  { css: '12px',  value: 12  },
-    4:  { css: '16px',  value: 16  },
+    1: { css: '4px', value: 4 },
+    2: { css: '8px', value: 8 },
+    3: { css: '12px', value: 12 },
+    4: { css: '16px', value: 16 },
     // ... through 64: { css: '256px', value: 256 }
   },
   typography: {
     fontSans: "'Inter', system-ui, sans-serif",
     fontDisplay: "'Geist', 'Inter', system-ui, sans-serif",
     fontMono: "'JetBrains Mono', 'Fira Code', monospace",
-    fontSizeXs: '11px', fontSizeSm: '13px', fontSizeBase: '14px', fontSizeMd: '16px',
-    fontSizeLg: '18px', fontSizeXl: '20px', fontSize2xl: '24px', fontSize3xl: '30px',
-    fontNormal: 400, fontMedium: 500, fontSemibold: 600, fontBold: 700,
-    leadingTight: 1.25, leadingNormal: 1.5, leadingRelaxed: 1.75,
-    trackingTight: '-0.01em', trackingNormal: '0', trackingWide: '0.05em',
+    fontSizeXs: '11px',
+    fontSizeSm: '13px',
+    fontSizeBase: '14px',
+    fontSizeMd: '16px',
+    fontSizeLg: '18px',
+    fontSizeXl: '20px',
+    fontSize2xl: '24px',
+    fontSize3xl: '30px',
+    fontNormal: 400,
+    fontMedium: 500,
+    fontSemibold: 600,
+    fontBold: 700,
+    leadingTight: 1.25,
+    leadingNormal: 1.5,
+    leadingRelaxed: 1.75,
+    trackingTight: '-0.01em',
+    trackingNormal: '0',
+    trackingWide: '0.05em',
   },
   radius: { none: '0px', sm: '2px', md: '3px', lg: '6px', xl: '8px', full: '9999px' },
-  shadows: { none: 'none', sm: '0 1px 2px rgb(0 0 0 / 0.5)', md: '0 4px 8px rgb(0 0 0 / 0.6)', /* ... */ },
-  animation: {
-    durationInstant: '0ms', durationFast: '100ms', durationNormal: '200ms', durationSlow: '400ms',
-    easingDefault: 'cubic-bezier(0, 0, 0.2, 1)', easingInOut: 'cubic-bezier(0.4, 0, 0.2, 1)', /* ... */
+  shadows: {
+    none: 'none',
+    sm: '0 1px 2px rgb(0 0 0 / 0.5)',
+    md: '0 4px 8px rgb(0 0 0 / 0.6)' /* ... */,
   },
-  zIndex: { base: 0, dropdown: 100, /* ... */ },
+  animation: {
+    durationInstant: '0ms',
+    durationFast: '100ms',
+    durationNormal: '200ms',
+    durationSlow: '400ms',
+    easingDefault: 'cubic-bezier(0, 0, 0.2, 1)',
+    easingInOut: 'cubic-bezier(0.4, 0, 0.2, 1)' /* ... */,
+  },
+  zIndex: { base: 0, dropdown: 100 /* ... */ },
   focusRing: { color: 'var(--forge-accent)', width: '2px', offset: '2px' },
-  opacity: { subtle: 0.08, light: 0.15, medium: 0.40, heavy: 0.60 },
+  opacity: { subtle: 0.08, light: 0.15, medium: 0.4, heavy: 0.6 },
   iconSize: { xs: 14, sm: 16, md: 20, lg: 24 },
 }
 ```
 
 #### Semantic Token Mappings
+
 In addition to raw scales, the JS export includes semantic aliases that mirror the CSS semantic tokens:
+
 ```typescript
 export const semantic = {
-  bg: 'var(--forge-bg)',                   // or resolved hex for canvas use
+  bg: 'var(--forge-bg)', // or resolved hex for canvas use
   surface: 'var(--forge-surface)',
   accent: 'var(--forge-accent)',
   text: 'var(--forge-text)',
@@ -506,18 +541,20 @@ export const semantic = {
 ```
 
 #### `color.ts` API
+
 Color manipulation utilities for canvas/WebGL rendering and runtime theming:
+
 ```typescript
 // @forgeui/tokens/color
-export function lighten(color: string, amount: number): string;
-export function darken(color: string, amount: number): string;
-export function alpha(color: string, opacity: number): string;   // → 'rgba(r, g, b, a)'
-export function hexToRgb(hex: string): [number, number, number];
-export function rgbToHex(r: number, g: number, b: number): string;
-export function hexToGlsl(hex: string): [number, number, number, number]; // → [r, g, b, a] floats 0–1
-export function contrastRatio(fg: string, bg: string): number;
-export function getAccessibleForeground(bgColor: string): '#000000' | '#ffffff';
-export function mix(color1: string, color2: string, weight?: number): string; // weight 0–1, default 0.5
+export function lighten(color: string, amount: number): string
+export function darken(color: string, amount: number): string
+export function alpha(color: string, opacity: number): string // → 'rgba(r, g, b, a)'
+export function hexToRgb(hex: string): [number, number, number]
+export function rgbToHex(r: number, g: number, b: number): string
+export function hexToGlsl(hex: string): [number, number, number, number] // → [r, g, b, a] floats 0–1
+export function contrastRatio(fg: string, bg: string): number
+export function getAccessibleForeground(bgColor: string): '#000000' | '#ffffff'
+export function mix(color1: string, color2: string, weight?: number): string // weight 0–1, default 0.5
 ```
 
 ---
@@ -557,63 +594,63 @@ Styling uses **CSS Modules** to prevent global namespace pollution.
 
 #### Primitives (13)
 
-| Component | Props | Notes |
-|-----------|-------|-------|
-| `Button` | variant, size, type, fullWidth, startIcon, endIcon, asChild, disabled, loading | Primary, secondary, ghost, danger variants |
-| `IconButton` | icon, label, size, variant | Accessible wrapper; requires `label` for screen readers |
-| `Badge` | variant, color | Status indicators; includes numeric entity-state mapping |
-| `Text` | asChild, size, weight, color, truncate | Inline/block text (`p`, `span`, `label`, `div`). Does **not** render headings — use `Heading` for that |
-| `Heading` | asChild, level, size | Semantic heading levels (`h1`–`h6`); `level` controls the HTML element, `size` controls visual scale independently |
-| `Separator` | orientation, decorative | Horizontal/vertical divider; `decorative` hides from a11y tree |
-| `Card` | asChild, variant, padding | Surface container with border and shadow tokens |
-| `Kbd` | keys | Keyboard shortcut display (e.g., `⌘+S`); renders styled keycap elements |
-| `ScrollArea` | orientation, scrollbarSize | Custom-styled scrollbar container; preserves native scroll behavior while matching dark theme |
-| `Label` | htmlFor | Accessible form label; pairs with all form controls |
-| `VisuallyHidden` | asChild | Renders content visible only to screen readers |
-| `Spinner` | size, label | Loading indicator with accessible `role="status"` and live region |
-| `AlertDialog` | Radix AlertDialog — open, onOpenChange | Confirmation dialog for destructive actions; blocks interaction until confirmed |
+| Component        | Props                                                                          | Notes                                                                                                              |
+| ---------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `Button`         | variant, size, type, fullWidth, startIcon, endIcon, asChild, disabled, loading | Primary, secondary, ghost, danger variants                                                                         |
+| `IconButton`     | icon, label, size, variant                                                     | Accessible wrapper; requires `label` for screen readers                                                            |
+| `Badge`          | variant, color                                                                 | Status indicators; includes numeric entity-state mapping                                                           |
+| `Text`           | asChild, size, weight, color, truncate                                         | Inline/block text (`p`, `span`, `label`, `div`). Does **not** render headings — use `Heading` for that             |
+| `Heading`        | asChild, level, size                                                           | Semantic heading levels (`h1`–`h6`); `level` controls the HTML element, `size` controls visual scale independently |
+| `Separator`      | orientation, decorative                                                        | Horizontal/vertical divider; `decorative` hides from a11y tree                                                     |
+| `Card`           | asChild, variant, padding                                                      | Surface container with border and shadow tokens                                                                    |
+| `Kbd`            | keys                                                                           | Keyboard shortcut display (e.g., `⌘+S`); renders styled keycap elements                                            |
+| `ScrollArea`     | orientation, scrollbarSize                                                     | Custom-styled scrollbar container; preserves native scroll behavior while matching dark theme                      |
+| `Label`          | htmlFor                                                                        | Accessible form label; pairs with all form controls                                                                |
+| `VisuallyHidden` | asChild                                                                        | Renders content visible only to screen readers                                                                     |
+| `Spinner`        | size, label                                                                    | Loading indicator with accessible `role="status"` and live region                                                  |
+| `AlertDialog`    | Radix AlertDialog — open, onOpenChange                                         | Confirmation dialog for destructive actions; blocks interaction until confirmed                                    |
 
 #### Forms (11)
 
-| Component | Props | Notes |
-|-----------|-------|-------|
-| `Input` | type, size, variant, error, disabled, startAdornment, endAdornment, clearable, placeholder | Text input with built-in validation styling, adornment slots, and optional clear button |
-| `Textarea` | size, resize, error | Auto-grows by default; resize configurable |
-| `Select` | options, value, placeholder, disabled, error, size | Radix Select for accessible dropdowns; size/error match Input for consistency |
-| `Checkbox` | checked, indeterminate, label | Radix Checkbox with label association |
-| `Switch` | checked, size, label | Toggle switch for boolean settings |
-| `RadioGroup` | options, value, orientation | Radix RadioGroup with keyboard navigation |
-| `Slider` | min, max, step, value | Radix Slider; useful for numeric tool parameters |
-| `Toggle` | pressed, variant, size | Radix Toggle; two-state button (on/off). Used for bold/italic toggles, view mode switches |
-| `ToggleGroup` | type, value, orientation | Radix ToggleGroup; single or multiple selection. Used for toolbar tool selection, alignment controls, mode switchers |
-| `FormField` | label, error, hint, required | Wrapper that composes label + input + error message |
-| `NumberInput` | value, min, max, step, precision | Numeric input with stepper buttons, min/max clamping, and drag-to-adjust interaction (hold and drag vertically to scrub values). Used for transforms, dimensions, physics params |
+| Component     | Props                                                                                      | Notes                                                                                                                                                                            |
+| ------------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Input`       | type, size, variant, error, disabled, startAdornment, endAdornment, clearable, placeholder | Text input with built-in validation styling, adornment slots, and optional clear button                                                                                          |
+| `Textarea`    | size, resize, error                                                                        | Auto-grows by default; resize configurable                                                                                                                                       |
+| `Select`      | options, value, placeholder, disabled, error, size                                         | Radix Select for accessible dropdowns; size/error match Input for consistency                                                                                                    |
+| `Checkbox`    | checked, indeterminate, label                                                              | Radix Checkbox with label association                                                                                                                                            |
+| `Switch`      | checked, size, label                                                                       | Toggle switch for boolean settings                                                                                                                                               |
+| `RadioGroup`  | options, value, orientation                                                                | Radix RadioGroup with keyboard navigation                                                                                                                                        |
+| `Slider`      | min, max, step, value                                                                      | Radix Slider; useful for numeric tool parameters                                                                                                                                 |
+| `Toggle`      | pressed, variant, size                                                                     | Radix Toggle; two-state button (on/off). Used for bold/italic toggles, view mode switches                                                                                        |
+| `ToggleGroup` | type, value, orientation                                                                   | Radix ToggleGroup; single or multiple selection. Used for toolbar tool selection, alignment controls, mode switchers                                                             |
+| `FormField`   | label, error, hint, required                                                               | Wrapper that composes label + input + error message                                                                                                                              |
+| `NumberInput` | value, min, max, step, precision                                                           | Numeric input with stepper buttons, min/max clamping, and drag-to-adjust interaction (hold and drag vertically to scrub values). Used for transforms, dimensions, physics params |
 
 #### Disclosure (2)
 
-| Component | Library | Props | Notes |
-|-----------|---------|-------|-------|
+| Component   | Library         | Props                           | Notes                                                                                                                     |
+| ----------- | --------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | `Accordion` | Radix Accordion | type, collapsible, defaultValue | Collapsible content sections; single or multiple open panels. Used in inspector panels, settings groups, property editors |
-| `Tabs` | Radix Tabs | value, orientation | Tabbed content panels; horizontal/vertical. Used in inspectors, multi-view editors, settings |
+| `Tabs`      | Radix Tabs      | value, orientation              | Tabbed content panels; horizontal/vertical. Used in inspectors, multi-view editors, settings                              |
 
 #### Feedback (4)
 
-| Component | Library | Props | Notes |
-|-----------|---------|-------|-------|
-| `Alert` | — | variant, icon, closable | Status banner for info/success/warning/error; used for inline feedback and destructive action confirmations |
-| `Progress` | Radix Progress | value, max, getValueLabel | Linear progress bar; determinate or indeterminate. Used for build progress, asset processing, batch operations |
-| `Skeleton` | — | width, height, radius, animate | Loading placeholder; matches content shape while data loads. Shimmer animation uses `--forge-duration-slow` |
-| `Toast` | **Radix Toast** | variant, duration, action | Stackable notifications at `--forge-z-toast`; auto-dismiss with configurable duration |
+| Component  | Library         | Props                          | Notes                                                                                                          |
+| ---------- | --------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| `Alert`    | —               | variant, icon, closable        | Status banner for info/success/warning/error; used for inline feedback and destructive action confirmations    |
+| `Progress` | Radix Progress  | value, max, getValueLabel      | Linear progress bar; determinate or indeterminate. Used for build progress, asset processing, batch operations |
+| `Skeleton` | —               | width, height, radius, animate | Loading placeholder; matches content shape while data loads. Shimmer animation uses `--forge-duration-slow`    |
+| `Toast`    | **Radix Toast** | variant, duration, action      | Stackable notifications at `--forge-z-toast`; auto-dismiss with configurable duration                          |
 
 #### Overlays (5)
 
-| Component | Library | Props | Notes |
-|-----------|---------|-------|-------|
-| `Dialog` | Radix Dialog | open, onOpenChange, size, title, description | Modal with focus trap and scroll lock |
-| `Tooltip` | Radix Tooltip | content, side, delay | Hover/focus info; accessible by default |
-| `DropdownMenu` | Radix DropdownMenu | items, trigger | Keyboard-navigable action menus |
-| `ContextMenu` | Radix Context Menu | items, trigger | Right-click menus; fundamental to every game dev tool. Supports submenus, checkable items, keyboard navigation |
-| `Popover` | Radix Popover | side, align, sideOffset | Anchored floating content; used for quick-edit panels, inline color pickers, mini-forms |
+| Component      | Library            | Props                                        | Notes                                                                                                          |
+| -------------- | ------------------ | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `Dialog`       | Radix Dialog       | open, onOpenChange, size, title, description | Modal with focus trap and scroll lock                                                                          |
+| `Tooltip`      | Radix Tooltip      | content, side, delay                         | Hover/focus info; accessible by default                                                                        |
+| `DropdownMenu` | Radix DropdownMenu | items, trigger                               | Keyboard-navigable action menus                                                                                |
+| `ContextMenu`  | Radix Context Menu | items, trigger                               | Right-click menus; fundamental to every game dev tool. Supports submenus, checkable items, keyboard navigation |
+| `Popover`      | Radix Popover      | side, align, sideOffset                      | Anchored floating content; used for quick-edit panels, inline color pickers, mini-forms                        |
 
 ### Phase 2a: Radix Composites & Layout (13 components)
 
@@ -622,36 +659,36 @@ Lower risk — primarily integration and styling work.
 
 #### Overlays (1)
 
-| Component | Library | Props | Notes |
-|-----------|---------|-------|-------|
-| `Drawer` | Radix Dialog (extended) | side, open, title | Slide-in panel from any edge; non-blocking alternative to Dialog for properties and settings |
+| Component | Library                 | Props             | Notes                                                                                        |
+| --------- | ----------------------- | ----------------- | -------------------------------------------------------------------------------------------- |
+| `Drawer`  | Radix Dialog (extended) | side, open, title | Slide-in panel from any edge; non-blocking alternative to Dialog for properties and settings |
 
 #### Composites (5)
 
-| Component | Library | Notes |
-|-----------|---------|-------|
-| `Toolbar` | **Radix Toolbar** | Groups related controls (buttons, toggles, separators) with roving keyboard focus. Used in canvas toolbars, editor action bars |
-| `ResizablePanelGroup` | — | Native-feeling resizable panels; persist sizes to localStorage. (Renamed from SplitPane for API clarity) |
-| `Collapsible` | **Radix Collapsible** | Animated show/hide for a single content region; simpler than Accordion for standalone use |
-| `Menubar` | **Radix Menubar** | Desktop-style horizontal menu bar (File, Edit, View...) with keyboard navigation and submenus. Used in Electron-based tools for native-feeling app chrome |
-| `Steps` | — | Multi-step wizard indicator with active/completed/error states. Used for asset pipeline flows, entity creation wizards, import workflows |
+| Component             | Library               | Notes                                                                                                                                                     |
+| --------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Toolbar`             | **Radix Toolbar**     | Groups related controls (buttons, toggles, separators) with roving keyboard focus. Used in canvas toolbars, editor action bars                            |
+| `ResizablePanelGroup` | —                     | Native-feeling resizable panels; persist sizes to localStorage. (Renamed from SplitPane for API clarity)                                                  |
+| `Collapsible`         | **Radix Collapsible** | Animated show/hide for a single content region; simpler than Accordion for standalone use                                                                 |
+| `Menubar`             | **Radix Menubar**     | Desktop-style horizontal menu bar (File, Edit, View...) with keyboard navigation and submenus. Used in Electron-based tools for native-feeling app chrome |
+| `Steps`               | —                     | Multi-step wizard indicator with active/completed/error states. Used for asset pipeline flows, entity creation wizards, import workflows                  |
 
 #### Data Display (4)
 
-| Component | Library | Notes |
-|-----------|---------|-------|
-| `Avatar` | **Radix Avatar** | User/entity image with fallback initials |
-| `AspectRatio` | **Radix AspectRatio** | Constrains child to a fixed aspect ratio (e.g., 16:9 thumbnails) |
-| `Table` | — | Simple semantic table (`Table.Header`, `Table.Body`, `Table.Row`, `Table.Cell`); for static/small data. Use `DataTable` for large datasets |
-| `Breadcrumb` | — | Navigation trail with separator and current-page indicator |
+| Component     | Library               | Notes                                                                                                                                      |
+| ------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Avatar`      | **Radix Avatar**      | User/entity image with fallback initials                                                                                                   |
+| `AspectRatio` | **Radix AspectRatio** | Constrains child to a fixed aspect ratio (e.g., 16:9 thumbnails)                                                                           |
+| `Table`       | —                     | Simple semantic table (`Table.Header`, `Table.Body`, `Table.Row`, `Table.Cell`); for static/small data. Use `DataTable` for large datasets |
+| `Breadcrumb`  | —                     | Navigation trail with separator and current-page indicator                                                                                 |
 
 #### Layout (3)
 
-| Component | Library | Notes |
-|-----------|---------|-------|
-| `AppShell` | — | Root layout (Sidebar + Nav + Main); fixed-viewport desktop assumption |
-| `DropZone` | — | Drag-and-drop file upload area with visual drag state, file type validation, and click-to-browse fallback. Used in asset import workflows |
-| `Pagination` | — | Page navigation controls (prev/next, page numbers, page size selector) |
+| Component    | Library | Notes                                                                                                                                     |
+| ------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `AppShell`   | —       | Root layout (Sidebar + Nav + Main); fixed-viewport desktop assumption                                                                     |
+| `DropZone`   | —       | Drag-and-drop file upload area with visual drag state, file type validation, and click-to-browse fallback. Used in asset import workflows |
+| `Pagination` | —       | Page navigation controls (prev/next, page numbers, page size selector)                                                                    |
 
 ### Phase 2b: Complex Inputs & Data (8 components)
 
@@ -660,36 +697,36 @@ requires dedicated design, testing, and iteration.
 
 #### Data (3)
 
-| Component | Library | Notes |
-|-----------|---------|-------|
-| `DataTable` | **TanStack Table** | Virtualization support for 10k+ rows; sorting, filtering, column resize |
-| `CommandPalette` | **cmdk** | Fast, keyboard-first navigation; fuzzy search |
-| `TreeView` | — | Hierarchical data display with expand/collapse, keyboard navigation, and selection. Used for scene graphs, entity hierarchies, file trees in EntityArchitect, LoreEngine, TerrainComposer |
+| Component        | Library            | Notes                                                                                                                                                                                     |
+| ---------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DataTable`      | **TanStack Table** | Virtualization support for 10k+ rows; sorting, filtering, column resize                                                                                                                   |
+| `CommandPalette` | **cmdk**           | Fast, keyboard-first navigation; fuzzy search                                                                                                                                             |
+| `TreeView`       | —                  | Hierarchical data display with expand/collapse, keyboard navigation, and selection. Used for scene graphs, entity hierarchies, file trees in EntityArchitect, LoreEngine, TerrainComposer |
 
 #### Advanced Inputs (4)
 
-| Component | Library | Props | Notes |
-|-----------|---------|-------|-------|
-| `Combobox` | **cmdk** or Radix | options, value, placeholder, search | Searchable select for large lists; autocomplete with filtering. Essential when Select doesn't scale (100s of entities/assets) |
-| `ColorPicker` | — | value, format, swatches, alpha, eyeDropper | HSL/RGB/Hex color selection with saturation/hue/alpha controls. Optional `alpha` channel toggle and `eyeDropper` for native picker. Used in material editing, palette creation, map annotations |
-| `TagsInput` | — | value, suggestions, max | Multi-tag entry field; add/remove freeform tags as pills. Used for entity tagging, keyword management across LoreEngine and QuestForge |
-| `PropertyGrid` | — | sections, values, onChange | Inspector-style key-value editor for entity properties; groups values into collapsible sections with typed editors per row |
+| Component      | Library           | Props                                      | Notes                                                                                                                                                                                           |
+| -------------- | ----------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Combobox`     | **cmdk** or Radix | options, value, placeholder, search        | Searchable select for large lists; autocomplete with filtering. Essential when Select doesn't scale (100s of entities/assets)                                                                   |
+| `ColorPicker`  | —                 | value, format, swatches, alpha, eyeDropper | HSL/RGB/Hex color selection with saturation/hue/alpha controls. Optional `alpha` channel toggle and `eyeDropper` for native picker. Used in material editing, palette creation, map annotations |
+| `TagsInput`    | —                 | value, suggestions, max                    | Multi-tag entry field; add/remove freeform tags as pills. Used for entity tagging, keyword management across LoreEngine and QuestForge                                                          |
+| `PropertyGrid` | —                 | sections, values, onChange                 | Inspector-style key-value editor for entity properties; groups values into collapsible sections with typed editors per row                                                                      |
 
 #### Display (1)
 
-| Component | Library | Notes |
-|-----------|---------|-------|
-| `EditableText` | — | Inline text that switches to an input on click/Enter. Used for renaming entities, nodes, layers, and labels in-place without opening a dialog. (Renamed from Editable for clarity) |
+| Component      | Library | Notes                                                                                                                                                                              |
+| -------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `EditableText` | —       | Inline text that switches to an input on click/Enter. Used for renaming entities, nodes, layers, and labels in-place without opening a dialog. (Renamed from Editable for clarity) |
 
 ### Phase 3: Domain-Specific (3 components)
 
 Components that require deeper integration with tool-specific data structures.
 
-| Component | Library | Props | Notes |
-|-----------|---------|-------|-------|
-| `NodeEditor` | — | nodes, edges, onConnect | Visual node graph for shader/logic/dialogue editors (future — may adopt reactflow) |
-| `Timeline` | — | tracks, currentTime, onSeek | Horizontal time-based track editor for animation sequences and cutscenes |
-| `VirtualCanvas` | — | items, viewport, onViewportChange | Infinite pannable/zoomable canvas for spatial layouts (maps, level editors) |
+| Component       | Library | Props                             | Notes                                                                              |
+| --------------- | ------- | --------------------------------- | ---------------------------------------------------------------------------------- |
+| `NodeEditor`    | —       | nodes, edges, onConnect           | Visual node graph for shader/logic/dialogue editors (future — may adopt reactflow) |
+| `Timeline`      | —       | tracks, currentTime, onSeek       | Horizontal time-based track editor for animation sequences and cutscenes           |
+| `VirtualCanvas` | —       | items, viewport, onViewportChange | Infinite pannable/zoomable canvas for spatial layouts (maps, level editors)        |
 
 ### Compound Component Patterns
 
@@ -711,13 +748,13 @@ Several components use **dot-notation** sub-components for structured compositio
 </Dialog>
 ```
 
-| Component | Sub-components |
-|-----------|---------------|
-| `Card` | `Card.Header`, `Card.Body`, `Card.Footer` |
-| `Dialog` | `Dialog.Trigger`, `Dialog.Content`, `Dialog.Header`, `Dialog.Footer` |
-| `Alert` | `Alert.Icon`, `Alert.Title`, `Alert.Description` |
-| `DataTable` | `DataTable.Toolbar`, `DataTable.Pagination` |
-| `Table` | `Table.Header`, `Table.Body`, `Table.Row`, `Table.Cell` |
+| Component   | Sub-components                                                       |
+| ----------- | -------------------------------------------------------------------- |
+| `Card`      | `Card.Header`, `Card.Body`, `Card.Footer`                            |
+| `Dialog`    | `Dialog.Trigger`, `Dialog.Content`, `Dialog.Header`, `Dialog.Footer` |
+| `Alert`     | `Alert.Icon`, `Alert.Title`, `Alert.Description`                     |
+| `DataTable` | `DataTable.Toolbar`, `DataTable.Pagination`                          |
+| `Table`     | `Table.Header`, `Table.Body`, `Table.Row`, `Table.Cell`              |
 
 ---
 
@@ -728,35 +765,35 @@ Several components use **dot-notation** sub-components for structured compositio
 Tools can provide domain-specific tokens (e.g., LoreEngine's "Prophecy" color) via the `ThemeProvider` without bloating the core system. The contract uses a generic type parameter for type-safe extensions.
 
 ```typescript
-type Palette = 'hearth-bronze' | 'midnight-forge' | 'deep-space' | 'midnight-forge-v2';
-type Mode = 'dark' | 'light';
+type Palette = 'hearth-bronze' | 'midnight-forge' | 'deep-space' | 'midnight-forge-v2'
+type Mode = 'dark' | 'light'
 
 interface ThemeContract<TExtensions extends Record<string, unknown> = Record<string, never>> {
-  palette: Palette;
-  mode: Mode;
-  colors: BaseColors;
-  spacing: SpacingScale;
-  shadows: ShadowScale;
-  animation: AnimationTokens;
-  zIndex: ZIndexScale;
-  extensions: TExtensions;
+  palette: Palette
+  mode: Mode
+  colors: BaseColors
+  spacing: SpacingScale
+  shadows: ShadowScale
+  animation: AnimationTokens
+  zIndex: ZIndexScale
+  extensions: TExtensions
 }
 
 // In LoreEngine:
 interface LoreExtensions {
-  prophecy: string;
-  factionPrimary: string;
-  factionSecondary: string;
-  timeline: { past: string; present: string; future: string };
+  prophecy: string
+  factionPrimary: string
+  factionSecondary: string
+  timeline: { past: string; present: string; future: string }
 }
-type LoreTheme = ThemeContract<LoreExtensions>;
+type LoreTheme = ThemeContract<LoreExtensions>
 
 // In TerrainComposer:
 interface TerrainExtensions {
-  terrain: { grass: string; water: string; rock: string };
-  gridLine: string;
+  terrain: { grass: string; water: string; rock: string }
+  gridLine: string
 }
-type TerrainTheme = ThemeContract<TerrainExtensions>;
+type TerrainTheme = ThemeContract<TerrainExtensions>
 ```
 
 #### CSS Injection Mechanism
@@ -798,13 +835,13 @@ contains all four palettes:
 
 ```css
 /* tokens.css — all palettes, scoped by data attribute */
-[data-palette="hearth-bronze"][data-theme="dark"] {
+[data-palette='hearth-bronze'][data-theme='dark'] {
   --forge-bg: #0c0805;
   --forge-surface: #1a140f;
   --forge-accent: #d97706;
   /* ... all semantic tokens */
 }
-[data-palette="midnight-forge"][data-theme="dark"] {
+[data-palette='midnight-forge'][data-theme='dark'] {
   --forge-bg: #0a0a1a;
   --forge-surface: #121830;
   --forge-accent: #4f8ff7;
@@ -835,6 +872,7 @@ All 9 tools are **fixed-viewport desktop applications** (Electron or full-window
 ### WCAG Compliance
 
 All components must meet **WCAG 2.1 AA** as a baseline:
+
 - **Text contrast**: All text/background combinations must achieve **4.5:1** contrast ratio (normal text) or **3:1** (large text ≥18px / bold ≥14px).
 - **Non-text contrast**: Interactive component boundaries and focus indicators must achieve **3:1** against adjacent colors.
 
@@ -866,22 +904,23 @@ All components must meet **WCAG 2.1 AA** as a baseline:
 
 Light mode is **not** a reversed dark scale. Warm-tinted grays (800–950) do not reverse cleanly to light backgrounds. Light mode requires its own semantic mapping:
 
-| Dark Mode | Light Mode |
-|-----------|------------|
-| `gray-950` → `--forge-bg` | `neutral-50` → `--forge-bg` |
-| `gray-900` → `--forge-surface` | `white` → `--forge-surface` |
+| Dark Mode                             | Light Mode                               |
+| ------------------------------------- | ---------------------------------------- |
+| `gray-950` → `--forge-bg`             | `neutral-50` → `--forge-bg`              |
+| `gray-900` → `--forge-surface`        | `white` → `--forge-surface`              |
 | `gray-800` → `--forge-surface-raised` | `neutral-100` → `--forge-surface-raised` |
-| `gray-100` → `--forge-text` | `gray-900` → `--forge-text` |
+| `gray-100` → `--forge-text`           | `gray-900` → `--forge-text`              |
 
 CSS scoping uses **data attributes** on the wrapping element (set by `ThemeProvider`):
+
 ```css
 /* Each palette × mode combination is a separate block in tokens.css */
-[data-palette="hearth-bronze"][data-theme="dark"] {
+[data-palette='hearth-bronze'][data-theme='dark'] {
   --forge-bg: #0c0805;
   --forge-surface: #1a140f;
   /* ... warm grays */
 }
-[data-palette="hearth-bronze"][data-theme="light"] {
+[data-palette='hearth-bronze'][data-theme='light'] {
   --forge-bg: #faf8f5;
   --forge-surface: #ffffff;
   /* ... neutral warm tones */
@@ -895,25 +934,26 @@ The `ThemeContract` includes a `mode` field (`'dark' | 'light'`) so components a
 
 **Default: Hearth Bronze (#11)** — artisanal blacksmith warmth with amber accent.
 
-| Token | Hearth Bronze (default) | Midnight Forge (#1) | Deep Space (#6) | Midnight Forge v2 (#10) |
-|-------|------------------------|---------------------|-----------------|------------------------|
-| `bg` | `#0c0805` | `#0a0a1a` | `#07090e` | `#080c14` |
-| `surface` | `#1a140f` | `#121830` | `#0e1420` | `#101828` |
-| `raised` | `#2a211a` | `#1e2d4a` | `#162032` | `#1a2540` |
-| `border` | `#3f3227` | `#2a3f5f` | `#243044` | `#283650` |
-| `text` | `#f2e9df` | `#e0e4ec` | `#d4dae5` | `#e2e8f0` |
-| `muted` | `#9a8169` | `#8892a8` | `#6b7a90` | `#7889a4` |
-| `accent` | `#d97706` (amber) | `#4f8ff7` (blue) | `#14b8a6` (teal) | `#f59e0b` (gold) |
-| `info` | `#3b82f6` | `#3b82f6` | `#38bdf8` | `#3b82f6` |
-| `success` | `#4ade80` | `#34d399` | `#22c55e` | `#34d399` |
-| `warning` | `#fbbf24` | `#fbbf24` | `#f59e0b` | `#fb923c` |
-| `danger` | `#f87171` | `#f87171` | `#ef4444` | `#f87171` |
-| Gray tint | Warm/brown | Navy/blue | Deep navy | Navy/blue |
-| Radius | `3px` | `3px` | `3px` | `3px` |
+| Token     | Hearth Bronze (default) | Midnight Forge (#1) | Deep Space (#6)  | Midnight Forge v2 (#10) |
+| --------- | ----------------------- | ------------------- | ---------------- | ----------------------- |
+| `bg`      | `#0c0805`               | `#0a0a1a`           | `#07090e`        | `#080c14`               |
+| `surface` | `#1a140f`               | `#121830`           | `#0e1420`        | `#101828`               |
+| `raised`  | `#2a211a`               | `#1e2d4a`           | `#162032`        | `#1a2540`               |
+| `border`  | `#3f3227`               | `#2a3f5f`           | `#243044`        | `#283650`               |
+| `text`    | `#f2e9df`               | `#e0e4ec`           | `#d4dae5`        | `#e2e8f0`               |
+| `muted`   | `#9a8169`               | `#8892a8`           | `#6b7a90`        | `#7889a4`               |
+| `accent`  | `#d97706` (amber)       | `#4f8ff7` (blue)    | `#14b8a6` (teal) | `#f59e0b` (gold)        |
+| `info`    | `#3b82f6`               | `#3b82f6`           | `#38bdf8`        | `#3b82f6`               |
+| `success` | `#4ade80`               | `#34d399`           | `#22c55e`        | `#34d399`               |
+| `warning` | `#fbbf24`               | `#fbbf24`           | `#f59e0b`        | `#fb923c`               |
+| `danger`  | `#f87171`               | `#f87171`           | `#ef4444`        | `#f87171`               |
+| Gray tint | Warm/brown              | Navy/blue           | Deep navy        | Navy/blue               |
+| Radius    | `3px`                   | `3px`               | `3px`            | `3px`                   |
 
 All four palettes use the **same 3px default radius** for a sharp, precision-tool feel.
 
 **Known issues to resolve during implementation:**
+
 - **Accent/warning collision** in Midnight Forge v2 (#10): gold accent `#f59e0b` is close to warning `#fb923c`. Differentiate by shifting warning toward pure amber or accent toward deeper gold.
 - **Danger button fills**: Light reds (`#f87171`) on solid fills may not clear WCAG AA for white text. Use darker fills (toward `#dc2626`) for danger button backgrounds specifically.
 - **Muted text contrast**: Hearth Bronze muted (`#9a8169`) and Deep Space muted (`#6b7a90`) need validation against their respective surfaces. May need 10–15% lightening.
@@ -931,6 +971,7 @@ All four palettes use the **same 3px default radius** for a sharp, precision-too
 ### Output Format
 
 All packages are built with **tsup**, producing:
+
 - **ESM** (primary) — for modern bundlers (Vite, esbuild).
 - **CJS** (secondary) — for legacy Node tooling or SSR if needed.
 - **TypeScript declarations** (`.d.ts`) — generated alongside each format.
@@ -953,18 +994,19 @@ module.exports = {
       getJSON() {}, // class map consumed by tsup plugin
     },
   },
-};
+}
 ```
 
 ### Entry Points
 
 Packages support both barrel and deep imports:
+
 ```typescript
 // Barrel (convenient, tree-shaking relies on bundler)
-import { Button, Input } from '@forgeui/components';
+import { Button, Input } from '@forgeui/components'
 
 // Deep import (guaranteed minimal, no barrel overhead)
-import { Button } from '@forgeui/components/Button';
+import { Button } from '@forgeui/components/Button'
 ```
 
 Each component is a separate entry point in the package's `exports` map.
@@ -972,10 +1014,12 @@ Each component is a separate entry point in the package's `exports` map.
 ### Build Order
 
 Turborepo manages the dependency graph:
+
 ```
 tokens ──→ hooks ──→ components
 tokens ──→ icons      (parallel with hooks)
 ```
+
 `hooks` depends on `tokens` (for `useTokens()`); `components` depends on both `tokens` and `hooks`.
 `icons` depends only on `tokens` and builds in parallel with `hooks`.
 
@@ -984,16 +1028,18 @@ tokens ──→ icons      (parallel with hooks)
 **Barrel imports** (`import { Button, Input } from '@forgeui/components'`) pull all CSS for the barrel — bundlers cannot tree-shake CSS side effects. **Deep imports** (`import { Button } from '@forgeui/components/Button'`) are CSS-optimal, pulling only the styles for that component.
 
 Each package.json specifies:
+
 ```json
 { "sideEffects": ["*.css"] }
 ```
+
 This tells bundlers that CSS imports have side effects (must not be removed), while all JS is side-effect-free and safe to tree-shake.
 
 ### Bundle Size Targets
 
-| Scope | Target |
-|-------|--------|
-| Per-component (JS + CSS, gzipped) | < 3 KB |
+| Scope                                       | Target  |
+| ------------------------------------------- | ------- |
+| Per-component (JS + CSS, gzipped)           | < 3 KB  |
 | Full barrel `@forgeui/components` (gzipped) | < 80 KB |
 
 CI tracks bundle sizes via `size-limit` and fails PRs that exceed budgets.
@@ -1024,6 +1070,7 @@ All four published packages (`tokens`, `components`, `hooks`, `icons`) use a **f
 ### CI Enforcement
 
 All quality gates run in CI on every PR:
+
 - `pnpm lint` — ESLint + Prettier.
 - `pnpm test` — Vitest (includes axe audits).
 - `pnpm build` — Ensures all packages compile cleanly.
@@ -1038,6 +1085,7 @@ PRs that fail any gate cannot merge.
 ### Semantic Versioning
 
 All packages follow **semver** strictly:
+
 - **Patch**: Bug fixes, token value tweaks that don't change names.
 - **Minor**: New components, new tokens, new non-breaking props.
 - **Major**: Removed/renamed components, removed/renamed tokens, breaking prop changes.
@@ -1045,6 +1093,7 @@ All packages follow **semver** strictly:
 ### Changesets
 
 Versioning is managed via **Changesets**:
+
 1. Every PR that changes a published package must include a changeset (`pnpm changeset`).
 2. Changesets accumulate on `main`.
 3. A release PR is auto-generated that bumps versions and updates changelogs.
@@ -1053,6 +1102,7 @@ Versioning is managed via **Changesets**:
 ### Breaking Change Policy
 
 Breaking changes require:
+
 - A migration guide in the PR description.
 - A deprecation period of at least one minor release where the old API is preserved with console warnings before removal.
 - Codemods provided where feasible (e.g., renaming a prop across consuming tools).
@@ -1064,6 +1114,7 @@ Breaking changes require:
 ### Storybook as Primary Docs
 
 Storybook serves as the living documentation site:
+
 - Every component has stories covering all variants, sizes, and states.
 - Stories include usage examples and prop documentation via `argTypes`.
 - The A11y addon panel is visible on every story for real-time audit feedback.
@@ -1075,6 +1126,7 @@ TypeScript types serve as the API reference. Component props are documented via 
 ### Migration Guides
 
 When consuming tools adopt ForgeUI, each tool gets a brief migration guide covering:
+
 - Which ForgeUI components replace existing ad-hoc components.
 - Token mapping from the tool's existing hardcoded values to ForgeUI tokens.
 - Any breaking changes in the tool's UI behavior.
@@ -1083,17 +1135,18 @@ When consuming tools adopt ForgeUI, each tool gets a brief migration guide cover
 
 ## Tooling & Quality Gates
 
-| Concern | Choice | Rationale |
-|---------|--------|-----------|
-| CSS Approach | **CSS Modules** | Scoped styles, zero runtime overhead, high performance |
-| Icons | **Lucide React** | Large, consistent library + custom SVG extension |
-| Testing | **Vitest + Testing Library** | Fast, modern test runner with DOM testing |
-| Accessibility | **vitest-axe** | Automated A11y testing; zero-violation policy in CI |
-| Styling Utils | **clsx** | Lightweight class merging for variant composition |
-| Build | **tsup** | Fast TS bundler; outputs ESM + CJS + declarations |
-| Versioning | **Changesets** | Automated semver bumps and changelogs |
+| Concern       | Choice                       | Rationale                                              |
+| ------------- | ---------------------------- | ------------------------------------------------------ |
+| CSS Approach  | **CSS Modules**              | Scoped styles, zero runtime overhead, high performance |
+| Icons         | **Lucide React**             | Large, consistent library + custom SVG extension       |
+| Testing       | **Vitest + Testing Library** | Fast, modern test runner with DOM testing              |
+| Accessibility | **vitest-axe**               | Automated A11y testing; zero-violation policy in CI    |
+| Styling Utils | **clsx**                     | Lightweight class merging for variant composition      |
+| Build         | **tsup**                     | Fast TS bundler; outputs ESM + CJS + declarations      |
+| Versioning    | **Changesets**               | Automated semver bumps and changelogs                  |
 
 ### Quality Gates
+
 - **A11y**: 100% `vitest-axe` pass rate on every component.
 - **Canvas-Ready**: Every color token must be available as a raw hex string for `<canvas>` use.
 - **Performance**: Individual packages are tree-shakeable; deep imports supported.
@@ -1102,20 +1155,21 @@ When consuming tools adopt ForgeUI, each tool gets a brief migration guide cover
 
 ### Infrastructure Config Files
 
-| File | Spec |
-|------|------|
-| `eslint.config.js` | ESLint 9 flat config + `eslint-plugin-jsx-a11y` + `eslint-plugin-react-hooks` |
-| `.prettierrc` | Single quotes, no semicolons, trailing commas (`all`) |
-| `tsconfig.json` | TypeScript project references, `composite: true`, strict mode |
-| `turbo.json` | Pipeline: `tokens` → `hooks` → `components`; `icons` parallel |
+| File                       | Spec                                                                                    |
+| -------------------------- | --------------------------------------------------------------------------------------- |
+| `eslint.config.js`         | ESLint 9 flat config + `eslint-plugin-jsx-a11y` + `eslint-plugin-react-hooks`           |
+| `.prettierrc`              | Single quotes, no semicolons, trailing commas (`all`)                                   |
+| `tsconfig.json`            | TypeScript project references, `composite: true`, strict mode                           |
+| `turbo.json`               | Pipeline: `tokens` → `hooks` → `components`; `icons` parallel                           |
 | `.github/workflows/ci.yml` | Lint → test (vitest + axe) → build → Storybook build → bundle size check (`size-limit`) |
-| `pnpm-workspace.yaml` | `packages: ['packages/*', 'apps/*']` |
+| `pnpm-workspace.yaml`      | `packages: ['packages/*', 'apps/*']`                                                    |
 
 ---
 
 ## Implementation Strategy
 
 ### Phase 1: Foundation (35 components)
+
 - Setup Monorepo (pnpm + Turborepo).
 - Define full numeric color scales (50–950, including 750) for all palettes and export JS-accessible objects.
 - Define spacing, typography, border radius, shadow, animation, z-index, focus ring, opacity, icon size, container width, and scrollbar token scales.
@@ -1129,7 +1183,9 @@ When consuming tools adopt ForgeUI, each tool gets a brief migration guide cover
 - Configure Changesets for versioning.
 
 ### Phase 2a: Radix Composites & Layout (13 components)
+
 Lower risk — primarily wrapping existing Radix primitives and composing layouts.
+
 - Build `Drawer` extending Radix Dialog for slide-in panels.
 - Build `Toolbar` with roving focus and grouped controls.
 - Build `ResizablePanelGroup` with persisted panel sizes.
@@ -1145,7 +1201,9 @@ Lower risk — primarily wrapping existing Radix primitives and composing layout
 - Build `Pagination` controls.
 
 ### Phase 2b: Complex Inputs & Data (8 components)
+
 Higher complexity — each requires dedicated design, testing, and iteration.
+
 - Integrate **TanStack Table** for `DataTable` with virtualization.
 - Integrate **cmdk** for `CommandPalette` and `Combobox`.
 - Build `TreeView` for hierarchical data (scene graphs, entity trees, file browsers).
@@ -1157,19 +1215,23 @@ Higher complexity — each requires dedicated design, testing, and iteration.
 ### Phase 3: Domain-Specific Components & Rollout (3 components)
 
 #### Domain Components
+
 - Build `NodeEditor` for visual node graphs (future — may adopt reactflow).
 - Build `Timeline` for time-based track editing.
 - Build `VirtualCanvas` for infinite pannable/zoomable spatial layouts.
 
 #### Extension Support
+
 - Implement generic `ThemeContract<T>` provider with typed extensions and CSS injection.
 - Build and document the extension pattern for LoreEngine (first consumer).
 
 #### Pilot Migration: PipelineInspector
+
 - **PipelineInspector** migrates first — it has the simplest UI surface and fewest custom components, making it the lowest-risk pilot.
 - Document the migration process, pain points, and patterns discovered.
 
 #### Incremental Rollout
+
 - Tools migrate incrementally, not all-at-once. A tool can adopt ForgeUI for new screens while keeping existing UI intact.
 - Migration order (after pilot): **EntityArchitect** → **QuestForge** → **EncounterComposer** → **AssetGenerator** → **Director** → **TerrainComposer** → **LoreEngine** (last, largest surface area).
 - **Crucible** is excluded from the migration order — it is the core framework, not a UI application. It may consume `@forgeui/tokens` for shared constants but does not render ForgeUI components.
@@ -1180,6 +1242,7 @@ Higher complexity — each requires dedicated design, testing, and iteration.
 - "Migrated" means: all new UI uses ForgeUI components; existing UI is converted or has a tracked backlog to convert.
 
 #### Compatibility & React Target
+
 - ForgeUI targets **React 19+**. Tools on older versions must upgrade before adopting.
 - **No `forwardRef`**: React 19 supports ref as a regular prop — components accept `ref` natively without wrapping in `forwardRef`.
 - **`'use client'` directive**: tsup's `banner` option prepends `'use client';` to every component entry point, ensuring compatibility with React Server Components.

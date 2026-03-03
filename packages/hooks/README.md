@@ -38,7 +38,7 @@ function ThemeSwitcher() {
 
   return (
     <>
-      <select value={palette} onChange={e => setPalette(e.target.value as Palette)}>
+      <select value={palette} onChange={(e) => setPalette(e.target.value as Palette)}>
         <option value="hearth-bronze">Hearth Bronze</option>
         <option value="midnight-forge">Midnight Forge</option>
         <option value="deep-space">Deep Space</option>
@@ -55,13 +55,13 @@ function ThemeSwitcher() {
 
 ### Return value
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `palette` | `'hearth-bronze' \| 'midnight-forge' \| 'deep-space' \| 'midnight-forge-v2'` | Active palette |
-| `mode` | `'dark' \| 'light'` | Active mode |
-| `setPalette` | `(p: Palette) => void` | Switch palette — updates `data-palette` attribute instantly |
-| `setMode` | `(m: Mode) => void` | Switch mode — updates `data-theme` attribute instantly |
-| `extensions` | `TExtensions` | Tool-specific extension tokens (see below) |
+| Field        | Type                                                                         | Description                                                 |
+| ------------ | ---------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| `palette`    | `'hearth-bronze' \| 'midnight-forge' \| 'deep-space' \| 'midnight-forge-v2'` | Active palette                                              |
+| `mode`       | `'dark' \| 'light'`                                                          | Active mode                                                 |
+| `setPalette` | `(p: Palette) => void`                                                       | Switch palette — updates `data-palette` attribute instantly |
+| `setMode`    | `(m: Mode) => void`                                                          | Switch mode — updates `data-theme` attribute instantly      |
+| `extensions` | `TExtensions`                                                                | Tool-specific extension tokens (see below)                  |
 
 Switching palette or mode swaps CSS custom properties via data attributes — no page reload or JS recalculation needed.
 
@@ -80,14 +80,14 @@ function CanvasRenderer() {
     const ctx = canvasRef.current?.getContext('2d')
     if (!ctx) return
 
-    ctx.fillStyle = tokens.bg       // '#0c0805'
+    ctx.fillStyle = tokens.bg // '#0c0805'
     ctx.fillRect(0, 0, width, height)
 
     ctx.strokeStyle = tokens.border // '#3f3227'
     ctx.lineWidth = 1
     ctx.strokeRect(x, y, w, h)
 
-    ctx.fillStyle = tokens.accent   // '#d97706'
+    ctx.fillStyle = tokens.accent // '#d97706'
     ctx.fillText('Selected', x, y)
   }, [tokens])
 
@@ -97,21 +97,21 @@ function CanvasRenderer() {
 
 ### Return value
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `bg` | `string` | Background hex — `#0c0805` |
-| `surface` | `string` | Surface hex |
-| `surfaceRaised` | `string` | Raised surface hex |
-| `border` | `string` | Default border hex |
-| `borderSubtle` | `string` | Subtle border hex |
-| `text` | `string` | Primary text hex |
-| `textMuted` | `string` | Muted text hex |
-| `accent` | `string` | Accent color hex |
-| `info` | `string` | Info status hex |
-| `success` | `string` | Success status hex |
-| `warning` | `string` | Warning status hex |
-| `danger` | `string` | Danger status hex |
-| `extensions` | `TExtensions` | Tool-specific extension tokens |
+| Field           | Type          | Description                    |
+| --------------- | ------------- | ------------------------------ |
+| `bg`            | `string`      | Background hex — `#0c0805`     |
+| `surface`       | `string`      | Surface hex                    |
+| `surfaceRaised` | `string`      | Raised surface hex             |
+| `border`        | `string`      | Default border hex             |
+| `borderSubtle`  | `string`      | Subtle border hex              |
+| `text`          | `string`      | Primary text hex               |
+| `textMuted`     | `string`      | Muted text hex                 |
+| `accent`        | `string`      | Accent color hex               |
+| `info`          | `string`      | Info status hex                |
+| `success`       | `string`      | Success status hex             |
+| `warning`       | `string`      | Warning status hex             |
+| `danger`        | `string`      | Danger status hex              |
+| `extensions`    | `TExtensions` | Tool-specific extension tokens |
 
 ### WebGL usage
 

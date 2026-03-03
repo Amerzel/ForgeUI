@@ -34,26 +34,29 @@ export function AppShell({
   return (
     <div
       className={cn('forge-app-shell', className)}
-      style={{
-        display: 'grid',
-        gridTemplateRows: hasNav ? `${navHeight} 1fr` : '1fr',
-        gridTemplateColumns: hasSidebar ? `${sidebarWidth} 1fr` : '1fr',
-        gridTemplateAreas: hasNav && hasSidebar
-          ? `"nav nav" "sidebar main"`
-          : hasNav
-            ? `"nav" "main"`
-            : hasSidebar
-              ? `"sidebar main"`
-              : `"main"`,
-        width: '100%',
-        height: '100dvh',
-        minHeight: '720px',
-        minWidth: '1280px',
-        overflow: 'hidden',
-        backgroundColor: 'var(--forge-bg)',
-        '--forge-shell-sidebar-width': sidebarWidth,
-        '--forge-shell-nav-height': navHeight,
-      } as React.CSSProperties}
+      style={
+        {
+          display: 'grid',
+          gridTemplateRows: hasNav ? `${navHeight} 1fr` : '1fr',
+          gridTemplateColumns: hasSidebar ? `${sidebarWidth} 1fr` : '1fr',
+          gridTemplateAreas:
+            hasNav && hasSidebar
+              ? `"nav nav" "sidebar main"`
+              : hasNav
+                ? `"nav" "main"`
+                : hasSidebar
+                  ? `"sidebar main"`
+                  : `"main"`,
+          width: '100%',
+          height: '100dvh',
+          minHeight: '720px',
+          minWidth: '1280px',
+          overflow: 'hidden',
+          backgroundColor: 'var(--forge-bg)',
+          '--forge-shell-sidebar-width': sidebarWidth,
+          '--forge-shell-nav-height': navHeight,
+        } as React.CSSProperties
+      }
     >
       {hasNav && (
         <header

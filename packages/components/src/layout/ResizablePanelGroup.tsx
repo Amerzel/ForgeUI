@@ -53,7 +53,9 @@ function ResizableHandle({ direction, onDrag }: ResizableHandleProps) {
     onDrag(delta)
   }
 
-  const handlePointerUp = () => { dragging.current = false }
+  const handlePointerUp = () => {
+    dragging.current = false
+  }
 
   return (
     <div
@@ -71,8 +73,12 @@ function ResizableHandle({ direction, onDrag }: ResizableHandleProps) {
         position: 'relative',
         zIndex: 1,
       }}
-      onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--forge-accent)' }}
-      onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'var(--forge-border)' }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = 'var(--forge-accent)'
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = 'var(--forge-border)'
+      }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
@@ -131,7 +137,9 @@ export function ResizablePanelGroup({
       try {
         const stored = localStorage.getItem(`forge-panel-${storageKey}`)
         if (stored) return JSON.parse(stored) as number[]
-      } catch { /* ignore */ }
+      } catch {
+        /* ignore */
+      }
     }
     return panels.map(() => null)
   })
@@ -151,43 +159,62 @@ export function ResizablePanelGroup({
     })
   }, [sizes, isHorizontal])
 
-  const handleDrag = useCallback((panelIndex: number, delta: number) => {
-    setSizes(prev => {
-      const next = [...prev]
-      const el = panelRefs.current[panelIndex]
-      if (!el) return prev
-      const currentSize = isHorizontal ? el.offsetWidth : el.offsetHeight
-      const panel = panels[panelIndex] as React.ReactElement<ResizablePanelProps>
-      const minSize = panel?.props?.minSize ?? 100
-      const maxSize = panel?.props?.maxSize ?? Infinity
-      const newSize = Math.max(minSize, Math.min(maxSize, currentSize + delta))
-      next[panelIndex] = newSize
-      if (storageKey) {
-        try { localStorage.setItem(`forge-panel-${storageKey}`, JSON.stringify(next)) } catch { /* ignore */ }
-      }
-      return next
-    })
-  }, [panels, isHorizontal, storageKey])
+  const handleDrag = useCallback(
+    (panelIndex: number, delta: number) => {
+      setSizes((prev) => {
+        const next = [...prev]
+        const el = panelRefs.current[panelIndex]
+        if (!el) return prev
+        const currentSize = isHorizontal ? el.offsetWidth : el.offsetHeight
+        const panel = panels[panelIndex] as React.ReactElement<ResizablePanelProps>
+        const minSize = panel?.props?.minSize ?? 100
+        const maxSize = panel?.props?.maxSize ?? Infinity
+        const newSize = Math.max(minSize, Math.min(maxSize, currentSize + delta))
+        next[panelIndex] = newSize
+        if (storageKey) {
+          try {
+            localStorage.setItem(`forge-panel-${storageKey}`, JSON.stringify(next))
+          } catch {
+            /* ignore */
+          }
+        }
+        return next
+      })
+    },
+    [panels, isHorizontal, storageKey],
+  )
 
   const items: React.ReactNode[] = []
   panels.forEach((panel, i) => {
     items.push(
       <div
         key={`panel-${i}`}
-        ref={el => { panelRefs.current[i] = el }}
+        ref={(el) => {
+          panelRefs.current[i] = el
+        }}
         style={{
-          flex: (panel as React.ReactElement<ResizablePanelProps>)?.props?.flex ? '1 1 auto' : 'none',
+          flex: (panel as React.ReactElement<ResizablePanelProps>)?.props?.flex
+            ? '1 1 auto'
+            : 'none',
           overflow: 'auto',
-          minWidth: isHorizontal ? ((panel as React.ReactElement<ResizablePanelProps>)?.props?.minSize ?? 100) : undefined,
-          minHeight: !isHorizontal ? ((panel as React.ReactElement<ResizablePanelProps>)?.props?.minSize ?? 100) : undefined,
+          minWidth: isHorizontal
+            ? ((panel as React.ReactElement<ResizablePanelProps>)?.props?.minSize ?? 100)
+            : undefined,
+          minHeight: !isHorizontal
+            ? ((panel as React.ReactElement<ResizablePanelProps>)?.props?.minSize ?? 100)
+            : undefined,
         }}
       >
         {panel}
-      </div>
+      </div>,
     )
     if (i < panels.length - 1) {
       items.push(
-        <ResizableHandle key={`handle-${i}`} direction={direction} onDrag={(d) => handleDrag(i, d)} />
+        <ResizableHandle
+          key={`handle-${i}`}
+          direction={direction}
+          onDrag={(d) => handleDrag(i, d)}
+        />,
       )
     }
   })

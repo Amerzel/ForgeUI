@@ -48,7 +48,9 @@ export function NumberInput({
   'aria-label': ariaLabel,
 }: NumberInputProps) {
   const [focused, setFocused] = useState(false)
-  const [displayValue, setDisplayValue] = useState(value !== undefined ? String(round(value, precision)) : '')
+  const [displayValue, setDisplayValue] = useState(
+    value !== undefined ? String(round(value, precision)) : '',
+  )
   const dragRef = useRef<{ startY: number; startValue: number } | null>(null)
 
   useEffect(() => {
@@ -57,16 +59,19 @@ export function NumberInput({
     }
   }, [value, precision, focused])
 
-  const commit = useCallback((raw: string) => {
-    const parsed = parseFloat(raw)
-    if (!isNaN(parsed)) {
-      const clamped = clamp(round(parsed, precision), min, max)
-      onChange?.(clamped)
-      setDisplayValue(String(clamped))
-    } else {
-      setDisplayValue(value !== undefined ? String(round(value, precision)) : '')
-    }
-  }, [onChange, value, min, max, precision])
+  const commit = useCallback(
+    (raw: string) => {
+      const parsed = parseFloat(raw)
+      if (!isNaN(parsed)) {
+        const clamped = clamp(round(parsed, precision), min, max)
+        onChange?.(clamped)
+        setDisplayValue(String(clamped))
+      } else {
+        setDisplayValue(value !== undefined ? String(round(value, precision)) : '')
+      }
+    },
+    [onChange, value, min, max, precision],
+  )
 
   const increment = () => {
     const current = value ?? 0
@@ -88,7 +93,7 @@ export function NumberInput({
 
   const handlePointerMove = (e: React.PointerEvent<HTMLInputElement>) => {
     if (!dragRef.current) return
-    const delta = dragRef.current.startY - e.clientY  // up = increase
+    const delta = dragRef.current.startY - e.clientY // up = increase
     const newVal = clamp(round(dragRef.current.startValue + delta * step, precision), min, max)
     onChange?.(newVal)
     setDisplayValue(String(newVal))
@@ -113,7 +118,9 @@ export function NumberInput({
         borderRadius: 'var(--forge-radius-md)',
         overflow: 'hidden',
         transition: `border-color var(--forge-duration-fast) var(--forge-easing-default)`,
-        boxShadow: focused ? `0 0 0 2px color-mix(in srgb, var(--forge-accent) 25%, transparent)` : undefined,
+        boxShadow: focused
+          ? `0 0 0 2px color-mix(in srgb, var(--forge-accent) 25%, transparent)`
+          : undefined,
         opacity: disabled ? 0.6 : 1,
       }}
     >
@@ -165,9 +172,17 @@ export function NumberInput({
           commit(e.currentTarget.value)
         }}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') { e.currentTarget.blur() }
-          if (e.key === 'ArrowUp')   { e.preventDefault(); increment() }
-          if (e.key === 'ArrowDown') { e.preventDefault(); decrement() }
+          if (e.key === 'Enter') {
+            e.currentTarget.blur()
+          }
+          if (e.key === 'ArrowUp') {
+            e.preventDefault()
+            increment()
+          }
+          if (e.key === 'ArrowDown') {
+            e.preventDefault()
+            decrement()
+          }
         }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}

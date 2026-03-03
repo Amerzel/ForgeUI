@@ -90,80 +90,102 @@ export function DrawingCanvas({
     ctx.putImageData(imageData, 0, 0)
   }, [invert, width, height])
 
-  const getCanvasPoint = useCallback((e: React.PointerEvent) => {
-    const canvas = canvasRef.current
-    if (!canvas) return null
-    const rect = canvas.getBoundingClientRect()
-    return {
-      x: ((e.clientX - rect.left) / rect.width) * width,
-      y: ((e.clientY - rect.top) / rect.height) * height,
-    }
-  }, [width, height])
+  const getCanvasPoint = useCallback(
+    (e: React.PointerEvent) => {
+      const canvas = canvasRef.current
+      if (!canvas) return null
+      const rect = canvas.getBoundingClientRect()
+      return {
+        x: ((e.clientX - rect.left) / rect.width) * width,
+        y: ((e.clientY - rect.top) / rect.height) * height,
+      }
+    },
+    [width, height],
+  )
 
-  const drawCircle = useCallback((ctx: CanvasRenderingContext2D, x: number, y: number) => {
-    ctx.beginPath()
-    ctx.arc(x, y, brushSize, 0, Math.PI * 2)
-    ctx.fill()
-  }, [brushSize])
+  const drawCircle = useCallback(
+    (ctx: CanvasRenderingContext2D, x: number, y: number) => {
+      ctx.beginPath()
+      ctx.arc(x, y, brushSize, 0, Math.PI * 2)
+      ctx.fill()
+    },
+    [brushSize],
+  )
 
-  const drawStroke = useCallback((ctx: CanvasRenderingContext2D, from: { x: number; y: number }, to: { x: number; y: number }) => {
-    const dx = to.x - from.x
-    const dy = to.y - from.y
-    const dist = Math.sqrt(dx * dx + dy * dy)
-    // Interpolate points for smooth strokes
-    const steps = Math.max(1, Math.ceil(dist / (brushSize * 0.3)))
-    for (let i = 0; i <= steps; i++) {
-      const t = i / steps
-      drawCircle(ctx, lerp(from.x, to.x, t), lerp(from.y, to.y, t))
-    }
-  }, [brushSize, drawCircle])
+  const drawStroke = useCallback(
+    (
+      ctx: CanvasRenderingContext2D,
+      from: { x: number; y: number },
+      to: { x: number; y: number },
+    ) => {
+      const dx = to.x - from.x
+      const dy = to.y - from.y
+      const dist = Math.sqrt(dx * dx + dy * dy)
+      // Interpolate points for smooth strokes
+      const steps = Math.max(1, Math.ceil(dist / (brushSize * 0.3)))
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps
+        drawCircle(ctx, lerp(from.x, to.x, t), lerp(from.y, to.y, t))
+      }
+    },
+    [brushSize, drawCircle],
+  )
 
-  const setupContext = useCallback((ctx: CanvasRenderingContext2D) => {
-    if (tool === 'eraser') {
-      ctx.globalCompositeOperation = 'destination-out'
-      ctx.fillStyle = 'rgba(0, 0, 0, 1)'
-    } else {
-      ctx.globalCompositeOperation = 'source-over'
-      ctx.fillStyle = brushColor
-    }
-  }, [tool, brushColor])
+  const setupContext = useCallback(
+    (ctx: CanvasRenderingContext2D) => {
+      if (tool === 'eraser') {
+        ctx.globalCompositeOperation = 'destination-out'
+        ctx.fillStyle = 'rgba(0, 0, 0, 1)'
+      } else {
+        ctx.globalCompositeOperation = 'source-over'
+        ctx.fillStyle = brushColor
+      }
+    },
+    [tool, brushColor],
+  )
 
   const getMaskDataUrl = useCallback(() => {
     return canvasRef.current?.toDataURL('image/png') ?? ''
   }, [])
 
-  const handlePointerDown = useCallback((e: React.PointerEvent) => {
-    const point = getCanvasPoint(e)
-    if (!point) return
+  const handlePointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      const point = getCanvasPoint(e)
+      if (!point) return
 
-    e.currentTarget.setPointerCapture(e.pointerId)
-    drawingRef.current = true
-    lastPointRef.current = point
+      e.currentTarget.setPointerCapture(e.pointerId)
+      drawingRef.current = true
+      lastPointRef.current = point
 
-    const ctx = canvasRef.current?.getContext('2d')
-    if (!ctx) return
-    setupContext(ctx)
-    drawCircle(ctx, point.x, point.y)
-    onStroke?.(getMaskDataUrl())
-  }, [getCanvasPoint, setupContext, drawCircle, onStroke, getMaskDataUrl])
-
-  const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (!drawingRef.current) return
-    const point = getCanvasPoint(e)
-    if (!point) return
-
-    const ctx = canvasRef.current?.getContext('2d')
-    if (!ctx) return
-    setupContext(ctx)
-
-    if (lastPointRef.current) {
-      drawStroke(ctx, lastPointRef.current, point)
-    } else {
+      const ctx = canvasRef.current?.getContext('2d')
+      if (!ctx) return
+      setupContext(ctx)
       drawCircle(ctx, point.x, point.y)
-    }
-    lastPointRef.current = point
-    onStroke?.(getMaskDataUrl())
-  }, [getCanvasPoint, setupContext, drawStroke, drawCircle, onStroke, getMaskDataUrl])
+      onStroke?.(getMaskDataUrl())
+    },
+    [getCanvasPoint, setupContext, drawCircle, onStroke, getMaskDataUrl],
+  )
+
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent) => {
+      if (!drawingRef.current) return
+      const point = getCanvasPoint(e)
+      if (!point) return
+
+      const ctx = canvasRef.current?.getContext('2d')
+      if (!ctx) return
+      setupContext(ctx)
+
+      if (lastPointRef.current) {
+        drawStroke(ctx, lastPointRef.current, point)
+      } else {
+        drawCircle(ctx, point.x, point.y)
+      }
+      lastPointRef.current = point
+      onStroke?.(getMaskDataUrl())
+    },
+    [getCanvasPoint, setupContext, drawStroke, drawCircle, onStroke, getMaskDataUrl],
+  )
 
   const handlePointerUp = useCallback(() => {
     if (!drawingRef.current) return

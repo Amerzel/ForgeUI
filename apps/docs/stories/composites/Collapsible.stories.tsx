@@ -18,16 +18,40 @@ export const Default: Story = {
           { label: 'Physics', content: 'Mass · Friction · Restitution · Constraints' },
           { label: 'Rendering', content: 'Material · Cast Shadows · Receive Shadows · Layer Mask' },
         ].map(({ label, content }) => (
-          <div key={label} style={{ border: '1px solid var(--forge-border)', borderRadius: 'var(--forge-radius-md)', overflow: 'hidden' }}>
+          <div
+            key={label}
+            style={{
+              border: '1px solid var(--forge-border)',
+              borderRadius: 'var(--forge-radius-md)',
+              overflow: 'hidden',
+            }}
+          >
             <Collapsible
               defaultOpen={label === 'Transform'}
               trigger={
-                <div style={{ padding: '10px 12px', backgroundColor: 'var(--forge-surface)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Text size="sm" style={{ fontWeight: 500 }}>{label}</Text>
+                <div
+                  style={{
+                    padding: '10px 12px',
+                    backgroundColor: 'var(--forge-surface)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                  }}
+                >
+                  <Text size="sm" style={{ fontWeight: 500 }}>
+                    {label}
+                  </Text>
                 </div>
               }
             >
-              <div style={{ padding: '12px', backgroundColor: 'var(--forge-bg)', color: 'var(--forge-text-muted)', fontSize: 'var(--forge-font-size-sm)' }}>
+              <div
+                style={{
+                  padding: '12px',
+                  backgroundColor: 'var(--forge-bg)',
+                  color: 'var(--forge-text-muted)',
+                  fontSize: 'var(--forge-font-size-sm)',
+                }}
+              >
                 {content}
               </div>
             </Collapsible>

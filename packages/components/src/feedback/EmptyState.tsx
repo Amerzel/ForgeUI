@@ -32,21 +32,32 @@ export function EmptyState({ icon, title, description, action, className }: Empt
       }}
     >
       {icon && (
-        <div style={{ fontSize: '2rem', color: 'var(--forge-text-muted)', lineHeight: 1 }} aria-hidden="true">
+        <div
+          style={{ fontSize: '2rem', color: 'var(--forge-text-muted)', lineHeight: 1 }}
+          aria-hidden="true"
+        >
           {icon}
         </div>
       )}
-      <span style={{
-        fontSize: 'var(--forge-font-size-base)',
-        fontWeight: 'var(--forge-font-semibold)',
-        color: 'var(--forge-text)',
-      }}>{title}</span>
+      <span
+        style={{
+          fontSize: 'var(--forge-font-size-base)',
+          fontWeight: 'var(--forge-font-semibold)',
+          color: 'var(--forge-text)',
+        }}
+      >
+        {title}
+      </span>
       {description && (
-        <span style={{
-          fontSize: 'var(--forge-font-size-sm)',
-          color: 'var(--forge-text-muted)',
-          maxWidth: '36ch',
-        }}>{description}</span>
+        <span
+          style={{
+            fontSize: 'var(--forge-font-size-sm)',
+            color: 'var(--forge-text-muted)',
+            maxWidth: '36ch',
+          }}
+        >
+          {description}
+        </span>
       )}
       {action && (
         <button
@@ -65,7 +76,9 @@ export function EmptyState({ icon, title, description, action, className }: Empt
             cursor: 'pointer',
             fontFamily: 'var(--forge-font-sans)',
           }}
-        >{action.label}</button>
+        >
+          {action.label}
+        </button>
       )}
     </div>
   )

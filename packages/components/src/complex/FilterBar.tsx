@@ -46,13 +46,15 @@ function FilterChip({
   const [open, setOpen] = useState(false)
   const popoverId = useId()
 
-  const isActive = filterValue !== undefined && filterValue !== false &&
+  const isActive =
+    filterValue !== undefined &&
+    filterValue !== false &&
     !(Array.isArray(filterValue) && filterValue.length === 0)
 
   const chipLabel = (() => {
     if (filter.type === 'boolean') return filter.label
     if (filter.type === 'single-select' && typeof filterValue === 'string') {
-      const opt = filter.options?.find(o => o.value === filterValue)
+      const opt = filter.options?.find((o) => o.value === filterValue)
       return opt ? `${filter.label}: ${opt.label}` : filter.label
     }
     if (filter.type === 'multi-select' && Array.isArray(filterValue) && filterValue.length > 0) {
@@ -65,22 +67,28 @@ function FilterChip({
     if (filter.type === 'boolean') {
       onChangeValue(filterValue ? undefined : true)
     } else {
-      setOpen(o => !o)
+      setOpen((o) => !o)
     }
   }, [filter.type, filterValue, onChangeValue])
 
-  const handleMultiToggle = useCallback((optValue: string) => {
-    const current = Array.isArray(filterValue) ? filterValue : []
-    const next = current.includes(optValue)
-      ? current.filter(v => v !== optValue)
-      : [...current, optValue]
-    onChangeValue(next.length > 0 ? next : undefined)
-  }, [filterValue, onChangeValue])
+  const handleMultiToggle = useCallback(
+    (optValue: string) => {
+      const current = Array.isArray(filterValue) ? filterValue : []
+      const next = current.includes(optValue)
+        ? current.filter((v) => v !== optValue)
+        : [...current, optValue]
+      onChangeValue(next.length > 0 ? next : undefined)
+    },
+    [filterValue, onChangeValue],
+  )
 
-  const handleSingleSelect = useCallback((optValue: string) => {
-    onChangeValue(filterValue === optValue ? undefined : optValue)
-    setOpen(false)
-  }, [filterValue, onChangeValue])
+  const handleSingleSelect = useCallback(
+    (optValue: string) => {
+      onChangeValue(filterValue === optValue ? undefined : optValue)
+      setOpen(false)
+    },
+    [filterValue, onChangeValue],
+  )
 
   return (
     <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -98,7 +106,9 @@ function FilterChip({
           fontFamily: 'var(--forge-font-sans)',
           fontWeight: 500,
           color: isActive ? 'var(--forge-accent)' : 'var(--forge-text-muted)',
-          backgroundColor: isActive ? 'color-mix(in srgb, var(--forge-accent) 10%, transparent)' : 'transparent',
+          backgroundColor: isActive
+            ? 'color-mix(in srgb, var(--forge-accent) 10%, transparent)'
+            : 'transparent',
           border: `1px solid ${isActive ? 'var(--forge-accent)' : 'var(--forge-border)'}`,
           borderRadius: 'var(--forge-radius-full)',
           cursor: 'pointer',
@@ -107,7 +117,9 @@ function FilterChip({
       >
         {chipLabel}
         {filter.type !== 'boolean' && (
-          <span aria-hidden style={{ fontSize: '8px' }}>{open ? '▲' : '▼'}</span>
+          <span aria-hidden style={{ fontSize: '8px' }}>
+            {open ? '▲' : '▼'}
+          </span>
         )}
       </button>
 
@@ -130,10 +142,11 @@ function FilterChip({
             boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
           }}
         >
-          {filter.options?.map(opt => {
-            const selected = filter.type === 'multi-select'
-              ? (Array.isArray(filterValue) && filterValue.includes(opt.value))
-              : filterValue === opt.value
+          {filter.options?.map((opt) => {
+            const selected =
+              filter.type === 'multi-select'
+                ? Array.isArray(filterValue) && filterValue.includes(opt.value)
+                : filterValue === opt.value
 
             return (
               <button
@@ -141,7 +154,11 @@ function FilterChip({
                 type="button"
                 role="option"
                 aria-selected={selected}
-                onClick={() => filter.type === 'multi-select' ? handleMultiToggle(opt.value) : handleSingleSelect(opt.value)}
+                onClick={() =>
+                  filter.type === 'multi-select'
+                    ? handleMultiToggle(opt.value)
+                    : handleSingleSelect(opt.value)
+                }
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -151,7 +168,9 @@ function FilterChip({
                   fontSize: 'var(--forge-font-size-xs)',
                   fontFamily: 'var(--forge-font-sans)',
                   color: 'var(--forge-text)',
-                  backgroundColor: selected ? 'color-mix(in srgb, var(--forge-accent) 10%, transparent)' : 'transparent',
+                  backgroundColor: selected
+                    ? 'color-mix(in srgb, var(--forge-accent) 10%, transparent)'
+                    : 'transparent',
                   border: 'none',
                   borderRadius: 'var(--forge-radius-sm)',
                   cursor: 'pointer',
@@ -159,13 +178,29 @@ function FilterChip({
                 }}
               >
                 {filter.type === 'multi-select' && (
-                  <span style={{ width: '14px', height: '14px', border: `1px solid ${selected ? 'var(--forge-accent)' : 'var(--forge-border)'}`, borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', flexShrink: 0, backgroundColor: selected ? 'var(--forge-accent)' : 'transparent', color: selected ? 'var(--forge-bg)' : 'transparent' }}>
+                  <span
+                    style={{
+                      width: '14px',
+                      height: '14px',
+                      border: `1px solid ${selected ? 'var(--forge-accent)' : 'var(--forge-border)'}`,
+                      borderRadius: '2px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '10px',
+                      flexShrink: 0,
+                      backgroundColor: selected ? 'var(--forge-accent)' : 'transparent',
+                      color: selected ? 'var(--forge-bg)' : 'transparent',
+                    }}
+                  >
                     ✓
                   </span>
                 )}
                 <span style={{ flex: 1 }}>{opt.label}</span>
                 {opt.count !== undefined && (
-                  <span style={{ color: 'var(--forge-text-muted)', fontSize: '10px' }}>{opt.count}</span>
+                  <span style={{ color: 'var(--forge-text-muted)', fontSize: '10px' }}>
+                    {opt.count}
+                  </span>
                 )}
               </button>
             )
@@ -180,26 +215,24 @@ function FilterChip({
 // FilterBar
 // ---------------------------------------------------------------------------
 
-export function FilterBar({
-  filters,
-  value,
-  onChange,
-  className,
-}: FilterBarProps) {
-  const hasActive = filters.some(f => {
+export function FilterBar({ filters, value, onChange, className }: FilterBarProps) {
+  const hasActive = filters.some((f) => {
     const v = value[f.id]
     return v !== undefined && v !== false && !(Array.isArray(v) && v.length === 0)
   })
 
-  const handleChangeValue = useCallback((filterId: string, filterValue: string | string[] | boolean | undefined) => {
-    const next = { ...value }
-    if (filterValue === undefined) {
-      delete next[filterId]
-    } else {
-      next[filterId] = filterValue
-    }
-    onChange(next)
-  }, [value, onChange])
+  const handleChangeValue = useCallback(
+    (filterId: string, filterValue: string | string[] | boolean | undefined) => {
+      const next = { ...value }
+      if (filterValue === undefined) {
+        delete next[filterId]
+      } else {
+        next[filterId] = filterValue
+      }
+      onChange(next)
+    },
+    [value, onChange],
+  )
 
   const handleClearAll = useCallback(() => {
     onChange({})
@@ -217,7 +250,7 @@ export function FilterBar({
         gap: 'var(--forge-space-2)',
       }}
     >
-      {filters.map(filter => (
+      {filters.map((filter) => (
         <FilterChip
           key={filter.id}
           filter={filter}

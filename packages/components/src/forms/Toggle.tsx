@@ -10,12 +10,35 @@ interface ToggleProps extends React.ComponentPropsWithoutRef<typeof RadixToggle.
 }
 
 const SIZE_STYLE: Record<ToggleSize, React.CSSProperties> = {
-  sm: { height: '28px', paddingInline: 'var(--forge-space-2)', fontSize: 'var(--forge-font-size-sm)', gap: 'var(--forge-space-1)' },
-  md: { height: '34px', paddingInline: 'var(--forge-space-3)', fontSize: 'var(--forge-font-size-base)', gap: 'var(--forge-space-2)' },
-  lg: { height: '42px', paddingInline: 'var(--forge-space-4)', fontSize: 'var(--forge-font-size-md)', gap: 'var(--forge-space-2)' },
+  sm: {
+    height: '28px',
+    paddingInline: 'var(--forge-space-2)',
+    fontSize: 'var(--forge-font-size-sm)',
+    gap: 'var(--forge-space-1)',
+  },
+  md: {
+    height: '34px',
+    paddingInline: 'var(--forge-space-3)',
+    fontSize: 'var(--forge-font-size-base)',
+    gap: 'var(--forge-space-2)',
+  },
+  lg: {
+    height: '42px',
+    paddingInline: 'var(--forge-space-4)',
+    fontSize: 'var(--forge-font-size-md)',
+    gap: 'var(--forge-space-2)',
+  },
 }
 
-export function Toggle({ variant = 'default', size = 'md', pressed, disabled, className, style, ...props }: ToggleProps) {
+export function Toggle({
+  variant = 'default',
+  size = 'md',
+  pressed,
+  disabled,
+  className,
+  style,
+  ...props
+}: ToggleProps) {
   const isPressed = pressed
 
   return (
@@ -28,9 +51,10 @@ export function Toggle({ variant = 'default', size = 'md', pressed, disabled, cl
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 'var(--forge-radius-md)',
-        border: variant === 'outline'
-          ? `1px solid ${isPressed ? 'var(--forge-accent)' : 'var(--forge-border)'}`
-          : '1px solid transparent',
+        border:
+          variant === 'outline'
+            ? `1px solid ${isPressed ? 'var(--forge-accent)' : 'var(--forge-border)'}`
+            : '1px solid transparent',
         backgroundColor: isPressed
           ? `color-mix(in srgb, var(--forge-accent) 15%, transparent)`
           : variant === 'default'
@@ -49,10 +73,13 @@ export function Toggle({ variant = 'default', size = 'md', pressed, disabled, cl
         ...style,
       }}
       onFocus={(e) => {
-        e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+        e.currentTarget.style.outline =
+          'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
         e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
       }}
-      onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+      onBlur={(e) => {
+        e.currentTarget.style.outline = 'none'
+      }}
       {...props}
     />
   )

@@ -28,17 +28,33 @@ const SIZE_STYLE: Record<IconButtonSize, React.CSSProperties> = {
 }
 
 const VARIANT_STYLE: Record<IconButtonVariant, React.CSSProperties> = {
-  primary:   { backgroundColor: 'var(--forge-accent)', color: 'var(--forge-text-on-accent)', border: '1px solid transparent' },
-  secondary: { backgroundColor: 'var(--forge-surface-raised)', color: 'var(--forge-text)', border: '1px solid var(--forge-border)' },
-  ghost:     { backgroundColor: 'transparent', color: 'var(--forge-text)', border: '1px solid transparent' },
-  danger:    { backgroundColor: 'var(--forge-danger-hover)', color: 'var(--forge-danger-foreground)', border: '1px solid transparent' },
+  primary: {
+    backgroundColor: 'var(--forge-accent)',
+    color: 'var(--forge-text-on-accent)',
+    border: '1px solid transparent',
+  },
+  secondary: {
+    backgroundColor: 'var(--forge-surface-raised)',
+    color: 'var(--forge-text)',
+    border: '1px solid var(--forge-border)',
+  },
+  ghost: {
+    backgroundColor: 'transparent',
+    color: 'var(--forge-text)',
+    border: '1px solid transparent',
+  },
+  danger: {
+    backgroundColor: 'var(--forge-danger-hover)',
+    color: 'var(--forge-danger-foreground)',
+    border: '1px solid transparent',
+  },
 }
 
 const HOVER_STYLE: Record<IconButtonVariant, React.CSSProperties> = {
-  primary:   { filter: 'brightness(0.9)' },
+  primary: { filter: 'brightness(0.9)' },
   secondary: { backgroundColor: 'var(--forge-surface-active)' },
-  ghost:     { backgroundColor: 'var(--forge-surface-hover)' },
-  danger:    { filter: 'brightness(0.9)' },
+  ghost: { backgroundColor: 'var(--forge-surface-hover)' },
+  danger: { filter: 'brightness(0.9)' },
 }
 
 /**
@@ -83,10 +99,17 @@ export function IconButton({
         outline: 'none',
         ...style,
       }}
-      onMouseEnter={(e) => { setHovered(true); onMouseEnter?.(e) }}
-      onMouseLeave={(e) => { setHovered(false); onMouseLeave?.(e) }}
+      onMouseEnter={(e) => {
+        setHovered(true)
+        onMouseEnter?.(e)
+      }}
+      onMouseLeave={(e) => {
+        setHovered(false)
+        onMouseLeave?.(e)
+      }}
       onFocus={(e) => {
-        e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+        e.currentTarget.style.outline =
+          'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
         e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
       }}
       onBlur={(e) => {

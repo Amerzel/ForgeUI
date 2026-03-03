@@ -11,19 +11,46 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const COLOR_VARS: Record<BadgeColor, { base: string; fg: string; border: string }> = {
-  accent:  { base: 'var(--forge-accent)',  fg: 'var(--forge-text-on-accent)', border: 'var(--forge-accent)' },
-  info:    { base: 'var(--forge-info)',     fg: 'var(--forge-info-foreground)', border: 'var(--forge-info-border)' },
-  success: { base: 'var(--forge-success)', fg: 'var(--forge-success-foreground)', border: 'var(--forge-success-border)' },
-  warning: { base: 'var(--forge-warning)', fg: 'var(--forge-warning-foreground)', border: 'var(--forge-warning-border)' },
-  danger:  { base: 'var(--forge-danger)',  fg: 'var(--forge-danger-foreground)', border: 'var(--forge-danger-border)' },
-  neutral: { base: 'var(--forge-border)',  fg: 'var(--forge-text)', border: 'var(--forge-border)' },
+  accent: {
+    base: 'var(--forge-accent)',
+    fg: 'var(--forge-text-on-accent)',
+    border: 'var(--forge-accent)',
+  },
+  info: {
+    base: 'var(--forge-info)',
+    fg: 'var(--forge-info-foreground)',
+    border: 'var(--forge-info-border)',
+  },
+  success: {
+    base: 'var(--forge-success)',
+    fg: 'var(--forge-success-foreground)',
+    border: 'var(--forge-success-border)',
+  },
+  warning: {
+    base: 'var(--forge-warning)',
+    fg: 'var(--forge-warning-foreground)',
+    border: 'var(--forge-warning-border)',
+  },
+  danger: {
+    base: 'var(--forge-danger)',
+    fg: 'var(--forge-danger-foreground)',
+    border: 'var(--forge-danger-border)',
+  },
+  neutral: { base: 'var(--forge-border)', fg: 'var(--forge-text)', border: 'var(--forge-border)' },
 }
 
 /**
  * Status indicator badge. Always includes text (never color alone) to be
  * accessible to users who cannot distinguish colors.
  */
-export function Badge({ variant = 'subtle', color = 'neutral', className, children, style, ...props }: BadgeProps) {
+export function Badge({
+  variant = 'subtle',
+  color = 'neutral',
+  className,
+  children,
+  style,
+  ...props
+}: BadgeProps) {
   const { base, fg, border } = COLOR_VARS[color]
 
   const variantStyle: React.CSSProperties =
@@ -31,7 +58,11 @@ export function Badge({ variant = 'subtle', color = 'neutral', className, childr
       ? { backgroundColor: base, color: fg, border: `1px solid transparent` }
       : variant === 'outline'
         ? { backgroundColor: 'transparent', color: base, border: `1px solid ${border}` }
-        : { backgroundColor: `color-mix(in srgb, ${base} 15%, transparent)`, color: base, border: `1px solid color-mix(in srgb, ${base} 25%, transparent)` }
+        : {
+            backgroundColor: `color-mix(in srgb, ${base} 15%, transparent)`,
+            color: base,
+            border: `1px solid color-mix(in srgb, ${base} 25%, transparent)`,
+          }
 
   return (
     <span

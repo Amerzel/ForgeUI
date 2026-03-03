@@ -116,22 +116,22 @@ body {
 
   /* Restore borders for interactive elements */
   button,
-  [role="button"],
+  [role='button'],
   input,
   select,
   textarea,
-  [role="combobox"],
-  [role="listbox"],
-  [role="option"] {
+  [role='combobox'],
+  [role='listbox'],
+  [role='option'] {
     border: 1px solid ButtonText;
     forced-color-adjust: auto;
   }
 
   /* Checkbox, Radio, Switch — use system colors for indicators */
   .forge-checkbox,
-  [role="checkbox"],
-  [role="radio"],
-  [role="switch"] {
+  [role='checkbox'],
+  [role='radio'],
+  [role='switch'] {
     border: 2px solid ButtonText;
     forced-color-adjust: none;
     background-color: Canvas;
@@ -139,22 +139,22 @@ body {
   }
 
   /* Checked/on state uses Highlight */
-  [role="checkbox"][data-state="checked"],
-  [role="radio"][data-state="checked"],
-  [role="switch"][data-state="checked"] {
+  [role='checkbox'][data-state='checked'],
+  [role='radio'][data-state='checked'],
+  [role='switch'][data-state='checked'] {
     background-color: Highlight;
     border-color: Highlight;
     color: HighlightText;
   }
 
   /* Progress bar — use Highlight for fill */
-  [role="progressbar"] > div {
+  [role='progressbar'] > div {
     background-color: Highlight;
     forced-color-adjust: none;
   }
 
   /* Slider thumb and range */
-  [role="slider"] {
+  [role='slider'] {
     background-color: Highlight;
     border: 2px solid ButtonText;
     forced-color-adjust: none;
@@ -198,15 +198,15 @@ body {
     forced-color-adjust: auto;
   }
 
-  .forge-tabs-trigger[data-state="active"] {
+  .forge-tabs-trigger[data-state='active'] {
     text-decoration: underline;
     font-weight: bold;
   }
 
   /* Toggle pressed state — underline instead of background */
-  [role="button"][aria-pressed="true"],
-  .forge-toggle[data-state="on"],
-  .forge-toggle-group [data-state="on"] {
+  [role='button'][aria-pressed='true'],
+  .forge-toggle[data-state='on'],
+  .forge-toggle-group [data-state='on'] {
     text-decoration: underline;
     outline: 2px solid Highlight;
   }
@@ -221,7 +221,12 @@ body {
    Typography defaults
 --------------------------------------------------------------------------- */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   font-family: var(--forge-font-display);
   font-weight: var(--forge-font-semibold);

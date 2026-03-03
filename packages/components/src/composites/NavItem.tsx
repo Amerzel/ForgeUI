@@ -51,24 +51,38 @@ export function NavItem({
       }}
     >
       {icon && (
-        <span style={{ width: 20, textAlign: 'center', flexShrink: 0, opacity: active ? 1 : 0.55, fontSize: 'var(--forge-font-size-sm)' }} aria-hidden="true">
+        <span
+          style={{
+            width: 20,
+            textAlign: 'center',
+            flexShrink: 0,
+            opacity: active ? 1 : 0.55,
+            fontSize: 'var(--forge-font-size-sm)',
+          }}
+          aria-hidden="true"
+        >
           {icon}
         </span>
       )}
       <span style={{ flex: 1 }}>{label}</span>
       {count !== undefined && (
-        <span style={{
-          fontSize: '10px',
-          fontWeight: 'var(--forge-font-medium)',
-          minWidth: 20,
-          textAlign: 'center',
-          padding: '1px 6px',
-          borderRadius: 'var(--forge-radius-full)',
-          backgroundColor: active
-            ? 'color-mix(in srgb, var(--forge-text-on-accent) 20%, transparent)'
-            : 'color-mix(in srgb, var(--forge-text-muted) 15%, transparent)',
-          color: active ? 'var(--forge-text-on-accent)' : 'var(--forge-text-muted)',
-        }} aria-label={`${count} items`}>{count}</span>
+        <span
+          style={{
+            fontSize: '10px',
+            fontWeight: 'var(--forge-font-medium)',
+            minWidth: 20,
+            textAlign: 'center',
+            padding: '1px 6px',
+            borderRadius: 'var(--forge-radius-full)',
+            backgroundColor: active
+              ? 'color-mix(in srgb, var(--forge-text-on-accent) 20%, transparent)'
+              : 'color-mix(in srgb, var(--forge-text-muted) 15%, transparent)',
+            color: active ? 'var(--forge-text-on-accent)' : 'var(--forge-text-muted)',
+          }}
+          aria-label={`${count} items`}
+        >
+          {count}
+        </span>
       )}
     </button>
   )

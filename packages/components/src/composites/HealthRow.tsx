@@ -15,19 +15,19 @@ export interface HealthRowProps {
 }
 
 const STATUS_COLOR: Record<HealthStatus, string> = {
-  ok:      'var(--forge-success)',
-  warn:    'var(--forge-warning)',
-  error:   'var(--forge-danger)',
+  ok: 'var(--forge-success)',
+  warn: 'var(--forge-warning)',
+  error: 'var(--forge-danger)',
   running: 'var(--forge-info)',
-  idle:    'var(--forge-border)',
+  idle: 'var(--forge-border)',
 }
 
 const STATUS_LABEL: Record<HealthStatus, string> = {
-  ok:      'Healthy',
-  warn:    'Warning',
-  error:   'Error',
+  ok: 'Healthy',
+  warn: 'Warning',
+  error: 'Error',
   running: 'Running',
-  idle:    'Idle',
+  idle: 'Idle',
 }
 
 export function HealthRow({ name, status, detail, icon, className }: HealthRowProps) {
@@ -58,7 +58,16 @@ export function HealthRow({ name, status, detail, icon, className }: HealthRowPr
 
       {/* Icon */}
       {icon && (
-        <span style={{ fontSize: 'var(--forge-font-size-sm)', opacity: 0.6, width: 20, textAlign: 'center', flexShrink: 0 }} aria-hidden="true">
+        <span
+          style={{
+            fontSize: 'var(--forge-font-size-sm)',
+            opacity: 0.6,
+            width: 20,
+            textAlign: 'center',
+            flexShrink: 0,
+          }}
+          aria-hidden="true"
+        >
           {icon}
         </span>
       )}
@@ -70,19 +79,35 @@ export function HealthRow({ name, status, detail, icon, className }: HealthRowPr
 
       {/* Spinner for running */}
       {status === 'running' && (
-        <svg width="14" height="14" viewBox="0 0 14 14" style={{ animation: 'spin 1s linear infinite', flexShrink: 0 }} aria-hidden="true">
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          style={{ animation: 'spin 1s linear infinite', flexShrink: 0 }}
+          aria-hidden="true"
+        >
           <circle cx="7" cy="7" r="5.5" fill="none" stroke="var(--forge-border)" strokeWidth="2" />
-          <path d="M7 1.5A5.5 5.5 0 0 1 12.5 7" fill="none" stroke="var(--forge-info)" strokeWidth="2" strokeLinecap="round" />
+          <path
+            d="M7 1.5A5.5 5.5 0 0 1 12.5 7"
+            fill="none"
+            stroke="var(--forge-info)"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
         </svg>
       )}
 
       {/* Detail */}
-      <span style={{
-        fontSize: 'var(--forge-font-size-xs)',
-        color: 'var(--forge-text-muted)',
-        fontFamily: 'var(--forge-font-mono)',
-        flexShrink: 0,
-      }}>{detail}</span>
+      <span
+        style={{
+          fontSize: 'var(--forge-font-size-xs)',
+          color: 'var(--forge-text-muted)',
+          fontFamily: 'var(--forge-font-mono)',
+          flexShrink: 0,
+        }}
+      >
+        {detail}
+      </span>
     </div>
   )
 }

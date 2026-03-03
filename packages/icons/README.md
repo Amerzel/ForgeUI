@@ -29,18 +29,18 @@ All icons accept `size` (number, default `24`) and `color` (string, default `'cu
 
 10 icons built specifically for game development tooling:
 
-| Component | Use case |
-|-----------|----------|
-| `NodeIcon` | NodeEditor nodes, shader graph nodes |
-| `EdgeIcon` | NodeEditor connections/edges |
-| `TimelineIcon` | Animation timeline, cutscene editor |
-| `SceneGraphIcon` | Scene hierarchy, entity tree |
-| `EntityIcon` | Entity list, inspector header |
-| `ComponentIcon` | Entity component system, ECS views |
-| `SplineIcon` | Curve editors, path tools |
-| `VertexIcon` | Mesh editing, vertex selection |
-| `TerrainIcon` | Terrain tool, heightmap editor |
-| `NavMeshIcon` | Navigation mesh, pathfinding tools |
+| Component        | Use case                             |
+| ---------------- | ------------------------------------ |
+| `NodeIcon`       | NodeEditor nodes, shader graph nodes |
+| `EdgeIcon`       | NodeEditor connections/edges         |
+| `TimelineIcon`   | Animation timeline, cutscene editor  |
+| `SceneGraphIcon` | Scene hierarchy, entity tree         |
+| `EntityIcon`     | Entity list, inspector header        |
+| `ComponentIcon`  | Entity component system, ECS views   |
+| `SplineIcon`     | Curve editors, path tools            |
+| `VertexIcon`     | Mesh editing, vertex selection       |
+| `TerrainIcon`    | Terrain tool, heightmap editor       |
+| `NavMeshIcon`    | Navigation mesh, pathfinding tools   |
 
 ## Lucide subset
 
@@ -49,29 +49,54 @@ A curated subset of Lucide React is re-exported with an `Icon` suffix for naming
 ```tsx
 import {
   // Navigation & direction
-  ChevronDownIcon, ChevronRightIcon, ChevronLeftIcon, ChevronUpIcon,
-  ArrowLeftIcon, ArrowRightIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  ChevronLeftIcon,
+  ChevronUpIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
 
   // File & data actions
-  SaveIcon, CopyIcon, TrashIcon, EditIcon,
-  DownloadIcon, UploadIcon, ExternalLinkIcon,
+  SaveIcon,
+  CopyIcon,
+  TrashIcon,
+  EditIcon,
+  DownloadIcon,
+  UploadIcon,
+  ExternalLinkIcon,
 
   // Editing actions
-  UndoIcon, RedoIcon, PlusIcon, CloseIcon,
+  UndoIcon,
+  RedoIcon,
+  PlusIcon,
+  CloseIcon,
 
   // Search & filter
-  SearchIcon, FilterIcon, SortAscIcon, SortDescIcon,
+  SearchIcon,
+  FilterIcon,
+  SortAscIcon,
+  SortDescIcon,
 
   // UI controls
-  MenuIcon, SidebarIcon, SettingsIcon,
-  GridIcon, ListIcon, LayersIcon,
+  MenuIcon,
+  SidebarIcon,
+  SettingsIcon,
+  GridIcon,
+  ListIcon,
+  LayersIcon,
 
   // Media playback
-  PlayIcon, PauseIcon, StopIcon,
+  PlayIcon,
+  PauseIcon,
+  StopIcon,
 
   // Status & feedback
-  InfoIcon, CheckIcon, WarningIcon,
-  AlertCircleIcon, CheckCircleIcon, XCircleIcon,
+  InfoIcon,
+  CheckIcon,
+  WarningIcon,
+  AlertCircleIcon,
+  CheckCircleIcon,
+  XCircleIcon,
 
   // State indicators
   RefreshIcon,
@@ -82,11 +107,11 @@ import {
 
 Match the ForgeUI icon size tokens for visual consistency across components:
 
-| Size | Token | Use |
-|------|-------|-----|
-| `14` | `--forge-icon-xs` | Inline metadata, badge decorations |
-| `16` | `--forge-icon-sm` | Button icons, form field adornments |
-| `20` | `--forge-icon-md` | Default standalone icons, nav items |
+| Size | Token             | Use                                     |
+| ---- | ----------------- | --------------------------------------- |
+| `14` | `--forge-icon-xs` | Inline metadata, badge decorations      |
+| `16` | `--forge-icon-sm` | Button icons, form field adornments     |
+| `20` | `--forge-icon-md` | Default standalone icons, nav items     |
 | `24` | `--forge-icon-lg` | Page headers, empty state illustrations |
 
 ```tsx
@@ -106,7 +131,7 @@ Match the ForgeUI icon size tokens for visual consistency across components:
 import type { IconProps } from '@forgeui/icons'
 
 interface IconProps {
-  size?: number   // width and height in px; default 24
-  color?: string  // CSS color string; default 'currentColor'
+  size?: number // width and height in px; default 24
+  color?: string // CSS color string; default 'currentColor'
 }
 ```

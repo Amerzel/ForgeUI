@@ -9,7 +9,12 @@ interface SeparatorProps extends React.ComponentPropsWithoutRef<typeof RadixSepa
  * Horizontal or vertical visual divider.
  * Set `decorative` to remove from the accessibility tree.
  */
-export function Separator({ orientation = 'horizontal', decorative = true, className, ...props }: SeparatorProps) {
+export function Separator({
+  orientation = 'horizontal',
+  decorative = true,
+  className,
+  ...props
+}: SeparatorProps) {
   return (
     <RadixSeparator.Root
       orientation={orientation}

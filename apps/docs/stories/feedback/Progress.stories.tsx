@@ -18,8 +18,32 @@ export const Variants: Story = {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '400px' }}>
         <Progress value={value} label="Upload progress" showValue />
         <div style={{ display: 'flex', gap: '8px' }}>
-          <button onClick={() => setValue(v => Math.max(0, v - 10))} style={{ padding: '4px 8px', cursor: 'pointer', background: 'var(--forge-surface)', border: '1px solid var(--forge-border)', borderRadius: '4px', color: 'var(--forge-text)' }}>-10</button>
-          <button onClick={() => setValue(v => Math.min(100, v + 10))} style={{ padding: '4px 8px', cursor: 'pointer', background: 'var(--forge-surface)', border: '1px solid var(--forge-border)', borderRadius: '4px', color: 'var(--forge-text)' }}>+10</button>
+          <button
+            onClick={() => setValue((v) => Math.max(0, v - 10))}
+            style={{
+              padding: '4px 8px',
+              cursor: 'pointer',
+              background: 'var(--forge-surface)',
+              border: '1px solid var(--forge-border)',
+              borderRadius: '4px',
+              color: 'var(--forge-text)',
+            }}
+          >
+            -10
+          </button>
+          <button
+            onClick={() => setValue((v) => Math.min(100, v + 10))}
+            style={{
+              padding: '4px 8px',
+              cursor: 'pointer',
+              background: 'var(--forge-surface)',
+              border: '1px solid var(--forge-border)',
+              borderRadius: '4px',
+              color: 'var(--forge-text)',
+            }}
+          >
+            +10
+          </button>
         </div>
         <Progress variant="success" value={100} label="Completed" showValue />
         <Progress variant="warning" value={78} label="Warning threshold" size="sm" />

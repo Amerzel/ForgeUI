@@ -33,18 +33,22 @@ export function Group({
 }: GroupProps) {
   const computedStyle: CSSProperties = {
     ...cleanStyle({
-      display:        'flex',
-      flexDirection:  'row',
-      alignItems:     align,
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: align,
       justifyContent: justify,
-      flexWrap:       wrap,
-      gap:            sp(gap ?? spacing ?? 2),
+      flexWrap: wrap,
+      gap: sp(gap ?? spacing ?? 2),
     }),
     ...style,
   }
 
   if (!grow) {
-    return <div style={computedStyle} {...props}>{children}</div>
+    return (
+      <div style={computedStyle} {...props}>
+        {children}
+      </div>
+    )
   }
 
   // When grow=true, wrap children so each fills equal space
@@ -55,12 +59,15 @@ export function Group({
 
   return (
     <div style={computedStyle} {...props}>
-      {Array.isArray(children)
-        ? children.map((child, i) => (
-            <div key={i} style={childStyle}>{child}</div>
-          ))
-        : <div style={childStyle}>{children}</div>
-      }
+      {Array.isArray(children) ? (
+        children.map((child, i) => (
+          <div key={i} style={childStyle}>
+            {child}
+          </div>
+        ))
+      ) : (
+        <div style={childStyle}>{children}</div>
+      )}
     </div>
   )
 }

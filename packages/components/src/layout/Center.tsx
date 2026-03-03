@@ -9,9 +9,9 @@ export interface CenterProps extends HTMLAttributes<HTMLDivElement> {
 export function Center({ inline = false, style, ...props }: CenterProps) {
   const computedStyle: CSSProperties = {
     ...cleanStyle({
-      display:         inline ? 'inline-flex' : 'flex',
-      alignItems:      'center',
-      justifyContent:  'center',
+      display: inline ? 'inline-flex' : 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     }),
     ...style,
   }

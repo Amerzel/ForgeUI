@@ -42,57 +42,94 @@ export function ComparisonSlider({
   const draggingRef = useRef(false)
 
   const pos = controlledPosition ?? internalPos
-  const setPos = useCallback((v: number) => {
-    const clamped = Math.max(0, Math.min(100, v))
-    if (controlledPosition === undefined) setInternalPos(clamped)
-    onPositionChange?.(clamped)
-  }, [controlledPosition, onPositionChange])
+  const setPos = useCallback(
+    (v: number) => {
+      const clamped = Math.max(0, Math.min(100, v))
+      if (controlledPosition === undefined) setInternalPos(clamped)
+      onPositionChange?.(clamped)
+    },
+    [controlledPosition, onPositionChange],
+  )
 
   const isHorizontal = orientation === 'horizontal'
 
-  const getPositionFromPointer = useCallback((clientX: number, clientY: number) => {
-    const rect = containerRef.current?.getBoundingClientRect()
-    if (!rect) return pos
-    if (isHorizontal) {
-      return ((clientX - rect.left) / rect.width) * 100
-    }
-    return ((clientY - rect.top) / rect.height) * 100
-  }, [isHorizontal, pos])
+  const getPositionFromPointer = useCallback(
+    (clientX: number, clientY: number) => {
+      const rect = containerRef.current?.getBoundingClientRect()
+      if (!rect) return pos
+      if (isHorizontal) {
+        return ((clientX - rect.left) / rect.width) * 100
+      }
+      return ((clientY - rect.top) / rect.height) * 100
+    },
+    [isHorizontal, pos],
+  )
 
-  const handlePointerDown = useCallback((e: React.PointerEvent) => {
-    e.currentTarget.setPointerCapture(e.pointerId)
-    draggingRef.current = true
-    setPos(getPositionFromPointer(e.clientX, e.clientY))
-  }, [getPositionFromPointer, setPos])
+  const handlePointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      e.currentTarget.setPointerCapture(e.pointerId)
+      draggingRef.current = true
+      setPos(getPositionFromPointer(e.clientX, e.clientY))
+    },
+    [getPositionFromPointer, setPos],
+  )
 
-  const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (!draggingRef.current) return
-    setPos(getPositionFromPointer(e.clientX, e.clientY))
-  }, [getPositionFromPointer, setPos])
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent) => {
+      if (!draggingRef.current) return
+      setPos(getPositionFromPointer(e.clientX, e.clientY))
+    },
+    [getPositionFromPointer, setPos],
+  )
 
   const handlePointerUp = useCallback(() => {
     draggingRef.current = false
   }, [])
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    const step = 5
-    if (isHorizontal) {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); setPos(pos - step) }
-      else if (e.key === 'ArrowRight') { e.preventDefault(); setPos(pos + step) }
-    } else {
-      if (e.key === 'ArrowUp') { e.preventDefault(); setPos(pos - step) }
-      else if (e.key === 'ArrowDown') { e.preventDefault(); setPos(pos + step) }
-    }
-  }, [pos, setPos, isHorizontal])
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      const step = 5
+      if (isHorizontal) {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault()
+          setPos(pos - step)
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault()
+          setPos(pos + step)
+        }
+      } else {
+        if (e.key === 'ArrowUp') {
+          e.preventDefault()
+          setPos(pos - step)
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault()
+          setPos(pos + step)
+        }
+      }
+    },
+    [pos, setPos, isHorizontal],
+  )
 
   const imageRendering = renderMode === 'pixelated' ? 'pixelated' : 'auto'
-  const clipBefore = isHorizontal
-    ? `inset(0 ${100 - pos}% 0 0)`
-    : `inset(0 0 ${100 - pos}% 0)`
+  const clipBefore = isHorizontal ? `inset(0 ${100 - pos}% 0 0)` : `inset(0 0 ${100 - pos}% 0)`
 
   const dividerStyle: React.CSSProperties = isHorizontal
-    ? { position: 'absolute', top: 0, bottom: 0, left: `${pos}%`, width: '3px', transform: 'translateX(-50%)' }
-    : { position: 'absolute', left: 0, right: 0, top: `${pos}%`, height: '3px', transform: 'translateY(-50%)' }
+    ? {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: `${pos}%`,
+        width: '3px',
+        transform: 'translateX(-50%)',
+      }
+    : {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: `${pos}%`,
+        height: '3px',
+        transform: 'translateY(-50%)',
+      }
 
   const handleStyle: React.CSSProperties = isHorizontal
     ? {
@@ -204,9 +241,7 @@ export function ComparisonSlider({
         }}
       >
         {/* Drag handle */}
-        <div style={handleStyle}>
-          {isHorizontal ? '⟷' : '⟡'}
-        </div>
+        <div style={handleStyle}>{isHorizontal ? '⟷' : '⟡'}</div>
       </div>
 
       {/* Labels */}

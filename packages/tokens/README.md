@@ -201,19 +201,19 @@ var(--forge-max-w-lg)     /* 768px */
 import { tokens, semantic, generateCssVars } from '@forgeui/tokens'
 
 // Raw scale values
-tokens.colors.gray[950]           // '#0c0805'
-tokens.colors.amber[500]          // '#f59e0b'
-tokens.spacing[4].value           // 16
-tokens.spacing[4].css             // '16px'
-tokens.radius.md                  // '3px'
-tokens.animation.durationNormal   // '200ms'
-tokens.zIndex.modal               // 400
+tokens.colors.gray[950] // '#0c0805'
+tokens.colors.amber[500] // '#f59e0b'
+tokens.spacing[4].value // 16
+tokens.spacing[4].css // '16px'
+tokens.radius.md // '3px'
+tokens.animation.durationNormal // '200ms'
+tokens.zIndex.modal // 400
 
 // Semantic aliases (CSS var strings — use in style props)
-semantic.bg        // 'var(--forge-bg)'
-semantic.surface   // 'var(--forge-surface)'
-semantic.accent    // 'var(--forge-accent)'
-semantic.text      // 'var(--forge-text)'
+semantic.bg // 'var(--forge-bg)'
+semantic.surface // 'var(--forge-surface)'
+semantic.accent // 'var(--forge-accent)'
+semantic.text // 'var(--forge-text)'
 semantic.textMuted // 'var(--forge-text-muted)'
 
 // Generate a full CSS variable block (useful for SSR or custom injection)
@@ -224,33 +224,39 @@ const cssBlock = generateCssVars('hearth-bronze', 'dark')
 
 ```ts
 import {
-  lighten, darken, alpha, mix,
-  hexToRgb, rgbToHex, hexToGlsl,
-  contrastRatio, getAccessibleForeground,
+  lighten,
+  darken,
+  alpha,
+  mix,
+  hexToRgb,
+  rgbToHex,
+  hexToGlsl,
+  contrastRatio,
+  getAccessibleForeground,
 } from '@forgeui/tokens/color'
 
-lighten('#d97706', 0.1)                    // lighter amber
-darken('#d97706', 0.1)                     // darker amber
-alpha('#d97706', 0.5)                      // 'rgba(217, 119, 6, 0.5)'
-mix('#d97706', '#1a140f', 0.3)             // blend 30/70
+lighten('#d97706', 0.1) // lighter amber
+darken('#d97706', 0.1) // darker amber
+alpha('#d97706', 0.5) // 'rgba(217, 119, 6, 0.5)'
+mix('#d97706', '#1a140f', 0.3) // blend 30/70
 
-hexToRgb('#d97706')                        // [217, 119, 6]
-rgbToHex(217, 119, 6)                      // '#d97706'
-hexToGlsl('#d97706')                       // [0.851, 0.467, 0.024, 1.0]
+hexToRgb('#d97706') // [217, 119, 6]
+rgbToHex(217, 119, 6) // '#d97706'
+hexToGlsl('#d97706') // [0.851, 0.467, 0.024, 1.0]
 
-contrastRatio('#f2e9df', '#0c0805')        // ~16.5
-getAccessibleForeground('#d97706')         // '#ffffff'
+contrastRatio('#f2e9df', '#0c0805') // ~16.5
+getAccessibleForeground('#d97706') // '#ffffff'
 ```
 
 `hexToGlsl` is particularly useful for passing token colors to WebGL uniforms.
 
 ## Palettes
 
-| Palette | Accent | Gray tint |
-|---------|--------|-----------|
-| `hearth-bronze` | Amber `#d97706` | Warm/brown |
-| `midnight-forge` | Blue `#4f8ff7` | Navy/blue |
-| `deep-space` | Teal `#14b8a6` | Deep navy |
-| `midnight-forge-v2` | Gold `#f59e0b` | Navy/blue |
+| Palette             | Accent          | Gray tint  |
+| ------------------- | --------------- | ---------- |
+| `hearth-bronze`     | Amber `#d97706` | Warm/brown |
+| `midnight-forge`    | Blue `#4f8ff7`  | Navy/blue  |
+| `deep-space`        | Teal `#14b8a6`  | Deep navy  |
+| `midnight-forge-v2` | Gold `#f59e0b`  | Navy/blue  |
 
 Palette and mode are applied by `ThemeProvider` in `@forgeui/components` via `data-palette` and `data-theme` data attributes on a wrapping element. All CSS token blocks are scoped to those attributes.

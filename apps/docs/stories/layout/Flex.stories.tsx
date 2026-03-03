@@ -32,15 +32,30 @@ export const FlexStory: Story = {
   render: () => (
     <Stack gap={6} p={6}>
       <div>
-        <Text size="sm" color="muted">Row (default) + gap=3</Text>
+        <Text size="sm" color="muted">
+          Row (default) + gap=3
+        </Text>
         <Flex gap={3} style={{ marginTop: 8 }}>
-          <Block label="A" /><Block label="B" /><Block label="C" />
+          <Block label="A" />
+          <Block label="B" />
+          <Block label="C" />
         </Flex>
       </div>
 
       <div>
-        <Text size="sm" color="muted">Row + justify=space-between + align=center</Text>
-        <Flex justify="space-between" align="center" style={{ marginTop: 8, border: '1px dashed var(--forge-border)', padding: 8, borderRadius: 4 }}>
+        <Text size="sm" color="muted">
+          Row + justify=space-between + align=center
+        </Text>
+        <Flex
+          justify="space-between"
+          align="center"
+          style={{
+            marginTop: 8,
+            border: '1px dashed var(--forge-border)',
+            padding: 8,
+            borderRadius: 4,
+          }}
+        >
           <Block label="Left" />
           <Block label="Center" />
           <Block label="Right" />
@@ -48,15 +63,28 @@ export const FlexStory: Story = {
       </div>
 
       <div>
-        <Text size="sm" color="muted">Column direction + gap=2</Text>
+        <Text size="sm" color="muted">
+          Column direction + gap=2
+        </Text>
         <Flex direction="column" gap={2} style={{ marginTop: 8, width: 200 }}>
-          <Block label="Top" /><Block label="Middle" /><Block label="Bottom" />
+          <Block label="Top" />
+          <Block label="Middle" />
+          <Block label="Bottom" />
         </Flex>
       </div>
 
       <div>
-        <Text size="sm" color="muted">Spacer push</Text>
-        <Flex style={{ marginTop: 8, border: '1px dashed var(--forge-border)', padding: 8, borderRadius: 4 }}>
+        <Text size="sm" color="muted">
+          Spacer push
+        </Text>
+        <Flex
+          style={{
+            marginTop: 8,
+            border: '1px dashed var(--forge-border)',
+            padding: 8,
+            borderRadius: 4,
+          }}
+        >
           <Block label="Logo" />
           <Spacer />
           <Block label="Actions" />

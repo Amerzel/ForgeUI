@@ -33,9 +33,21 @@ function isGroup(item: SelectOption | SelectGroup): item is SelectGroup {
 }
 
 const SIZE_STYLE: Record<SelectSize, React.CSSProperties> = {
-  sm: { height: '28px', fontSize: 'var(--forge-font-size-sm)',   paddingInline: 'var(--forge-space-2)' },
-  md: { height: '34px', fontSize: 'var(--forge-font-size-base)', paddingInline: 'var(--forge-space-3)' },
-  lg: { height: '42px', fontSize: 'var(--forge-font-size-md)',   paddingInline: 'var(--forge-space-4)' },
+  sm: {
+    height: '28px',
+    fontSize: 'var(--forge-font-size-sm)',
+    paddingInline: 'var(--forge-space-2)',
+  },
+  md: {
+    height: '34px',
+    fontSize: 'var(--forge-font-size-base)',
+    paddingInline: 'var(--forge-space-3)',
+  },
+  lg: {
+    height: '42px',
+    fontSize: 'var(--forge-font-size-md)',
+    paddingInline: 'var(--forge-space-4)',
+  },
 }
 
 const ITEM_STYLE: React.CSSProperties = {
@@ -94,10 +106,18 @@ export function Select({
           e.currentTarget.style.boxShadow = ''
         }}
       >
-        <RadixSelect.Value placeholder={<span style={{ color: 'var(--forge-text-muted)' }}>{placeholder}</span>} />
+        <RadixSelect.Value
+          placeholder={<span style={{ color: 'var(--forge-text-muted)' }}>{placeholder}</span>}
+        />
         <RadixSelect.Icon style={{ color: 'var(--forge-text-muted)', flexShrink: 0 }}>
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-            <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path
+              d="M2 4l4 4 4-4"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </RadixSelect.Icon>
       </RadixSelect.Trigger>
@@ -122,7 +142,16 @@ export function Select({
             {options.map((item, i) =>
               isGroup(item) ? (
                 <RadixSelect.Group key={i}>
-                  <RadixSelect.Label style={{ padding: 'var(--forge-space-1) var(--forge-space-3)', fontSize: 'var(--forge-font-size-xs)', color: 'var(--forge-text-muted)', fontWeight: 'var(--forge-font-semibold)', letterSpacing: 'var(--forge-tracking-wide)', textTransform: 'uppercase' }}>
+                  <RadixSelect.Label
+                    style={{
+                      padding: 'var(--forge-space-1) var(--forge-space-3)',
+                      fontSize: 'var(--forge-font-size-xs)',
+                      color: 'var(--forge-text-muted)',
+                      fontWeight: 'var(--forge-font-semibold)',
+                      letterSpacing: 'var(--forge-tracking-wide)',
+                      textTransform: 'uppercase',
+                    }}
+                  >
                     {item.label}
                   </RadixSelect.Label>
                   {item.options.map((opt) => (
@@ -131,7 +160,7 @@ export function Select({
                 </RadixSelect.Group>
               ) : (
                 <SelectItem key={item.value} option={item} />
-              )
+              ),
             )}
           </RadixSelect.Viewport>
         </RadixSelect.Content>
@@ -152,15 +181,29 @@ function SelectItem({ option }: { option: SelectOption }) {
       value={option.value}
       disabled={option.disabled}
       style={ITEM_STYLE}
-      onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)' }}
-      onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent' }}
-      onFocus={(e) => { e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)' }}
-      onBlur={(e) => { e.currentTarget.style.backgroundColor = 'transparent' }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = 'transparent'
+      }}
+      onFocus={(e) => {
+        e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'
+      }}
+      onBlur={(e) => {
+        e.currentTarget.style.backgroundColor = 'transparent'
+      }}
     >
       <RadixSelect.ItemText>{option.label}</RadixSelect.ItemText>
       <RadixSelect.ItemIndicator style={{ marginLeft: 'auto', color: 'var(--forge-accent)' }}>
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-          <path d="M1 6l3.5 3.5L11 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path
+            d="M1 6l3.5 3.5L11 2"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </RadixSelect.ItemIndicator>
     </RadixSelect.Item>

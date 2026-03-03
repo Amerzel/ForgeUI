@@ -29,9 +29,18 @@ interface ToastListProps {
 
 const VARIANT_STYLE: Record<ToastVariant, { border: string; icon: string }> = {
   default: { border: 'var(--forge-border)', icon: 'var(--forge-text-muted)' },
-  success: { border: 'color-mix(in srgb, var(--forge-success) 50%, transparent)', icon: 'var(--forge-success)' },
-  warning: { border: 'color-mix(in srgb, var(--forge-warning) 50%, transparent)', icon: 'var(--forge-warning)' },
-  danger:  { border: 'color-mix(in srgb, var(--forge-danger) 50%, transparent)',  icon: 'var(--forge-danger)'  },
+  success: {
+    border: 'color-mix(in srgb, var(--forge-success) 50%, transparent)',
+    icon: 'var(--forge-success)',
+  },
+  warning: {
+    border: 'color-mix(in srgb, var(--forge-warning) 50%, transparent)',
+    icon: 'var(--forge-warning)',
+  },
+  danger: {
+    border: 'color-mix(in srgb, var(--forge-danger) 50%, transparent)',
+    icon: 'var(--forge-danger)',
+  },
 }
 
 /**
@@ -61,7 +70,9 @@ export function ToastList({ toasts, onDismiss, className }: ToastListProps) {
           <RadixToast.Root
             key={toast.id}
             open={true}
-            onOpenChange={(open) => { if (!open) onDismiss(toast.id) }}
+            onOpenChange={(open) => {
+              if (!open) onDismiss(toast.id)
+            }}
             duration={toast.duration}
             className={cn('forge-toast', className)}
             style={{
@@ -100,10 +111,7 @@ export function ToastList({ toasts, onDismiss, className }: ToastListProps) {
                 </RadixToast.Description>
               )}
               {toast.action && (
-                <RadixToast.Action
-                  altText={toast.action.label}
-                  asChild
-                >
+                <RadixToast.Action altText={toast.action.label} asChild>
                   <button
                     type="button"
                     onClick={toast.action.onClick}
@@ -145,12 +153,20 @@ export function ToastList({ toasts, onDismiss, className }: ToastListProps) {
                 outline: 'none',
               }}
               onFocus={(e) => {
-                e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+                e.currentTarget.style.outline =
+                  'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
               }}
-              onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+              onBlur={(e) => {
+                e.currentTarget.style.outline = 'none'
+              }}
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                <path
+                  d="M1 1l10 10M11 1L1 11"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
               </svg>
             </RadixToast.Close>
           </RadixToast.Root>

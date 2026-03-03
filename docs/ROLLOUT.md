@@ -11,17 +11,17 @@ migration guide and `docs/PLAN.md` for design decisions.
 
 Ordered by complexity (simplest → largest surface area).
 
-| # | Tool | Status | Notes |
-|---|------|--------|-------|
-| 1 | **PipelineInspector** | 🔲 | Pilot — establish patterns |
-| 2 | **EntityArchitect** | 🔲 | PropertyGrid + TreeView heavy |
-| 3 | **QuestForge** | 🔲 | Timeline + Steps usage |
-| 4 | **EncounterComposer** | 🔲 | DataTable + CommandPalette |
-| 5 | **AssetGenerator** | 🔲 | DropZone + ColorPicker |
-| 6 | **Director** | 🔲 | Timeline + NodeEditor |
-| 7 | **TerrainComposer** | 🔲 | VirtualCanvas + PropertyGrid |
-| 8 | **LoreEngine** | 🔲 | Largest surface area — last |
-| 9 | **Crucible** | 🔲 | Tokens only (`@forgeui/tokens`) |
+| #   | Tool                  | Status | Notes                           |
+| --- | --------------------- | ------ | ------------------------------- |
+| 1   | **PipelineInspector** | 🔲     | Pilot — establish patterns      |
+| 2   | **EntityArchitect**   | 🔲     | PropertyGrid + TreeView heavy   |
+| 3   | **QuestForge**        | 🔲     | Timeline + Steps usage          |
+| 4   | **EncounterComposer** | 🔲     | DataTable + CommandPalette      |
+| 5   | **AssetGenerator**    | 🔲     | DropZone + ColorPicker          |
+| 6   | **Director**          | 🔲     | Timeline + NodeEditor           |
+| 7   | **TerrainComposer**   | 🔲     | VirtualCanvas + PropertyGrid    |
+| 8   | **LoreEngine**        | 🔲     | Largest surface area — last     |
+| 9   | **Crucible**          | 🔲     | Tokens only (`@forgeui/tokens`) |
 
 ---
 
@@ -30,6 +30,7 @@ Ordered by complexity (simplest → largest surface area).
 The pilot migration establishes patterns for subsequent tools.
 
 ### Pilot Goals
+
 1. Validate token coverage (are there gaps in `--forge-*` tokens?)
 2. Validate component coverage (anything missing from Phase 1–3?)
 3. Identify common prop/event API friction
@@ -40,18 +41,18 @@ The pilot migration establishes patterns for subsequent tools.
 
 Expected components needed (to be confirmed during migration):
 
-| PipelineInspector widget | ForgeUI equivalent |
-|--------------------------|-------------------|
-| App layout | `AppShell` (nav + sidebar + main) |
-| Node graph canvas | `NodeEditor` (ReactFlow) |
-| Property panel | `PropertyGrid` |
-| File import dialog | `Dialog` + `DropZone` |
-| Asset table | `DataTable` |
-| Context menus | `ContextMenu` |
-| Status toasts | `ToastProvider` + `ToastList` |
-| Toolbar | `Toolbar` |
-| Progress indicators | `Progress` + `Spinner` |
-| Search | `CommandPalette` or `Input` with filter |
+| PipelineInspector widget | ForgeUI equivalent                      |
+| ------------------------ | --------------------------------------- |
+| App layout               | `AppShell` (nav + sidebar + main)       |
+| Node graph canvas        | `NodeEditor` (ReactFlow)                |
+| Property panel           | `PropertyGrid`                          |
+| File import dialog       | `Dialog` + `DropZone`                   |
+| Asset table              | `DataTable`                             |
+| Context menus            | `ContextMenu`                           |
+| Status toasts            | `ToastProvider` + `ToastList`           |
+| Toolbar                  | `Toolbar`                               |
+| Progress indicators      | `Progress` + `Spinner`                  |
+| Search                   | `CommandPalette` or `Input` with filter |
 
 ### Step-by-Step Pilot Plan
 
@@ -92,9 +93,9 @@ Week 5: Polish + validation
 
 Document any ForgeUI gaps discovered during migration:
 
-| Gap | Severity | Resolution |
-|-----|----------|------------|
-| (none yet) | — | — |
+| Gap        | Severity | Resolution |
+| ---------- | -------- | ---------- |
+| (none yet) | —        | —          |
 
 ---
 
@@ -103,17 +104,17 @@ Document any ForgeUI gaps discovered during migration:
 Each tool should namespace its extension tokens with a tool-specific prefix.
 This prevents collisions when tools are eventually composed.
 
-| Tool | Prefix | Example token |
-|------|--------|---------------|
-| PipelineInspector | `--pipe-` | `--pipe-node-active` |
-| EntityArchitect | `--arch-` | `--arch-component-color` |
-| QuestForge | `--quest-` | `--quest-stage-active` |
-| EncounterComposer | `--enc-` | `--enc-enemy-hp` |
-| AssetGenerator | `--asset-` | `--asset-tag-color` |
-| Director | `--dir-` | `--dir-shot-color` |
-| TerrainComposer | `--terrain-` | `--terrain-biome-color` |
-| LoreEngine | `--lore-` | `--lore-faction-arcane` |
-| Crucible | `--crucible-` | (tokens only, no components) |
+| Tool              | Prefix        | Example token                |
+| ----------------- | ------------- | ---------------------------- |
+| PipelineInspector | `--pipe-`     | `--pipe-node-active`         |
+| EntityArchitect   | `--arch-`     | `--arch-component-color`     |
+| QuestForge        | `--quest-`    | `--quest-stage-active`       |
+| EncounterComposer | `--enc-`      | `--enc-enemy-hp`             |
+| AssetGenerator    | `--asset-`    | `--asset-tag-color`          |
+| Director          | `--dir-`      | `--dir-shot-color`           |
+| TerrainComposer   | `--terrain-`  | `--terrain-biome-color`      |
+| LoreEngine        | `--lore-`     | `--lore-faction-arcane`      |
+| Crucible          | `--crucible-` | (tokens only, no components) |
 
 ---
 
@@ -128,10 +129,7 @@ import { AppShell, Menubar, Toolbar } from '@forgeui/components'
 
 function ToolApp() {
   return (
-    <AppShell
-      nav={<AppNav />}
-      sidebar={<AppSidebar />}
-    >
+    <AppShell nav={<AppNav />} sidebar={<AppSidebar />}>
       <AppMain />
     </AppShell>
   )
@@ -196,11 +194,7 @@ function ToolRoot() {
   return (
     <>
       <AppContent />
-      <CommandPalette
-        open={paletteOpen}
-        onOpenChange={setPaletteOpen}
-        groups={COMMAND_GROUPS}
-      />
+      <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} groups={COMMAND_GROUPS} />
     </>
   )
 }

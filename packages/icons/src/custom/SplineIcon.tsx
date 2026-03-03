@@ -27,7 +27,15 @@ export function SplineIcon({ size = 20, color = 'currentColor', ...props }: Icon
       <circle cx="5" cy="5" r="1" stroke={color} strokeWidth="1" fill="none" />
       <circle cx="15" cy="15" r="1" stroke={color} strokeWidth="1" fill="none" />
       <line x1="3" y1="15" x2="5" y2="5" stroke={color} strokeWidth="0.75" strokeDasharray="2 1" />
-      <line x1="17" y1="5" x2="15" y2="15" stroke={color} strokeWidth="0.75" strokeDasharray="2 1" />
+      <line
+        x1="17"
+        y1="5"
+        x2="15"
+        y2="15"
+        stroke={color}
+        strokeWidth="0.75"
+        strokeDasharray="2 1"
+      />
     </svg>
   )
 }

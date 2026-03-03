@@ -16,9 +16,9 @@ const preview: Preview = {
         icon: 'paintbrush',
         items: [
           { value: 'midnight-forge-v2', title: 'Midnight Forge v2 (default)' },
-          { value: 'hearth-bronze',    title: 'Hearth Bronze' },
-          { value: 'midnight-forge',   title: 'Midnight Forge' },
-          { value: 'deep-space',       title: 'Deep Space' },
+          { value: 'hearth-bronze', title: 'Hearth Bronze' },
+          { value: 'midnight-forge', title: 'Midnight Forge' },
+          { value: 'deep-space', title: 'Deep Space' },
         ],
         dynamicTitle: true,
       },
@@ -29,7 +29,7 @@ const preview: Preview = {
         title: 'Mode',
         icon: 'moon',
         items: [
-          { value: 'dark',  title: 'Dark' },
+          { value: 'dark', title: 'Dark' },
           { value: 'light', title: 'Light' },
         ],
         dynamicTitle: true,
@@ -43,23 +43,26 @@ const preview: Preview = {
   decorators: [
     (Story, context) => {
       const palette = (context.globals['palette'] ?? 'midnight-forge-v2') as Palette
-      const mode    = (context.globals['mode'] ?? 'dark') as Mode
-      return createElement(
-        ThemeProvider,
-        {
-          palette,
-          mode,
-          children: createElement(
-            TooltipProvider,
-            { delayDuration: 400 },
-            createElement(
-              'div',
-              { style: { backgroundColor: 'var(--forge-bg)', padding: '1rem', boxSizing: 'border-box' } },
-              createElement(Story),
-            ),
+      const mode = (context.globals['mode'] ?? 'dark') as Mode
+      return createElement(ThemeProvider, {
+        palette,
+        mode,
+        children: createElement(
+          TooltipProvider,
+          { delayDuration: 400 },
+          createElement(
+            'div',
+            {
+              style: {
+                backgroundColor: 'var(--forge-bg)',
+                padding: '1rem',
+                boxSizing: 'border-box',
+              },
+            },
+            createElement(Story),
           ),
-        },
-      )
+        ),
+      })
     },
   ],
   parameters: {

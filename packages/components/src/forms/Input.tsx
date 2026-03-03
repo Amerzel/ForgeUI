@@ -22,9 +22,21 @@ interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, '
 }
 
 const SIZE_STYLE: Record<InputSize, React.CSSProperties> = {
-  sm: { height: '28px', fontSize: 'var(--forge-font-size-sm)',   paddingInline: 'var(--forge-space-2)' },
-  md: { height: '34px', fontSize: 'var(--forge-font-size-base)', paddingInline: 'var(--forge-space-3)' },
-  lg: { height: '42px', fontSize: 'var(--forge-font-size-md)',   paddingInline: 'var(--forge-space-4)' },
+  sm: {
+    height: '28px',
+    fontSize: 'var(--forge-font-size-sm)',
+    paddingInline: 'var(--forge-space-2)',
+  },
+  md: {
+    height: '34px',
+    fontSize: 'var(--forge-font-size-base)',
+    paddingInline: 'var(--forge-space-3)',
+  },
+  lg: {
+    height: '42px',
+    fontSize: 'var(--forge-font-size-md)',
+    paddingInline: 'var(--forge-space-4)',
+  },
 }
 
 /**
@@ -70,12 +82,22 @@ export function Input({
         border: `1px solid ${borderColor}`,
         borderRadius: 'var(--forge-radius-md)',
         transition: `border-color var(--forge-duration-fast) var(--forge-easing-default)`,
-        boxShadow: focused ? `0 0 0 2px color-mix(in srgb, ${borderColor} 25%, transparent)` : undefined,
+        boxShadow: focused
+          ? `0 0 0 2px color-mix(in srgb, ${borderColor} 25%, transparent)`
+          : undefined,
         ...style,
       }}
     >
       {startAdornment && (
-        <span style={{ paddingLeft: 'var(--forge-space-2)', color: 'var(--forge-text-muted)', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+        <span
+          style={{
+            paddingLeft: 'var(--forge-space-2)',
+            color: 'var(--forge-text-muted)',
+            display: 'flex',
+            alignItems: 'center',
+            flexShrink: 0,
+          }}
+        >
           {startAdornment}
         </span>
       )}
@@ -100,8 +122,14 @@ export function Input({
           color: disabled ? 'var(--forge-text-disabled)' : 'var(--forge-text)',
           cursor: disabled ? 'not-allowed' : 'text',
         }}
-        onFocus={(e) => { setFocused(true); props.onFocus?.(e) }}
-        onBlur={(e) => { setFocused(false); props.onBlur?.(e) }}
+        onFocus={(e) => {
+          setFocused(true)
+          props.onFocus?.(e)
+        }}
+        onBlur={(e) => {
+          setFocused(false)
+          props.onBlur?.(e)
+        }}
         {...props}
       />
       {showClear && (
@@ -126,12 +154,25 @@ export function Input({
           }}
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-            <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            <path
+              d="M1 1l10 10M11 1L1 11"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
           </svg>
         </button>
       )}
       {endAdornment && !showClear && (
-        <span style={{ paddingRight: 'var(--forge-space-2)', color: 'var(--forge-text-muted)', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+        <span
+          style={{
+            paddingRight: 'var(--forge-space-2)',
+            color: 'var(--forge-text-muted)',
+            display: 'flex',
+            alignItems: 'center',
+            flexShrink: 0,
+          }}
+        >
           {endAdornment}
         </span>
       )}

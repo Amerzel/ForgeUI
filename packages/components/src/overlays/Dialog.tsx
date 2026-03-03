@@ -130,12 +130,20 @@ export function Dialog({
                 outline: 'none',
               }}
               onFocus={(e) => {
-                e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+                e.currentTarget.style.outline =
+                  'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
               }}
-              onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+              onBlur={(e) => {
+                e.currentTarget.style.outline = 'none'
+              }}
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                <path
+                  d="M1 1l12 12M13 1L1 13"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
               </svg>
             </RadixDialog.Close>
           </div>

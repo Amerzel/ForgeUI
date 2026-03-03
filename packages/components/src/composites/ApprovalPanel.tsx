@@ -59,13 +59,15 @@ export function ApprovalPanel({
       }}
     >
       {/* Header */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--forge-space-2)',
-        padding: 'var(--forge-space-3)',
-        borderBottom: '1px solid var(--forge-border)',
-      }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--forge-space-2)',
+          padding: 'var(--forge-space-3)',
+          borderBottom: '1px solid var(--forge-border)',
+        }}
+      >
         {/* Status dot */}
         <span
           role="status"
@@ -79,51 +81,57 @@ export function ApprovalPanel({
           }}
         />
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{
-            fontWeight: 600,
-            fontSize: 'var(--forge-font-size-sm)',
-            color: 'var(--forge-text)',
-          }}>
+          <div
+            style={{
+              fontWeight: 600,
+              fontSize: 'var(--forge-font-size-sm)',
+              color: 'var(--forge-text)',
+            }}
+          >
             {title}
           </div>
           {description && (
-            <div style={{
-              fontSize: 'var(--forge-font-size-xs)',
-              color: 'var(--forge-text-muted)',
-              marginTop: '2px',
-            }}>
+            <div
+              style={{
+                fontSize: 'var(--forge-font-size-xs)',
+                color: 'var(--forge-text-muted)',
+                marginTop: '2px',
+              }}
+            >
               {description}
             </div>
           )}
         </div>
-        <span style={{
-          fontSize: 'var(--forge-font-size-xs)',
-          fontWeight: 500,
-          padding: '1px var(--forge-space-2)',
-          borderRadius: 'var(--forge-radius-sm)',
-          backgroundColor: `color-mix(in srgb, ${config.color} 15%, transparent)`,
-          color: config.color,
-          flexShrink: 0,
-        }}>
+        <span
+          style={{
+            fontSize: 'var(--forge-font-size-xs)',
+            fontWeight: 500,
+            padding: '1px var(--forge-space-2)',
+            borderRadius: 'var(--forge-radius-sm)',
+            backgroundColor: `color-mix(in srgb, ${config.color} 15%, transparent)`,
+            color: config.color,
+            flexShrink: 0,
+          }}
+        >
           {config.label}
         </span>
       </div>
 
       {/* Content */}
-      <div style={{ padding: 'var(--forge-space-3)', flex: 1 }}>
-        {children}
-      </div>
+      <div style={{ padding: 'var(--forge-space-3)', flex: 1 }}>{children}</div>
 
       {/* Action footer */}
       {isPending && (onApprove || onReject) && (
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 'var(--forge-space-2)',
-          padding: 'var(--forge-space-3)',
-          borderTop: '1px solid var(--forge-border)',
-          backgroundColor: 'var(--forge-bg)',
-        }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--forge-space-2)',
+            padding: 'var(--forge-space-3)',
+            borderTop: '1px solid var(--forge-border)',
+            backgroundColor: 'var(--forge-bg)',
+          }}
+        >
           <textarea
             value={rationale}
             onChange={(e) => setRationale(e.target.value)}

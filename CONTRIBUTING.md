@@ -90,6 +90,7 @@ pnpm lint           # ESLint across all packages
 ### Testing requirements
 
 Every component must have:
+
 - At minimum: render test + key prop tests + `axe` accessibility audit
 - Tests must wrap with `<ThemeProvider>` — see existing test files for the pattern
 - Use `getEl(container)` to navigate past the ThemeProvider wrapper div in layout tests

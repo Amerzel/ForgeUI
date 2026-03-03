@@ -8,7 +8,12 @@ const meta: Meta<typeof FileSourceBar> = {
   component: FileSourceBar,
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'Toolbar displaying current file status with load/clear controls. Designed to pair with DropZone.' } },
+    docs: {
+      description: {
+        component:
+          'Toolbar displaying current file status with load/clear controls. Designed to pair with DropZone.',
+      },
+    },
   },
 }
 export default meta
@@ -28,12 +33,17 @@ export const Default: Story = {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
         <div>
-          <div style={{ fontSize: '12px', color: 'var(--forge-text-muted)', marginBottom: '8px' }}>Interactive demo — click Load to simulate</div>
+          <div style={{ fontSize: '12px', color: 'var(--forge-text-muted)', marginBottom: '8px' }}>
+            Interactive demo — click Load to simulate
+          </div>
           <FileSourceBar
             file={file}
             error={error}
             onLoad={handleLoad}
-            onClear={() => { setFile(null); setError(null) }}
+            onClear={() => {
+              setFile(null)
+              setError(null)
+            }}
             accept=".json"
             label="Game Design Document"
           />

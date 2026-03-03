@@ -25,7 +25,7 @@ export function JsonViewer({
 
   const json = useMemo((): unknown => {
     try {
-      return typeof data === 'string' ? JSON.parse(data) as unknown : data
+      return typeof data === 'string' ? (JSON.parse(data) as unknown) : data
     } catch {
       return data
     }
@@ -74,7 +74,14 @@ export function JsonViewer({
             borderBottom: '1px solid var(--forge-border)',
           }}
         >
-          <span style={{ fontSize: 'var(--forge-font-size-xs)', color: 'var(--forge-text-muted)', textTransform: 'uppercase', letterSpacing: 'var(--forge-tracking-wide)' }}>
+          <span
+            style={{
+              fontSize: 'var(--forge-font-size-xs)',
+              color: 'var(--forge-text-muted)',
+              textTransform: 'uppercase',
+              letterSpacing: 'var(--forge-tracking-wide)',
+            }}
+          >
             JSON
           </span>
           <div style={{ flex: 1 }} />
@@ -119,9 +126,34 @@ export function JsonViewer({
               }}
             >
               {copied ? (
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
               ) : (
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
               )}
               {copied ? 'Copied' : 'Copy'}
             </button>
@@ -139,7 +171,14 @@ export function JsonViewer({
         role="tree"
         aria-label="JSON data"
       >
-        <JsonNode value={json} depth={0} defaultExpandDepth={defaultExpandDepth} search={search} keyName={undefined} isLast={true} />
+        <JsonNode
+          value={json}
+          depth={0}
+          defaultExpandDepth={defaultExpandDepth}
+          search={search}
+          keyName={undefined}
+          isLast={true}
+        />
       </div>
     </div>
   )
@@ -167,23 +206,26 @@ function JsonNode({ keyName, value, depth, defaultExpandDepth, search, isLast }:
 
   const toggle = useCallback(() => setExpanded((v) => !v), [])
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault()
-      toggle()
-    } else if (e.key === 'ArrowRight' && !expanded) {
-      e.preventDefault()
-      setExpanded(true)
-    } else if (e.key === 'ArrowLeft' && expanded) {
-      e.preventDefault()
-      setExpanded(false)
-    }
-  }, [expanded, toggle])
-
-  const matchesSearch = search.length > 0 && (
-    (keyName != null && keyName.toLowerCase().includes(search.toLowerCase())) ||
-    (!isExpandable && String(value).toLowerCase().includes(search.toLowerCase()))
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        toggle()
+      } else if (e.key === 'ArrowRight' && !expanded) {
+        e.preventDefault()
+        setExpanded(true)
+      } else if (e.key === 'ArrowLeft' && expanded) {
+        e.preventDefault()
+        setExpanded(false)
+      }
+    },
+    [expanded, toggle],
   )
+
+  const matchesSearch =
+    search.length > 0 &&
+    ((keyName != null && keyName.toLowerCase().includes(search.toLowerCase())) ||
+      (!isExpandable && String(value).toLowerCase().includes(search.toLowerCase())))
 
   const highlightStyle: React.CSSProperties | undefined = matchesSearch
     ? { backgroundColor: 'var(--forge-highlight-bg)', borderRadius: 'var(--forge-radius-sm)' }
@@ -198,14 +240,25 @@ function JsonNode({ keyName, value, depth, defaultExpandDepth, search, isLast }:
     const count = isArray ? arrayItems.length : objectEntries.length
 
     return (
-      <div role="treeitem" aria-expanded={expanded} aria-selected={false} style={{ paddingLeft: indent }}>
+      <div
+        role="treeitem"
+        aria-expanded={expanded}
+        aria-selected={false}
+        style={{ paddingLeft: indent }}
+      >
         <span
           role="button"
           tabIndex={0}
           onClick={toggle}
           onKeyDown={handleKeyDown}
           aria-label={`${expanded ? 'Collapse' : 'Expand'} ${keyName ?? (isArray ? 'array' : 'object')}`}
-          style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 'var(--forge-space-1)', outline: 'none' }}
+          style={{
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 'var(--forge-space-1)',
+            outline: 'none',
+          }}
         >
           <span
             aria-hidden="true"
@@ -229,25 +282,51 @@ function JsonNode({ keyName, value, depth, defaultExpandDepth, search, isLast }:
           {keyName != null && <span style={{ color: 'var(--forge-text-muted)' }}>: </span>}
           <span style={{ color: 'var(--forge-text-muted)' }}>{bracket[0]}</span>
           {!expanded && (
-            <span style={{ color: 'var(--forge-text-disabled)', fontSize: 'var(--forge-font-size-xs)' }}>
-              {' '}{count} {count === 1 ? 'item' : 'items'}{' '}
+            <span
+              style={{ color: 'var(--forge-text-disabled)', fontSize: 'var(--forge-font-size-xs)' }}
+            >
+              {' '}
+              {count} {count === 1 ? 'item' : 'items'}{' '}
             </span>
           )}
-          {!expanded && <span style={{ color: 'var(--forge-text-muted)' }}>{bracket[1]}{isLast ? '' : ','}</span>}
+          {!expanded && (
+            <span style={{ color: 'var(--forge-text-muted)' }}>
+              {bracket[1]}
+              {isLast ? '' : ','}
+            </span>
+          )}
         </span>
 
         {expanded && (
           <div role="group">
             {isArray
               ? arrayItems.map((item, i) => (
-                  <JsonNode key={i} keyName={undefined} value={item} depth={depth + 1} defaultExpandDepth={defaultExpandDepth} search={search} isLast={i === arrayItems.length - 1} />
+                  <JsonNode
+                    key={i}
+                    keyName={undefined}
+                    value={item}
+                    depth={depth + 1}
+                    defaultExpandDepth={defaultExpandDepth}
+                    search={search}
+                    isLast={i === arrayItems.length - 1}
+                  />
                 ))
               : objectEntries.map(([k, v], i) => (
-                  <JsonNode key={k} keyName={k} value={v} depth={depth + 1} defaultExpandDepth={defaultExpandDepth} search={search} isLast={i === objectEntries.length - 1} />
-                ))
-            }
+                  <JsonNode
+                    key={k}
+                    keyName={k}
+                    value={v}
+                    depth={depth + 1}
+                    defaultExpandDepth={defaultExpandDepth}
+                    search={search}
+                    isLast={i === objectEntries.length - 1}
+                  />
+                ))}
             <div style={{ paddingLeft: indent }}>
-              <span style={{ color: 'var(--forge-text-muted)' }}>{bracket[1]}{isLast ? '' : ','}</span>
+              <span style={{ color: 'var(--forge-text-muted)' }}>
+                {bracket[1]}
+                {isLast ? '' : ','}
+              </span>
             </div>
           </div>
         )}
@@ -261,20 +340,28 @@ function JsonNode({ keyName, value, depth, defaultExpandDepth, search, isLast }:
       <span style={{ display: 'inline-block', width: 12, flexShrink: 0 }} />
       {keyName != null && (
         <>
-          <span style={{ color: 'var(--forge-accent)', ...highlightStyle }}>&quot;{keyName}&quot;</span>
+          <span style={{ color: 'var(--forge-accent)', ...highlightStyle }}>
+            &quot;{keyName}&quot;
+          </span>
           <span style={{ color: 'var(--forge-text-muted)' }}>: </span>
         </>
       )}
-      <PrimitiveValue value={value} highlight={matchesSearch && keyName == null ? highlightStyle : undefined} />
+      <PrimitiveValue
+        value={value}
+        highlight={matchesSearch && keyName == null ? highlightStyle : undefined}
+      />
       {!isLast && <span style={{ color: 'var(--forge-text-muted)' }}>,</span>}
     </div>
   )
 }
 
 function PrimitiveValue({ value, highlight }: { value: unknown; highlight?: React.CSSProperties }) {
-  if (value === null) return <span style={{ color: 'var(--forge-text-disabled)', ...highlight }}>null</span>
-  if (typeof value === 'boolean') return <span style={{ color: 'var(--forge-info)', ...highlight }}>{String(value)}</span>
-  if (typeof value === 'number') return <span style={{ color: 'var(--forge-info)', ...highlight }}>{String(value)}</span>
+  if (value === null)
+    return <span style={{ color: 'var(--forge-text-disabled)', ...highlight }}>null</span>
+  if (typeof value === 'boolean')
+    return <span style={{ color: 'var(--forge-info)', ...highlight }}>{String(value)}</span>
+  if (typeof value === 'number')
+    return <span style={{ color: 'var(--forge-info)', ...highlight }}>{String(value)}</span>
   const str = typeof value === 'string' ? value : JSON.stringify(value)
   return <span style={{ color: 'var(--forge-success)', ...highlight }}>&quot;{str}&quot;</span>
 }

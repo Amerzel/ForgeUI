@@ -18,32 +18,22 @@ export interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
 
 const SIZE_MAP: Record<string, string> = {
   prose: 'var(--forge-max-w-prose)',
-  sm:    'var(--forge-max-w-sm)',
-  md:    'var(--forge-max-w-md)',
-  lg:    'var(--forge-max-w-lg)',
+  sm: 'var(--forge-max-w-sm)',
+  md: 'var(--forge-max-w-md)',
+  lg: 'var(--forge-max-w-lg)',
 }
 
-export function Container({
-  size,
-  px = 4,
-  fluid = false,
-  style,
-  ...props
-}: ContainerProps) {
-  const maxWidth = fluid
-    ? undefined
-    : size !== undefined
-      ? (SIZE_MAP[size] ?? size)
-      : undefined
+export function Container({ size, px = 4, fluid = false, style, ...props }: ContainerProps) {
+  const maxWidth = fluid ? undefined : size !== undefined ? (SIZE_MAP[size] ?? size) : undefined
 
   const computedStyle = {
     ...cleanStyle({
-      width:          '100%',
-      marginLeft:     'auto',
-      marginRight:    'auto',
+      width: '100%',
+      marginLeft: 'auto',
+      marginRight: 'auto',
       maxWidth,
-      paddingLeft:    fluid ? undefined : sp(px),
-      paddingRight:   fluid ? undefined : sp(px),
+      paddingLeft: fluid ? undefined : sp(px),
+      paddingRight: fluid ? undefined : sp(px),
     }),
     ...style,
   }

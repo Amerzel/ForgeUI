@@ -18,10 +18,25 @@ export const Default: Story = {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         <FormField label="Count" htmlFor="num-count">
-          <NumberInput id="num-count" value={count} onChange={setCount} min={0} max={100} step={1} />
+          <NumberInput
+            id="num-count"
+            value={count}
+            onChange={setCount}
+            min={0}
+            max={100}
+            step={1}
+          />
         </FormField>
         <FormField label="Angle" htmlFor="num-angle">
-          <NumberInput id="num-angle" value={angle} onChange={setAngle} min={-360} max={360} step={0.5} precision={1} />
+          <NumberInput
+            id="num-angle"
+            value={angle}
+            onChange={setAngle}
+            min={-360}
+            max={360}
+            step={0.5}
+            precision={1}
+          />
         </FormField>
         <FormField label="Disabled" htmlFor="num-disabled">
           <NumberInput id="num-disabled" value={10} disabled />

@@ -32,18 +32,26 @@ export const SimpleGridStory: Story = {
   render: () => (
     <Stack gap={6} p={6}>
       <div>
-        <Text size="sm" color="muted">cols=4 (stat cards)</Text>
+        <Text size="sm" color="muted">
+          cols=4 (stat cards)
+        </Text>
         <SimpleGrid cols={4} spacing={3} style={{ marginTop: 8 }}>
-          {['Entities', 'Quests', 'Factions', 'Locations'].map(label => (
+          {['Entities', 'Quests', 'Factions', 'Locations'].map((label) => (
             <Card key={label}>
-              <Card.Body><Text size="sm" weight="semibold">{label}</Text></Card.Body>
+              <Card.Body>
+                <Text size="sm" weight="semibold">
+                  {label}
+                </Text>
+              </Card.Body>
             </Card>
           ))}
         </SimpleGrid>
       </div>
 
       <div>
-        <Text size="sm" color="muted">minChildWidth=&quot;200px&quot; (auto-fit)</Text>
+        <Text size="sm" color="muted">
+          minChildWidth=&quot;200px&quot; (auto-fit)
+        </Text>
         <SimpleGrid minChildWidth="200px" spacing={3} style={{ marginTop: 8 }}>
           {Array.from({ length: 5 }, (_, i) => (
             <Block key={i} label={`Item ${i + 1}`} />

@@ -11,12 +11,12 @@ export default meta
 type Story = StoryObj<typeof ContextMenu>
 
 const NODE_CONTEXT: MenuEntry[] = [
-  { label: 'Rename',      shortcut: 'F2',  onSelect: () => alert('Rename') },
-  { label: 'Duplicate',   shortcut: '⌘D',  onSelect: () => alert('Duplicate') },
-  { label: 'Group nodes', shortcut: '⌘G',  onSelect: () => alert('Group') },
+  { label: 'Rename', shortcut: 'F2', onSelect: () => alert('Rename') },
+  { label: 'Duplicate', shortcut: '⌘D', onSelect: () => alert('Duplicate') },
+  { label: 'Group nodes', shortcut: '⌘G', onSelect: () => alert('Group') },
   { type: 'separator' },
-  { label: 'Cut',   shortcut: '⌘X', onSelect: () => alert('Cut') },
-  { label: 'Copy',  shortcut: '⌘C', onSelect: () => alert('Copy') },
+  { label: 'Cut', shortcut: '⌘X', onSelect: () => alert('Cut') },
+  { label: 'Copy', shortcut: '⌘C', onSelect: () => alert('Copy') },
   { label: 'Paste', shortcut: '⌘V', onSelect: () => alert('Paste') },
   { type: 'separator' },
   { label: 'Delete node', variant: 'danger', onSelect: () => alert('Delete') },

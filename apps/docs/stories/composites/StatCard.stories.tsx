@@ -6,7 +6,11 @@ const meta: Meta<typeof StatCard> = {
   component: StatCard,
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'KPI / metric card with label, value, delta indicator, icon, and color accent.' } },
+    docs: {
+      description: {
+        component: 'KPI / metric card with label, value, delta indicator, icon, and color accent.',
+      },
+    },
   },
 }
 export default meta
@@ -69,8 +73,16 @@ export const Dashboard: Story = {
   name: 'Dashboard Grid',
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-      <Text size="sm" style={{ fontWeight: 500 }}>Project Dashboard</Text>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px' }}>
+      <Text size="sm" style={{ fontWeight: 500 }}>
+        Project Dashboard
+      </Text>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gap: '12px',
+        }}
+      >
         <StatCard label="Entities" value="2,847" delta="+124" icon="🗂" color="accent" />
         <StatCard label="Build Time" value="4.2s" delta="-0.8s" icon="⚡" color="success" />
         <StatCard label="Warnings" value="12" delta="+3" icon="⚠️" color="warning" />

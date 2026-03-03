@@ -3,8 +3,18 @@ import { cn } from '../lib/cn.js'
 
 type ColorFormat = 'hex' | 'rgb' | 'hsl'
 
-interface RGB { r: number; g: number; b: number; a: number }
-interface HSV { h: number; s: number; v: number; a: number }
+interface RGB {
+  r: number
+  g: number
+  b: number
+  a: number
+}
+interface HSV {
+  h: number
+  s: number
+  v: number
+  a: number
+}
 
 interface ColorPickerProps {
   value?: string
@@ -24,9 +34,15 @@ interface ColorPickerProps {
 
 function hexToRgb(hex: string): RGB {
   const clean = hex.replace('#', '')
-  const full = clean.length === 3
-    ? clean.split('').map(c => c + c).join('')
-    : clean.length === 8 ? clean : clean.padEnd(8, 'ff')
+  const full =
+    clean.length === 3
+      ? clean
+          .split('')
+          .map((c) => c + c)
+          .join('')
+      : clean.length === 8
+        ? clean
+        : clean.padEnd(8, 'ff')
   const n = parseInt(full, 16)
   return {
     r: (n >>> 24) & 0xff,
@@ -37,14 +53,20 @@ function hexToRgb(hex: string): RGB {
 }
 
 function rgbToHex({ r, g, b, a }: RGB, showAlpha: boolean): string {
-  const toHex = (n: number) => Math.round(Math.max(0, Math.min(255, n))).toString(16).padStart(2, '0')
+  const toHex = (n: number) =>
+    Math.round(Math.max(0, Math.min(255, n)))
+      .toString(16)
+      .padStart(2, '0')
   const alphaHex = showAlpha ? toHex(Math.round(a * 255)) : ''
   return `#${toHex(r)}${toHex(g)}${toHex(b)}${alphaHex}`
 }
 
 function rgbToHsv({ r, g, b, a }: RGB): HSV {
-  const rr = r / 255, gg = g / 255, bb = b / 255
-  const max = Math.max(rr, gg, bb), min = Math.min(rr, gg, bb)
+  const rr = r / 255,
+    gg = g / 255,
+    bb = b / 255
+  const max = Math.max(rr, gg, bb),
+    min = Math.min(rr, gg, bb)
   const d = max - min
   let h = 0
   const s = max === 0 ? 0 : d / max
@@ -64,23 +86,53 @@ function hsvToRgb({ h, s, v, a }: HSV): RGB {
   const p = v * (1 - s)
   const q = v * (1 - f * s)
   const t = v * (1 - (1 - f) * s)
-  let r = 0, g = 0, b = 0
+  let r = 0,
+    g = 0,
+    b = 0
   switch (i % 6) {
-    case 0: r = v; g = t; b = p; break
-    case 1: r = q; g = v; b = p; break
-    case 2: r = p; g = v; b = t; break
-    case 3: r = p; g = q; b = v; break
-    case 4: r = t; g = p; b = v; break
-    case 5: r = v; g = p; b = q; break
+    case 0:
+      r = v
+      g = t
+      b = p
+      break
+    case 1:
+      r = q
+      g = v
+      b = p
+      break
+    case 2:
+      r = p
+      g = v
+      b = t
+      break
+    case 3:
+      r = p
+      g = q
+      b = v
+      break
+    case 4:
+      r = t
+      g = p
+      b = v
+      break
+    case 5:
+      r = v
+      g = p
+      b = q
+      break
   }
   return { r: r * 255, g: g * 255, b: b * 255, a }
 }
 
 function rgbToHsl({ r, g, b, a: _a }: RGB): string {
-  const rr = r / 255, gg = g / 255, bb = b / 255
-  const max = Math.max(rr, gg, bb), min = Math.min(rr, gg, bb)
+  const rr = r / 255,
+    gg = g / 255,
+    bb = b / 255
+  const max = Math.max(rr, gg, bb),
+    min = Math.min(rr, gg, bb)
   const l = (max + min) / 2
-  let h = 0, s = 0
+  let h = 0,
+    s = 0
   if (max !== min) {
     const d = max - min
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
@@ -119,7 +171,13 @@ function formatOutput(hsv: HSV, format: ColorFormat, alpha: boolean): string {
 // ---------------------------------------------------------------------------
 // Draggable 2D picker
 // ---------------------------------------------------------------------------
-function SaturationPicker({ hsv, onChange }: { hsv: HSV; onChange: (s: number, v: number) => void }) {
+function SaturationPicker({
+  hsv,
+  onChange,
+}: {
+  hsv: HSV
+  onChange: (s: number, v: number) => void
+}) {
   const ref = useRef<HTMLDivElement>(null)
   const dragging = useRef(false)
 
@@ -144,7 +202,9 @@ function SaturationPicker({ hsv, onChange }: { hsv: HSV; onChange: (s: number, v
     onChange(s, v)
   }
 
-  const onPointerUp = () => { dragging.current = false }
+  const onPointerUp = () => {
+    dragging.current = false
+  }
 
   const thumbX = `${hsv.s * 100}%`
   const thumbY = `${(1 - hsv.v) * 100}%`
@@ -183,7 +243,7 @@ function SaturationPicker({ hsv, onChange }: { hsv: HSV; onChange: (s: number, v
           border: '2px solid white',
           boxShadow: '0 0 2px rgba(0,0,0,0.5)',
           pointerEvents: 'none',
-          backgroundColor: `hsl(${hsv.h}, ${hsv.s * 100}%, ${(hsv.v * (1 - hsv.s / 2)) * 100}%)`,
+          backgroundColor: `hsl(${hsv.h}, ${hsv.s * 100}%, ${hsv.v * (1 - hsv.s / 2) * 100}%)`,
         }}
       />
     </div>
@@ -222,7 +282,9 @@ function Slider1D({
     if (!dragging.current) return
     onChange(getVal(e))
   }
-  const onPointerUp = () => { dragging.current = false }
+  const onPointerUp = () => {
+    dragging.current = false
+  }
 
   return (
     <div
@@ -246,12 +308,24 @@ function Slider1D({
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
-      onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'; e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)' }}
-      onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+      onFocus={(e) => {
+        e.currentTarget.style.outline =
+          'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+        e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
+      }}
+      onBlur={(e) => {
+        e.currentTarget.style.outline = 'none'
+      }}
       onKeyDown={(e) => {
         const step = e.shiftKey ? 0.1 : 0.01
-        if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); onChange(Math.min(1, value + step)) }
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); onChange(Math.max(0, value - step)) }
+        if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+          e.preventDefault()
+          onChange(Math.min(1, value + step))
+        }
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+          e.preventDefault()
+          onChange(Math.max(0, value - step))
+        }
       }}
     >
       <div
@@ -297,11 +371,14 @@ export function ColorPicker({
     }
   }, [value, alpha])
 
-  const emitChange = useCallback((newHsv: HSV) => {
-    const output = formatOutput(newHsv, format, alpha)
-    onChange?.(output)
-    setHexInput(rgbToHex(hsvToRgb(newHsv), alpha))
-  }, [format, alpha, onChange])
+  const emitChange = useCallback(
+    (newHsv: HSV) => {
+      const output = formatOutput(newHsv, format, alpha)
+      onChange?.(output)
+      setHexInput(rgbToHex(hsvToRgb(newHsv), alpha))
+    },
+    [format, alpha, onChange],
+  )
 
   const previewColor = `hsl(${hsv.h}, ${hsv.s * 100}%, ${hsv.v * (100 - hsv.s * 50)}%)`
 
@@ -309,19 +386,21 @@ export function ColorPicker({
     <div
       aria-label="Color picker"
       className={cn('forge-color-picker', className)}
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'var(--forge-space-3)',
-        padding: 'var(--forge-space-3)',
-        backgroundColor: 'var(--forge-surface)',
-        border: '1px solid var(--forge-border)',
-        borderRadius: 'var(--forge-radius-lg)',
-        width: '240px',
-        opacity: disabled ? 0.6 : 1,
-        pointerEvents: disabled ? 'none' : undefined,
-        userSelect: 'none',
-      } as React.CSSProperties}
+      style={
+        {
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'var(--forge-space-3)',
+          padding: 'var(--forge-space-3)',
+          backgroundColor: 'var(--forge-surface)',
+          border: '1px solid var(--forge-border)',
+          borderRadius: 'var(--forge-radius-lg)',
+          width: '240px',
+          opacity: disabled ? 0.6 : 1,
+          pointerEvents: disabled ? 'none' : undefined,
+          userSelect: 'none',
+        } as React.CSSProperties
+      }
     >
       {/* Saturation/Value picker */}
       <SaturationPicker
@@ -348,7 +427,14 @@ export function ColorPicker({
         />
 
         {/* Sliders */}
-        <div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', gap: 'var(--forge-space-2)' }}>
+        <div
+          style={{
+            flex: '1 1 auto',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--forge-space-2)',
+          }}
+        >
           {/* Hue slider */}
           <Slider1D
             value={hsv.h / 360}
@@ -404,14 +490,20 @@ export function ColorPicker({
             // ignore invalid input
           }
         }}
-        onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'; e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)' }}
-        onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur() }}
+        onFocus={(e) => {
+          e.currentTarget.style.outline =
+            'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+          e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') (e.target as HTMLInputElement).blur()
+        }}
       />
 
       {/* Swatches */}
       {swatches.length > 0 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--forge-space-1)' }}>
-          {swatches.map(swatch => (
+          {swatches.map((swatch) => (
             <button
               key={swatch}
               type="button"
@@ -426,13 +518,22 @@ export function ColorPicker({
                 height: '20px',
                 borderRadius: 'var(--forge-radius-sm)',
                 backgroundColor: swatch,
-                border: swatch === value ? '2px solid var(--forge-accent)' : '1px solid var(--forge-border)',
+                border:
+                  swatch === value
+                    ? '2px solid var(--forge-accent)'
+                    : '1px solid var(--forge-border)',
                 cursor: 'pointer',
                 padding: 0,
                 outline: 'none',
               }}
-              onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'; e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)' }}
-              onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+              onFocus={(e) => {
+                e.currentTarget.style.outline =
+                  'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+                e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.outline = 'none'
+              }}
             />
           ))}
         </div>

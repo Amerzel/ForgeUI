@@ -22,14 +22,21 @@ export const Default: Story = {
           pageSize={pageSize}
           total={total}
           onPageChange={setPage}
-          onPageSizeChange={p => { setPageSize(p); setPage(1) }}
+          onPageSizeChange={(p) => {
+            setPageSize(p)
+            setPage(1)
+          }}
         />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <Text size="xs" style={{ color: 'var(--forge-text-muted)' }}>Small dataset (no ellipsis)</Text>
+          <Text size="xs" style={{ color: 'var(--forge-text-muted)' }}>
+            Small dataset (no ellipsis)
+          </Text>
           <Pagination page={2} pageSize={10} total={50} onPageChange={() => {}} />
         </div>
         <div>
-          <Text size="xs" style={{ color: 'var(--forge-text-muted)' }}>Disabled state</Text>
+          <Text size="xs" style={{ color: 'var(--forge-text-muted)' }}>
+            Disabled state
+          </Text>
           <Pagination page={1} pageSize={25} total={500} onPageChange={() => {}} disabled />
         </div>
       </div>

@@ -1,7 +1,7 @@
 name: Component Request
 description: Request a new component or significant enhancement to an existing one.
-title: "feat: [ComponentName] — short description"
-labels: ["component-request", "triage"]
+title: 'feat: [ComponentName] — short description'
+labels: ['component-request', 'triage']
 body:
   - type: markdown
     attributes:
@@ -14,7 +14,7 @@ body:
     id: component-name
     attributes:
       label: Proposed component name
-      placeholder: "e.g. DatePicker, SplitButton, KanbanBoard"
+      placeholder: 'e.g. DatePicker, SplitButton, KanbanBoard'
     validations:
       required: true
 

@@ -57,12 +57,12 @@ import { Button } from '@forgeui/components/Button'
 
 Defaults: `palette="midnight-forge-v2"`, `mode="dark"`.
 
-| Palette | Accent | Character |
-|---------|--------|-----------|
-| `midnight-forge-v2` | Gold `#f59e0b` | Navy/gold (default) |
-| `hearth-bronze` | Amber `#d97706` | Warm forge workshop |
-| `midnight-forge` | Blue `#4f8ff7` | Cool navy |
-| `deep-space` | Teal `#14b8a6` | Deep navy |
+| Palette             | Accent          | Character           |
+| ------------------- | --------------- | ------------------- |
+| `midnight-forge-v2` | Gold `#f59e0b`  | Navy/gold (default) |
+| `hearth-bronze`     | Amber `#d97706` | Warm forge workshop |
+| `midnight-forge`    | Blue `#4f8ff7`  | Cool navy           |
+| `deep-space`        | Teal `#14b8a6`  | Deep navy           |
 
 ### Tool-specific token extensions
 
@@ -84,102 +84,102 @@ See [THEME-EXTENSION.md](../../docs/THEME-EXTENSION.md) for the full typed exten
 
 ### Primitives (13)
 
-| Component | Description |
-|-----------|-------------|
-| `Button` | Primary, secondary, ghost, danger variants; loading state; `asChild` |
-| `IconButton` | Accessible icon-only button; requires `label` for screen readers |
-| `Badge` | Status indicators; solid, subtle, outline variants |
-| `Text` | Inline/block text with size, weight, color, truncate props |
-| `Heading` | Semantic h1–h6; `level` controls element, `size` controls visual scale |
-| `Separator` | Horizontal/vertical divider |
-| `Card` | Surface container; `Card.Header`, `Card.Body`, `Card.Footer` |
-| `Kbd` | Keyboard shortcut display — `⌘+S` |
-| `ScrollArea` | Custom-styled scrollbar; preserves native scroll behavior |
-| `Label` | Accessible form label |
-| `VisuallyHidden` | Screen-reader-only content |
-| `Spinner` | Loading indicator with accessible live region |
-| `AlertDialog` | Blocking confirmation dialog for destructive actions |
+| Component        | Description                                                            |
+| ---------------- | ---------------------------------------------------------------------- |
+| `Button`         | Primary, secondary, ghost, danger variants; loading state; `asChild`   |
+| `IconButton`     | Accessible icon-only button; requires `label` for screen readers       |
+| `Badge`          | Status indicators; solid, subtle, outline variants                     |
+| `Text`           | Inline/block text with size, weight, color, truncate props             |
+| `Heading`        | Semantic h1–h6; `level` controls element, `size` controls visual scale |
+| `Separator`      | Horizontal/vertical divider                                            |
+| `Card`           | Surface container; `Card.Header`, `Card.Body`, `Card.Footer`           |
+| `Kbd`            | Keyboard shortcut display — `⌘+S`                                      |
+| `ScrollArea`     | Custom-styled scrollbar; preserves native scroll behavior              |
+| `Label`          | Accessible form label                                                  |
+| `VisuallyHidden` | Screen-reader-only content                                             |
+| `Spinner`        | Loading indicator with accessible live region                          |
+| `AlertDialog`    | Blocking confirmation dialog for destructive actions                   |
 
 ### Forms (11)
 
-| Component | Description |
-|-----------|-------------|
-| `Input` | Text input; adornments, clear button, error state |
-| `Textarea` | Auto-growing textarea |
-| `Select` | Accessible dropdown; keyboard navigable |
-| `Checkbox` | With indeterminate state |
-| `Switch` | Toggle for boolean settings |
-| `RadioGroup` | Horizontal or vertical radio group |
-| `Slider` | Range slider with accent-colored track |
-| `Toggle` | Two-state button (bold/italic, view modes) |
+| Component     | Description                                        |
+| ------------- | -------------------------------------------------- |
+| `Input`       | Text input; adornments, clear button, error state  |
+| `Textarea`    | Auto-growing textarea                              |
+| `Select`      | Accessible dropdown; keyboard navigable            |
+| `Checkbox`    | With indeterminate state                           |
+| `Switch`      | Toggle for boolean settings                        |
+| `RadioGroup`  | Horizontal or vertical radio group                 |
+| `Slider`      | Range slider with accent-colored track             |
+| `Toggle`      | Two-state button (bold/italic, view modes)         |
 | `ToggleGroup` | Single or multiple selection (toolbars, alignment) |
-| `FormField` | Composes Label + input slot + error + hint |
-| `NumberInput` | Stepper buttons + drag-to-scrub interaction |
+| `FormField`   | Composes Label + input slot + error + hint         |
+| `NumberInput` | Stepper buttons + drag-to-scrub interaction        |
 
 ### Disclosure (2)
 
-| Component | Description |
-|-----------|-------------|
+| Component   | Description                                   |
+| ----------- | --------------------------------------------- |
 | `Accordion` | Collapsible sections; single or multiple open |
-| `Tabs` | Tabbed panels; horizontal or vertical |
+| `Tabs`      | Tabbed panels; horizontal or vertical         |
 
 ### Feedback (4)
 
-| Component | Description |
-|-----------|-------------|
-| `Alert` | Status banner; info/success/warning/error variants |
-| `Progress` | Linear progress bar; determinate or indeterminate |
-| `Skeleton` | Loading placeholder with shimmer |
-| `Toast` / `ToastList` | Stackable auto-dismiss notifications |
+| Component             | Description                                        |
+| --------------------- | -------------------------------------------------- |
+| `Alert`               | Status banner; info/success/warning/error variants |
+| `Progress`            | Linear progress bar; determinate or indeterminate  |
+| `Skeleton`            | Loading placeholder with shimmer                   |
+| `Toast` / `ToastList` | Stackable auto-dismiss notifications               |
 
 ### Overlays (5)
 
-| Component | Description |
-|-----------|-------------|
-| `Dialog` | Modal with focus trap and scroll lock |
-| `Tooltip` | Hover/focus info tooltip |
-| `DropdownMenu` | Keyboard-navigable action menu |
-| `ContextMenu` | Right-click menu with submenus and checkable items |
-| `Popover` | Anchored floating panel |
+| Component      | Description                                        |
+| -------------- | -------------------------------------------------- |
+| `Dialog`       | Modal with focus trap and scroll lock              |
+| `Tooltip`      | Hover/focus info tooltip                           |
+| `DropdownMenu` | Keyboard-navigable action menu                     |
+| `ContextMenu`  | Right-click menu with submenus and checkable items |
+| `Popover`      | Anchored floating panel                            |
 
 ### Composites & Layout (13)
 
-| Component | Description |
-|-----------|-------------|
-| `Drawer` | Slide-in panel from any edge |
-| `Toolbar` | Grouped controls with roving keyboard focus |
+| Component             | Description                                              |
+| --------------------- | -------------------------------------------------------- |
+| `Drawer`              | Slide-in panel from any edge                             |
+| `Toolbar`             | Grouped controls with roving keyboard focus              |
 | `ResizablePanelGroup` | Draggable resize panels; sizes persisted to localStorage |
-| `Collapsible` | Animated show/hide for a single content region |
-| `Menubar` | Desktop-style horizontal menu bar (File/Edit/View) |
-| `Steps` | Multi-step wizard indicator |
-| `Avatar` | User/entity image with fallback initials |
-| `AspectRatio` | Constrain child to a fixed aspect ratio |
-| `Table` | Semantic table with compound sub-components |
-| `Breadcrumb` | Navigation trail with current-page indicator |
-| `AppShell` | Root layout (Sidebar + Nav + Main) |
-| `DropZone` | Drag-and-drop file upload area |
-| `Pagination` | Page navigation controls |
+| `Collapsible`         | Animated show/hide for a single content region           |
+| `Menubar`             | Desktop-style horizontal menu bar (File/Edit/View)       |
+| `Steps`               | Multi-step wizard indicator                              |
+| `Avatar`              | User/entity image with fallback initials                 |
+| `AspectRatio`         | Constrain child to a fixed aspect ratio                  |
+| `Table`               | Semantic table with compound sub-components              |
+| `Breadcrumb`          | Navigation trail with current-page indicator             |
+| `AppShell`            | Root layout (Sidebar + Nav + Main)                       |
+| `DropZone`            | Drag-and-drop file upload area                           |
+| `Pagination`          | Page navigation controls                                 |
 
 ### Complex Inputs & Data (8)
 
-| Component | Description |
-|-----------|-------------|
-| `DataTable` | TanStack Table v8; sorting, filtering, column resize, virtualization for 10k+ rows |
-| `CommandPalette` | `⌘K` fuzzy search; keyboard-first navigation |
-| `TreeView` | Hierarchical data with keyboard navigation; scene graphs, entity trees, file trees |
-| `Combobox` | Searchable select for large lists; autocomplete with filtering |
-| `ColorPicker` | HSL/RGB/Hex; saturation picker, hue/alpha sliders, swatch grid, eyeDropper |
-| `TagsInput` | Multi-tag entry with pill chips; keyboard focus management |
-| `PropertyGrid` | Inspector-style typed key-value editor with collapsible sections |
-| `EditableText` | Inline rename — static text that activates an input on click/Enter |
+| Component        | Description                                                                        |
+| ---------------- | ---------------------------------------------------------------------------------- |
+| `DataTable`      | TanStack Table v8; sorting, filtering, column resize, virtualization for 10k+ rows |
+| `CommandPalette` | `⌘K` fuzzy search; keyboard-first navigation                                       |
+| `TreeView`       | Hierarchical data with keyboard navigation; scene graphs, entity trees, file trees |
+| `Combobox`       | Searchable select for large lists; autocomplete with filtering                     |
+| `ColorPicker`    | HSL/RGB/Hex; saturation picker, hue/alpha sliders, swatch grid, eyeDropper         |
+| `TagsInput`      | Multi-tag entry with pill chips; keyboard focus management                         |
+| `PropertyGrid`   | Inspector-style typed key-value editor with collapsible sections                   |
+| `EditableText`   | Inline rename — static text that activates an input on click/Enter                 |
 
 ### Domain-Specific (3)
 
-| Component | Description |
-|-----------|-------------|
-| `NodeEditor` | Visual node graph via `@xyflow/react`; ports, connections, pan/zoom, minimap |
-| `Timeline` | Time-based track editor; clips, playhead, drag/resize, zoom |
-| `VirtualCanvas` | Infinite pannable/zoomable canvas; grid, item selection and drag |
+| Component       | Description                                                                  |
+| --------------- | ---------------------------------------------------------------------------- |
+| `NodeEditor`    | Visual node graph via `@xyflow/react`; ports, connections, pan/zoom, minimap |
+| `Timeline`      | Time-based track editor; clips, playhead, drag/resize, zoom                  |
+| `VirtualCanvas` | Infinite pannable/zoomable canvas; grid, item selection and drag             |
 
 ## Examples
 
@@ -202,7 +202,7 @@ See [THEME-EXTENSION.md](../../docs/THEME-EXTENSION.md) for the full typed exten
 <FormField label="Entity Name" error={errors.name} hint="Used as the display name" required>
   <Input
     value={name}
-    onChange={e => setName(e.target.value)}
+    onChange={(e) => setName(e.target.value)}
     error={!!errors.name}
     placeholder="e.g. Goblin Chief"
   />
@@ -220,8 +220,12 @@ See [THEME-EXTENSION.md](../../docs/THEME-EXTENSION.md) for the full typed exten
     <Dialog.Header>Confirm Export</Dialog.Header>
     <p>Export 42 assets to the output directory?</p>
     <Dialog.Footer>
-      <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
-      <Button variant="primary" onClick={handleExport}>Export</Button>
+      <Button variant="ghost" onClick={() => setOpen(false)}>
+        Cancel
+      </Button>
+      <Button variant="primary" onClick={handleExport}>
+        Export
+      </Button>
     </Dialog.Footer>
   </Dialog.Content>
 </Dialog>
@@ -263,7 +267,7 @@ const columns: ColumnDef<Entity>[] = [
   items={[
     {
       group: 'Entities',
-      items: entities.map(e => ({
+      items: entities.map((e) => ({
         label: e.name,
         icon: <EntityIcon size={16} />,
         action: () => selectEntity(e.id),
@@ -319,6 +323,7 @@ Primitives that render a semantic HTML element support `asChild`. When `true`, t
 ## Accessibility
 
 All components meet WCAG 2.1 AA:
+
 - Full keyboard navigation on all interactive components
 - Screen reader labels via Radix primitives
 - Color-independent status indicators — icon + text label, never color alone

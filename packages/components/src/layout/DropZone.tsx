@@ -29,11 +29,16 @@ function validateFiles(
   const valid: File[] = []
   for (const file of files) {
     if (maxSize && file.size > maxSize) {
-      return { valid: [], error: `"${file.name}" exceeds the ${(maxSize / 1024 / 1024).toFixed(1)} MB limit.` }
+      return {
+        valid: [],
+        error: `"${file.name}" exceeds the ${(maxSize / 1024 / 1024).toFixed(1)} MB limit.`,
+      }
     }
     if (accept && accept.length > 0) {
-      const accepted = accept.some(a =>
-        a.startsWith('.') ? file.name.toLowerCase().endsWith(a.toLowerCase()) : file.type.match(a.replace('*', '.*'))
+      const accepted = accept.some((a) =>
+        a.startsWith('.')
+          ? file.name.toLowerCase().endsWith(a.toLowerCase())
+          : file.type.match(a.replace('*', '.*')),
       )
       if (!accepted) {
         return { valid: [], error: `"${file.name}" is not an accepted file type.` }
@@ -58,17 +63,20 @@ export function DropZone({
   const [error, setError] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleFiles = useCallback((files: FileList | null) => {
-    if (!files || files.length === 0) return
-    setError(null)
-    const { valid, error: err } = validateFiles(Array.from(files), accept, maxSize, multiple)
-    if (err) {
-      setError(err)
-      onError?.(err)
-    } else {
-      onDrop(valid)
-    }
-  }, [accept, maxSize, multiple, onDrop, onError])
+  const handleFiles = useCallback(
+    (files: FileList | null) => {
+      if (!files || files.length === 0) return
+      setError(null)
+      const { valid, error: err } = validateFiles(Array.from(files), accept, maxSize, multiple)
+      if (err) {
+        setError(err)
+        onError?.(err)
+      } else {
+        onDrop(valid)
+      }
+    },
+    [accept, maxSize, multiple, onDrop, onError],
+  )
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
@@ -117,9 +125,22 @@ export function DropZone({
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
       onClick={() => !disabled && inputRef.current?.click()}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!disabled) { inputRef.current?.click() } } }}
-      onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'; e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)' }}
-      onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          if (!disabled) {
+            inputRef.current?.click()
+          }
+        }
+      }}
+      onFocus={(e) => {
+        e.currentTarget.style.outline =
+          'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+        e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
+      }}
+      onBlur={(e) => {
+        e.currentTarget.style.outline = 'none'
+      }}
     >
       <input
         ref={inputRef}
@@ -135,21 +156,46 @@ export function DropZone({
 
       {children ?? (
         <>
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" style={{ color: isDragging ? 'var(--forge-accent)' : 'var(--forge-text-muted)' }}>
-            <path d="M16 4v16M10 10l6-6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M6 22v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            aria-hidden="true"
+            style={{ color: isDragging ? 'var(--forge-accent)' : 'var(--forge-text-muted)' }}
+          >
+            <path
+              d="M16 4v16M10 10l6-6 6 6"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M6 22v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
           </svg>
           <div>
             <div style={{ fontSize: 'var(--forge-font-size-base)', color: 'var(--forge-text)' }}>
               {isDragging ? 'Drop to upload' : 'Drop files here or click to browse'}
             </div>
             {accept && (
-              <div style={{ fontSize: 'var(--forge-font-size-xs)', marginTop: 'var(--forge-space-1)' }}>
+              <div
+                style={{ fontSize: 'var(--forge-font-size-xs)', marginTop: 'var(--forge-space-1)' }}
+              >
                 Accepted: {accept.join(', ')}
               </div>
             )}
             {maxSize && (
-              <div style={{ fontSize: 'var(--forge-font-size-xs)', marginTop: 'var(--forge-space-0-5)' }}>
+              <div
+                style={{
+                  fontSize: 'var(--forge-font-size-xs)',
+                  marginTop: 'var(--forge-space-0-5)',
+                }}
+              >
                 Max size: {(maxSize / 1024 / 1024).toFixed(1)} MB
               </div>
             )}
@@ -158,7 +204,10 @@ export function DropZone({
       )}
 
       {error && (
-        <div role="alert" style={{ fontSize: 'var(--forge-font-size-sm)', color: 'var(--forge-danger)' }}>
+        <div
+          role="alert"
+          style={{ fontSize: 'var(--forge-font-size-sm)', color: 'var(--forge-danger)' }}
+        >
           {error}
         </div>
       )}

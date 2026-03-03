@@ -12,7 +12,10 @@ interface AlertProps {
   className?: string
 }
 
-const VARIANT_TOKENS: Record<AlertVariant, { bg: string; border: string; icon: string; iconPath: string }> = {
+const VARIANT_TOKENS: Record<
+  AlertVariant,
+  { bg: string; border: string; icon: string; iconPath: string }
+> = {
   info: {
     bg: 'color-mix(in srgb, var(--forge-info) 10%, transparent)',
     border: 'color-mix(in srgb, var(--forge-info) 40%, transparent)',
@@ -29,7 +32,8 @@ const VARIANT_TOKENS: Record<AlertVariant, { bg: string; border: string; icon: s
     bg: 'color-mix(in srgb, var(--forge-warning) 10%, transparent)',
     border: 'color-mix(in srgb, var(--forge-warning) 40%, transparent)',
     icon: 'var(--forge-warning)',
-    iconPath: 'M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z',
+    iconPath:
+      'M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z',
   },
   danger: {
     bg: 'color-mix(in srgb, var(--forge-danger) 10%, transparent)',
@@ -125,12 +129,20 @@ export function Alert({
             alignSelf: 'flex-start',
           }}
           onFocus={(e) => {
-            e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+            e.currentTarget.style.outline =
+              'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
           }}
-          onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+          onBlur={(e) => {
+            e.currentTarget.style.outline = 'none'
+          }}
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-            <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            <path
+              d="M1 1l10 10M11 1L1 11"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
           </svg>
         </button>
       )}

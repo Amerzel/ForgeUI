@@ -6,7 +6,12 @@ const meta: Meta<typeof EmptyState> = {
   component: EmptyState,
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'Centered empty state placeholder with icon, title, description, and optional action button.' } },
+    docs: {
+      description: {
+        component:
+          'Centered empty state placeholder with icon, title, description, and optional action button.',
+      },
+    },
   },
 }
 export default meta

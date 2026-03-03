@@ -40,8 +40,12 @@ export const Default: Story = {
               <Input id="pop-name" placeholder="Search…" size="sm" />
             </FormField>
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
-              <Button variant="ghost" size="sm" onClick={() => setOpen(false)}>Reset</Button>
-              <Button variant="primary" size="sm" onClick={() => setOpen(false)}>Apply</Button>
+              <Button variant="ghost" size="sm" onClick={() => setOpen(false)}>
+                Reset
+              </Button>
+              <Button variant="primary" size="sm" onClick={() => setOpen(false)}>
+                Apply
+              </Button>
             </div>
           </div>
         </Popover>

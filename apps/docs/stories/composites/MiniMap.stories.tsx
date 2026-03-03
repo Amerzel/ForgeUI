@@ -6,7 +6,11 @@ const meta: Meta<typeof MiniMap> = {
   component: MiniMap,
   tags: ['autodocs'],
   parameters: {
-    docs: { description: { component: 'Scaled-down viewport navigation widget for large canvases and graphs.' } },
+    docs: {
+      description: {
+        component: 'Scaled-down viewport navigation widget for large canvases and graphs.',
+      },
+    },
   },
 }
 export default meta
@@ -26,7 +30,9 @@ export const WithContent: Story = {
   name: 'With Node Dots',
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-      <Text size="sm" style={{ fontWeight: 500 }}>Graph Navigation</Text>
+      <Text size="sm" style={{ fontWeight: 500 }}>
+        Graph Navigation
+      </Text>
       <MiniMap
         contentWidth={1000}
         contentHeight={800}
@@ -35,11 +41,61 @@ export const WithContent: Story = {
         height={160}
       >
         {/* Simulated graph nodes */}
-        <div style={{ position: 'absolute', left: 200, top: 150, width: 12, height: 12, borderRadius: '50%', backgroundColor: 'var(--forge-accent)' }} />
-        <div style={{ position: 'absolute', left: 400, top: 300, width: 12, height: 12, borderRadius: '50%', backgroundColor: 'var(--forge-success)' }} />
-        <div style={{ position: 'absolute', left: 600, top: 200, width: 12, height: 12, borderRadius: '50%', backgroundColor: 'var(--forge-warning)' }} />
-        <div style={{ position: 'absolute', left: 300, top: 500, width: 12, height: 12, borderRadius: '50%', backgroundColor: 'var(--forge-danger)' }} />
-        <div style={{ position: 'absolute', left: 700, top: 450, width: 12, height: 12, borderRadius: '50%', backgroundColor: 'var(--forge-accent)' }} />
+        <div
+          style={{
+            position: 'absolute',
+            left: 200,
+            top: 150,
+            width: 12,
+            height: 12,
+            borderRadius: '50%',
+            backgroundColor: 'var(--forge-accent)',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            left: 400,
+            top: 300,
+            width: 12,
+            height: 12,
+            borderRadius: '50%',
+            backgroundColor: 'var(--forge-success)',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            left: 600,
+            top: 200,
+            width: 12,
+            height: 12,
+            borderRadius: '50%',
+            backgroundColor: 'var(--forge-warning)',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            left: 300,
+            top: 500,
+            width: 12,
+            height: 12,
+            borderRadius: '50%',
+            backgroundColor: 'var(--forge-danger)',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            left: 700,
+            top: 450,
+            width: 12,
+            height: 12,
+            borderRadius: '50%',
+            backgroundColor: 'var(--forge-accent)',
+          }}
+        />
       </MiniMap>
     </div>
   ),

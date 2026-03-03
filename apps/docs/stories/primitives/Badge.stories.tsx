@@ -13,10 +13,12 @@ export const Variants: Story = {
   name: 'Badge — variants',
   render: () => (
     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-      {(['accent','info','success','warning','danger','neutral'] as const).map(color =>
-        (['solid','subtle','outline'] as const).map(variant => (
-          <Badge key={`${color}-${variant}`} color={color} variant={variant}>{color}</Badge>
-        ))
+      {(['accent', 'info', 'success', 'warning', 'danger', 'neutral'] as const).map((color) =>
+        (['solid', 'subtle', 'outline'] as const).map((variant) => (
+          <Badge key={`${color}-${variant}`} color={color} variant={variant}>
+            {color}
+          </Badge>
+        )),
       )}
     </div>
   ),

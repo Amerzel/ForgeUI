@@ -38,9 +38,15 @@ export const Default: Story = {
                 ]}
               />
             </FormField>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', paddingTop: '8px' }}>
-              <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
-              <Button variant="primary" onClick={() => setOpen(false)}>Save</Button>
+            <div
+              style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', paddingTop: '8px' }}
+            >
+              <Button variant="ghost" onClick={() => setOpen(false)}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={() => setOpen(false)}>
+                Save
+              </Button>
             </div>
           </div>
         </Dialog>

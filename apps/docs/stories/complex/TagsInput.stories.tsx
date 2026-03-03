@@ -17,20 +17,49 @@ export const TagsInputStory: Story = {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '400px' }}>
         <div>
-          <Text size="sm" style={{ color: 'var(--forge-text-muted)', marginBottom: '6px', display: 'block' }}>Asset tags</Text>
+          <Text
+            size="sm"
+            style={{ color: 'var(--forge-text-muted)', marginBottom: '6px', display: 'block' }}
+          >
+            Asset tags
+          </Text>
           <TagsInput
             value={tags}
             onChange={setTags}
-            suggestions={['outdoor', 'indoor', 'fantasy', 'sci-fi', 'medieval', 'modern', 'character', 'environment', 'prop', 'vfx']}
+            suggestions={[
+              'outdoor',
+              'indoor',
+              'fantasy',
+              'sci-fi',
+              'medieval',
+              'modern',
+              'character',
+              'environment',
+              'prop',
+              'vfx',
+            ]}
             placeholder="Add tag…"
           />
         </div>
         <div>
-          <Text size="sm" style={{ color: 'var(--forge-text-muted)', marginBottom: '6px', display: 'block' }}>Layer mask (max 4)</Text>
+          <Text
+            size="sm"
+            style={{ color: 'var(--forge-text-muted)', marginBottom: '6px', display: 'block' }}
+          >
+            Layer mask (max 4)
+          </Text>
           <TagsInput
             value={layers}
             onChange={setLayers}
-            suggestions={['Default', 'Player', 'Enemy', 'UI', 'Environment', 'Projectile', 'Trigger']}
+            suggestions={[
+              'Default',
+              'Player',
+              'Enemy',
+              'UI',
+              'Environment',
+              'Projectile',
+              'Trigger',
+            ]}
             max={4}
             placeholder="Add layer…"
           />

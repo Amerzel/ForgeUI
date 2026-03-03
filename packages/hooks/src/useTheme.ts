@@ -30,7 +30,9 @@ export interface UseThemeResult<TExtensions extends ExtensionTokens = ExtensionT
  * const { extensions } = useTheme<LoreExtensions>()
  * extensions['--lore-prophecy'] // string
  */
-export function useTheme<TExtensions extends ExtensionTokens = ExtensionTokens>(): UseThemeResult<TExtensions> {
+export function useTheme<
+  TExtensions extends ExtensionTokens = ExtensionTokens,
+>(): UseThemeResult<TExtensions> {
   const ctx = use(ThemeContext)
   if (!ctx) {
     throw new Error('useTheme() must be used inside a <ThemeProvider>.')

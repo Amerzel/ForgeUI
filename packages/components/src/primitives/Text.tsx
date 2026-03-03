@@ -19,29 +19,29 @@ interface TextProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const SIZE_VARS: Record<TextSize, { fontSize: string; lineHeight: string }> = {
-  'xs':   { fontSize: 'var(--forge-font-size-xs)',   lineHeight: 'var(--forge-line-height-xs)' },
-  'sm':   { fontSize: 'var(--forge-font-size-sm)',   lineHeight: 'var(--forge-line-height-sm)' },
-  'base': { fontSize: 'var(--forge-font-size-base)', lineHeight: 'var(--forge-line-height-base)' },
-  'md':   { fontSize: 'var(--forge-font-size-md)',   lineHeight: 'var(--forge-line-height-md)' },
-  'lg':   { fontSize: 'var(--forge-font-size-lg)',   lineHeight: 'var(--forge-line-height-lg)' },
-  'xl':   { fontSize: 'var(--forge-font-size-xl)',   lineHeight: 'var(--forge-line-height-xl)' },
-  '2xl':  { fontSize: 'var(--forge-font-size-2xl)',  lineHeight: 'var(--forge-line-height-2xl)' },
-  '3xl':  { fontSize: 'var(--forge-font-size-3xl)',  lineHeight: 'var(--forge-line-height-3xl)' },
+  xs: { fontSize: 'var(--forge-font-size-xs)', lineHeight: 'var(--forge-line-height-xs)' },
+  sm: { fontSize: 'var(--forge-font-size-sm)', lineHeight: 'var(--forge-line-height-sm)' },
+  base: { fontSize: 'var(--forge-font-size-base)', lineHeight: 'var(--forge-line-height-base)' },
+  md: { fontSize: 'var(--forge-font-size-md)', lineHeight: 'var(--forge-line-height-md)' },
+  lg: { fontSize: 'var(--forge-font-size-lg)', lineHeight: 'var(--forge-line-height-lg)' },
+  xl: { fontSize: 'var(--forge-font-size-xl)', lineHeight: 'var(--forge-line-height-xl)' },
+  '2xl': { fontSize: 'var(--forge-font-size-2xl)', lineHeight: 'var(--forge-line-height-2xl)' },
+  '3xl': { fontSize: 'var(--forge-font-size-3xl)', lineHeight: 'var(--forge-line-height-3xl)' },
 }
 
 const WEIGHT_VARS: Record<TextWeight, string> = {
-  normal:   'var(--forge-font-normal)',
-  medium:   'var(--forge-font-medium)',
+  normal: 'var(--forge-font-normal)',
+  medium: 'var(--forge-font-medium)',
   semibold: 'var(--forge-font-semibold)',
-  bold:     'var(--forge-font-bold)',
+  bold: 'var(--forge-font-bold)',
 }
 
 const COLOR_VARS: Record<TextColor, string> = {
-  default:  'var(--forge-text)',
-  muted:    'var(--forge-text-muted)',
+  default: 'var(--forge-text)',
+  muted: 'var(--forge-text-muted)',
   disabled: 'var(--forge-text-disabled)',
-  accent:   'var(--forge-accent)',
-  inherit:  'inherit',
+  accent: 'var(--forge-accent)',
+  inherit: 'inherit',
 }
 
 /**

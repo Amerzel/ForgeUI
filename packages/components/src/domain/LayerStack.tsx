@@ -56,18 +56,21 @@ export function LayerStack({
     setDropIndex(index)
   }, [])
 
-  const handleDragMove = useCallback((e: React.PointerEvent) => {
-    if (!dragId || !containerRef.current) return
-    const rect = containerRef.current.getBoundingClientRect()
-    const rowHeight = compact ? 32 : 44
-    const y = e.clientY - rect.top
-    const idx = Math.max(0, Math.min(layers.length - 1, Math.floor(y / rowHeight)))
-    setDropIndex(idx)
-  }, [dragId, layers.length, compact])
+  const handleDragMove = useCallback(
+    (e: React.PointerEvent) => {
+      if (!dragId || !containerRef.current) return
+      const rect = containerRef.current.getBoundingClientRect()
+      const rowHeight = compact ? 32 : 44
+      const y = e.clientY - rect.top
+      const idx = Math.max(0, Math.min(layers.length - 1, Math.floor(y / rowHeight)))
+      setDropIndex(idx)
+    },
+    [dragId, layers.length, compact],
+  )
 
   const handleDragEnd = useCallback(() => {
     if (dragId !== null && dropIndex !== null && onReorder) {
-      const fromIdx = layers.findIndex(l => l.id === dragId)
+      const fromIdx = layers.findIndex((l) => l.id === dragId)
       if (fromIdx !== -1 && fromIdx !== dropIndex) {
         const reordered = [...layers]
         const [moved] = reordered.splice(fromIdx, 1)
@@ -81,23 +84,26 @@ export function LayerStack({
     setDropIndex(null)
   }, [dragId, dropIndex, layers, onReorder])
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent, id: string, index: number) => {
-    if (e.key === 'ArrowUp' && index > 0) {
-      e.preventDefault()
-      const prev = layers[index - 1]
-      if (prev) onSelect?.(prev.id)
-    } else if (e.key === 'ArrowDown' && index < layers.length - 1) {
-      e.preventDefault()
-      const next = layers[index + 1]
-      if (next) onSelect?.(next.id)
-    } else if (e.key === ' ') {
-      e.preventDefault()
-      onToggleVisibility?.(id)
-    } else if (e.key === 'Delete' || e.key === 'Backspace') {
-      e.preventDefault()
-      onRemove?.(id)
-    }
-  }, [layers, onSelect, onToggleVisibility, onRemove])
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent, id: string, index: number) => {
+      if (e.key === 'ArrowUp' && index > 0) {
+        e.preventDefault()
+        const prev = layers[index - 1]
+        if (prev) onSelect?.(prev.id)
+      } else if (e.key === 'ArrowDown' && index < layers.length - 1) {
+        e.preventDefault()
+        const next = layers[index + 1]
+        if (next) onSelect?.(next.id)
+      } else if (e.key === ' ') {
+        e.preventDefault()
+        onToggleVisibility?.(id)
+      } else if (e.key === 'Delete' || e.key === 'Backspace') {
+        e.preventDefault()
+        onRemove?.(id)
+      }
+    },
+    [layers, onSelect, onToggleVisibility, onRemove],
+  )
 
   const rowHeight = compact ? 32 : 44
   const thumbSize = compact ? 20 : 28
@@ -121,22 +127,26 @@ export function LayerStack({
       onPointerUp={handleDragEnd}
     >
       {/* Header */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: `var(--forge-space-1-5) var(--forge-space-3)`,
-        borderBottom: '1px solid var(--forge-border)',
-        backgroundColor: 'var(--forge-surface)',
-        minHeight: '32px',
-      }}>
-        <span style={{
-          fontSize: 'var(--forge-font-size-xs)',
-          fontFamily: 'var(--forge-font-mono)',
-          color: 'var(--forge-text-muted)',
-          textTransform: 'uppercase',
-          letterSpacing: '0.05em',
-        }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: `var(--forge-space-1-5) var(--forge-space-3)`,
+          borderBottom: '1px solid var(--forge-border)',
+          backgroundColor: 'var(--forge-surface)',
+          minHeight: '32px',
+        }}
+      >
+        <span
+          style={{
+            fontSize: 'var(--forge-font-size-xs)',
+            fontFamily: 'var(--forge-font-mono)',
+            color: 'var(--forge-text-muted)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+          }}
+        >
           Layers ({layers.length})
         </span>
         {onAdd && (
@@ -154,7 +164,9 @@ export function LayerStack({
               padding: '1px 8px',
               lineHeight: '1.4',
             }}
-          >+</button>
+          >
+            +
+          </button>
         )}
       </div>
 
@@ -169,16 +181,19 @@ export function LayerStack({
             <div key={layer.id} style={{ position: 'relative' }}>
               {/* Drop indicator */}
               {showDropIndicator && (
-                <div aria-hidden="true" style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 'var(--forge-space-2)',
-                  right: 'var(--forge-space-2)',
-                  height: '2px',
-                  backgroundColor: 'var(--forge-accent)',
-                  borderRadius: '1px',
-                  zIndex: 2,
-                }} />
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 'var(--forge-space-2)',
+                    right: 'var(--forge-space-2)',
+                    height: '2px',
+                    backgroundColor: 'var(--forge-accent)',
+                    borderRadius: '1px',
+                    zIndex: 2,
+                  }}
+                />
               )}
               <div
                 role="listitem"
@@ -213,7 +228,10 @@ export function LayerStack({
                       touchAction: 'none',
                       lineHeight: 1,
                     }}
-                    onPointerDown={(e) => { e.stopPropagation(); handleDragStart(e, layer.id, index) }}
+                    onPointerDown={(e) => {
+                      e.stopPropagation()
+                      handleDragStart(e, layer.id, index)
+                    }}
                   >
                     ⠿
                   </div>
@@ -221,22 +239,24 @@ export function LayerStack({
 
                 {/* Thumbnail */}
                 {layer.thumbnail && (
-                  <div style={{
-                    width: thumbSize,
-                    height: thumbSize,
-                    borderRadius: 'var(--forge-radius-sm)',
-                    border: '1px solid var(--forge-border)',
-                    overflow: 'hidden',
-                    flexShrink: 0,
-                    backgroundImage: `
+                  <div
+                    style={{
+                      width: thumbSize,
+                      height: thumbSize,
+                      borderRadius: 'var(--forge-radius-sm)',
+                      border: '1px solid var(--forge-border)',
+                      overflow: 'hidden',
+                      flexShrink: 0,
+                      backgroundImage: `
                       linear-gradient(45deg, var(--forge-surface) 25%, transparent 25%),
                       linear-gradient(-45deg, var(--forge-surface) 25%, transparent 25%),
                       linear-gradient(45deg, transparent 75%, var(--forge-surface) 75%),
                       linear-gradient(-45deg, transparent 75%, var(--forge-surface) 75%)
                     `,
-                    backgroundSize: '6px 6px',
-                    backgroundPosition: '0 0, 0 3px, 3px -3px, -3px 0',
-                  }}>
+                      backgroundSize: '6px 6px',
+                      backgroundPosition: '0 0, 0 3px, 3px -3px, -3px 0',
+                    }}
+                  >
                     <img
                       src={layer.thumbnail}
                       alt=""
@@ -251,29 +271,39 @@ export function LayerStack({
                 )}
 
                 {/* Label */}
-                <span style={{
-                  flex: '1 1 auto',
-                  fontSize: compact ? 'var(--forge-font-size-xs)' : 'var(--forge-font-size-sm)',
-                  color: 'var(--forge-text)',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                }}>
+                <span
+                  style={{
+                    flex: '1 1 auto',
+                    fontSize: compact ? 'var(--forge-font-size-xs)' : 'var(--forge-font-size-sm)',
+                    color: 'var(--forge-text)',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
                   {layer.label}
                 </span>
 
                 {/* Opacity */}
-                {!compact && (
-                  editingOpacity === layer.id ? (
+                {!compact &&
+                  (editingOpacity === layer.id ? (
                     <input
                       type="number"
                       aria-label={`Opacity for ${layer.label}`}
                       min={0}
                       max={100}
                       value={layer.opacity}
-                      onChange={(e) => onOpacityChange?.(layer.id, Math.max(0, Math.min(100, Number(e.target.value))))}
+                      onChange={(e) =>
+                        onOpacityChange?.(
+                          layer.id,
+                          Math.max(0, Math.min(100, Number(e.target.value))),
+                        )
+                      }
                       onBlur={() => setEditingOpacity(null)}
-                      onKeyDown={(e) => { if (e.key === 'Enter') setEditingOpacity(null); e.stopPropagation() }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') setEditingOpacity(null)
+                        e.stopPropagation()
+                      }}
                       autoFocus
                       style={{
                         width: '40px',
@@ -294,7 +324,10 @@ export function LayerStack({
                       role="button"
                       tabIndex={-1}
                       aria-label={`Opacity: ${layer.opacity}%`}
-                      onClick={(e) => { e.stopPropagation(); setEditingOpacity(layer.id) }}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setEditingOpacity(layer.id)
+                      }}
                       style={{
                         fontSize: 'var(--forge-font-size-xs)',
                         fontFamily: 'var(--forge-font-mono)',
@@ -308,14 +341,16 @@ export function LayerStack({
                     >
                       {layer.opacity}%
                     </span>
-                  )
-                )}
+                  ))}
 
                 {/* Visibility toggle */}
                 <button
                   type="button"
                   aria-label={layer.visible ? `Hide ${layer.label}` : `Show ${layer.label}`}
-                  onClick={(e) => { e.stopPropagation(); onToggleVisibility?.(layer.id) }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onToggleVisibility?.(layer.id)
+                  }}
                   style={{
                     background: 'none',
                     border: 'none',
@@ -333,7 +368,10 @@ export function LayerStack({
                 <button
                   type="button"
                   aria-label={layer.locked ? `Unlock ${layer.label}` : `Lock ${layer.label}`}
-                  onClick={(e) => { e.stopPropagation(); onToggleLock?.(layer.id) }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onToggleLock?.(layer.id)
+                  }}
                   style={{
                     background: 'none',
                     border: 'none',
@@ -352,7 +390,10 @@ export function LayerStack({
                   <button
                     type="button"
                     aria-label={`Remove ${layer.label}`}
-                    onClick={(e) => { e.stopPropagation(); onRemove(layer.id) }}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onRemove(layer.id)
+                    }}
                     style={{
                       background: 'none',
                       border: 'none',

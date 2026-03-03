@@ -4,12 +4,12 @@ Shared design system for 9 game development tools. 59 React 19 components built 
 
 ## Packages
 
-| Package | Description |
-|---------|-------------|
-| [`@forgeui/tokens`](packages/tokens/README.md) | Design tokens — CSS custom properties, JS constants, color utilities |
-| [`@forgeui/components`](packages/components/README.md) | 59 React 19 components |
-| [`@forgeui/icons`](packages/icons/README.md) | Curated Lucide React + 10 custom game dev icons |
-| [`@forgeui/hooks`](packages/hooks/README.md) | `useTheme`, `useTokens` for canvas/WebGL access |
+| Package                                                | Description                                                          |
+| ------------------------------------------------------ | -------------------------------------------------------------------- |
+| [`@forgeui/tokens`](packages/tokens/README.md)         | Design tokens — CSS custom properties, JS constants, color utilities |
+| [`@forgeui/components`](packages/components/README.md) | 59 React 19 components                                               |
+| [`@forgeui/icons`](packages/icons/README.md)           | Curated Lucide React + 10 custom game dev icons                      |
+| [`@forgeui/hooks`](packages/hooks/README.md)           | `useTheme`, `useTokens` for canvas/WebGL access                      |
 
 All packages are at **v1.0.0** and use fixed versioning — they always release together.
 
@@ -40,12 +40,12 @@ export function App() {
 
 ## Palettes
 
-| Palette | Accent | Character |
-|---------|--------|-----------|
-| `midnight-forge-v2` | Gold `#f59e0b` | Navy/gold (default) |
-| `hearth-bronze` | Amber `#d97706` | Warm forge workshop |
-| `midnight-forge` | Blue `#4f8ff7` | Cool navy |
-| `deep-space` | Teal `#14b8a6` | Deep navy |
+| Palette             | Accent          | Character           |
+| ------------------- | --------------- | ------------------- |
+| `midnight-forge-v2` | Gold `#f59e0b`  | Navy/gold (default) |
+| `hearth-bronze`     | Amber `#d97706` | Warm forge workshop |
+| `midnight-forge`    | Blue `#4f8ff7`  | Cool navy           |
+| `deep-space`        | Teal `#14b8a6`  | Deep navy           |
 
 All palettes use a 3px default radius for a sharp, precision-tool aesthetic.
 
@@ -76,27 +76,27 @@ pnpm typecheck  # TypeScript across all packages
 
 ## Documentation
 
-| Document | Description |
-|----------|-------------|
-| [docs/PLAN.md](docs/PLAN.md) | Full design system specification — tokens, components, theming |
-| [docs/THEME-EXTENSION.md](docs/THEME-EXTENSION.md) | Tool-specific token extensions via `ThemeContract<T>` |
-| [docs/ROLLOUT.md](docs/ROLLOUT.md) | Migration guide and order for each tool |
-| [docs/TASKS.md](docs/TASKS.md) | Implementation task breakdown |
-| Storybook | Run `pnpm dev` — live docs for all 59 components |
+| Document                                           | Description                                                    |
+| -------------------------------------------------- | -------------------------------------------------------------- |
+| [docs/PLAN.md](docs/PLAN.md)                       | Full design system specification — tokens, components, theming |
+| [docs/THEME-EXTENSION.md](docs/THEME-EXTENSION.md) | Tool-specific token extensions via `ThemeContract<T>`          |
+| [docs/ROLLOUT.md](docs/ROLLOUT.md)                 | Migration guide and order for each tool                        |
+| [docs/TASKS.md](docs/TASKS.md)                     | Implementation task breakdown                                  |
+| Storybook                                          | Run `pnpm dev` — live docs for all 59 components               |
 
 ## Tool ecosystem
 
-| Tool | Purpose | Migration |
-|------|---------|-----------|
-| **PipelineInspector** | Asset/build pipeline monitoring | Pilot — first |
-| **EntityArchitect** | Entity and character design | 2nd |
-| **QuestForge** | Quest and narrative generation | 3rd |
-| **EncounterComposer** | Encounter and scenario building | 4th |
-| **AssetGenerator** | Asset creation pipeline | 5th |
-| **Director** | Narrative direction | 6th |
-| **TerrainComposer** | World and terrain generation | 7th |
-| **LoreEngine** | Worldbuilding knowledge graph | Last (largest) |
-| **Crucible** | Core framework — `@forgeui/tokens` only | No component migration |
+| Tool                  | Purpose                                 | Migration              |
+| --------------------- | --------------------------------------- | ---------------------- |
+| **PipelineInspector** | Asset/build pipeline monitoring         | Pilot — first          |
+| **EntityArchitect**   | Entity and character design             | 2nd                    |
+| **QuestForge**        | Quest and narrative generation          | 3rd                    |
+| **EncounterComposer** | Encounter and scenario building         | 4th                    |
+| **AssetGenerator**    | Asset creation pipeline                 | 5th                    |
+| **Director**          | Narrative direction                     | 6th                    |
+| **TerrainComposer**   | World and terrain generation            | 7th                    |
+| **LoreEngine**        | Worldbuilding knowledge graph           | Last (largest)         |
+| **Crucible**          | Core framework — `@forgeui/tokens` only | No component migration |
 
 ## Architecture
 

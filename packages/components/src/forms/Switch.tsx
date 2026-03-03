@@ -43,10 +43,13 @@ export function Switch({ label, id, size = 'md', disabled, checked, ...props }: 
           transition: `background-color var(--forge-duration-fast) var(--forge-easing-default)`,
         }}
         onFocus={(e) => {
-          e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+          e.currentTarget.style.outline =
+            'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
           e.currentTarget.style.outlineOffset = 'var(--forge-focus-ring-offset)'
         }}
-        onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+        onBlur={(e) => {
+          e.currentTarget.style.outline = 'none'
+        }}
         {...props}
       >
         <RadixSwitch.Thumb

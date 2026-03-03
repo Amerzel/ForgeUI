@@ -47,6 +47,7 @@ The result is a unified user experience with a federated development model: one 
 **Secondary stakeholder:** Future contributors or collaborators who may own a single tool and should not need to understand the whole codebase to work on it.
 
 Pain points today:
+
 - Context-switching between separate apps and terminals breaks flow
 - No unified "home" for the toolchain
 - LoreEngine and AssetGenerator have separate, inconsistent UIs
@@ -87,6 +88,7 @@ Pain points today:
 ### 5.1 The Shell
 
 The shell is thin by design. It owns:
+
 - The router and top-level route definitions
 - The `AppShell` chrome (sidebar, toolbar, breadcrumb) from ForgeUI
 - The `ThemeProvider` and global CSS
@@ -98,6 +100,7 @@ The shell **does not** own any business logic. It knows that modules exist and h
 ### 5.2 Modules
 
 Each tool is a feature module. A module is a self-contained directory that:
+
 - Owns its own views, state, and services
 - Exports a single `ModuleConfig` (routes, nav entries, event handlers)
 - Does **not** import from other modules directly
@@ -145,13 +148,13 @@ This creates an **audit trail of cross-module dependencies**: the event schema i
 
 Infrastructure that all modules can use is provided through a shared services layer — not through global state:
 
-| Service | Responsibility |
-|---|---|
-| `ProjectContext` | Active project path, last-opened world, metadata |
-| `CLIBridge` | Invoke CLI tools, stream stdout/stderr to the logger |
-| `Logger` | Structured log stream; modules write, shell renders |
-| `EventBus` | Typed event pub/sub between modules |
-| `NotificationService` | Toast/alert queue rendered by the shell |
+| Service               | Responsibility                                       |
+| --------------------- | ---------------------------------------------------- |
+| `ProjectContext`      | Active project path, last-opened world, metadata     |
+| `CLIBridge`           | Invoke CLI tools, stream stdout/stderr to the logger |
+| `Logger`              | Structured log stream; modules write, shell renders  |
+| `EventBus`            | Typed event pub/sub between modules                  |
+| `NotificationService` | Toast/alert queue rendered by the shell              |
 
 Modules receive these services via React Context or dependency injection — they do not import from each other.
 
@@ -272,38 +275,38 @@ At no point does the existing app need to be taken offline or frozen.
 
 ### Advantages
 
-| Advantage | Detail |
-|---|---|
-| Isolation by default | A module crash cannot destabilize other modules (with an ErrorBoundary per module) |
-| Independent testability | Mock the EventBus and services — test a module in total isolation |
-| Clear ownership | "Who owns this?" is answered by which module directory it's in |
-| Safe incremental migration | Iframe → native transition keeps existing apps running during migration |
-| Extensible | New tools are a new module, not a modification to existing code |
-| Future flexibility | A module could be extracted into a standalone app without rearchitecting its internals |
+| Advantage                  | Detail                                                                                 |
+| -------------------------- | -------------------------------------------------------------------------------------- |
+| Isolation by default       | A module crash cannot destabilize other modules (with an ErrorBoundary per module)     |
+| Independent testability    | Mock the EventBus and services — test a module in total isolation                      |
+| Clear ownership            | "Who owns this?" is answered by which module directory it's in                         |
+| Safe incremental migration | Iframe → native transition keeps existing apps running during migration                |
+| Extensible                 | New tools are a new module, not a modification to existing code                        |
+| Future flexibility         | A module could be extracted into a standalone app without rearchitecting its internals |
 
 ### Disadvantages
 
-| Disadvantage | Detail |
-|---|---|
-| More upfront design | The EventBus schema, ModuleConfig contract, and service interfaces must be designed before building modules |
-| Event schema maintenance | If a module changes what it emits, dependent modules must be updated — the EventBus is a soft contract |
-| Indirect communication | Cross-module workflows that require tight feedback loops (e.g., real-time sync) are harder with events than shared state |
-| Potential over-engineering | If the project stays solo and small, the module boundaries may never provide payoff |
-| More boilerplate per module | Each module needs index.ts, module.config.tsx, mock service setup for tests |
+| Disadvantage                | Detail                                                                                                                   |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| More upfront design         | The EventBus schema, ModuleConfig contract, and service interfaces must be designed before building modules              |
+| Event schema maintenance    | If a module changes what it emits, dependent modules must be updated — the EventBus is a soft contract                   |
+| Indirect communication      | Cross-module workflows that require tight feedback loops (e.g., real-time sync) are harder with events than shared state |
+| Potential over-engineering  | If the project stays solo and small, the module boundaries may never provide payoff                                      |
+| More boilerplate per module | Each module needs index.ts, module.config.tsx, mock service setup for tests                                              |
 
 ---
 
 ## 10. Comparison: Where This Wins and Loses vs. Integrated
 
-| Dimension | Integrated | Feature Module |
-|---|---|---|
-| Cross-tool UX depth | Higher (shared state, any view sees all data) | Moderate (event-driven, slightly delayed awareness) |
-| Isolation / bug containment | Lower | Higher |
-| Initial build speed | Faster | Slower (framework cost upfront) |
-| Scalability to more contributors | Harder | Easier |
-| Incremental migration | Harder (big bang or iframe hack) | Easier (iframe phase is legitimate) |
-| Testability of individual tools | Harder (must mock global store) | Easier (mock services, isolated test run) |
-| Conceptual overhead | Low | Medium |
+| Dimension                        | Integrated                                    | Feature Module                                      |
+| -------------------------------- | --------------------------------------------- | --------------------------------------------------- |
+| Cross-tool UX depth              | Higher (shared state, any view sees all data) | Moderate (event-driven, slightly delayed awareness) |
+| Isolation / bug containment      | Lower                                         | Higher                                              |
+| Initial build speed              | Faster                                        | Slower (framework cost upfront)                     |
+| Scalability to more contributors | Harder                                        | Easier                                              |
+| Incremental migration            | Harder (big bang or iframe hack)              | Easier (iframe phase is legitimate)                 |
+| Testability of individual tools  | Harder (must mock global store)               | Easier (mock services, isolated test run)           |
+| Conceptual overhead              | Low                                           | Medium                                              |
 
 ---
 
@@ -321,20 +324,24 @@ At no point does the existing app need to be taken offline or frozen.
 ## 12. Migration Path
 
 ### v0: Shell Only
+
 - Build the AppShell with ForgeUI
 - Register placeholder routes for all 9 tools (most show "CLI only — run `forge pipeline inspect`")
 - LoreEngine and AssetGenerator get iframe modules pointing to their current apps
 
 ### v1: LoreEngine Module (Native)
+
 - Port LoreEngine views into the module architecture
 - Define and emit the first events (`lore:world-changed`, `lore:entity-selected`)
 - Validate the module contract works in practice
 
 ### v2: AssetGenerator Module (Native)
+
 - Port AssetGenerator, subscribe to LoreEngine events
 - Cross-tool workflow: select faction in LoreEngine → AssetGenerator filters by faction
 
 ### v3+: Remaining Tools
+
 - Each CLI tool gets at minimum a status/output surface (log viewer, last run status)
 - Full UI modules added as needed
 

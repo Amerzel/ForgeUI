@@ -13,17 +13,23 @@ export const GroupStory: Story = {
   render: () => (
     <Stack gap={6} p={6}>
       <div>
-        <Text size="sm" color="muted">Default (gap=2, align=center)</Text>
+        <Text size="sm" color="muted">
+          Default (gap=2, align=center)
+        </Text>
         <Group style={{ marginTop: 8 }}>
           <Button size="sm">Save</Button>
-          <Button size="sm" variant="ghost">Cancel</Button>
+          <Button size="sm" variant="ghost">
+            Cancel
+          </Button>
           <Separator orientation="vertical" style={{ height: 20 }} />
           <Badge color="success">Saved</Badge>
         </Group>
       </div>
 
       <div>
-        <Text size="sm" color="muted">grow=true — equal width children</Text>
+        <Text size="sm" color="muted">
+          grow=true — equal width children
+        </Text>
         <Group grow gap={2} style={{ marginTop: 8, width: 400 }}>
           <Button variant="primary">Confirm</Button>
           <Button variant="ghost">Cancel</Button>
@@ -32,10 +38,14 @@ export const GroupStory: Story = {
       </div>
 
       <div>
-        <Text size="sm" color="muted">Wrapping badge list</Text>
+        <Text size="sm" color="muted">
+          Wrapping badge list
+        </Text>
         <Group wrap="wrap" gap={2} style={{ marginTop: 8 }}>
-          {['Fighter', 'Mage', 'Rogue', 'Cleric', 'Paladin', 'Ranger', 'Druid'].map(c => (
-            <Badge key={c} variant="subtle">{c}</Badge>
+          {['Fighter', 'Mage', 'Rogue', 'Cleric', 'Paladin', 'Ranger', 'Druid'].map((c) => (
+            <Badge key={c} variant="subtle">
+              {c}
+            </Badge>
           ))}
         </Group>
       </div>

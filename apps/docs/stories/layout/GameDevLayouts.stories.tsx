@@ -1,9 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import {
-  Box, Stack, Flex, Group, Grid, Center, Spacer,
-  Container, SimpleGrid, Wrap,
-  Button, Badge, Text, Heading, Separator, Card,
-  Input, Select, Tabs,
+  Box,
+  Stack,
+  Flex,
+  Group,
+  Grid,
+  Center,
+  Spacer,
+  Container,
+  SimpleGrid,
+  Wrap,
+  Button,
+  Badge,
+  Text,
+  Heading,
+  Separator,
+  Card,
+  Input,
+  Select,
+  Tabs,
   Spinner,
 } from '@forgeui/components'
 
@@ -30,7 +45,15 @@ type Story = StoryObj
 
 function SectionLabel({ children }: { children: string }) {
   return (
-    <Text size="xs" color="muted" style={{ fontFamily: 'var(--forge-font-mono)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+    <Text
+      size="xs"
+      color="muted"
+      style={{
+        fontFamily: 'var(--forge-font-mono)',
+        textTransform: 'uppercase',
+        letterSpacing: '0.08em',
+      }}
+    >
       {children}
     </Text>
   )
@@ -41,10 +64,18 @@ function StatCard({ label, value, delta }: { label: string; value: string; delta
     <Card>
       <Card.Body>
         <Stack gap={1}>
-          <Text size="xs" color="muted">{label}</Text>
+          <Text size="xs" color="muted">
+            {label}
+          </Text>
           <Flex align="baseline" gap={2}>
-            <Text size="lg" weight="semibold">{value}</Text>
-            {delta && <Badge color={delta.startsWith('+') ? 'success' : 'danger'} variant="subtle" >{delta}</Badge>}
+            <Text size="lg" weight="semibold">
+              {value}
+            </Text>
+            {delta && (
+              <Badge color={delta.startsWith('+') ? 'success' : 'danger'} variant="subtle">
+                {delta}
+              </Badge>
+            )}
           </Flex>
         </Stack>
       </Card.Body>
@@ -52,7 +83,17 @@ function StatCard({ label, value, delta }: { label: string; value: string; delta
   )
 }
 
-function TreeItem({ label, depth = 0, active = false, icon = '◆' }: { label: string; depth?: number; active?: boolean; icon?: string }) {
+function TreeItem({
+  label,
+  depth = 0,
+  active = false,
+  icon = '◆',
+}: {
+  label: string
+  depth?: number
+  active?: boolean
+  icon?: string
+}) {
   return (
     <Box
       p={2}
@@ -66,8 +107,13 @@ function TreeItem({ label, depth = 0, active = false, icon = '◆' }: { label: s
         backgroundColor: active ? 'var(--forge-accent)' : undefined,
       }}
     >
-      <Text size="xs" style={{ opacity: 0.5, fontFamily: 'var(--forge-font-mono)' }}>{icon}</Text>
-      <Text size="sm" style={{ color: active ? 'var(--forge-text-on-accent)' : 'var(--forge-text)' }}>
+      <Text size="xs" style={{ opacity: 0.5, fontFamily: 'var(--forge-font-mono)' }}>
+        {icon}
+      </Text>
+      <Text
+        size="sm"
+        style={{ color: active ? 'var(--forge-text-on-accent)' : 'var(--forge-text)' }}
+      >
         {label}
       </Text>
     </Box>
@@ -76,21 +122,56 @@ function TreeItem({ label, depth = 0, active = false, icon = '◆' }: { label: s
 
 function InspectorRow({ label, value }: { label: string; value: string }) {
   return (
-    <Flex justify="space-between" align="center" py={1} style={{ borderBottom: '1px solid var(--forge-border-subtle)' }}>
-      <Text size="xs" color="muted" style={{ minWidth: 100 }}>{label}</Text>
-      <Text size="xs" weight="medium" style={{ fontFamily: 'var(--forge-font-mono)' }}>{value}</Text>
+    <Flex
+      justify="space-between"
+      align="center"
+      py={1}
+      style={{ borderBottom: '1px solid var(--forge-border-subtle)' }}
+    >
+      <Text size="xs" color="muted" style={{ minWidth: 100 }}>
+        {label}
+      </Text>
+      <Text size="xs" weight="medium" style={{ fontFamily: 'var(--forge-font-mono)' }}>
+        {value}
+      </Text>
     </Flex>
   )
 }
 
-function LogLine({ level, message, ts }: { level: 'info' | 'warn' | 'error' | 'ok'; message: string; ts: string }) {
-  const color = { info: 'var(--forge-text-muted)', warn: 'var(--forge-warning)', error: 'var(--forge-danger)', ok: 'var(--forge-success)' }[level]
+function LogLine({
+  level,
+  message,
+  ts,
+}: {
+  level: 'info' | 'warn' | 'error' | 'ok'
+  message: string
+  ts: string
+}) {
+  const color = {
+    info: 'var(--forge-text-muted)',
+    warn: 'var(--forge-warning)',
+    error: 'var(--forge-danger)',
+    ok: 'var(--forge-success)',
+  }[level]
   const prefix = { info: 'INFO', warn: 'WARN', error: 'ERR ', ok: ' OK ' }[level]
   return (
-    <Flex gap={3} style={{ fontFamily: 'var(--forge-font-mono)', fontSize: 'var(--forge-font-size-xs)', whiteSpace: 'nowrap' }}>
-      <Text size="xs" color="muted" style={{ minWidth: 52, flexShrink: 0 }}>{ts}</Text>
-      <Text size="xs" style={{ color, minWidth: 36, flexShrink: 0 }}>{prefix}</Text>
-      <Text size="xs" style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{message}</Text>
+    <Flex
+      gap={3}
+      style={{
+        fontFamily: 'var(--forge-font-mono)',
+        fontSize: 'var(--forge-font-size-xs)',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      <Text size="xs" color="muted" style={{ minWidth: 52, flexShrink: 0 }}>
+        {ts}
+      </Text>
+      <Text size="xs" style={{ color, minWidth: 36, flexShrink: 0 }}>
+        {prefix}
+      </Text>
+      <Text size="xs" style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        {message}
+      </Text>
     </Flex>
   )
 }
@@ -103,19 +184,29 @@ export const ThreePanelEditor: Story = {
   render: () => (
     <Grid columns="220px 1fr 280px" style={{ height: '100vh' }}>
       {/* ── Sidebar ── */}
-      <Stack gap={0} bg="surface" style={{ borderRight: '1px solid var(--forge-border)', overflow: 'hidden' }}>
+      <Stack
+        gap={0}
+        bg="surface"
+        style={{ borderRight: '1px solid var(--forge-border)', overflow: 'hidden' }}
+      >
         {/* Sidebar header */}
         <Box p={3} style={{ borderBottom: '1px solid var(--forge-border)' }}>
           <Flex align="center" gap={2}>
-            <Badge color="accent" variant="solid" style={{ fontFamily: 'var(--forge-font-mono)' }}>LE</Badge>
-            <Text size="sm" weight="semibold">LoreEngine</Text>
+            <Badge color="accent" variant="solid" style={{ fontFamily: 'var(--forge-font-mono)' }}>
+              LE
+            </Badge>
+            <Text size="sm" weight="semibold">
+              LoreEngine
+            </Text>
           </Flex>
         </Box>
 
         {/* Project tree */}
         <Box p={2} style={{ flex: 1, overflowY: 'auto' }}>
           <Stack gap={0}>
-            <Box px={2} py={1}><SectionLabel>Worlds</SectionLabel></Box>
+            <Box px={2} py={1}>
+              <SectionLabel>Worlds</SectionLabel>
+            </Box>
             <TreeItem label="Eldenmoor" icon="🌍" active />
             <TreeItem label="Factions" depth={1} icon="⚔️" />
             <TreeItem label="Ironback Clan" depth={2} />
@@ -125,7 +216,9 @@ export const ThreePanelEditor: Story = {
             <TreeItem label="Lady Aldra" depth={2} />
             <TreeItem label="Prophecies" depth={1} icon="📜" />
             <Separator style={{ margin: '8px 0' }} />
-            <Box px={2} py={1}><SectionLabel>Assets</SectionLabel></Box>
+            <Box px={2} py={1}>
+              <SectionLabel>Assets</SectionLabel>
+            </Box>
             <TreeItem label="Character Art" icon="🎨" />
             <TreeItem label="World Maps" icon="🗺️" />
           </Stack>
@@ -134,8 +227,12 @@ export const ThreePanelEditor: Story = {
         {/* Sidebar footer */}
         <Box p={2} style={{ borderTop: '1px solid var(--forge-border)' }}>
           <Group gap={1}>
-            <Button size="sm" variant="ghost" style={{ flex: 1 }}>+ World</Button>
-            <Button size="sm" variant="ghost" style={{ flex: 1 }}>+ Entity</Button>
+            <Button size="sm" variant="ghost" style={{ flex: 1 }}>
+              + World
+            </Button>
+            <Button size="sm" variant="ghost" style={{ flex: 1 }}>
+              + Entity
+            </Button>
           </Group>
         </Box>
       </Stack>
@@ -145,13 +242,23 @@ export const ThreePanelEditor: Story = {
         {/* Toolbar */}
         <Box px={3} py={2} bg="surface" style={{ borderBottom: '1px solid var(--forge-border)' }}>
           <Group gap={2}>
-            <Heading level={4} size="sm">Goblin Chief</Heading>
-            <Badge color="warning" variant="subtle">Draft</Badge>
+            <Heading level={4} size="sm">
+              Goblin Chief
+            </Heading>
+            <Badge color="warning" variant="subtle">
+              Draft
+            </Badge>
             <Spacer />
-            <Button size="sm" variant="ghost">Duplicate</Button>
-            <Button size="sm" variant="ghost">History</Button>
+            <Button size="sm" variant="ghost">
+              Duplicate
+            </Button>
+            <Button size="sm" variant="ghost">
+              History
+            </Button>
             <Separator orientation="vertical" style={{ height: 20 }} />
-            <Button size="sm" variant="primary">Save</Button>
+            <Button size="sm" variant="primary">
+              Save
+            </Button>
           </Group>
         </Box>
 
@@ -174,21 +281,54 @@ export const ThreePanelEditor: Story = {
                     content: (
                       <Stack gap={3}>
                         <Text color="muted" size="sm">
-                          Krag the Ironback leads the largest goblin clan in Eldenmoor&apos;s eastern marshes.
-                          Born from the ashes of the Sunguard conflict, he has united three rival clans
-                          under a single banner through fear, cunning, and an unnatural resistance to fire.
+                          Krag the Ironback leads the largest goblin clan in Eldenmoor&apos;s
+                          eastern marshes. Born from the ashes of the Sunguard conflict, he has
+                          united three rival clans under a single banner through fear, cunning, and
+                          an unnatural resistance to fire.
                         </Text>
                         <Wrap gap={2}>
-                          {['Aggressive', 'Pack Leader', 'Fire Resistant', 'Cursed', 'Legendary'].map(t => (
-                            <Badge key={t} variant="subtle" color="warning">{t}</Badge>
+                          {[
+                            'Aggressive',
+                            'Pack Leader',
+                            'Fire Resistant',
+                            'Cursed',
+                            'Legendary',
+                          ].map((t) => (
+                            <Badge key={t} variant="subtle" color="warning">
+                              {t}
+                            </Badge>
                           ))}
                         </Wrap>
                       </Stack>
                     ),
                   },
-                  { value: 'stats',     label: 'Stats',     content: <Text color="muted" size="sm">Stats editor here…</Text> },
-                  { value: 'relations', label: 'Relations', content: <Text color="muted" size="sm">Relations graph here…</Text> },
-                  { value: 'events',    label: 'Events',    content: <Text color="muted" size="sm">Event log here…</Text> },
+                  {
+                    value: 'stats',
+                    label: 'Stats',
+                    content: (
+                      <Text color="muted" size="sm">
+                        Stats editor here…
+                      </Text>
+                    ),
+                  },
+                  {
+                    value: 'relations',
+                    label: 'Relations',
+                    content: (
+                      <Text color="muted" size="sm">
+                        Relations graph here…
+                      </Text>
+                    ),
+                  },
+                  {
+                    value: 'events',
+                    label: 'Events',
+                    content: (
+                      <Text color="muted" size="sm">
+                        Event log here…
+                      </Text>
+                    ),
+                  },
                 ]}
               />
             </Stack>
@@ -197,9 +337,15 @@ export const ThreePanelEditor: Story = {
       </Stack>
 
       {/* ── Inspector ── */}
-      <Stack gap={0} bg="surface" style={{ borderLeft: '1px solid var(--forge-border)', overflow: 'hidden' }}>
+      <Stack
+        gap={0}
+        bg="surface"
+        style={{ borderLeft: '1px solid var(--forge-border)', overflow: 'hidden' }}
+      >
         <Box p={3} style={{ borderBottom: '1px solid var(--forge-border)' }}>
-          <Text size="sm" weight="semibold">Inspector</Text>
+          <Text size="sm" weight="semibold">
+            Inspector
+          </Text>
         </Box>
 
         <Box p={3} style={{ flex: 1, overflowY: 'auto' }}>
@@ -229,7 +375,9 @@ export const ThreePanelEditor: Story = {
         </Box>
 
         <Box p={2} style={{ borderTop: '1px solid var(--forge-border)' }}>
-          <Button size="sm" variant="danger" style={{ width: '100%' }}>Delete Entity</Button>
+          <Button size="sm" variant="danger" style={{ width: '100%' }}>
+            Delete Entity
+          </Button>
         </Box>
       </Stack>
     </Grid>
@@ -246,10 +394,16 @@ export const ProjectDashboard: Story = {
       {/* Top bar */}
       <Box px={6} py={3} bg="surface" style={{ borderBottom: '1px solid var(--forge-border)' }}>
         <Group gap={3}>
-          <Heading level={3} size="md">Eldenmoor — Project Overview</Heading>
+          <Heading level={3} size="md">
+            Eldenmoor — Project Overview
+          </Heading>
           <Spacer />
-          <Badge color="success" variant="subtle">Last built 2m ago</Badge>
-          <Button size="sm" variant="primary">Build All</Button>
+          <Badge color="success" variant="subtle">
+            Last built 2m ago
+          </Badge>
+          <Button size="sm" variant="primary">
+            Build All
+          </Button>
         </Group>
       </Box>
 
@@ -272,22 +426,59 @@ export const ProjectDashboard: Story = {
                   <Flex align="center" gap={2}>
                     <Text weight="semibold">Recent Activity</Text>
                     <Spacer />
-                    <Badge color="info" variant="subtle">Live</Badge>
+                    <Badge color="info" variant="subtle">
+                      Live
+                    </Badge>
                   </Flex>
                   <Separator />
                   {[
-                    { action: 'Entity created', target: 'Goblin Chief',   ts: '2m ago',  color: 'success' as const },
-                    { action: 'Faction edited', target: 'Ironback Clan',  ts: '15m ago', color: 'info' as const },
-                    { action: 'Quest linked',   target: 'The Dark Forge', ts: '1h ago',  color: 'accent' as const },
-                    { action: 'Build failed',   target: 'Asset pipeline', ts: '2h ago',  color: 'danger' as const },
-                    { action: 'World exported', target: 'eldenmoor.json', ts: '3h ago',  color: 'neutral' as const },
+                    {
+                      action: 'Entity created',
+                      target: 'Goblin Chief',
+                      ts: '2m ago',
+                      color: 'success' as const,
+                    },
+                    {
+                      action: 'Faction edited',
+                      target: 'Ironback Clan',
+                      ts: '15m ago',
+                      color: 'info' as const,
+                    },
+                    {
+                      action: 'Quest linked',
+                      target: 'The Dark Forge',
+                      ts: '1h ago',
+                      color: 'accent' as const,
+                    },
+                    {
+                      action: 'Build failed',
+                      target: 'Asset pipeline',
+                      ts: '2h ago',
+                      color: 'danger' as const,
+                    },
+                    {
+                      action: 'World exported',
+                      target: 'eldenmoor.json',
+                      ts: '3h ago',
+                      color: 'neutral' as const,
+                    },
                   ].map(({ action, target, ts, color }) => (
                     <Flex key={target} align="center" gap={3}>
-                      <Badge color={color} variant="subtle" style={{ minWidth: 8, height: 8, padding: 0, borderRadius: '50%' }}>{' '}</Badge>
+                      <Badge
+                        color={color}
+                        variant="subtle"
+                        style={{ minWidth: 8, height: 8, padding: 0, borderRadius: '50%' }}
+                      >
+                        {' '}
+                      </Badge>
                       <Stack gap={0} style={{ flex: 1 }}>
-                        <Text size="sm">{action} — <strong>{target}</strong></Text>
+                        <Text size="sm">
+                          {action} — <strong>{target}</strong>
+                        </Text>
                       </Stack>
-                      <Text size="xs" color="muted">{ts}</Text>
+                      <Text size="xs" color="muted">
+                        {ts}
+                      </Text>
                     </Flex>
                   ))}
                 </Stack>
@@ -309,9 +500,24 @@ export const ProjectDashboard: Story = {
                     ].map(({ stage, status }) => (
                       <Flex key={stage} align="center" justify="space-between">
                         <Text size="sm">{stage}</Text>
-                        {status === 'ok'      && <Badge color="success" variant="subtle">Done</Badge>}
-                        {status === 'running' && <Group gap={1}><Spinner size="sm" /><Badge color="info" variant="subtle">Running</Badge></Group>}
-                        {status === 'pending' && <Badge color="neutral" variant="subtle">Pending</Badge>}
+                        {status === 'ok' && (
+                          <Badge color="success" variant="subtle">
+                            Done
+                          </Badge>
+                        )}
+                        {status === 'running' && (
+                          <Group gap={1}>
+                            <Spinner size="sm" />
+                            <Badge color="info" variant="subtle">
+                              Running
+                            </Badge>
+                          </Group>
+                        )}
+                        {status === 'pending' && (
+                          <Badge color="neutral" variant="subtle">
+                            Pending
+                          </Badge>
+                        )}
                       </Flex>
                     ))}
                   </Stack>
@@ -323,10 +529,18 @@ export const ProjectDashboard: Story = {
                   <Stack gap={2}>
                     <Text weight="semibold">Quick Actions</Text>
                     <Separator />
-                    <Button variant="ghost" style={{ justifyContent: 'flex-start' }}>+ New Entity</Button>
-                    <Button variant="ghost" style={{ justifyContent: 'flex-start' }}>+ New Faction</Button>
-                    <Button variant="ghost" style={{ justifyContent: 'flex-start' }}>Run Validation</Button>
-                    <Button variant="ghost" style={{ justifyContent: 'flex-start' }}>Export World</Button>
+                    <Button variant="ghost" style={{ justifyContent: 'flex-start' }}>
+                      + New Entity
+                    </Button>
+                    <Button variant="ghost" style={{ justifyContent: 'flex-start' }}>
+                      + New Faction
+                    </Button>
+                    <Button variant="ghost" style={{ justifyContent: 'flex-start' }}>
+                      Run Validation
+                    </Button>
+                    <Button variant="ghost" style={{ justifyContent: 'flex-start' }}>
+                      Export World
+                    </Button>
                   </Stack>
                 </Card.Body>
               </Card>
@@ -348,34 +562,54 @@ export const PipelineLogViewer: Story = {
       {/* Stage list */}
       <Stack gap={0} bg="surface" style={{ borderRight: '1px solid var(--forge-border)' }}>
         <Box p={3} style={{ borderBottom: '1px solid var(--forge-border)' }}>
-          <Text size="sm" weight="semibold">Build #47</Text>
-          <Text size="xs" color="muted">Started 3m 12s ago</Text>
+          <Text size="sm" weight="semibold">
+            Build #47
+          </Text>
+          <Text size="xs" color="muted">
+            Started 3m 12s ago
+          </Text>
         </Box>
         <Box p={2} style={{ flex: 1 }}>
           <Stack gap={1}>
             {[
-              { name: 'Install deps',      duration: '12s',  status: 'ok' },
-              { name: 'Typecheck',          duration: '8s',   status: 'ok' },
-              { name: 'Lint',              duration: '4s',   status: 'ok' },
-              { name: 'Unit tests',        duration: '22s',  status: 'ok' },
-              { name: 'Asset generation',  duration: '1m 4s', status: 'running' },
-              { name: 'World export',      duration: '—',    status: 'pending' },
-              { name: 'Bundle analysis',   duration: '—',    status: 'pending' },
+              { name: 'Install deps', duration: '12s', status: 'ok' },
+              { name: 'Typecheck', duration: '8s', status: 'ok' },
+              { name: 'Lint', duration: '4s', status: 'ok' },
+              { name: 'Unit tests', duration: '22s', status: 'ok' },
+              { name: 'Asset generation', duration: '1m 4s', status: 'running' },
+              { name: 'World export', duration: '—', status: 'pending' },
+              { name: 'Bundle analysis', duration: '—', status: 'pending' },
             ].map(({ name, duration, status }) => (
               <Box
                 key={name}
                 p={2}
                 radius="sm"
-                style={{ cursor: 'pointer', backgroundColor: status === 'running' ? 'var(--forge-surface-raised)' : undefined }}
+                style={{
+                  cursor: 'pointer',
+                  backgroundColor: status === 'running' ? 'var(--forge-surface-raised)' : undefined,
+                }}
               >
                 <Flex align="center" gap={2}>
-                  <Box style={{ width: 8, height: 8, borderRadius: '50%', flexShrink: 0, backgroundColor:
-                    status === 'ok' ? 'var(--forge-success)' :
-                    status === 'running' ? 'var(--forge-info)' :
-                    'var(--forge-border)'
-                  }} />
-                  <Text size="sm" style={{ flex: 1 }}>{name}</Text>
-                  <Text size="xs" color="muted">{duration}</Text>
+                  <Box
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: '50%',
+                      flexShrink: 0,
+                      backgroundColor:
+                        status === 'ok'
+                          ? 'var(--forge-success)'
+                          : status === 'running'
+                            ? 'var(--forge-info)'
+                            : 'var(--forge-border)',
+                    }}
+                  />
+                  <Text size="sm" style={{ flex: 1 }}>
+                    {name}
+                  </Text>
+                  <Text size="xs" color="muted">
+                    {duration}
+                  </Text>
                 </Flex>
               </Box>
             ))}
@@ -387,11 +621,19 @@ export const PipelineLogViewer: Story = {
       <Stack gap={0} style={{ overflow: 'hidden' }}>
         <Box px={4} py={2} bg="surface" style={{ borderBottom: '1px solid var(--forge-border)' }}>
           <Group gap={2}>
-            <Text size="sm" weight="semibold">Asset generation</Text>
-            <Badge color="info" variant="solid">Running</Badge>
+            <Text size="sm" weight="semibold">
+              Asset generation
+            </Text>
+            <Badge color="info" variant="solid">
+              Running
+            </Badge>
             <Spacer />
-            <Button size="sm" variant="ghost">Copy</Button>
-            <Button size="sm" variant="danger">Cancel</Button>
+            <Button size="sm" variant="ghost">
+              Copy
+            </Button>
+            <Button size="sm" variant="danger">
+              Cancel
+            </Button>
           </Group>
         </Box>
 
@@ -407,19 +649,49 @@ export const PipelineLogViewer: Story = {
           <Stack gap={1}>
             <LogLine level="info" ts="03:12" message="Starting asset generation pipeline…" />
             <LogLine level="info" ts="03:12" message="Found 142 entities in eldenmoor.json" />
-            <LogLine level="info" ts="03:13" message="Processing faction: ironback-clan (38 assets)" />
-            <LogLine level="ok"   ts="03:13" message="ironback-clan/goblin-chief.png — generated (512×512)" />
-            <LogLine level="ok"   ts="03:13" message="ironback-clan/goblin-guard.png — generated (512×512)" />
-            <LogLine level="warn" ts="03:13" message="ironback-clan/shaman.png — missing source texture, using fallback" />
+            <LogLine
+              level="info"
+              ts="03:13"
+              message="Processing faction: ironback-clan (38 assets)"
+            />
+            <LogLine
+              level="ok"
+              ts="03:13"
+              message="ironback-clan/goblin-chief.png — generated (512×512)"
+            />
+            <LogLine
+              level="ok"
+              ts="03:13"
+              message="ironback-clan/goblin-guard.png — generated (512×512)"
+            />
+            <LogLine
+              level="warn"
+              ts="03:13"
+              message="ironback-clan/shaman.png — missing source texture, using fallback"
+            />
             <LogLine level="info" ts="03:14" message="Processing faction: sunguard (24 assets)" />
-            <LogLine level="ok"   ts="03:14" message="sunguard/lady-aldra.png — generated (1024×1024)" />
-            <LogLine level="info" ts="03:14" message="Processing faction: marsh-wraiths (17 assets)" />
-            <LogLine level="error" ts="03:15" message="marsh-wraiths/wraith-elder.png — Error: source path not found: /assets/src/wraith-elder.psd" />
+            <LogLine
+              level="ok"
+              ts="03:14"
+              message="sunguard/lady-aldra.png — generated (1024×1024)"
+            />
+            <LogLine
+              level="info"
+              ts="03:14"
+              message="Processing faction: marsh-wraiths (17 assets)"
+            />
+            <LogLine
+              level="error"
+              ts="03:15"
+              message="marsh-wraiths/wraith-elder.png — Error: source path not found: /assets/src/wraith-elder.psd"
+            />
             <LogLine level="info" ts="03:15" message="Continuing with remaining assets…" />
             <LogLine level="info" ts="03:15" message="Processing locations: 64 discovered" />
             <Flex gap={2} align="center" pt={1}>
               <Spinner size="sm" />
-              <Text size="xs" color="muted" style={{ fontFamily: 'var(--forge-font-mono)' }}>Generating east-marsh terrain tiles…</Text>
+              <Text size="xs" color="muted" style={{ fontFamily: 'var(--forge-font-mono)' }}>
+                Generating east-marsh terrain tiles…
+              </Text>
             </Flex>
           </Stack>
         </Box>
@@ -438,7 +710,9 @@ export const SettingsPanel: Story = {
       {/* Settings nav */}
       <Stack gap={0} bg="surface" style={{ borderRight: '1px solid var(--forge-border)' }}>
         <Box p={3} style={{ borderBottom: '1px solid var(--forge-border)' }}>
-          <Text size="sm" weight="semibold">Settings</Text>
+          <Text size="sm" weight="semibold">
+            Settings
+          </Text>
         </Box>
         <Box p={2}>
           <Stack gap={0}>
@@ -450,8 +724,19 @@ export const SettingsPanel: Story = {
               { label: 'Keybindings', active: false },
               { label: 'About', active: false },
             ].map(({ label, active }) => (
-              <Box key={label} px={3} py={2} radius="sm" style={{ cursor: 'pointer', backgroundColor: active ? 'var(--forge-surface-raised)' : undefined }}>
-                <Text size="sm" weight={active ? 'medium' : 'normal'}>{label}</Text>
+              <Box
+                key={label}
+                px={3}
+                py={2}
+                radius="sm"
+                style={{
+                  cursor: 'pointer',
+                  backgroundColor: active ? 'var(--forge-surface-raised)' : undefined,
+                }}
+              >
+                <Text size="sm" weight={active ? 'medium' : 'normal'}>
+                  {label}
+                </Text>
               </Box>
             ))}
           </Stack>
@@ -463,8 +748,12 @@ export const SettingsPanel: Story = {
         <Container size="sm">
           <Stack gap={8}>
             <Stack gap={1}>
-              <Heading level={2} size="lg">General</Heading>
-              <Text color="muted" size="sm">Project-wide settings and defaults.</Text>
+              <Heading level={2} size="lg">
+                General
+              </Heading>
+              <Text color="muted" size="sm">
+                Project-wide settings and defaults.
+              </Text>
             </Stack>
 
             {/* Section: Project */}
@@ -537,17 +826,25 @@ export const SettingsPanel: Story = {
             {/* Section: Danger zone */}
             <Stack gap={4}>
               <Stack gap={1}>
-                <Text weight="semibold" style={{ color: 'var(--forge-danger)' }}>Danger Zone</Text>
+                <Text weight="semibold" style={{ color: 'var(--forge-danger)' }}>
+                  Danger Zone
+                </Text>
                 <Separator />
               </Stack>
               <Card style={{ border: '1px solid var(--forge-danger-border)' }}>
                 <Card.Body>
                   <Flex align="center" gap={3}>
                     <Stack gap={1} style={{ flex: 1 }}>
-                      <Text size="sm" weight="semibold">Reset all settings</Text>
-                      <Text size="xs" color="muted">Revert to factory defaults. Your project data is not affected.</Text>
+                      <Text size="sm" weight="semibold">
+                        Reset all settings
+                      </Text>
+                      <Text size="xs" color="muted">
+                        Revert to factory defaults. Your project data is not affected.
+                      </Text>
                     </Stack>
-                    <Button variant="danger" size="sm">Reset</Button>
+                    <Button variant="danger" size="sm">
+                      Reset
+                    </Button>
                   </Flex>
                 </Card.Body>
               </Card>
@@ -572,14 +869,50 @@ export const AssetBrowser: Story = {
   name: 'Asset Browser',
   render: () => {
     const assets = [
-      { name: 'goblin-chief',   type: 'Character', faction: 'Ironback',  size: '512×512', status: 'ready' },
-      { name: 'goblin-guard',   type: 'Character', faction: 'Ironback',  size: '512×512', status: 'ready' },
-      { name: 'goblin-shaman',  type: 'Character', faction: 'Ironback',  size: '512×512', status: 'warn' },
-      { name: 'lady-aldra',     type: 'Character', faction: 'Sunguard',  size: '1024×1024', status: 'ready' },
-      { name: 'sunguard-helm',  type: 'Item',      faction: 'Sunguard',  size: '256×256', status: 'ready' },
-      { name: 'wraith-elder',   type: 'Character', faction: 'Wraiths',   size: '—',        status: 'error' },
-      { name: 'east-marsh',     type: 'Location',  faction: '—',         size: '4096×4096', status: 'ready' },
-      { name: 'iron-fortress',  type: 'Location',  faction: 'Ironback',  size: '2048×2048', status: 'ready' },
+      {
+        name: 'goblin-chief',
+        type: 'Character',
+        faction: 'Ironback',
+        size: '512×512',
+        status: 'ready',
+      },
+      {
+        name: 'goblin-guard',
+        type: 'Character',
+        faction: 'Ironback',
+        size: '512×512',
+        status: 'ready',
+      },
+      {
+        name: 'goblin-shaman',
+        type: 'Character',
+        faction: 'Ironback',
+        size: '512×512',
+        status: 'warn',
+      },
+      {
+        name: 'lady-aldra',
+        type: 'Character',
+        faction: 'Sunguard',
+        size: '1024×1024',
+        status: 'ready',
+      },
+      {
+        name: 'sunguard-helm',
+        type: 'Item',
+        faction: 'Sunguard',
+        size: '256×256',
+        status: 'ready',
+      },
+      { name: 'wraith-elder', type: 'Character', faction: 'Wraiths', size: '—', status: 'error' },
+      { name: 'east-marsh', type: 'Location', faction: '—', size: '4096×4096', status: 'ready' },
+      {
+        name: 'iron-fortress',
+        type: 'Location',
+        faction: 'Ironback',
+        size: '2048×2048',
+        status: 'ready',
+      },
     ]
 
     return (
@@ -587,7 +920,9 @@ export const AssetBrowser: Story = {
         {/* Toolbar */}
         <Box px={4} py={2} bg="surface" style={{ borderBottom: '1px solid var(--forge-border)' }}>
           <Group gap={3}>
-            <Heading level={3} size="sm">Asset Browser</Heading>
+            <Heading level={3} size="sm">
+              Asset Browser
+            </Heading>
             <Separator orientation="vertical" style={{ height: 20 }} />
             <Input placeholder="Search assets…" style={{ width: 240 }} />
             <Box style={{ width: 140 }}>
@@ -615,27 +950,44 @@ export const AssetBrowser: Story = {
               />
             </Box>
             <Spacer />
-            <Text size="sm" color="muted">{assets.length} assets</Text>
-            <Button size="sm" variant="primary">Generate Selected</Button>
+            <Text size="sm" color="muted">
+              {assets.length} assets
+            </Text>
+            <Button size="sm" variant="primary">
+              Generate Selected
+            </Button>
           </Group>
         </Box>
 
         {/* Filter chips */}
-        <Box px={4} py={2} bg="surface-raised" style={{ borderBottom: '1px solid var(--forge-border)' }}>
+        <Box
+          px={4}
+          py={2}
+          bg="surface-raised"
+          style={{ borderBottom: '1px solid var(--forge-border)' }}
+        >
           <Group gap={2}>
-            <Text size="xs" color="muted">Active filters:</Text>
+            <Text size="xs" color="muted">
+              Active filters:
+            </Text>
             <Wrap gap={2}>
-              <Badge variant="subtle" color="accent">Type: Character ×</Badge>
-              <Badge variant="subtle" color="info">Faction: Ironback ×</Badge>
+              <Badge variant="subtle" color="accent">
+                Type: Character ×
+              </Badge>
+              <Badge variant="subtle" color="info">
+                Faction: Ironback ×
+              </Badge>
             </Wrap>
-            <Button size="sm" variant="ghost">Clear all</Button>
+            <Button size="sm" variant="ghost">
+              Clear all
+            </Button>
           </Group>
         </Box>
 
         {/* Asset grid */}
         <Box p={4} style={{ flex: 1, overflowY: 'auto' }}>
           <SimpleGrid minChildWidth="220px" spacing={3}>
-            {assets.map(asset => (
+            {assets.map((asset) => (
               <Card key={asset.name} style={{ cursor: 'pointer' }}>
                 <Box
                   bg="surface-raised"
@@ -653,16 +1005,40 @@ export const AssetBrowser: Story = {
                 <Card.Body>
                   <Stack gap={1}>
                     <Flex align="center" gap={2}>
-                      <Text size="sm" weight="medium" style={{ flex: 1, fontFamily: 'var(--forge-font-mono)' }}>{asset.name}</Text>
-                      {asset.status === 'ready' && <Badge color="success" variant="subtle">✓</Badge>}
-                      {asset.status === 'warn'  && <Badge color="warning" variant="subtle">!</Badge>}
-                      {asset.status === 'error' && <Badge color="danger" variant="solid">✗</Badge>}
+                      <Text
+                        size="sm"
+                        weight="medium"
+                        style={{ flex: 1, fontFamily: 'var(--forge-font-mono)' }}
+                      >
+                        {asset.name}
+                      </Text>
+                      {asset.status === 'ready' && (
+                        <Badge color="success" variant="subtle">
+                          ✓
+                        </Badge>
+                      )}
+                      {asset.status === 'warn' && (
+                        <Badge color="warning" variant="subtle">
+                          !
+                        </Badge>
+                      )}
+                      {asset.status === 'error' && (
+                        <Badge color="danger" variant="solid">
+                          ✗
+                        </Badge>
+                      )}
                     </Flex>
                     <Flex gap={2} wrap="wrap">
-                      <Badge color="neutral" variant="subtle">{asset.type}</Badge>
-                      <Badge color="info" variant="subtle">{asset.faction}</Badge>
+                      <Badge color="neutral" variant="subtle">
+                        {asset.type}
+                      </Badge>
+                      <Badge color="info" variant="subtle">
+                        {asset.faction}
+                      </Badge>
                     </Flex>
-                    <Text size="xs" color="muted">{asset.size}</Text>
+                    <Text size="xs" color="muted">
+                      {asset.size}
+                    </Text>
                   </Stack>
                 </Card.Body>
               </Card>
@@ -684,28 +1060,45 @@ export const LayoutPrimitivesReference: Story = {
       <Container size="lg">
         <Stack gap={8}>
           <Stack gap={2}>
-            <Heading level={1} size="2xl">Layout Primitives</Heading>
+            <Heading level={1} size="2xl">
+              Layout Primitives
+            </Heading>
             <Text color="muted">
-              ForgeUI ships 10 layout primitives. All accept token-aware shorthand props
-              (p, m, gap, bg, radius). Combine them instead of writing raw flexbox/grid CSS.
+              ForgeUI ships 10 layout primitives. All accept token-aware shorthand props (p, m, gap,
+              bg, radius). Combine them instead of writing raw flexbox/grid CSS.
             </Text>
           </Stack>
 
           {/* Box */}
           <Stack gap={3}>
-            <Heading level={2} size="lg">Box — the base unit</Heading>
+            <Heading level={2} size="lg">
+              Box — the base unit
+            </Heading>
             <Text size="sm" color="muted">
               Every layout primitive is built on Box. Use it when you need padding, background,
               radius, or a custom HTML element — but don&apos;t need flex/grid behaviour.
             </Text>
             <Flex gap={3} wrap="wrap">
-              <Box p={4} bg="surface" radius="md" style={{ border: '1px solid var(--forge-border)' }}>
+              <Box
+                p={4}
+                bg="surface"
+                radius="md"
+                style={{ border: '1px solid var(--forge-border)' }}
+              >
                 <Text size="sm">p=4 + bg=surface + radius=md</Text>
               </Box>
               <Box px={6} py={2} bg="accent" radius="full">
-                <Text size="sm" style={{ color: 'var(--forge-text-on-accent)' }}>px=6 py=2 bg=accent radius=full</Text>
+                <Text size="sm" style={{ color: 'var(--forge-text-on-accent)' }}>
+                  px=6 py=2 bg=accent radius=full
+                </Text>
               </Box>
-              <Box as="section" p={3} bg="surface-raised" radius="sm" style={{ border: '1px solid var(--forge-border)' }}>
+              <Box
+                as="section"
+                p={3}
+                bg="surface-raised"
+                radius="sm"
+                style={{ border: '1px solid var(--forge-border)' }}
+              >
                 <Text size="sm">as=&quot;section&quot; (polymorphic)</Text>
               </Box>
             </Flex>
@@ -715,21 +1108,65 @@ export const LayoutPrimitivesReference: Story = {
 
           {/* Stack */}
           <Stack gap={3}>
-            <Heading level={2} size="lg">Stack — vertical flow</Heading>
+            <Heading level={2} size="lg">
+              Stack — vertical flow
+            </Heading>
             <Text size="sm" color="muted">
-              Column flexbox with a gap. The workhorse for form sections, sidebars,
-              card bodies, and anything that stacks vertically.
+              Column flexbox with a gap. The workhorse for form sections, sidebars, card bodies, and
+              anything that stacks vertically.
             </Text>
             <Flex gap={6} align="flex-start">
               <Stack gap={2} style={{ width: 160 }}>
-                <Box p={2} bg="surface" radius="sm" style={{ border: '1px solid var(--forge-border)', textAlign:'center' }}><Text size="xs">gap=2</Text></Box>
-                <Box p={2} bg="surface" radius="sm" style={{ border: '1px solid var(--forge-border)', textAlign:'center' }}><Text size="xs">Item 2</Text></Box>
-                <Box p={2} bg="surface" radius="sm" style={{ border: '1px solid var(--forge-border)', textAlign:'center' }}><Text size="xs">Item 3</Text></Box>
+                <Box
+                  p={2}
+                  bg="surface"
+                  radius="sm"
+                  style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}
+                >
+                  <Text size="xs">gap=2</Text>
+                </Box>
+                <Box
+                  p={2}
+                  bg="surface"
+                  radius="sm"
+                  style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}
+                >
+                  <Text size="xs">Item 2</Text>
+                </Box>
+                <Box
+                  p={2}
+                  bg="surface"
+                  radius="sm"
+                  style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}
+                >
+                  <Text size="xs">Item 3</Text>
+                </Box>
               </Stack>
               <Stack gap={5} style={{ width: 160 }}>
-                <Box p={2} bg="surface" radius="sm" style={{ border: '1px solid var(--forge-border)', textAlign:'center' }}><Text size="xs">gap=5</Text></Box>
-                <Box p={2} bg="surface" radius="sm" style={{ border: '1px solid var(--forge-border)', textAlign:'center' }}><Text size="xs">Item 2</Text></Box>
-                <Box p={2} bg="surface" radius="sm" style={{ border: '1px solid var(--forge-border)', textAlign:'center' }}><Text size="xs">Item 3</Text></Box>
+                <Box
+                  p={2}
+                  bg="surface"
+                  radius="sm"
+                  style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}
+                >
+                  <Text size="xs">gap=5</Text>
+                </Box>
+                <Box
+                  p={2}
+                  bg="surface"
+                  radius="sm"
+                  style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}
+                >
+                  <Text size="xs">Item 2</Text>
+                </Box>
+                <Box
+                  p={2}
+                  bg="surface"
+                  radius="sm"
+                  style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}
+                >
+                  <Text size="xs">Item 3</Text>
+                </Box>
               </Stack>
             </Flex>
           </Stack>
@@ -738,24 +1175,36 @@ export const LayoutPrimitivesReference: Story = {
 
           {/* Flex + Spacer */}
           <Stack gap={3}>
-            <Heading level={2} size="lg">Flex + Spacer — horizontal flow</Heading>
+            <Heading level={2} size="lg">
+              Flex + Spacer — horizontal flow
+            </Heading>
             <Text size="sm" color="muted">
-              Flex is the horizontal counterpart to Stack. Add a Spacer to push
-              items to opposite ends — classic toolbar pattern.
+              Flex is the horizontal counterpart to Stack. Add a Spacer to push items to opposite
+              ends — classic toolbar pattern.
             </Text>
             <Stack gap={3}>
-              <Box style={{ border: '1px dashed var(--forge-border)', borderRadius: 4, padding: 8 }}>
+              <Box
+                style={{ border: '1px dashed var(--forge-border)', borderRadius: 4, padding: 8 }}
+              >
                 <Flex gap={2} align="center">
                   <Badge color="accent">Logo</Badge>
                   <Spacer />
-                  <Button size="sm" variant="ghost">Help</Button>
-                  <Button size="sm" variant="primary">Save</Button>
+                  <Button size="sm" variant="ghost">
+                    Help
+                  </Button>
+                  <Button size="sm" variant="primary">
+                    Save
+                  </Button>
                 </Flex>
               </Box>
-              <Box style={{ border: '1px dashed var(--forge-border)', borderRadius: 4, padding: 8 }}>
+              <Box
+                style={{ border: '1px dashed var(--forge-border)', borderRadius: 4, padding: 8 }}
+              >
                 <Flex gap={2} justify="space-between" align="center">
                   <Text size="sm">justify=space-between</Text>
-                  <Badge color="success" variant="subtle">Synced</Badge>
+                  <Badge color="success" variant="subtle">
+                    Synced
+                  </Badge>
                 </Flex>
               </Box>
             </Stack>
@@ -765,23 +1214,54 @@ export const LayoutPrimitivesReference: Story = {
 
           {/* Grid */}
           <Stack gap={3}>
-            <Heading level={2} size="lg">Grid — CSS grid</Heading>
+            <Heading level={2} size="lg">
+              Grid — CSS grid
+            </Heading>
             <Text size="sm" color="muted">
-              Numeric columns produce equal fractions. Pass a string for custom templates.
-              Use Grid.Col to span columns or assign named areas.
+              Numeric columns produce equal fractions. Pass a string for custom templates. Use
+              Grid.Col to span columns or assign named areas.
             </Text>
             <Stack gap={3}>
               <Grid columns={3} gap={2}>
                 {['span 12', 'span 4', 'span 4', 'span 4'].map((l, i) => (
-                  <Box key={i} p={3} bg="surface-raised" radius="sm" style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}>
-                    <Text size="xs" color="muted">{l}</Text>
+                  <Box
+                    key={i}
+                    p={3}
+                    bg="surface-raised"
+                    radius="sm"
+                    style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}
+                  >
+                    <Text size="xs" color="muted">
+                      {l}
+                    </Text>
                   </Box>
                 ))}
               </Grid>
               <Grid columns="220px 1fr 280px" gap={2}>
-                <Box p={3} bg="surface" radius="sm" style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}><Text size="xs">Sidebar 220px</Text></Box>
-                <Box p={3} bg="surface-raised" radius="sm" style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}><Text size="xs">Canvas 1fr</Text></Box>
-                <Box p={3} bg="surface" radius="sm" style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}><Text size="xs">Inspector 280px</Text></Box>
+                <Box
+                  p={3}
+                  bg="surface"
+                  radius="sm"
+                  style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}
+                >
+                  <Text size="xs">Sidebar 220px</Text>
+                </Box>
+                <Box
+                  p={3}
+                  bg="surface-raised"
+                  radius="sm"
+                  style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}
+                >
+                  <Text size="xs">Canvas 1fr</Text>
+                </Box>
+                <Box
+                  p={3}
+                  bg="surface"
+                  radius="sm"
+                  style={{ border: '1px solid var(--forge-border)', textAlign: 'center' }}
+                >
+                  <Text size="xs">Inspector 280px</Text>
+                </Box>
               </Grid>
             </Stack>
           </Stack>
@@ -790,14 +1270,22 @@ export const LayoutPrimitivesReference: Story = {
 
           {/* SimpleGrid + Wrap */}
           <Stack gap={3}>
-            <Heading level={2} size="lg">SimpleGrid — equal columns</Heading>
+            <Heading level={2} size="lg">
+              SimpleGrid — equal columns
+            </Heading>
             <Text size="sm" color="muted">
-              Shorthand for equal-width grid layouts. Use minChildWidth for
-              responsive auto-fit grids that don&apos;t need explicit breakpoints.
+              Shorthand for equal-width grid layouts. Use minChildWidth for responsive auto-fit
+              grids that don&apos;t need explicit breakpoints.
             </Text>
             <SimpleGrid minChildWidth="180px" spacing={3}>
-              {['Entities', 'Quests', 'Factions', 'Locations', 'Events'].map(label => (
-                <Card key={label}><Card.Body><Text size="sm" weight="semibold">{label}</Text></Card.Body></Card>
+              {['Entities', 'Quests', 'Factions', 'Locations', 'Events'].map((label) => (
+                <Card key={label}>
+                  <Card.Body>
+                    <Text size="sm" weight="semibold">
+                      {label}
+                    </Text>
+                  </Card.Body>
+                </Card>
               ))}
             </SimpleGrid>
           </Stack>
@@ -806,12 +1294,16 @@ export const LayoutPrimitivesReference: Story = {
 
           {/* Center + Container */}
           <Stack gap={3}>
-            <Heading level={2} size="lg">Center + Container</Heading>
+            <Heading level={2} size="lg">
+              Center + Container
+            </Heading>
             <Text size="sm" color="muted">
-              Center wraps content in flex with align+justify=center.
-              Container adds a max-width with auto side margins — use it for readable prose widths.
+              Center wraps content in flex with align+justify=center. Container adds a max-width
+              with auto side margins — use it for readable prose widths.
             </Text>
-            <Center style={{ height: 80, border: '1px dashed var(--forge-border)', borderRadius: 4 }}>
+            <Center
+              style={{ height: 80, border: '1px dashed var(--forge-border)', borderRadius: 4 }}
+            >
               <Badge color="accent">Centered content</Badge>
             </Center>
           </Stack>

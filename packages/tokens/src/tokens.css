@@ -115,8 +115,8 @@
   /* --- Opacity --- */
   --forge-opacity-subtle: 0.08;
   --forge-opacity-light: 0.15;
-  --forge-opacity-medium: 0.40;
-  --forge-opacity-heavy: 0.60;
+  --forge-opacity-medium: 0.4;
+  --forge-opacity-heavy: 0.6;
 
   /* --- Icon sizes --- */
   --forge-icon-xs: 14px;
@@ -143,12 +143,11 @@
   }
 }
 
-
 /* ============================================================
    Palette × mode semantic tokens
    ============================================================ */
 
-[data-palette="hearth-bronze"][data-theme="dark"] {
+[data-palette='hearth-bronze'][data-theme='dark'] {
   /* --- Surfaces --- */
   --forge-bg: #0c0805;
   --forge-surface: #1a140f;
@@ -158,7 +157,7 @@
   --forge-surface-sunken: #050302;
   --forge-surface-overlay: rgb(12 8 5 / 0.6);
   --forge-surface-popover: #221b15;
-  --forge-bg-overlay: rgb(0 0 0 / 0.60);
+  --forge-bg-overlay: rgb(0 0 0 / 0.6);
   --forge-bg-disabled: rgb(42 33 26 / 0.5);
 
   /* --- Borders --- */
@@ -220,7 +219,7 @@
   --forge-scrollbar-thumb-hover: #5f4b3b;
 }
 
-[data-palette="hearth-bronze"][data-theme="light"] {
+[data-palette='hearth-bronze'][data-theme='light'] {
   /* --- Surfaces --- */
   --forge-bg: #faf8f5;
   --forge-surface: #ffffff;
@@ -230,7 +229,7 @@
   --forge-surface-sunken: #f7f3ee;
   --forge-surface-overlay: rgb(250 248 245 / 0.6);
   --forge-surface-popover: #f9f4ef;
-  --forge-bg-overlay: rgb(0 0 0 / 0.60);
+  --forge-bg-overlay: rgb(0 0 0 / 0.6);
   --forge-bg-disabled: rgb(242 233 223 / 0.5);
 
   /* --- Borders --- */
@@ -292,7 +291,7 @@
   --forge-scrollbar-thumb-hover: #e3dace;
 }
 
-[data-palette="midnight-forge"][data-theme="dark"] {
+[data-palette='midnight-forge'][data-theme='dark'] {
   /* --- Surfaces --- */
   --forge-bg: #0a0a1a;
   --forge-surface: #121830;
@@ -302,7 +301,7 @@
   --forge-surface-sunken: #070713;
   --forge-surface-overlay: rgb(10 10 26 / 0.6);
   --forge-surface-popover: #18233d;
-  --forge-bg-overlay: rgb(0 0 0 / 0.60);
+  --forge-bg-overlay: rgb(0 0 0 / 0.6);
   --forge-bg-disabled: rgb(30 45 74 / 0.5);
 
   /* --- Borders --- */
@@ -364,7 +363,7 @@
   --forge-scrollbar-thumb-hover: #3a5682;
 }
 
-[data-palette="midnight-forge"][data-theme="light"] {
+[data-palette='midnight-forge'][data-theme='light'] {
   /* --- Surfaces --- */
   --forge-bg: #f8faff;
   --forge-surface: #ffffff;
@@ -374,7 +373,7 @@
   --forge-surface-sunken: #eef3ff;
   --forge-surface-overlay: rgb(248 250 255 / 0.6);
   --forge-surface-popover: #f7f9ff;
-  --forge-bg-overlay: rgb(0 0 0 / 0.60);
+  --forge-bg-overlay: rgb(0 0 0 / 0.6);
   --forge-bg-disabled: rgb(238 242 255 / 0.5);
 
   /* --- Borders --- */
@@ -436,7 +435,7 @@
   --forge-scrollbar-thumb-hover: #f9faff;
 }
 
-[data-palette="deep-space"][data-theme="dark"] {
+[data-palette='deep-space'][data-theme='dark'] {
   /* --- Surfaces --- */
   --forge-bg: #07090e;
   --forge-surface: #0e1420;
@@ -446,7 +445,7 @@
   --forge-surface-sunken: #040507;
   --forge-surface-overlay: rgb(7 9 14 / 0.6);
   --forge-surface-popover: #121a29;
-  --forge-bg-overlay: rgb(0 0 0 / 0.60);
+  --forge-bg-overlay: rgb(0 0 0 / 0.6);
   --forge-bg-disabled: rgb(22 32 50 / 0.5);
 
   /* --- Borders --- */
@@ -508,7 +507,7 @@
   --forge-scrollbar-thumb-hover: #364865;
 }
 
-[data-palette="deep-space"][data-theme="light"] {
+[data-palette='deep-space'][data-theme='light'] {
   /* --- Surfaces --- */
   --forge-bg: #f0f9ff;
   --forge-surface: #ffffff;
@@ -518,7 +517,7 @@
   --forge-surface-sunken: #e6f5ff;
   --forge-surface-overlay: rgb(240 249 255 / 0.6);
   --forge-surface-popover: #f0f9ff;
-  --forge-bg-overlay: rgb(0 0 0 / 0.60);
+  --forge-bg-overlay: rgb(0 0 0 / 0.6);
   --forge-bg-disabled: rgb(224 242 254 / 0.5);
 
   /* --- Borders --- */
@@ -580,7 +579,7 @@
   --forge-scrollbar-thumb-hover: #afe4fd;
 }
 
-[data-palette="midnight-forge-v2"][data-theme="dark"] {
+[data-palette='midnight-forge-v2'][data-theme='dark'] {
   /* --- Surfaces --- */
   --forge-bg: #080c14;
   --forge-surface: #101828;
@@ -590,7 +589,7 @@
   --forge-surface-sunken: #05080d;
   --forge-surface-overlay: rgb(8 12 20 / 0.6);
   --forge-surface-popover: #151f34;
-  --forge-bg-overlay: rgb(0 0 0 / 0.60);
+  --forge-bg-overlay: rgb(0 0 0 / 0.6);
   --forge-bg-disabled: rgb(26 37 64 / 0.5);
 
   /* --- Borders --- */
@@ -652,7 +651,7 @@
   --forge-scrollbar-thumb-hover: #394d72;
 }
 
-[data-palette="midnight-forge-v2"][data-theme="light"] {
+[data-palette='midnight-forge-v2'][data-theme='light'] {
   /* --- Surfaces --- */
   --forge-bg: #f8fafc;
   --forge-surface: #ffffff;
@@ -662,7 +661,7 @@
   --forge-surface-sunken: #f1f5f9;
   --forge-surface-overlay: rgb(248 250 252 / 0.6);
   --forge-surface-popover: #f8fafc;
-  --forge-bg-overlay: rgb(0 0 0 / 0.60);
+  --forge-bg-overlay: rgb(0 0 0 / 0.6);
   --forge-bg-disabled: rgb(241 245 249 / 0.5);
 
   /* --- Borders --- */

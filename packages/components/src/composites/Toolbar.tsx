@@ -25,7 +25,12 @@ interface ToolbarSeparatorProps {
   className?: string
 }
 
-function ToolbarRoot({ children, orientation = 'horizontal', 'aria-label': ariaLabel, className }: ToolbarProps) {
+function ToolbarRoot({
+  children,
+  orientation = 'horizontal',
+  'aria-label': ariaLabel,
+  className,
+}: ToolbarProps) {
   return (
     <RadixToolbar.Root
       orientation={orientation}
@@ -71,11 +76,29 @@ function ToolbarButton({ children, disabled, className, ...props }: ToolbarButto
     <RadixToolbar.Button
       disabled={disabled}
       className={cn('forge-toolbar-button', className)}
-      style={{ ...TOOL_BTN, opacity: disabled ? 0.5 : 1, cursor: disabled ? 'not-allowed' : 'pointer' }}
-      onMouseEnter={(e) => { if (!disabled) { e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'; e.currentTarget.style.color = 'var(--forge-text)' } }}
-      onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = 'var(--forge-text-muted)' }}
-      onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'; e.currentTarget.style.outlineOffset = '-1px' }}
-      onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+      style={{
+        ...TOOL_BTN,
+        opacity: disabled ? 0.5 : 1,
+        cursor: disabled ? 'not-allowed' : 'pointer',
+      }}
+      onMouseEnter={(e) => {
+        if (!disabled) {
+          e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'
+          e.currentTarget.style.color = 'var(--forge-text)'
+        }
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = 'transparent'
+        e.currentTarget.style.color = 'var(--forge-text-muted)'
+      }}
+      onFocus={(e) => {
+        e.currentTarget.style.outline =
+          'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+        e.currentTarget.style.outlineOffset = '-1px'
+      }}
+      onBlur={(e) => {
+        e.currentTarget.style.outline = 'none'
+      }}
       {...props}
     >
       {children}
@@ -87,18 +110,19 @@ function ToolbarSeparator({ className }: ToolbarSeparatorProps) {
   return (
     <RadixToolbar.Separator
       className={cn('forge-toolbar-separator', className)}
-      style={{ width: '1px', height: '20px', backgroundColor: 'var(--forge-border)', flexShrink: 0, margin: '0 var(--forge-space-1)' }}
+      style={{
+        width: '1px',
+        height: '20px',
+        backgroundColor: 'var(--forge-border)',
+        flexShrink: 0,
+        margin: '0 var(--forge-space-1)',
+      }}
     />
   )
 }
 
 function ToolbarToggleGroup(props: ToolbarToggleGroupProps) {
-  return (
-    <RadixToolbar.ToggleGroup
-      {...props}
-      style={{ display: 'contents' }}
-    />
-  )
+  return <RadixToolbar.ToggleGroup {...props} style={{ display: 'contents' }} />
 }
 
 function ToolbarToggleItem({ children, className, ...props }: ToolbarToggleItemProps) {
@@ -106,14 +130,25 @@ function ToolbarToggleItem({ children, className, ...props }: ToolbarToggleItemP
     <RadixToolbar.ToggleItem
       className={cn('forge-toolbar-toggle-item', className)}
       style={TOOL_BTN}
-      onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'; e.currentTarget.style.color = 'var(--forge-text)' }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = 'var(--forge-surface-hover)'
+        e.currentTarget.style.color = 'var(--forge-text)'
+      }}
       onMouseLeave={(e) => {
         const isOn = e.currentTarget.getAttribute('data-state') === 'on'
-        e.currentTarget.style.backgroundColor = isOn ? 'color-mix(in srgb, var(--forge-accent) 15%, transparent)' : 'transparent'
+        e.currentTarget.style.backgroundColor = isOn
+          ? 'color-mix(in srgb, var(--forge-accent) 15%, transparent)'
+          : 'transparent'
         e.currentTarget.style.color = isOn ? 'var(--forge-accent)' : 'var(--forge-text-muted)'
       }}
-      onFocus={(e) => { e.currentTarget.style.outline = 'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'; e.currentTarget.style.outlineOffset = '-1px' }}
-      onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
+      onFocus={(e) => {
+        e.currentTarget.style.outline =
+          'var(--forge-focus-ring-width) solid var(--forge-focus-ring-color)'
+        e.currentTarget.style.outlineOffset = '-1px'
+      }}
+      onBlur={(e) => {
+        e.currentTarget.style.outline = 'none'
+      }}
       {...props}
     >
       {children}

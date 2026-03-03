@@ -192,11 +192,7 @@ export {
 } from 'lucide-react'
 
 // Keyboard & input
-export {
-  Keyboard as KeyboardIcon,
-  Mouse as MouseIcon,
-  Command as CommandIcon,
-} from 'lucide-react'
+export { Keyboard as KeyboardIcon, Mouse as MouseIcon, Command as CommandIcon } from 'lucide-react'
 
 // ---------------------------------------------------------------------------
 // Custom game-development SVG icons
