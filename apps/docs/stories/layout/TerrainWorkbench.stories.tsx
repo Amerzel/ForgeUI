@@ -6,10 +6,10 @@ import {
   FileSourceBar, CodeBlock, JsonViewer,
   TreeView, DropZone, Slider, Select, Badge, Text,
   Card, Stack, Flex, Group, ScrollArea,
-  Button, Separator,
+  Button, Separator, Breadcrumb,
   TooltipProvider,
 } from '@forgeui/components'
-import type { FileSourceBarFile, TreeNode } from '@forgeui/components'
+import type { FileSourceBarFile, TreeNode, BreadcrumbItem } from '@forgeui/components'
 
 /**
  * Terrain Workbench — Layout Explorations
@@ -774,6 +774,37 @@ function PipelineProperties() {
   )
 }
 
+// -- Breadcrumb helper -------------------------------------------------------
+
+function getPropertiesBreadcrumb(mode: FocusMode, selectedNode: string | null): BreadcrumbItem[] {
+  const modeLabels: Record<FocusMode, string> = {
+    inspect: 'Inspect',
+    paint: 'Paint',
+    effects: 'Effects',
+    fills: 'Fills',
+    pipeline: 'Pipeline',
+  }
+  const crumbs: BreadcrumbItem[] = [{ label: modeLabels[mode] }]
+
+  if (mode === 'inspect') {
+    if (selectedNode?.startsWith('gap-')) {
+      crumbs.push({ label: 'Gaps' }, { label: selectedNode === 'gap-1' ? 'grass_water_ms5_cliff-shadow' : 'grass_water_ms10_cliff-shadow' })
+    } else if (selectedNode) {
+      crumbs.push({ label: 'grass → water' }, { label: 'grass_water_ms3_cliff-face' })
+    }
+  } else if (mode === 'paint') {
+    crumbs.push({ label: 'Cell (4, 7)' })
+  } else if (mode === 'effects') {
+    crumbs.push({ label: 'cliff-face' }, { label: 'Parameters' })
+  } else if (mode === 'fills') {
+    crumbs.push({ label: 'grass_fill_01' }, { label: 'Quality Metrics' })
+  } else if (mode === 'pipeline') {
+    crumbs.push({ label: 'terrain_pack.v1' })
+  }
+
+  return crumbs
+}
+
 // -- Main unified story -----------------------------------------------------
 
 export const UnifiedWorkspace: Story = {
@@ -906,11 +937,9 @@ Click the mode buttons in the bottom-left to switch focus. Click tree nodes in t
                     borderBottom: '1px solid var(--forge-border)',
                     display: 'flex', alignItems: 'center', gap: 'var(--forge-space-2)',
                   }}>
-                    <Text size="sm" weight="semibold">
-                      {mode === 'inspect' ? 'Tile Detail' : mode === 'paint' ? 'Cell Inspector' : mode === 'effects' ? 'Effect Parameters' : mode === 'fills' ? 'Quality Metrics' : 'Pipeline'}
-                    </Text>
+                    <Breadcrumb items={getPropertiesBreadcrumb(mode, selectedNode)} />
                     <div style={{ flex: 1 }} />
-                    <Text size="xs" color="muted">{MODE_ICONS[mode]} {MODE_LABELS[mode]}</Text>
+                    <Text size="xs" color="muted">{MODE_ICONS[mode]}</Text>
                   </div>
                   <div style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
                     {mode === 'inspect' && <InspectProperties selectedNode={selectedNode} />}
