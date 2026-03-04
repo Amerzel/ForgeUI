@@ -31,6 +31,7 @@ export type MenuEntry = MenuItem | MenuSeparatorItem | MenuSubItem
 export const MENU_CONTENT_STYLE: React.CSSProperties = {
   overflow: 'hidden',
   backgroundColor: 'var(--forge-surface-popover)',
+  color: 'var(--forge-text)',
   border: '1px solid var(--forge-border)',
   borderRadius: 'var(--forge-radius-md)',
   boxShadow: 'var(--forge-shadow-md)',

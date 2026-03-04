@@ -36,7 +36,11 @@ const COLOR_VARS: Record<BadgeColor, { base: string; fg: string; border: string 
     fg: 'var(--forge-danger-foreground)',
     border: 'var(--forge-danger-border)',
   },
-  neutral: { base: 'var(--forge-border)', fg: 'var(--forge-text)', border: 'var(--forge-border)' },
+  neutral: {
+    base: 'var(--forge-text-muted)',
+    fg: 'var(--forge-text)',
+    border: 'var(--forge-border)',
+  },
 }
 
 /**

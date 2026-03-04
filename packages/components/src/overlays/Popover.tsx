@@ -43,6 +43,7 @@ export function Popover({
           style={{
             width,
             backgroundColor: 'var(--forge-surface-popover)',
+            color: 'var(--forge-text)',
             border: '1px solid var(--forge-border)',
             borderRadius: 'var(--forge-radius-md)',
             boxShadow: 'var(--forge-shadow-md)',

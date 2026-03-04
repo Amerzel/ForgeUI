@@ -57,6 +57,7 @@ export function Dialog({
             maxWidth: 'calc(100vw - 2rem)',
             maxHeight: fullHeight ? 'calc(100vh - 4rem)' : '85vh',
             backgroundColor: 'var(--forge-surface-popover)',
+            color: 'var(--forge-text)',
             border: '1px solid var(--forge-border)',
             borderRadius: 'var(--forge-radius-lg)',
             boxShadow: 'var(--forge-shadow-xl)',

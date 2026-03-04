@@ -81,7 +81,11 @@ export function ThemeProvider({
           data-palette={palette}
           data-theme={mode}
           data-forge-provider=""
-          style={extensionStyle}
+          style={{
+            color: 'var(--forge-text)',
+            backgroundColor: 'var(--forge-surface)',
+            ...extensionStyle,
+          }}
         >
           {children}
         </div>
