@@ -195,10 +195,12 @@ export function LayerStack({
                   }}
                 />
               )}
+              {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- composite widget with keyboard navigation */}
               <div
                 role="listitem"
                 data-selected={isSelected ? 'true' : undefined}
                 aria-label={`${layer.label}${!layer.visible ? ', hidden' : ''}${layer.locked ? ', locked' : ''}`}
+                // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
                 tabIndex={isSelected ? 0 : -1}
                 onClick={() => onSelect?.(layer.id)}
                 onKeyDown={(e) => handleKeyDown(e, layer.id, index)}
@@ -304,6 +306,7 @@ export function LayerStack({
                         if (e.key === 'Enter') setEditingOpacity(null)
                         e.stopPropagation()
                       }}
+                      // eslint-disable-next-line jsx-a11y/no-autofocus -- focus is expected when user triggers inline edit
                       autoFocus
                       style={{
                         width: '40px',
@@ -327,6 +330,12 @@ export function LayerStack({
                       onClick={(e) => {
                         e.stopPropagation()
                         setEditingOpacity(layer.id)
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.stopPropagation()
+                          setEditingOpacity(layer.id)
+                        }
                       }}
                       style={{
                         fontSize: 'var(--forge-font-size-xs)',

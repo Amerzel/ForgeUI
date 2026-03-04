@@ -83,7 +83,7 @@ export const DataTableStory: Story = {
 
 export const DataTableVirtualized: Story = {
   name: 'DataTable — virtualized (10k rows)',
-  render: () => {
+  render: function DataTableVirtualizedStory() {
     const BIG_TYPES = ['Mesh', 'Texture', 'Audio', 'Material'] as const
     const bigData = useMemo(
       () =>

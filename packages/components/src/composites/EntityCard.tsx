@@ -110,6 +110,7 @@ export function EntityCard({
           </span>
         )}
         {actions && (
+          // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- event boundary to prevent card click
           <div
             style={{ flexShrink: 0, marginLeft: 'var(--forge-space-1)' }}
             onClick={(e) => e.stopPropagation()}

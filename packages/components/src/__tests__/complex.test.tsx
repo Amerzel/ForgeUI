@@ -23,7 +23,6 @@ import type {
   TreeNode,
   PropertySection,
   FilterDefinition,
-  FilterState,
 } from '../index.js'
 
 function Themed({ children }: { children: React.ReactNode }) {

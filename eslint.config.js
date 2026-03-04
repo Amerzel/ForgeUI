@@ -72,6 +72,7 @@ export default [
       '**/scripts/**',
       '**/__tests__/**',
       '**/test-setup.ts',
+      '**/stories/**',
     ],
     languageOptions: {
       parserOptions: {
@@ -80,6 +81,10 @@ export default [
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      'no-console': 'off',
+      'react/no-unescaped-entities': 'off',
+      'react/no-children-prop': 'off',
       // Disable all type-checked rules (they require project)
       ...tsPlugin.configs['disable-type-checked'].rules,
     },

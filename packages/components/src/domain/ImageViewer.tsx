@@ -200,11 +200,13 @@ export function ImageViewer({
   const checkerSize = 12
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- role="application" is a custom interactive widget
     <div
       ref={containerRef}
       className={cn('forge-image-viewer', className)}
       role="application"
       aria-label={`Image viewer: ${alt}`}
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
       style={{
         position: 'relative',
