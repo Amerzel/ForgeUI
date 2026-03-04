@@ -440,6 +440,49 @@ describe('SimpleGrid', () => {
 })
 
 // ---------------------------------------------------------------------------
+// sp() string aliases
+// ---------------------------------------------------------------------------
+describe('sp string aliases', () => {
+  it('resolves xs to space-1', () => {
+    const { container } = wrap(<Box p="xs">content</Box>)
+    const el = getEl(container)
+    expect(el.style.paddingLeft).toBe('var(--forge-space-1)')
+  })
+
+  it('resolves sm to space-2', () => {
+    const { container } = wrap(<Box p="sm">content</Box>)
+    const el = getEl(container)
+    expect(el.style.paddingLeft).toBe('var(--forge-space-2)')
+  })
+
+  it('resolves md to space-4', () => {
+    const { container } = wrap(
+      <Stack gap="md">
+        <div>a</div>
+      </Stack>,
+    )
+    const el = getEl(container)
+    expect(el.style.gap).toBe('var(--forge-space-4)')
+  })
+
+  it('resolves lg to space-6', () => {
+    const { container } = wrap(<Box px="lg">content</Box>)
+    const el = getEl(container)
+    expect(el.style.paddingLeft).toBe('var(--forge-space-6)')
+  })
+
+  it('resolves xl to space-8', () => {
+    const { container } = wrap(
+      <Flex gap="xl">
+        <div>a</div>
+      </Flex>,
+    )
+    const el = getEl(container)
+    expect(el.style.gap).toBe('var(--forge-space-8)')
+  })
+})
+
+// ---------------------------------------------------------------------------
 // Wrap
 // ---------------------------------------------------------------------------
 describe('Wrap', () => {

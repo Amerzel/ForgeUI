@@ -7,10 +7,20 @@ export type SpaceValue = number | string
 
 const SPACE_SCALE = new Set([0, 0.5, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64])
 
+const SPACE_ALIASES: Record<string, number> = {
+  xs: 1,
+  sm: 2,
+  md: 4,
+  lg: 6,
+  xl: 8,
+}
+
 /** Converts a space scale value to a CSS var or passes through raw CSS strings. */
 export function sp(val: SpaceValue | undefined): string | undefined {
   if (val === undefined) return undefined
   if (val === 'px') return 'var(--forge-space-px)'
+  if (typeof val === 'string' && val in SPACE_ALIASES)
+    return `var(--forge-space-${SPACE_ALIASES[val]})`
   if (typeof val === 'number' && SPACE_SCALE.has(val)) return `var(--forge-space-${val})`
   return String(val)
 }
