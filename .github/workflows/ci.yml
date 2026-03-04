@@ -49,6 +49,7 @@ jobs:
         run: pnpm --filter docs build-storybook
 
       - name: Size limit
+        if: github.event_name == 'pull_request'
         uses: andresz1/size-limit-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
