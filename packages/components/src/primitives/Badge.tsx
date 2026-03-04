@@ -63,9 +63,9 @@ export function Badge({
       : variant === 'outline'
         ? { backgroundColor: 'transparent', color: base, border: `1px solid ${border}` }
         : {
-            backgroundColor: `color-mix(in srgb, ${base} 15%, transparent)`,
+            backgroundColor: `color-mix(in srgb, ${base} 20%, transparent)`,
             color: base,
-            border: `1px solid color-mix(in srgb, ${base} 25%, transparent)`,
+            border: `1px solid color-mix(in srgb, ${base} 40%, transparent)`,
           }
 
   return (
