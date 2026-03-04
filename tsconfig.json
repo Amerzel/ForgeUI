@@ -20,12 +20,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-    "paths": {
-      "@forgeui/tokens": ["./packages/tokens/src/index.ts"],
-      "@forgeui/hooks": ["./packages/hooks/src/index.ts"],
-      "@forgeui/icons": ["./packages/icons/src/index.ts"],
-      "@forgeui/components": ["./packages/components/src/index.ts"]
-    }
+    "paths": {}
   },
   "exclude": ["node_modules", "**/dist/**", "**/coverage/**", "**/.storybook/**"]
 }

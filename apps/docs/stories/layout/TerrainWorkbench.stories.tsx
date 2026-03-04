@@ -354,13 +354,13 @@ function PaintViewport() {
         }}
       >
         <Group gap={1}>
-          <Button size="sm" variant="solid">
+          <Button size="sm" variant="primary">
             🖌 Paint
           </Button>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="secondary">
             ⬜ Erase
           </Button>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="secondary">
             🔍 Inspect
           </Button>
         </Group>
@@ -426,7 +426,7 @@ function EffectsViewport() {
             <Button
               key={v}
               size="sm"
-              variant={splitView === v ? 'solid' : 'outline'}
+              variant={splitView === v ? 'primary' : 'secondary'}
               onClick={() => setSplitView(v)}
             >
               {v === 'composite'
@@ -441,10 +441,10 @@ function EffectsViewport() {
         </Group>
         <div style={{ flex: 1 }} />
         <Group gap={1}>
-          <Button size="sm" variant="solid">
+          <Button size="sm" variant="primary">
             B Higher ↑
           </Button>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="secondary">
             A Higher ↑
           </Button>
         </Group>
@@ -506,10 +506,10 @@ function FillsViewport() {
         />
         <Separator orientation="vertical" style={{ height: 20 }} />
         <Group gap={1}>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="secondary">
             Seam Lines
           </Button>
-          <Button size="sm" variant="solid">
+          <Button size="sm" variant="primary">
             Heat Map
           </Button>
         </Group>
@@ -544,7 +544,7 @@ function PipelineViewport() {
         <Group gap={1}>
           <Button
             size="sm"
-            variant="solid"
+            variant="primary"
             onClick={() => {
               setComposeStatus('running')
               setTimeout(() => setComposeStatus('done'), 1500)
@@ -553,14 +553,14 @@ function PipelineViewport() {
           >
             {composeStatus === 'running' ? '⏳ Composing…' : '🔨 Compose'}
           </Button>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="secondary">
             🗺 Resolve
           </Button>
         </Group>
         <Separator orientation="vertical" style={{ height: 20 }} />
         <Group gap={1}>
           {['Rendered', 'Diff', 'Layers'].map((v) => (
-            <Button key={v} size="sm" variant={v === 'Rendered' ? 'solid' : 'outline'}>
+            <Button key={v} size="sm" variant={v === 'Rendered' ? 'primary' : 'secondary'}>
               {v}
             </Button>
           ))}
@@ -607,7 +607,7 @@ function InspectProperties({ selectedNode }: { selectedNode: string | null }) {
           The transition tile exists but the corresponding cliff-shadow effect overlay is absent.
           This causes the renderer to skip the effect layer for this case.
         </Text>
-        <Button size="sm" variant="outline">
+        <Button size="sm" variant="secondary">
           → Tune this effect
         </Button>
       </Stack>
@@ -818,7 +818,7 @@ function EffectsProperties() {
                 Darkness
               </Text>
               <Text size="xs" style={{ fontFamily: 'var(--forge-font-mono)' }}>
-                {(darkness[0] / 100).toFixed(2)}
+                {((darkness[0] ?? 0) / 100).toFixed(2)}
               </Text>
             </Flex>
             <Slider min={0} max={100} step={1} value={darkness} onValueChange={setDarkness} />
@@ -852,7 +852,7 @@ function EffectsProperties() {
                 Alpha
               </Text>
               <Text size="xs" style={{ fontFamily: 'var(--forge-font-mono)' }}>
-                {(alpha[0] / 100).toFixed(2)}
+                {((alpha[0] ?? 0) / 100).toFixed(2)}
               </Text>
             </Flex>
             <Slider min={0} max={100} step={1} value={alpha} onValueChange={setAlpha} />
@@ -936,7 +936,7 @@ function EffectsProperties() {
             <Text size="xs" weight="semibold">
               Recipe Fragment
             </Text>
-            <Button size="sm" variant="outline">
+            <Button size="sm" variant="secondary">
               Export
             </Button>
           </Flex>
@@ -945,8 +945,8 @@ function EffectsProperties() {
             code={JSON.stringify(
               {
                 outline: { width: outlineWidth[0], mode: 'darken' },
-                'cliff-face': { height: height[0], darkness: darkness[0] / 100 },
-                'cliff-shadow': { depth: depth[0], alpha: alpha[0] / 100 },
+                'cliff-face': { height: height[0] ?? 0, darkness: (darkness[0] ?? 0) / 100 },
+                'cliff-shadow': { depth: depth[0] ?? 0, alpha: (alpha[0] ?? 0) / 100 },
               },
               null,
               2,
@@ -1243,7 +1243,7 @@ Click the mode buttons in the bottom-left to switch focus. Click tree nodes in t
                     <div style={{ padding: 'var(--forge-space-2)' }}>
                       <TreeView
                         nodes={PACK_TREE}
-                        selected={selectedNode ?? undefined}
+                        {...(selectedNode != null ? { selected: selectedNode } : {})}
                         expanded={expandedNodes}
                         onSelect={handleNodeSelect}
                         onExpand={handleNodeExpand}
@@ -1715,7 +1715,7 @@ export const EffectWorkbench: Story = {
           title="Effect Workbench"
           actions={
             <Group gap={1}>
-              <Button variant="outline" size="sm">
+              <Button variant="secondary" size="sm">
                 Export Recipe Fragment
               </Button>
             </Group>
@@ -1768,10 +1768,10 @@ export const EffectWorkbench: Story = {
                       Elevation
                     </Text>
                     <Group gap={1}>
-                      <Button size="sm" variant="solid">
+                      <Button size="sm" variant="primary">
                         B Higher ↑
                       </Button>
-                      <Button size="sm" variant="outline">
+                      <Button size="sm" variant="secondary">
                         A Higher ↑
                       </Button>
                     </Group>
@@ -1804,7 +1804,7 @@ export const EffectWorkbench: Story = {
                           Darkness
                         </Text>
                         <Text size="xs" style={{ fontFamily: 'var(--forge-font-mono)' }}>
-                          {(darkness[0] / 100).toFixed(2)}
+                          {((darkness[0] ?? 0) / 100).toFixed(2)}
                         </Text>
                       </Flex>
                       <Slider
@@ -1844,7 +1844,7 @@ export const EffectWorkbench: Story = {
                           Alpha
                         </Text>
                         <Text size="xs" style={{ fontFamily: 'var(--forge-font-mono)' }}>
-                          {(alpha[0] / 100).toFixed(2)}
+                          {((alpha[0] ?? 0) / 100).toFixed(2)}
                         </Text>
                       </Flex>
                       <Slider min={0} max={100} step={1} value={alpha} onValueChange={setAlpha} />
@@ -2018,8 +2018,11 @@ export const EffectWorkbench: Story = {
                         {
                           effects: {
                             outline: { width: outlineWidth[0], mode: 'darken' },
-                            'cliff-face': { height: height[0], darkness: darkness[0] / 100 },
-                            'cliff-shadow': { depth: depth[0], alpha: alpha[0] / 100 },
+                            'cliff-face': {
+                              height: height[0] ?? 0,
+                              darkness: (darkness[0] ?? 0) / 100,
+                            },
+                            'cliff-shadow': { depth: depth[0] ?? 0, alpha: (alpha[0] ?? 0) / 100 },
                           },
                         },
                         null,
@@ -2088,7 +2091,7 @@ export const MapPainter: Story = {
                 ]}
               />
               <Separator orientation="vertical" style={{ height: 20 }} />
-              <Button variant="outline" size="sm">
+              <Button variant="secondary" size="sm">
                 Clear
               </Button>
             </Group>
@@ -2217,10 +2220,10 @@ export const MapPainter: Story = {
                     Tool
                   </Text>
                   <Group gap={1}>
-                    <Button size="sm" variant="solid">
+                    <Button size="sm" variant="primary">
                       🖌 Paint
                     </Button>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="secondary">
                       🔍 Inspect
                     </Button>
                   </Group>
@@ -2402,10 +2405,10 @@ export const FillInspector: Story = {
                   />
                   <Separator orientation="vertical" style={{ height: 20 }} />
                   <Group gap={1}>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="secondary">
                       Seam Lines
                     </Button>
-                    <Button size="sm" variant="solid">
+                    <Button size="sm" variant="primary">
                       Heat Map
                     </Button>
                   </Group>
@@ -2591,7 +2594,7 @@ export const EndToEndPreview: Story = {
           actions={
             <Group gap={2}>
               <Button
-                variant="outline"
+                variant="secondary"
                 size="sm"
                 onClick={() => {
                   setComposeStatus('running')
@@ -2601,11 +2604,11 @@ export const EndToEndPreview: Story = {
               >
                 {composeStatus === 'running' ? '⏳ Composing…' : '🔨 Compose'}
               </Button>
-              <Button variant="outline" size="sm">
+              <Button variant="secondary" size="sm">
                 🗺 Resolve
               </Button>
               <Separator orientation="vertical" style={{ height: 20 }} />
-              <Button variant="outline" size="sm">
+              <Button variant="secondary" size="sm">
                 📸 Screenshot
               </Button>
             </Group>

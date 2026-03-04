@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@forgeui/tokens": ["./packages/tokens/src/index.ts"],
+      "@forgeui/hooks": ["./packages/hooks/src/index.ts"],
+      "@forgeui/icons": ["./packages/icons/src/index.ts"],
+      "@forgeui/components": ["./packages/components/src/index.ts"]
+    }
+  },
+  "include": ["packages/*/src/**/*"]
+}

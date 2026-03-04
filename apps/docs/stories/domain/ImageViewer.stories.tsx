@@ -101,7 +101,7 @@ export const PixelArt: Story = {
         <ImageViewer
           src={pixelArt}
           alt="Pixel art character"
-          pixelated
+          renderMode="pixelated"
           checkerboard
           style={{
             height: '400px',

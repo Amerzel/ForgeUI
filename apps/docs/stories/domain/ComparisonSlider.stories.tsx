@@ -59,8 +59,8 @@ export const BeforeAfter: Story = {
       <ComparisonSlider
         before={BEFORE_IMAGE}
         after={AFTER_IMAGE}
-        beforeAlt="Original low-res texture"
-        afterAlt="AI upscaled texture"
+        beforeLabel="Original low-res texture"
+        afterLabel="AI upscaled texture"
         style={{ height: '320px', borderRadius: 'var(--forge-radius-md)', overflow: 'hidden' }}
       />
       <Text size="xs" style={{ color: 'var(--forge-text-muted)' }}>

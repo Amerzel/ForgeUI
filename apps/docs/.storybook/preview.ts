@@ -49,7 +49,7 @@ const preview: Preview = {
         mode,
         children: createElement(
           TooltipProvider,
-          { delayDuration: 400 },
+          null,
           createElement(
             'div',
             {

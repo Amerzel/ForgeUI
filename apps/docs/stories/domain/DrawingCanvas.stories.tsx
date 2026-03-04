@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState, useRef } from 'react'
 import { DrawingCanvas, Button, Text, Badge } from '@forgeui/components'
-import type { DrawingCanvasHandle } from '@forgeui/components'
 
 const meta: Meta = {
   title: 'Domain/DrawingCanvas',
@@ -22,7 +21,7 @@ type Story = StoryObj
 export const InpaintingMask: Story = {
   name: 'Inpainting Mask',
   render: function DrawingCanvasDemo() {
-    const canvasRef = useRef<DrawingCanvasHandle>(null)
+    const canvasRef = useRef<{ clear(): void; invert(): void }>(null)
     const [tool, setTool] = useState<'brush' | 'eraser'>('brush')
     const [brushSize, setBrushSize] = useState(24)
 
@@ -73,18 +72,20 @@ export const InpaintingMask: Story = {
             </Button>
           ))}
         </div>
-        <DrawingCanvas
-          ref={canvasRef}
-          width={640}
-          height={400}
-          tool={tool}
-          brushSize={brushSize}
-          brushColor="rgba(255, 0, 0, 0.5)"
+        <div
           style={{
             border: '1px solid var(--forge-border)',
             borderRadius: 'var(--forge-radius-md)',
           }}
-        />
+        >
+          <DrawingCanvas
+            width={640}
+            height={400}
+            tool={tool}
+            brushSize={brushSize}
+            brushColor="rgba(255, 0, 0, 0.5)"
+          />
+        </div>
         <Text size="xs" style={{ color: 'var(--forge-text-muted)' }}>
           Click and drag to paint · Switch between brush and eraser · Use Clear/Invert controls
         </Text>
