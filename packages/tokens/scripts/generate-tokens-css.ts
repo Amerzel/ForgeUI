@@ -151,7 +151,7 @@ function buildBlock(palette: PaletteName, mode: 'dark' | 'light'): string {
   const surfaceActive = p.border
   const surfaceSunken = darken(p.bg, 0.02)
   const surfaceOverlay = alpha(p.bg, 0.6)
-  const bgOverlay = 'rgb(0 0 0 / 0.60)'
+  const bgOverlay = 'rgb(0 0 0 / 0.6)'
   const bgDisabled = alpha(p.raised, 0.5)
   const surfacePopover = mix(p.surface, p.raised, 0.5)
 
@@ -192,7 +192,7 @@ function buildBlock(palette: PaletteName, mode: 'dark' | 'light'): string {
   const scrollbarThumb = p.border
   const scrollbarThumbHover = lighten(p.border, 0.1)
 
-  return `[data-palette="${palette}"][data-theme="${mode}"] {
+  return `[data-palette='${palette}'][data-theme='${mode}'] {
   /* --- Surfaces --- */
   --forge-bg: ${p.bg};
   --forge-surface: ${p.surface};
@@ -380,8 +380,8 @@ const STATIC_TOKENS = `/* ======================================================
   /* --- Opacity --- */
   --forge-opacity-subtle: 0.08;
   --forge-opacity-light: 0.15;
-  --forge-opacity-medium: 0.40;
-  --forge-opacity-heavy: 0.60;
+  --forge-opacity-medium: 0.4;
+  --forge-opacity-heavy: 0.6;
 
   /* --- Icon sizes --- */
   --forge-icon-xs: 14px;
