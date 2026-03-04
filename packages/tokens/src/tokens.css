@@ -170,8 +170,8 @@
 
   /* --- Text --- */
   --forge-text: #f2e9df;
-  --forge-text-muted: #9a8169;
-  --forge-text-disabled: #6d5b49;
+  --forge-text-muted: #a48d78;
+  --forge-text-disabled: #7c6754;
 
   /* --- Text on color --- */
   --forge-text-on-accent: #000000;
@@ -314,8 +314,8 @@
 
   /* --- Text --- */
   --forge-text: #e0e4ec;
-  --forge-text-muted: #8892a8;
-  --forge-text-disabled: #606b83;
+  --forge-text-muted: #959db1;
+  --forge-text-disabled: #6a7590;
 
   /* --- Text on color --- */
   --forge-text-on-accent: #000000;
@@ -458,8 +458,8 @@
 
   /* --- Text --- */
   --forge-text: #d4dae5;
-  --forge-text-muted: #6b7a90;
-  --forge-text-disabled: #4a5564;
+  --forge-text-muted: #8490a2;
+  --forge-text-disabled: #5e6a7c;
 
   /* --- Text on color --- */
   --forge-text-on-accent: #000000;
@@ -602,8 +602,8 @@
 
   /* --- Text --- */
   --forge-text: #e2e8f0;
-  --forge-text-muted: #7889a4;
-  --forge-text-disabled: #54637c;
+  --forge-text-muted: #8695ae;
+  --forge-text-disabled: #5d6e8b;
 
   /* --- Text on color --- */
   --forge-text-on-accent: #000000;
@@ -670,7 +670,7 @@
   --forge-border-strong: #dbe2ea;
 
   /* --- Accent --- */
-  --forge-accent: #d97706;
+  --forge-accent: #b45309;
 
   /* --- Text --- */
   --forge-text: #080c14;
@@ -678,7 +678,7 @@
   --forge-text-disabled: #28303b;
 
   /* --- Text on color --- */
-  --forge-text-on-accent: #000000;
+  --forge-text-on-accent: #ffffff;
   --forge-text-on-info: #ffffff;
   --forge-text-on-success: #ffffff;
   --forge-text-on-warning: #ffffff;
@@ -713,9 +713,9 @@
   --forge-danger-foreground: #ffffff;
 
   /* --- Selection --- */
-  --forge-selection-bg: rgb(217 119 6 / 0.3);
+  --forge-selection-bg: rgb(180 83 9 / 0.3);
   --forge-selection-text: #080c14;
-  --forge-highlight-bg: rgb(217 119 6 / 0.25);
+  --forge-highlight-bg: rgb(180 83 9 / 0.25);
 
   /* --- Scrollbar --- */
   --forge-scrollbar-track: #ffffff;
