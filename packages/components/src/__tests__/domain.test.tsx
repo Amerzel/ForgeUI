@@ -14,7 +14,9 @@ import {
   AnimationPreview,
   TilePreview,
   TilingGrid,
+  PipelineStepViewer,
 } from '../index.js'
+import type { PipelineStep } from '../index.js'
 import type {
   TimelineTrack,
   CanvasItem,
@@ -958,5 +960,122 @@ describe('TilingGrid', () => {
       </Themed>,
     )
     expect(document.querySelector('.forge-tiling-grid')).toBeInTheDocument()
+  })
+})
+
+/* ===================================================================
+ * PipelineStepViewer
+ * =================================================================== */
+describe('PipelineStepViewer', () => {
+  const makeSteps = (): PipelineStep[] => [
+    { id: 'raw', label: 'Raw Output', status: 'complete', durationMs: 120 },
+    { id: 'palette', label: 'Palette Snap', status: 'running', durationMs: 40 },
+    { id: 'alpha', label: 'Alpha Cleanup', status: 'pending' },
+  ]
+
+  it('renders all step labels', () => {
+    render(
+      <Themed>
+        <PipelineStepViewer steps={makeSteps()} />
+      </Themed>,
+    )
+    // Each label appears in both the step indicator and possibly the result panel header,
+    // so use getAllByText for labels that may appear twice.
+    expect(screen.getAllByText('Raw Output').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Palette Snap').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Alpha Cleanup').length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('shows status in step button aria-label', () => {
+    render(
+      <Themed>
+        <PipelineStepViewer steps={makeSteps()} />
+      </Themed>,
+    )
+    expect(screen.getByLabelText('Raw Output — complete (120ms)')).toBeInTheDocument()
+  })
+
+  it('fires onSelectStep when a step is clicked', async () => {
+    const user = userEvent.setup()
+    const onSelect = vi.fn()
+    render(
+      <Themed>
+        <PipelineStepViewer steps={makeSteps()} onSelectStep={onSelect} />
+      </Themed>,
+    )
+    await user.click(screen.getByLabelText('Palette Snap — running (40ms)'))
+    expect(onSelect).toHaveBeenCalledWith('palette')
+  })
+
+  it('highlights the selected step', () => {
+    render(
+      <Themed>
+        <PipelineStepViewer steps={makeSteps()} selectedStep="palette" />
+      </Themed>,
+    )
+    const btn = screen.getByLabelText('Palette Snap — running (40ms)')
+    expect(btn.getAttribute('aria-current')).toBe('step')
+  })
+
+  it('shows result panel for selected step', () => {
+    const steps: PipelineStep[] = [
+      { id: 'raw', label: 'Raw', status: 'complete', result: <div>Result content here</div> },
+    ]
+    render(
+      <Themed>
+        <PipelineStepViewer steps={steps} selectedStep="raw" />
+      </Themed>,
+    )
+    expect(screen.getByText('Result content here')).toBeInTheDocument()
+  })
+
+  it('displays step metadata', () => {
+    const steps: PipelineStep[] = [
+      { id: 'raw', label: 'Raw', status: 'complete', meta: { colors: '256', format: 'RGBA' } },
+    ]
+    render(
+      <Themed>
+        <PipelineStepViewer steps={steps} selectedStep="raw" />
+      </Themed>,
+    )
+    expect(screen.getByText('256')).toBeInTheDocument()
+    expect(screen.getByText('RGBA')).toBeInTheDocument()
+  })
+
+  it('supports vertical layout', () => {
+    render(
+      <Themed>
+        <PipelineStepViewer steps={makeSteps()} layout="vertical" />
+      </Themed>,
+    )
+    const viewer = document.querySelector('.forge-pipeline-step-viewer')
+    expect(viewer).toBeInTheDocument()
+    expect((viewer as HTMLElement).style.flexDirection).toBe('row')
+  })
+
+  it('supports filmstrip layout showing all results', () => {
+    const steps: PipelineStep[] = [
+      { id: 'a', label: 'A', status: 'complete', result: <div>Res A</div> },
+      { id: 'b', label: 'B', status: 'complete', result: <div>Res B</div> },
+    ]
+    render(
+      <Themed>
+        <PipelineStepViewer steps={steps} layout="filmstrip" />
+      </Themed>,
+    )
+    expect(screen.getByText('Res A')).toBeInTheDocument()
+    expect(screen.getByText('Res B')).toBeInTheDocument()
+  })
+
+  it('formats duration as seconds for large values', () => {
+    const steps: PipelineStep[] = [
+      { id: 'raw', label: 'Raw', status: 'complete', durationMs: 2500 },
+    ]
+    render(
+      <Themed>
+        <PipelineStepViewer steps={steps} />
+      </Themed>,
+    )
+    expect(screen.getAllByText('2.5s').length).toBeGreaterThanOrEqual(1)
   })
 })

@@ -96,6 +96,8 @@ export { TilePreview } from './domain/TilePreview.js'
 export type { TilePreviewProps, TileSource } from './domain/TilePreview.js'
 export { TilingGrid } from './domain/TilingGrid.js'
 export type { TilingGridProps } from './domain/TilingGrid.js'
+export { PipelineStepViewer } from './domain/PipelineStepViewer.js'
+export type { PipelineStepViewerProps, PipelineStep } from './domain/PipelineStepViewer.js'
 
 // Phase 2b — Complex inputs
 export { DataTable } from './complex/DataTable.js'
