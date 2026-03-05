@@ -47,7 +47,7 @@ import type { PipelineStep, GenerationJob, Verdict, GridTemplate } from '@forgeu
  *    VerdictWidget, and GenerationQueue for monitoring batch jobs.
  */
 const meta: Meta = {
-  title: 'Layout/Terrain Studio Patterns',
+  title: 'Patterns/Terrain Studio Patterns',
   parameters: { layout: 'fullscreen' },
 }
 export default meta

@@ -33,7 +33,7 @@ import {
  * to see exactly which primitives produce each region.
  */
 const meta: Meta = {
-  title: 'Layout/Game Dev Compositions',
+  title: 'Patterns/Game Dev Compositions',
   parameters: { layout: 'fullscreen' },
 }
 export default meta

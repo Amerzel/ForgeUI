@@ -39,7 +39,7 @@ import type { FileSourceBarFile, TreeNode, BreadcrumbItem } from '@forgeui/compo
  *    switch focus modes without losing context.
  */
 const meta: Meta = {
-  title: 'Layout/Terrain Workbench',
+  title: 'Patterns/Terrain Workbench',
   parameters: { layout: 'fullscreen' },
 }
 export default meta

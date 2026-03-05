@@ -45,7 +45,7 @@ import {
  * composite components, and complex data components work together.
  */
 const meta: Meta = {
-  title: 'Layout/Forge Patterns',
+  title: 'Patterns/Forge Patterns',
   parameters: { layout: 'fullscreen' },
 }
 export default meta

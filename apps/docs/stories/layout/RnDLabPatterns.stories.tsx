@@ -82,7 +82,7 @@ import type {
  * | ScrollArea             |     ✓     |            |      ✓       |     ✓      |            |
  */
 const meta: Meta = {
-  title: 'Layout/R&D Lab Patterns',
+  title: 'Patterns/R&D Lab Patterns',
   parameters: { layout: 'fullscreen' },
 }
 export default meta

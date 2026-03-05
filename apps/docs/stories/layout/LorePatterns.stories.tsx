@@ -19,7 +19,7 @@ import {
 import type { FilterDefinition, FilterState } from '@forgeui/components'
 
 const meta: Meta = {
-  title: 'Layout/Lore Patterns',
+  title: 'Patterns/Lore Patterns',
   tags: ['autodocs'],
   parameters: {
     docs: {
