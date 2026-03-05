@@ -12,6 +12,7 @@ import {
   LayerStack,
   NodeEditor,
   AnimationPreview,
+  TilePreview,
 } from '../index.js'
 import type {
   TimelineTrack,
@@ -773,5 +774,122 @@ describe('AnimationPreview', () => {
       </Themed>,
     )
     expect(await axe(container)).toHaveNoViolations()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// TilePreview
+// ---------------------------------------------------------------------------
+describe('TilePreview', () => {
+  it('renders canvas at specified size', () => {
+    render(
+      <Themed>
+        <TilePreview source={null} size={64} />
+      </Themed>,
+    )
+    const canvas = document.querySelector('.forge-tile-preview canvas') as HTMLCanvasElement
+    expect(canvas).toBeInTheDocument()
+    expect(canvas.style.width).toBe('64px')
+    expect(canvas.style.height).toBe('64px')
+  })
+
+  it('shows placeholder text for null source', () => {
+    render(
+      <Themed>
+        <TilePreview source={null} size={64} />
+      </Themed>,
+    )
+    // Canvas should still render (placeholder drawn on canvas)
+    expect(document.querySelector('.forge-tile-preview')).toBeInTheDocument()
+  })
+
+  it('renders label overlay', () => {
+    render(
+      <Themed>
+        <TilePreview source={null} size={64} label="MS-3" />
+      </Themed>,
+    )
+    expect(screen.getByText('MS-3')).toBeInTheDocument()
+  })
+
+  it('applies selected border style', () => {
+    render(
+      <Themed>
+        <TilePreview source={null} size={64} border="selected" />
+      </Themed>,
+    )
+    const el = document.querySelector('.forge-tile-preview') as HTMLElement
+    expect(el.style.border).toContain('var(--forge-accent)')
+  })
+
+  it('applies error border style', () => {
+    render(
+      <Themed>
+        <TilePreview source={null} size={64} border="error" />
+      </Themed>,
+    )
+    const el = document.querySelector('.forge-tile-preview') as HTMLElement
+    expect(el.style.border).toContain('var(--forge-danger)')
+  })
+
+  it('is clickable when onClick provided', async () => {
+    const onClick = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <TilePreview source={null} size={64} onClick={onClick} />
+      </Themed>,
+    )
+    const el = screen.getByRole('button')
+    await user.click(el)
+    expect(onClick).toHaveBeenCalled()
+  })
+
+  it('handles keyboard activation when interactive', async () => {
+    const onClick = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <TilePreview source={null} size={64} onClick={onClick} />
+      </Themed>,
+    )
+    const el = screen.getByRole('button')
+    el.focus()
+    await user.keyboard('{Enter}')
+    expect(onClick).toHaveBeenCalled()
+  })
+
+  it('calls onHover on mouse enter/leave', async () => {
+    const onHover = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <TilePreview source={null} size={64} onHover={onHover} />
+      </Themed>,
+    )
+    const el = document.querySelector('.forge-tile-preview') as HTMLElement
+    await user.hover(el)
+    expect(onHover).toHaveBeenCalledWith(true)
+    await user.unhover(el)
+    expect(onHover).toHaveBeenCalledWith(false)
+  })
+
+  it('forwards className', () => {
+    render(
+      <Themed>
+        <TilePreview source={null} size={64} className="my-custom" />
+      </Themed>,
+    )
+    const el = document.querySelector('.forge-tile-preview')
+    expect(el?.className).toContain('my-custom')
+  })
+
+  it('does not render as button when no onClick', () => {
+    render(
+      <Themed>
+        <TilePreview source={null} size={64} />
+      </Themed>,
+    )
+    expect(screen.queryByRole('button')).not.toBeInTheDocument()
   })
 })

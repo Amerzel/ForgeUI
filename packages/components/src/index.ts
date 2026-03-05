@@ -92,6 +92,8 @@ export { LayerStack } from './domain/LayerStack.js'
 export type { Layer, LayerStackProps } from './domain/LayerStack.js'
 export { AnimationPreview } from './domain/AnimationPreview.js'
 export type { AnimationFrame, AnimationPreviewProps } from './domain/AnimationPreview.js'
+export { TilePreview } from './domain/TilePreview.js'
+export type { TilePreviewProps, TileSource } from './domain/TilePreview.js'
 
 // Phase 2b — Complex inputs
 export { DataTable } from './complex/DataTable.js'
