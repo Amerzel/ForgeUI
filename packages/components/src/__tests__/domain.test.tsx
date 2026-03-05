@@ -13,6 +13,7 @@ import {
   NodeEditor,
   AnimationPreview,
   TilePreview,
+  TilingGrid,
 } from '../index.js'
 import type {
   TimelineTrack,
@@ -891,5 +892,71 @@ describe('TilePreview', () => {
       </Themed>,
     )
     expect(screen.queryByRole('button')).not.toBeInTheDocument()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// TilingGrid
+// ---------------------------------------------------------------------------
+describe('TilingGrid', () => {
+  it('renders canvas at specified size', () => {
+    render(
+      <Themed>
+        <TilingGrid source={null} size={192} />
+      </Themed>,
+    )
+    const canvas = document.querySelector('.forge-tiling-grid canvas') as HTMLCanvasElement
+    expect(canvas).toBeInTheDocument()
+    expect(canvas.style.width).toBe('192px')
+  })
+
+  it('has correct aria label with default 3×3', () => {
+    render(
+      <Themed>
+        <TilingGrid source={null} size={192} />
+      </Themed>,
+    )
+    expect(screen.getByLabelText('3×3 tiling grid')).toBeInTheDocument()
+  })
+
+  it('has correct aria label with custom dimensions', () => {
+    render(
+      <Themed>
+        <TilingGrid source={null} size={256} cols={5} rows={4} />
+      </Themed>,
+    )
+    expect(screen.getByLabelText('5×4 tiling grid')).toBeInTheDocument()
+  })
+
+  it('forwards className', () => {
+    render(
+      <Themed>
+        <TilingGrid source={null} size={192} className="custom-grid" />
+      </Themed>,
+    )
+    const el = document.querySelector('.forge-tiling-grid')
+    expect(el?.className).toContain('custom-grid')
+  })
+
+  it('accepts getCellSource callback prop', () => {
+    const getCellSource = vi.fn().mockReturnValue(null)
+    // In JSDOM, canvas.getContext returns null so draw() exits early.
+    // We verify the component renders without error and accepts the callback.
+    render(
+      <Themed>
+        <TilingGrid getCellSource={getCellSource} size={192} cols={3} rows={3} />
+      </Themed>,
+    )
+    expect(document.querySelector('.forge-tiling-grid')).toBeInTheDocument()
+  })
+
+  it('accepts overlay callback prop', () => {
+    const overlay = vi.fn()
+    render(
+      <Themed>
+        <TilingGrid source={null} size={192} overlay={overlay} />
+      </Themed>,
+    )
+    expect(document.querySelector('.forge-tiling-grid')).toBeInTheDocument()
   })
 })
