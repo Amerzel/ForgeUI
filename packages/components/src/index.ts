@@ -110,6 +110,14 @@ export { GenerationQueue } from './domain/GenerationQueue.js'
 export type { GenerationQueueProps, GenerationJob } from './domain/GenerationQueue.js'
 export { WizardDialog } from './domain/WizardDialog.js'
 export type { WizardDialogProps, WizardStep } from './domain/WizardDialog.js'
+export { InpaintMaskPainter } from './domain/InpaintMaskPainter.js'
+export type { InpaintMaskPainterProps } from './domain/InpaintMaskPainter.js'
+export { SpritesheetSlicer } from './domain/SpritesheetSlicer.js'
+export type {
+  SpritesheetSlicerProps,
+  GridTemplate,
+  SlicedTile,
+} from './domain/SpritesheetSlicer.js'
 
 // Phase 2b — Complex inputs
 export { DataTable } from './complex/DataTable.js'

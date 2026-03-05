@@ -20,6 +20,8 @@ import {
   VerdictWidget,
   GenerationQueue,
   WizardDialog,
+  InpaintMaskPainter,
+  SpritesheetSlicer,
 } from '../index.js'
 import type { PipelineStep, GenerationJob, WizardStep } from '../index.js'
 import type {
@@ -1567,5 +1569,238 @@ describe('WizardDialog', () => {
     expect(screen.getByText('Basics')).toBeInTheDocument()
     expect(screen.getByText('Materials')).toBeInTheDocument()
     expect(screen.getByText('Review')).toBeInTheDocument()
+  })
+})
+
+/* ------------------------------------------------------------------ */
+/*  InpaintMaskPainter                                                */
+/* ------------------------------------------------------------------ */
+describe('InpaintMaskPainter', () => {
+  function makeCanvasSource(w = 32, h = 32) {
+    const c = document.createElement('canvas')
+    c.width = w
+    c.height = h
+    return c
+  }
+
+  it('renders container with correct size', () => {
+    const { container } = render(
+      <Themed>
+        <InpaintMaskPainter source={makeCanvasSource()} size={256} />
+      </Themed>,
+    )
+    const wrapper = container.querySelector('.forge-inpaint-mask-painter')
+    expect(wrapper).toBeInTheDocument()
+    expect(wrapper).toHaveStyle({ width: '256px', height: '256px' })
+  })
+
+  it('renders two canvas elements (source + mask)', () => {
+    const { container } = render(
+      <Themed>
+        <InpaintMaskPainter source={makeCanvasSource()} size={200} />
+      </Themed>,
+    )
+    const canvases = container.querySelectorAll('canvas')
+    expect(canvases.length).toBe(2)
+  })
+
+  it('hides source canvas when showSource is false', () => {
+    const { container } = render(
+      <Themed>
+        <InpaintMaskPainter source={makeCanvasSource()} size={200} showSource={false} />
+      </Themed>,
+    )
+    const canvases = container.querySelectorAll('canvas')
+    expect(canvases.length).toBe(1)
+  })
+
+  it('sets canvas dimensions to source dimensions', () => {
+    const { container } = render(
+      <Themed>
+        <InpaintMaskPainter source={makeCanvasSource(64, 64)} size={256} />
+      </Themed>,
+    )
+    const canvas = container.querySelector('canvas') as HTMLCanvasElement
+    expect(canvas.width).toBe(64)
+    expect(canvas.height).toBe(64)
+  })
+
+  it('applies crosshair cursor for paint tool', () => {
+    const { container } = render(
+      <Themed>
+        <InpaintMaskPainter source={null} size={200} tool="paint" />
+      </Themed>,
+    )
+    const wrapper = container.querySelector('.forge-inpaint-mask-painter')
+    expect(wrapper).toHaveStyle({ cursor: 'crosshair' })
+  })
+
+  it('applies cell cursor for erase tool', () => {
+    const { container } = render(
+      <Themed>
+        <InpaintMaskPainter source={null} size={200} tool="erase" />
+      </Themed>,
+    )
+    const wrapper = container.querySelector('.forge-inpaint-mask-painter')
+    expect(wrapper).toHaveStyle({ cursor: 'cell' })
+  })
+
+  it('applies pixelated rendering by default', () => {
+    const { container } = render(
+      <Themed>
+        <InpaintMaskPainter source={null} size={200} />
+      </Themed>,
+    )
+    const canvas = container.querySelector('canvas') as HTMLCanvasElement
+    expect(canvas.style.imageRendering).toBe('pixelated')
+  })
+
+  it('renders with null source without crashing', () => {
+    const { container } = render(
+      <Themed>
+        <InpaintMaskPainter source={null} size={200} />
+      </Themed>,
+    )
+    expect(container.querySelector('.forge-inpaint-mask-painter')).toBeInTheDocument()
+  })
+
+  it('accepts custom className', () => {
+    const { container } = render(
+      <Themed>
+        <InpaintMaskPainter source={null} size={200} className="my-painter" />
+      </Themed>,
+    )
+    expect(container.querySelector('.my-painter')).toBeInTheDocument()
+  })
+
+  it('has an accessible role', () => {
+    render(
+      <Themed>
+        <InpaintMaskPainter source={null} size={200} />
+      </Themed>,
+    )
+    expect(screen.getByRole('img')).toBeInTheDocument()
+  })
+})
+
+/* ------------------------------------------------------------------ */
+/*  SpritesheetSlicer                                                 */
+/* ------------------------------------------------------------------ */
+describe('SpritesheetSlicer', () => {
+  const sampleTemplates = [
+    { id: 'wang4', label: '4×4 Wang', cols: 4, rows: 4 },
+    { id: 'blob47', label: '7×7 Blob-47', cols: 7, rows: 7 },
+  ]
+
+  it('renders the slicer container', () => {
+    render(
+      <Themed>
+        <SpritesheetSlicer source={null} templates={sampleTemplates} />
+      </Themed>,
+    )
+    expect(screen.getByTestId('spritesheet-slicer')).toBeInTheDocument()
+  })
+
+  it('shows placeholder text when no source', () => {
+    render(
+      <Themed>
+        <SpritesheetSlicer source={null} templates={sampleTemplates} />
+      </Themed>,
+    )
+    expect(screen.getByText('Load a spritesheet to begin')).toBeInTheDocument()
+  })
+
+  it('renders template selector with all templates', () => {
+    render(
+      <Themed>
+        <SpritesheetSlicer source={null} templates={sampleTemplates} />
+      </Themed>,
+    )
+    expect(screen.getByLabelText('Grid template')).toBeInTheDocument()
+    const options = screen.getAllByRole('option')
+    expect(options.length).toBe(2)
+    expect(options[0]).toHaveTextContent('4×4 Wang')
+    expect(options[1]).toHaveTextContent('7×7 Blob-47')
+  })
+
+  it('displays tile count info', () => {
+    render(
+      <Themed>
+        <SpritesheetSlicer source={null} templates={sampleTemplates} selectedTemplate="wang4" />
+      </Themed>,
+    )
+    expect(screen.getByText(/16 tiles/)).toBeInTheDocument()
+  })
+
+  it('renders slice button disabled when no source', () => {
+    render(
+      <Themed>
+        <SpritesheetSlicer source={null} templates={sampleTemplates} />
+      </Themed>,
+    )
+    const btn = screen.getByRole('button', { name: 'Slice' })
+    expect(btn).toBeDisabled()
+  })
+
+  it('calls onTemplateChange when template is selected', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+    render(
+      <Themed>
+        <SpritesheetSlicer
+          source={null}
+          templates={sampleTemplates}
+          selectedTemplate="wang4"
+          onTemplateChange={onChange}
+        />
+      </Themed>,
+    )
+    const select = screen.getByLabelText('Grid template')
+    await user.selectOptions(select, 'blob47')
+    expect(onChange).toHaveBeenCalledWith('blob47')
+  })
+
+  it('accepts custom className', () => {
+    const { container } = render(
+      <Themed>
+        <SpritesheetSlicer source={null} templates={sampleTemplates} className="my-slicer" />
+      </Themed>,
+    )
+    expect(container.querySelector('.my-slicer')).toBeInTheDocument()
+  })
+
+  it('renders canvas when source is provided', () => {
+    const canvas = document.createElement('canvas')
+    canvas.width = 128
+    canvas.height = 128
+    const { container } = render(
+      <Themed>
+        <SpritesheetSlicer source={canvas} templates={sampleTemplates} />
+      </Themed>,
+    )
+    // Should have a canvas element in the viewer area
+    const canvases = container.querySelectorAll('canvas')
+    expect(canvases.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('shows correct tile count for blob template', () => {
+    render(
+      <Themed>
+        <SpritesheetSlicer source={null} templates={sampleTemplates} selectedTemplate="blob47" />
+      </Themed>,
+    )
+    expect(screen.getByText(/49 tiles/)).toBeInTheDocument()
+  })
+
+  it('hides placeholder when source is provided', () => {
+    const canvas = document.createElement('canvas')
+    canvas.width = 128
+    canvas.height = 128
+    render(
+      <Themed>
+        <SpritesheetSlicer source={canvas} templates={sampleTemplates} />
+      </Themed>,
+    )
+    expect(screen.queryByText('Load a spritesheet to begin')).not.toBeInTheDocument()
   })
 })
