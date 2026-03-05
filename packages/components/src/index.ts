@@ -106,6 +106,8 @@ export type {
 } from './domain/HeatMapOverlay.js'
 export { VerdictWidget } from './domain/VerdictWidget.js'
 export type { VerdictWidgetProps, Verdict } from './domain/VerdictWidget.js'
+export { GenerationQueue } from './domain/GenerationQueue.js'
+export type { GenerationQueueProps, GenerationJob } from './domain/GenerationQueue.js'
 
 // Phase 2b — Complex inputs
 export { DataTable } from './complex/DataTable.js'

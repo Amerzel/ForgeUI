@@ -18,8 +18,9 @@ import {
   HeatMapOverlay,
   renderHeatMap,
   VerdictWidget,
+  GenerationQueue,
 } from '../index.js'
-import type { PipelineStep } from '../index.js'
+import type { PipelineStep, GenerationJob } from '../index.js'
 import type {
   TimelineTrack,
   CanvasItem,
@@ -1249,5 +1250,107 @@ describe('VerdictWidget', () => {
     )
     expect(screen.getByLabelText('Approve')).toBeDisabled()
     expect(screen.getByLabelText('Reject')).toBeDisabled()
+  })
+})
+
+/* ===================================================================
+ * GenerationQueue
+ * =================================================================== */
+describe('GenerationQueue', () => {
+  const makeJobs = (): GenerationJob[] => [
+    { id: 'j1', label: 'Generate grass fill', status: 'completed', apiCalls: 3 },
+    { id: 'j2', label: 'Generate stone fill', status: 'running', progress: 45 },
+    { id: 'j3', label: 'Generate water fill', status: 'queued' },
+    { id: 'j4', label: 'Generate lava fill', status: 'failed', error: 'Rate limited' },
+  ]
+
+  it('renders compact variant with job summary', () => {
+    render(
+      <Themed>
+        <GenerationQueue jobs={makeJobs()} />
+      </Themed>,
+    )
+    expect(screen.getByText(/1 running/)).toBeInTheDocument()
+    expect(screen.getByText(/1 queued/)).toBeInTheDocument()
+  })
+
+  it('renders expanded variant with all job labels', () => {
+    render(
+      <Themed>
+        <GenerationQueue jobs={makeJobs()} variant="expanded" />
+      </Themed>,
+    )
+    expect(screen.getByText('Generate grass fill')).toBeInTheDocument()
+    expect(screen.getByText('Generate stone fill')).toBeInTheDocument()
+    expect(screen.getByText('Generate water fill')).toBeInTheDocument()
+    expect(screen.getByText('Generate lava fill')).toBeInTheDocument()
+  })
+
+  it('shows cancel button for queued jobs', () => {
+    const onCancel = vi.fn()
+    render(
+      <Themed>
+        <GenerationQueue jobs={makeJobs()} variant="expanded" onCancel={onCancel} />
+      </Themed>,
+    )
+    expect(screen.getByLabelText('Cancel Generate water fill')).toBeInTheDocument()
+  })
+
+  it('fires onCancel when cancel is clicked', async () => {
+    const user = userEvent.setup()
+    const onCancel = vi.fn()
+    render(
+      <Themed>
+        <GenerationQueue jobs={makeJobs()} variant="expanded" onCancel={onCancel} />
+      </Themed>,
+    )
+    await user.click(screen.getByLabelText('Cancel Generate water fill'))
+    expect(onCancel).toHaveBeenCalledWith('j3')
+  })
+
+  it('shows retry button for failed jobs', () => {
+    const onRetry = vi.fn()
+    render(
+      <Themed>
+        <GenerationQueue jobs={makeJobs()} variant="expanded" onRetry={onRetry} />
+      </Themed>,
+    )
+    expect(screen.getByLabelText('Retry Generate lava fill')).toBeInTheDocument()
+  })
+
+  it('displays cost with default formatter', () => {
+    render(
+      <Themed>
+        <GenerationQueue jobs={[]} totalCost={850} />
+      </Themed>,
+    )
+    expect(screen.getByText('$8.50')).toBeInTheDocument()
+  })
+
+  it('displays cost with custom formatter', () => {
+    render(
+      <Themed>
+        <GenerationQueue jobs={[]} totalCost={100} costFormat={(cents) => `${cents} credits`} />
+      </Themed>,
+    )
+    expect(screen.getByText('100 credits')).toBeInTheDocument()
+  })
+
+  it('shows budget warning when over ceiling', () => {
+    render(
+      <Themed>
+        <GenerationQueue jobs={[]} totalCost={1100} budgetCeiling={1000} />
+      </Themed>,
+    )
+    expect(screen.getByText(/over budget/)).toBeInTheDocument()
+  })
+
+  it('shows progress bar for running jobs with progress', () => {
+    render(
+      <Themed>
+        <GenerationQueue jobs={makeJobs()} variant="expanded" />
+      </Themed>,
+    )
+    expect(screen.getByLabelText('Generate stone fill progress')).toBeInTheDocument()
   })
 })
