@@ -8,6 +8,7 @@ on:
 
 jobs:
   sync-project:
+    if: false # disabled — missing token scopes (read:org, read:discussion)
     runs-on: ubuntu-latest
     steps:
       - name: Sync item to project

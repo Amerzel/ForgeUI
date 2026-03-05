@@ -7,7 +7,7 @@ export interface TilingGridProps {
   /** Single tile to repeat in every cell */
   source?: TileSource
   /** Per-cell tile callback — overrides source when provided */
-  getCellSource?: (col: number, row: number) => ImageBitmap | ImageData | null
+  getCellSource?: (col: number, row: number) => TileSource
   /** Number of columns. Default: 3 */
   cols?: number
   /** Number of rows. Default: 3 */
