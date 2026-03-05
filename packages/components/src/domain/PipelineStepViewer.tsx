@@ -22,8 +22,14 @@ export interface PipelineStepViewerProps {
   selectedStep?: string
   /** Step selection callback */
   onSelectStep?: (stepId: string) => void
-  /** Layout mode. Default: 'horizontal' */
-  layout?: 'horizontal' | 'vertical' | 'filmstrip'
+  /**
+   * Layout mode. Default: 'horizontal'
+   * - 'horizontal': step bar on top, single result panel below
+   * - 'vertical': step bar on left, single result panel right
+   * - 'filmstrip': step bar on top, all results in scrollable row
+   * - 'all': all steps shown side-by-side with header + result per column
+   */
+  layout?: 'horizontal' | 'vertical' | 'filmstrip' | 'all'
   /** Show step connectors/arrows. Default: true */
   showConnectors?: boolean
   /** Custom render function for step results */
@@ -66,11 +72,11 @@ function StepIndicator({
   onClick: () => void
   showConnector: boolean
   isLast: boolean
-  layout: 'horizontal' | 'vertical' | 'filmstrip'
+  layout: 'horizontal' | 'vertical' | 'filmstrip' | 'all'
 }) {
   const color = STATUS_COLORS[step.status]
   const icon = STATUS_ICONS[step.status]
-  const isHorizontal = layout === 'horizontal' || layout === 'filmstrip'
+  const isHorizontal = layout === 'horizontal' || layout === 'filmstrip' || layout === 'all'
 
   return (
     <div
@@ -199,6 +205,7 @@ export function PipelineStepViewer({
   const selectedStepData = steps.find((s) => s.id === selected)
 
   const isFilmstrip = layout === 'filmstrip'
+  const isAll = layout === 'all'
   const isVertical = layout === 'vertical'
 
   return (
@@ -222,38 +229,40 @@ export function PipelineStepViewer({
         }
       `}</style>
 
-      {/* Step indicators */}
-      <div
-        role="tablist"
-        aria-label="Pipeline steps"
-        style={{
-          display: 'flex',
-          flexDirection: isVertical ? 'column' : 'row',
-          alignItems: isVertical ? 'stretch' : 'center',
-          padding: 'var(--forge-space-2)',
-          borderBottom: isVertical ? undefined : '1px solid var(--forge-border)',
-          borderRight: isVertical ? '1px solid var(--forge-border)' : undefined,
-          gap: 0,
-          overflowX: isVertical ? undefined : 'auto',
-          overflowY: isVertical ? 'auto' : undefined,
-          flexShrink: 0,
-        }}
-      >
-        {steps.map((step, i) => (
-          <StepIndicator
-            key={step.id}
-            step={step}
-            isSelected={step.id === selected}
-            onClick={() => onSelectStep?.(step.id)}
-            showConnector={showConnectors}
-            isLast={i === steps.length - 1}
-            layout={layout}
-          />
-        ))}
-      </div>
+      {/* Step indicators (hidden in 'all' layout — headers are inline) */}
+      {!isAll && (
+        <div
+          role="tablist"
+          aria-label="Pipeline steps"
+          style={{
+            display: 'flex',
+            flexDirection: isVertical ? 'column' : 'row',
+            alignItems: isVertical ? 'stretch' : 'center',
+            padding: 'var(--forge-space-2)',
+            borderBottom: isVertical ? undefined : '1px solid var(--forge-border)',
+            borderRight: isVertical ? '1px solid var(--forge-border)' : undefined,
+            gap: 0,
+            overflowX: isVertical ? undefined : 'auto',
+            overflowY: isVertical ? 'auto' : undefined,
+            flexShrink: 0,
+          }}
+        >
+          {steps.map((step, i) => (
+            <StepIndicator
+              key={step.id}
+              step={step}
+              isSelected={step.id === selected}
+              onClick={() => onSelectStep?.(step.id)}
+              showConnector={showConnectors}
+              isLast={i === steps.length - 1}
+              layout={layout}
+            />
+          ))}
+        </div>
+      )}
 
-      {/* Result panel */}
-      {selectedStepData && !isFilmstrip && (
+      {/* Single result panel (horizontal / vertical) */}
+      {selectedStepData && !isFilmstrip && !isAll && (
         <div
           role="tabpanel"
           aria-label={`${selectedStepData.label} result`}
@@ -267,7 +276,7 @@ export function PipelineStepViewer({
             overflow: 'auto',
           }}
         >
-          {/* Step header */}
+          {/* Step header — fixed height to prevent layout shift */}
           <div
             style={{
               display: 'flex',
@@ -310,16 +319,17 @@ export function PipelineStepViewer({
             )}
           </div>
 
-          {/* Metadata */}
-          {selectedStepData.meta && Object.keys(selectedStepData.meta).length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                gap: 'var(--forge-space-3)',
-                fontSize: 'var(--forge-font-size-xs)',
-              }}
-            >
-              {Object.entries(selectedStepData.meta).map(([key, value]) => (
+          {/* Metadata — reserve line height even when empty to prevent shift */}
+          <div
+            style={{
+              display: 'flex',
+              gap: 'var(--forge-space-3)',
+              fontSize: 'var(--forge-font-size-xs)',
+              minHeight: '1.2em',
+            }}
+          >
+            {selectedStepData.meta &&
+              Object.entries(selectedStepData.meta).map(([key, value]) => (
                 <span key={key} style={{ color: 'var(--forge-text-muted)' }}>
                   {key}:{' '}
                   <span
@@ -329,8 +339,7 @@ export function PipelineStepViewer({
                   </span>
                 </span>
               ))}
-            </div>
-          )}
+          </div>
 
           {/* Result content */}
           <div style={{ flex: '1 1 auto', minHeight: 0 }}>
@@ -339,7 +348,7 @@ export function PipelineStepViewer({
         </div>
       )}
 
-      {/* Filmstrip: all results inline */}
+      {/* Filmstrip: all results in scrollable row */}
       {isFilmstrip && (
         <div
           style={{
@@ -377,6 +386,107 @@ export function PipelineStepViewer({
               {renderResult ? renderResult(step) : step.result}
             </div>
           ))}
+        </div>
+      )}
+
+      {/* All: every step with header + result in a single row */}
+      {isAll && (
+        <div
+          style={{
+            display: 'flex',
+            gap: 'var(--forge-space-3)',
+            padding: 'var(--forge-space-3)',
+            overflowX: 'auto',
+            flex: '1 1 auto',
+            alignItems: 'flex-start',
+          }}
+        >
+          {steps.map((step) => {
+            const color = STATUS_COLORS[step.status]
+            const isSelected = step.id === selected
+            return (
+              <div
+                key={step.id}
+                style={{
+                  flexShrink: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 'var(--forge-space-1)',
+                  border: `1px solid ${isSelected ? 'var(--forge-accent)' : 'var(--forge-border)'}`,
+                  borderRadius: 'var(--forge-radius-md)',
+                  padding: 'var(--forge-space-2)',
+                  backgroundColor: isSelected
+                    ? 'color-mix(in srgb, var(--forge-accent) 5%, transparent)'
+                    : 'transparent',
+                  cursor: onSelectStep ? 'pointer' : 'default',
+                }}
+                onClick={() => onSelectStep?.(step.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    onSelectStep?.(step.id)
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                {/* Compact header: label + status badge + duration */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 'var(--forge-space-1)',
+                    fontSize: 'var(--forge-font-size-xs)',
+                  }}
+                >
+                  <span style={{ color, fontWeight: 600, fontSize: '10px' }}>
+                    {STATUS_ICONS[step.status]}
+                  </span>
+                  <span
+                    style={{
+                      fontWeight: 500,
+                      color: 'var(--forge-text)',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {step.label}
+                  </span>
+                  {step.durationMs !== undefined && (
+                    <span
+                      style={{
+                        fontFamily: 'var(--forge-font-mono)',
+                        color: 'var(--forge-text-muted)',
+                        fontSize: '10px',
+                      }}
+                    >
+                      {formatDuration(step.durationMs)}
+                    </span>
+                  )}
+                </div>
+
+                {/* Metadata — always reserve the row */}
+                <div
+                  style={{
+                    fontSize: '10px',
+                    color: 'var(--forge-text-muted)',
+                    minHeight: '1em',
+                    display: 'flex',
+                    gap: 'var(--forge-space-2)',
+                  }}
+                >
+                  {step.meta &&
+                    Object.entries(step.meta).map(([key, value]) => (
+                      <span key={key}>
+                        {key}: <span style={{ color: 'var(--forge-text)' }}>{value}</span>
+                      </span>
+                    ))}
+                </div>
+
+                {/* Result */}
+                <div>{renderResult ? renderResult(step) : step.result}</div>
+              </div>
+            )
+          })}
         </div>
       )}
     </div>

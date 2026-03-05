@@ -148,3 +148,19 @@ export const WithError: Story = {
     )
   },
 }
+
+export const AllStepsLayout: Story = {
+  render: function AllStepsDemo() {
+    const [selected, setSelected] = useState('raw')
+    return (
+      <div style={{ width: 800 }}>
+        <PipelineStepViewer
+          steps={DEMO_STEPS}
+          selectedStep={selected}
+          onSelectStep={setSelected}
+          layout="all"
+        />
+      </div>
+    )
+  },
+}

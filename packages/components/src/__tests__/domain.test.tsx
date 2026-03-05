@@ -1072,6 +1072,28 @@ describe('PipelineStepViewer', () => {
     expect(screen.getByText('Res B')).toBeInTheDocument()
   })
 
+  it('supports all layout showing every step with header and result', () => {
+    const steps: PipelineStep[] = [
+      {
+        id: 'a',
+        label: 'Step A',
+        status: 'complete',
+        result: <div>Res A</div>,
+        meta: { model: 'xl' },
+      },
+      { id: 'b', label: 'Step B', status: 'running', result: <div>Res B</div> },
+    ]
+    render(
+      <Themed>
+        <PipelineStepViewer steps={steps} layout="all" />
+      </Themed>,
+    )
+    expect(screen.getByText('Res A')).toBeInTheDocument()
+    expect(screen.getByText('Res B')).toBeInTheDocument()
+    expect(screen.getByText('Step A')).toBeInTheDocument()
+    expect(screen.getByText('Step B')).toBeInTheDocument()
+  })
+
   it('formats duration as seconds for large values', () => {
     const steps: PipelineStep[] = [
       { id: 'raw', label: 'Raw', status: 'complete', durationMs: 2500 },
