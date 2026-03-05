@@ -25,7 +25,7 @@ export interface VerdictWidgetProps {
 const THUMB_UP_PATH =
   'M7 10v12m8-16.12L14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.68a2 2 0 0 0 1.7-.95l3.24-4.86a1.5 1.5 0 0 1 2.5.17L15 6'
 const THUMB_DOWN_PATH =
-  'M17 14V2m-8 4.12L10 14H4.17a2 2 0 0 0-1.92 2.56l2.33 8A2 2 0 0 0 6.5 26H20a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-2.68a2 2 0 0 1-1.7-.95l-3.24-4.86a1.5 1.5 0 0 0-2.5.17L9 6'
+  'M17 14V2M9 18.12L10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.68a2 2 0 0 0-1.7.95l-3.24 4.86a1.5 1.5 0 0 1-2.5-.17L9 18.12Z'
 
 function ThumbIcon({ path, size }: { path: string; size: number }) {
   return (

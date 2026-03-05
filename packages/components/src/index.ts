@@ -108,6 +108,8 @@ export { VerdictWidget } from './domain/VerdictWidget.js'
 export type { VerdictWidgetProps, Verdict } from './domain/VerdictWidget.js'
 export { GenerationQueue } from './domain/GenerationQueue.js'
 export type { GenerationQueueProps, GenerationJob } from './domain/GenerationQueue.js'
+export { WizardDialog } from './domain/WizardDialog.js'
+export type { WizardDialogProps, WizardStep } from './domain/WizardDialog.js'
 
 // Phase 2b — Complex inputs
 export { DataTable } from './complex/DataTable.js'

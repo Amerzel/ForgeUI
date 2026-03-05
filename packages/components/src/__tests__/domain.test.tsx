@@ -19,8 +19,9 @@ import {
   renderHeatMap,
   VerdictWidget,
   GenerationQueue,
+  WizardDialog,
 } from '../index.js'
-import type { PipelineStep, GenerationJob } from '../index.js'
+import type { PipelineStep, GenerationJob, WizardStep } from '../index.js'
 import type {
   TimelineTrack,
   CanvasItem,
@@ -1352,5 +1353,197 @@ describe('GenerationQueue', () => {
       </Themed>,
     )
     expect(screen.getByLabelText('Generate stone fill progress')).toBeInTheDocument()
+  })
+})
+
+/* ===================================================================
+ * WizardDialog
+ * =================================================================== */
+describe('WizardDialog', () => {
+  const makeSteps = (): WizardStep[] => [
+    { id: 'basics', label: 'Basics', content: <div>Step 1 content</div> },
+    { id: 'materials', label: 'Materials', content: <div>Step 2 content</div> },
+    { id: 'review', label: 'Review', content: <div>Step 3 content</div> },
+  ]
+
+  it('renders when open', () => {
+    render(
+      <Themed>
+        <WizardDialog
+          open={true}
+          onOpenChange={() => {}}
+          title="New Pack"
+          steps={makeSteps()}
+          onComplete={() => {}}
+        />
+      </Themed>,
+    )
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    expect(screen.getByText('New Pack')).toBeInTheDocument()
+  })
+
+  it('does not render when closed', () => {
+    render(
+      <Themed>
+        <WizardDialog
+          open={false}
+          onOpenChange={() => {}}
+          title="New Pack"
+          steps={makeSteps()}
+          onComplete={() => {}}
+        />
+      </Themed>,
+    )
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('shows first step content initially', () => {
+    render(
+      <Themed>
+        <WizardDialog
+          open={true}
+          onOpenChange={() => {}}
+          title="New Pack"
+          steps={makeSteps()}
+          onComplete={() => {}}
+        />
+      </Themed>,
+    )
+    expect(screen.getByText('Step 1 content')).toBeInTheDocument()
+  })
+
+  it('navigates to next step on Next click', async () => {
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <WizardDialog
+          open={true}
+          onOpenChange={() => {}}
+          title="New Pack"
+          steps={makeSteps()}
+          onComplete={() => {}}
+        />
+      </Themed>,
+    )
+    await user.click(screen.getByText('Next'))
+    expect(screen.getByText('Step 2 content')).toBeInTheDocument()
+  })
+
+  it('navigates back on Back click', async () => {
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <WizardDialog
+          open={true}
+          onOpenChange={() => {}}
+          title="New Pack"
+          steps={makeSteps()}
+          onComplete={() => {}}
+        />
+      </Themed>,
+    )
+    await user.click(screen.getByText('Next'))
+    await user.click(screen.getByText('Back'))
+    expect(screen.getByText('Step 1 content')).toBeInTheDocument()
+  })
+
+  it('shows finish label on last step', async () => {
+    const user = userEvent.setup()
+    render(
+      <Themed>
+        <WizardDialog
+          open={true}
+          onOpenChange={() => {}}
+          title="New Pack"
+          steps={makeSteps()}
+          onComplete={() => {}}
+          finishLabel="Done"
+        />
+      </Themed>,
+    )
+    await user.click(screen.getByText('Next'))
+    await user.click(screen.getByText('Next'))
+    expect(screen.getByText('Done')).toBeInTheDocument()
+  })
+
+  it('calls onComplete when finish is clicked', async () => {
+    const user = userEvent.setup()
+    const onComplete = vi.fn()
+    render(
+      <Themed>
+        <WizardDialog
+          open={true}
+          onOpenChange={() => {}}
+          title="New Pack"
+          steps={makeSteps()}
+          onComplete={onComplete}
+        />
+      </Themed>,
+    )
+    await user.click(screen.getByText('Next'))
+    await user.click(screen.getByText('Next'))
+    await user.click(screen.getByText('Create'))
+    expect(onComplete).toHaveBeenCalledTimes(1)
+  })
+
+  it('shows validation error when validate returns a message', async () => {
+    const user = userEvent.setup()
+    const steps: WizardStep[] = [
+      {
+        id: 'a',
+        label: 'A',
+        content: <div>A</div>,
+        validate: () => 'Name is required',
+      },
+      { id: 'b', label: 'B', content: <div>B</div> },
+    ]
+    render(
+      <Themed>
+        <WizardDialog
+          open={true}
+          onOpenChange={() => {}}
+          title="Test"
+          steps={steps}
+          onComplete={() => {}}
+        />
+      </Themed>,
+    )
+    await user.click(screen.getByText('Next'))
+    expect(screen.getByRole('alert')).toHaveTextContent('Name is required')
+  })
+
+  it('calls onOpenChange with false when Cancel is clicked', async () => {
+    const user = userEvent.setup()
+    const onOpenChange = vi.fn()
+    render(
+      <Themed>
+        <WizardDialog
+          open={true}
+          onOpenChange={onOpenChange}
+          title="New Pack"
+          steps={makeSteps()}
+          onComplete={() => {}}
+        />
+      </Themed>,
+    )
+    await user.click(screen.getByText('Cancel'))
+    expect(onOpenChange).toHaveBeenCalledWith(false)
+  })
+
+  it('shows step labels in progress indicator', () => {
+    render(
+      <Themed>
+        <WizardDialog
+          open={true}
+          onOpenChange={() => {}}
+          title="New Pack"
+          steps={makeSteps()}
+          onComplete={() => {}}
+        />
+      </Themed>,
+    )
+    expect(screen.getByText('Basics')).toBeInTheDocument()
+    expect(screen.getByText('Materials')).toBeInTheDocument()
+    expect(screen.getByText('Review')).toBeInTheDocument()
   })
 })
