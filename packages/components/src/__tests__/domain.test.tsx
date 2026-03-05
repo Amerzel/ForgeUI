@@ -15,6 +15,8 @@ import {
   TilePreview,
   TilingGrid,
   PipelineStepViewer,
+  HeatMapOverlay,
+  renderHeatMap,
 } from '../index.js'
 import type { PipelineStep } from '../index.js'
 import type {
@@ -1077,5 +1079,85 @@ describe('PipelineStepViewer', () => {
       </Themed>,
     )
     expect(screen.getAllByText('2.5s').length).toBeGreaterThanOrEqual(1)
+  })
+})
+
+/* ===================================================================
+ * HeatMapOverlay
+ * =================================================================== */
+describe('HeatMapOverlay', () => {
+  it('renders a canvas element', () => {
+    render(
+      <Themed>
+        <HeatMapOverlay width={64} height={64} />
+      </Themed>,
+    )
+    const canvas = document.querySelector('.forge-heatmap-overlay')
+    expect(canvas).toBeInTheDocument()
+    expect(canvas?.tagName).toBe('CANVAS')
+  })
+
+  it('has correct width and height attributes', () => {
+    render(
+      <Themed>
+        <HeatMapOverlay width={128} height={64} />
+      </Themed>,
+    )
+    const canvas = document.querySelector('.forge-heatmap-overlay') as HTMLCanvasElement
+    expect(canvas.width).toBe(128)
+    expect(canvas.height).toBe(64)
+  })
+
+  it('has pointer-events none for overlay use', () => {
+    render(
+      <Themed>
+        <HeatMapOverlay width={64} height={64} />
+      </Themed>,
+    )
+    const canvas = document.querySelector('.forge-heatmap-overlay') as HTMLElement
+    expect(canvas.style.pointerEvents).toBe('none')
+  })
+
+  it('accepts aria-label for accessibility', () => {
+    render(
+      <Themed>
+        <HeatMapOverlay width={64} height={64} />
+      </Themed>,
+    )
+    expect(screen.getByLabelText('Heat map overlay')).toBeInTheDocument()
+  })
+
+  it('accepts className prop', () => {
+    render(
+      <Themed>
+        <HeatMapOverlay width={64} height={64} className="custom-heatmap" />
+      </Themed>,
+    )
+    const canvas = document.querySelector('.forge-heatmap-overlay')
+    expect(canvas?.classList.contains('custom-heatmap')).toBe(true)
+  })
+
+  it('accepts rgbaData input', () => {
+    const rgba = new Uint8ClampedArray(64 * 64 * 4)
+    render(
+      <Themed>
+        <HeatMapOverlay rgbaData={rgba} width={64} height={64} />
+      </Themed>,
+    )
+    expect(document.querySelector('.forge-heatmap-overlay')).toBeInTheDocument()
+  })
+
+  it('accepts scalarData as 2D array', () => {
+    const scalar = Array.from({ length: 8 }, () => Array.from({ length: 8 }, () => Math.random()))
+    render(
+      <Themed>
+        <HeatMapOverlay scalarData={scalar} width={8} height={8} />
+      </Themed>,
+    )
+    expect(document.querySelector('.forge-heatmap-overlay')).toBeInTheDocument()
+  })
+
+  it('exports renderHeatMap utility function', () => {
+    expect(typeof renderHeatMap).toBe('function')
   })
 })

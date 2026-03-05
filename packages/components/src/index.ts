@@ -98,6 +98,12 @@ export { TilingGrid } from './domain/TilingGrid.js'
 export type { TilingGridProps } from './domain/TilingGrid.js'
 export { PipelineStepViewer } from './domain/PipelineStepViewer.js'
 export type { PipelineStepViewerProps, PipelineStep } from './domain/PipelineStepViewer.js'
+export { HeatMapOverlay, renderHeatMap } from './domain/HeatMapOverlay.js'
+export type {
+  HeatMapOverlayProps,
+  HeatMapColorMap,
+  RenderHeatMapOptions,
+} from './domain/HeatMapOverlay.js'
 
 // Phase 2b — Complex inputs
 export { DataTable } from './complex/DataTable.js'
