@@ -104,6 +104,8 @@ export type {
   HeatMapColorMap,
   RenderHeatMapOptions,
 } from './domain/HeatMapOverlay.js'
+export { VerdictWidget } from './domain/VerdictWidget.js'
+export type { VerdictWidgetProps, Verdict } from './domain/VerdictWidget.js'
 
 // Phase 2b — Complex inputs
 export { DataTable } from './complex/DataTable.js'

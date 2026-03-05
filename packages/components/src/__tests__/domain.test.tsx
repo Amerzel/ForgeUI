@@ -17,6 +17,7 @@ import {
   PipelineStepViewer,
   HeatMapOverlay,
   renderHeatMap,
+  VerdictWidget,
 } from '../index.js'
 import type { PipelineStep } from '../index.js'
 import type {
@@ -1159,5 +1160,94 @@ describe('HeatMapOverlay', () => {
 
   it('exports renderHeatMap utility function', () => {
     expect(typeof renderHeatMap).toBe('function')
+  })
+})
+
+/* ===================================================================
+ * VerdictWidget
+ * =================================================================== */
+describe('VerdictWidget', () => {
+  it('renders approve and reject buttons', () => {
+    render(
+      <Themed>
+        <VerdictWidget />
+      </Themed>,
+    )
+    expect(screen.getByLabelText('Approve')).toBeInTheDocument()
+    expect(screen.getByLabelText('Reject')).toBeInTheDocument()
+  })
+
+  it('fires onChange with "up" when approve is clicked', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+    render(
+      <Themed>
+        <VerdictWidget onChange={onChange} />
+      </Themed>,
+    )
+    await user.click(screen.getByLabelText('Approve'))
+    expect(onChange).toHaveBeenCalledWith('up')
+  })
+
+  it('fires onChange with "down" when reject is clicked', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+    render(
+      <Themed>
+        <VerdictWidget onChange={onChange} />
+      </Themed>,
+    )
+    await user.click(screen.getByLabelText('Reject'))
+    expect(onChange).toHaveBeenCalledWith('down')
+  })
+
+  it('toggles off when clicking the active verdict', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+    render(
+      <Themed>
+        <VerdictWidget value="up" onChange={onChange} />
+      </Themed>,
+    )
+    await user.click(screen.getByLabelText('Approve'))
+    expect(onChange).toHaveBeenCalledWith(null)
+  })
+
+  it('sets aria-pressed on the active verdict', () => {
+    render(
+      <Themed>
+        <VerdictWidget value="down" />
+      </Themed>,
+    )
+    expect(screen.getByLabelText('Approve').getAttribute('aria-pressed')).toBe('false')
+    expect(screen.getByLabelText('Reject').getAttribute('aria-pressed')).toBe('true')
+  })
+
+  it('shows notes textarea when showNotes is true and verdict is set', () => {
+    render(
+      <Themed>
+        <VerdictWidget value="up" showNotes />
+      </Themed>,
+    )
+    expect(screen.getByLabelText('Verdict notes')).toBeInTheDocument()
+  })
+
+  it('hides notes textarea when no verdict is selected', () => {
+    render(
+      <Themed>
+        <VerdictWidget showNotes />
+      </Themed>,
+    )
+    expect(screen.queryByLabelText('Verdict notes')).not.toBeInTheDocument()
+  })
+
+  it('disables buttons when disabled prop is set', () => {
+    render(
+      <Themed>
+        <VerdictWidget disabled />
+      </Themed>,
+    )
+    expect(screen.getByLabelText('Approve')).toBeDisabled()
+    expect(screen.getByLabelText('Reject')).toBeDisabled()
   })
 })
