@@ -149,6 +149,8 @@ export function ResizablePanelGroup({
     sizes.forEach((size, i) => {
       const el = panelRefs.current[i]
       if (!el || size === null) return
+      // Pin the dragged panel at the new size via flex-basis
+      el.style.flex = `0 1 ${size}px`
       if (isHorizontal) {
         el.style.width = `${size}px`
       } else {
@@ -182,12 +184,29 @@ export function ResizablePanelGroup({
     [panels, isHorizontal, storageKey],
   )
 
+  const hasFlexPanel = panels.some(
+    (p) => (p as React.ReactElement<ResizablePanelProps>)?.props?.flex,
+  )
+
   const items: React.ReactNode[] = []
   panels.forEach((panel, i) => {
     const panelProps = (panel as React.ReactElement<ResizablePanelProps>)?.props
     const isFlex = panelProps?.flex
     const panelMinSize = panelProps?.minSize ?? 100
     const panelDefaultSize = panelProps?.defaultSize
+
+    // Determine flex behavior:
+    // - flex panels always fill remaining space
+    // - non-flex panels alongside a flex sibling stay fixed at defaultSize
+    // - when no panel has flex, distribute space proportionally by defaultSize
+    let flexStyle: string
+    if (isFlex) {
+      flexStyle = '1 1 auto'
+    } else if (hasFlexPanel) {
+      flexStyle = panelDefaultSize ? `0 1 ${panelDefaultSize}px` : '0 1 auto'
+    } else {
+      flexStyle = `${panelDefaultSize ?? 1} 1 0px`
+    }
 
     items.push(
       <div
@@ -196,9 +215,7 @@ export function ResizablePanelGroup({
           panelRefs.current[i] = el
         }}
         style={{
-          flex: isFlex ? '1 1 auto' : '0 1 auto',
-          ...(isHorizontal && !isFlex && panelDefaultSize ? { width: panelDefaultSize } : {}),
-          ...(!isHorizontal && !isFlex && panelDefaultSize ? { height: panelDefaultSize } : {}),
+          flex: flexStyle,
           overflowX: isHorizontal ? 'hidden' : 'auto',
           overflowY: isHorizontal ? 'auto' : 'hidden',
           minWidth: isHorizontal ? (isFlex ? 0 : panelMinSize) : undefined,
