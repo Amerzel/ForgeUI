@@ -206,7 +206,9 @@ export function ResizablePanelGroup({
               : ((panel as React.ReactElement<ResizablePanelProps>)?.props?.minSize ?? 100)
             : undefined,
           minHeight: !isHorizontal
-            ? ((panel as React.ReactElement<ResizablePanelProps>)?.props?.minSize ?? 100)
+            ? (panel as React.ReactElement<ResizablePanelProps>)?.props?.flex
+              ? 0
+              : ((panel as React.ReactElement<ResizablePanelProps>)?.props?.minSize ?? 100)
             : undefined,
         }}
       >
