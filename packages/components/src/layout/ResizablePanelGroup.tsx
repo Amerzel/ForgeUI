@@ -9,7 +9,12 @@ interface ResizablePanelProps {
   minSize?: number
   /** Maximum size in pixels */
   maxSize?: number
-  /** Initial size in pixels */
+  /**
+   * Initial size of this panel.
+   * - When a sibling has `flex`, this is treated as **pixels** (e.g. 250).
+   * - When NO sibling has `flex`, values are treated as **proportional weights**
+   *   (e.g. 25/50/25 → 25%/50%/25% of available space).
+   */
   defaultSize?: number
   /** When true, this panel takes remaining space (flex: 1) */
   flex?: boolean

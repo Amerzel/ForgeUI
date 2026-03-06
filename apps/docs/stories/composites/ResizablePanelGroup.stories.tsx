@@ -9,7 +9,7 @@ export default meta
 type Story = StoryObj
 
 export const Default: Story = {
-  name: 'ResizablePanelGroup',
+  name: 'Pixel Sizes + Flex',
   render: () => (
     <div
       style={{
@@ -89,6 +89,51 @@ export const Default: Story = {
                 </div>
               ))}
             </div>
+          </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </div>
+  ),
+}
+
+const PanelLabel = ({ children }: { children: React.ReactNode }) => (
+  <div
+    style={{
+      height: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '12px',
+      color: 'var(--forge-text-muted)',
+    }}
+  >
+    <Text size="sm">{children}</Text>
+  </div>
+)
+
+export const ProportionalWeights: Story = {
+  name: 'Proportional Weights (no flex)',
+  render: () => (
+    <div
+      style={{
+        height: '320px',
+        border: '1px solid var(--forge-border)',
+        borderRadius: 'var(--forge-radius-md)',
+        overflow: 'hidden',
+      }}
+    >
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel defaultSize={20} minSize={12}>
+          <div style={{ height: '100%', backgroundColor: 'var(--forge-surface)' }}>
+            <PanelLabel>Sidebar (20%)</PanelLabel>
+          </div>
+        </ResizablePanel>
+        <ResizablePanel defaultSize={55} minSize={30}>
+          <PanelLabel>Main Content (55%)</PanelLabel>
+        </ResizablePanel>
+        <ResizablePanel defaultSize={25} minSize={15}>
+          <div style={{ height: '100%', backgroundColor: 'var(--forge-surface)' }}>
+            <PanelLabel>Inspector (25%)</PanelLabel>
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>
