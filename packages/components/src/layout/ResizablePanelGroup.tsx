@@ -196,7 +196,8 @@ export function ResizablePanelGroup({
           flex: (panel as React.ReactElement<ResizablePanelProps>)?.props?.flex
             ? '1 1 auto'
             : 'none',
-          overflow: 'auto',
+          overflowX: isHorizontal ? 'hidden' : 'auto',
+          overflowY: isHorizontal ? 'auto' : 'hidden',
           minWidth: isHorizontal
             ? ((panel as React.ReactElement<ResizablePanelProps>)?.props?.minSize ?? 100)
             : undefined,
