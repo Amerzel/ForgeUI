@@ -106,9 +106,7 @@ export function ResizablePanel({
       data-default-size={defaultSize}
       data-flex={flex}
       style={{
-        ...(flex
-          ? { flex: '1 1 auto', overflow: 'hidden', minWidth: 0 }
-          : { flexShrink: 0, overflow: 'auto' }),
+        ...(flex ? { flex: '1 1 auto', overflow: 'hidden', minWidth: 0 } : { overflow: 'auto' }),
         ...(defaultSize && !flex ? { width: undefined, height: undefined } : {}),
         ...style,
       }}
@@ -153,10 +151,8 @@ export function ResizablePanelGroup({
       if (!el || size === null) return
       if (isHorizontal) {
         el.style.width = `${size}px`
-        el.style.flex = 'none'
       } else {
         el.style.height = `${size}px`
-        el.style.flex = 'none'
       }
     })
   }, [sizes, isHorizontal])
@@ -188,6 +184,11 @@ export function ResizablePanelGroup({
 
   const items: React.ReactNode[] = []
   panels.forEach((panel, i) => {
+    const panelProps = (panel as React.ReactElement<ResizablePanelProps>)?.props
+    const isFlex = panelProps?.flex
+    const panelMinSize = panelProps?.minSize ?? 100
+    const panelDefaultSize = panelProps?.defaultSize
+
     items.push(
       <div
         key={`panel-${i}`}
@@ -195,21 +196,13 @@ export function ResizablePanelGroup({
           panelRefs.current[i] = el
         }}
         style={{
-          flex: (panel as React.ReactElement<ResizablePanelProps>)?.props?.flex
-            ? '1 1 auto'
-            : 'none',
+          flex: isFlex ? '1 1 auto' : '0 1 auto',
+          ...(isHorizontal && !isFlex && panelDefaultSize ? { width: panelDefaultSize } : {}),
+          ...(!isHorizontal && !isFlex && panelDefaultSize ? { height: panelDefaultSize } : {}),
           overflowX: isHorizontal ? 'hidden' : 'auto',
           overflowY: isHorizontal ? 'auto' : 'hidden',
-          minWidth: isHorizontal
-            ? (panel as React.ReactElement<ResizablePanelProps>)?.props?.flex
-              ? 0
-              : ((panel as React.ReactElement<ResizablePanelProps>)?.props?.minSize ?? 100)
-            : undefined,
-          minHeight: !isHorizontal
-            ? (panel as React.ReactElement<ResizablePanelProps>)?.props?.flex
-              ? 0
-              : ((panel as React.ReactElement<ResizablePanelProps>)?.props?.minSize ?? 100)
-            : undefined,
+          minWidth: isHorizontal ? (isFlex ? 0 : panelMinSize) : undefined,
+          minHeight: !isHorizontal ? (isFlex ? 0 : panelMinSize) : undefined,
         }}
       >
         {panel}
