@@ -106,7 +106,9 @@ export function ResizablePanel({
       data-default-size={defaultSize}
       data-flex={flex}
       style={{
-        ...(flex ? { flex: '1 1 auto', overflow: 'auto' } : { flexShrink: 0, overflow: 'auto' }),
+        ...(flex
+          ? { flex: '1 1 auto', overflow: 'hidden', minWidth: 0 }
+          : { flexShrink: 0, overflow: 'auto' }),
         ...(defaultSize && !flex ? { width: undefined, height: undefined } : {}),
         ...style,
       }}
@@ -199,7 +201,9 @@ export function ResizablePanelGroup({
           overflowX: isHorizontal ? 'hidden' : 'auto',
           overflowY: isHorizontal ? 'auto' : 'hidden',
           minWidth: isHorizontal
-            ? ((panel as React.ReactElement<ResizablePanelProps>)?.props?.minSize ?? 100)
+            ? (panel as React.ReactElement<ResizablePanelProps>)?.props?.flex
+              ? 0
+              : ((panel as React.ReactElement<ResizablePanelProps>)?.props?.minSize ?? 100)
             : undefined,
           minHeight: !isHorizontal
             ? ((panel as React.ReactElement<ResizablePanelProps>)?.props?.minSize ?? 100)
